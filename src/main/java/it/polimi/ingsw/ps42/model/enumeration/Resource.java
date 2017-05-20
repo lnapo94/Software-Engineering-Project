@@ -1,7 +1,12 @@
 package it.polimi.ingsw.ps42.model.enumeration;
 
 public enum Resource {
-	VICTORYPOINT("VictoryPoint"), FAITHPOINT("FaithPoint"), MILITARYPOINT("MilitaryPoint"), WOOD("Wood"), SLAVE("Slave"), MONEY("Money"), STONE("Stone");
+	//Type of Resources present in the game. Council isn't added in this enum because it is
+	//immediately converted in a resource
+	
+	VICTORYPOINT("VictoryPoint"), FAITHPOINT("FaithPoint"), 
+	MILITARYPOINT("MilitaryPoint"), WOOD("Wood"), SLAVE("Slave"), 
+	MONEY("Money"), STONE("Stone");
 	
 	private final String message;
 	
