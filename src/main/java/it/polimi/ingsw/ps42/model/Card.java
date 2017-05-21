@@ -23,6 +23,7 @@ public class Card {
 	private ArrayList<Packet> requirements;
 	private ArrayList<Effect> immediateEffects;
 	private ArrayList<Effect> permanentEffects;
+	private ArrayList<Effect> finalEffects;
 	
 	public Card(String name, String description, Color color, int period, 
 			int level, ArrayList<Packet> costs, ArrayList<Effect> immediateEffects, ArrayList<Effect> permanentEffect){
@@ -70,6 +71,10 @@ public class Card {
 		return permanentEffects;
 	}
 	
+	public ArrayList<Effect> getFinalEffect() {
+		return finalEffects;
+	}
+	
 	public void setOwner(Player owner) {
 		this.owner = owner;
 	}
@@ -82,12 +87,20 @@ public class Card {
 		
 	}
 	
+	public void enableFinalEffect() {
+		//Enable the final effect at the end of the game
+	}
+	
 	public void enableImmediateEffect(int choice){		//Enables only the immediate effect passed 
 		
 	}
 	
 	public void enablePermanentEffect(int choice){		//Enables only the immediate effect passed
 		
+	}
+	
+	public void enableFinalEffect(int choice) {
+		//Enable the specific final effect among the effects in the arraylist
 	}
 	
 	
