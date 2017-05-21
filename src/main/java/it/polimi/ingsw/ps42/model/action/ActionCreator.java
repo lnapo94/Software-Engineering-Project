@@ -5,12 +5,12 @@ import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 public class ActionCreator {
 		//Factory of Action, gives methods to build different kind of Action
 	
-	public Action actionFactory(ActionType type, Player player, Familiar familiar, ArrayList<Position> tableposition){
+	public Action actionFactory(ActionType type, Familiar familiar, ArrayList<Position> tableposition, int positionInTableList){
 		//Returns the required action
 		
 	}
 	
-	public Action actionFactory(ActionType type, Player player, ArrayList<Position> tableposition){
+	public Action actionFactory(ActionType type, Player player, ArrayList<Position> tableposition, int positionInTableList){
 		//Returns the required action, usually called when a bonus action occurs (no familiar)
 		
 	}

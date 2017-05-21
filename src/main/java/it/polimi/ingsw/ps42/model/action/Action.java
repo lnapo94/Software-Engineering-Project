@@ -16,11 +16,11 @@ public abstract class Action {
 	private Packet discount;
 	
 	
-	public Action(ActionType type, Player player, Familiar familiar,ArrayList<Position> tablePosition){
-		//Constructor for normal action
+	public Action(ActionType type, Familiar familiar,ArrayList<Position> tablePosition, int positionInTableList){
+		//Constructor for normal action, player is get from familiar
 	}
-	public Action(ActionType type, Player player, Familiar familiar,ArrayList<Position> tablePosition){
-		//Constructor for bonus action (no familiar involved) 
+	public Action(ActionType type, Player player,ArrayList<Position> tablePosition, int positionInTableList){
+		//Constructor for bonus action (no familiar involved, so requires the player) 
 		
 	}
 	
