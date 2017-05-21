@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import it.polimi.ingsw.ps42.model.effect.Effect;
+import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.CouncilPosition;
 import it.polimi.ingsw.ps42.model.position.MarketPosition;
 import it.polimi.ingsw.ps42.model.position.TowerPosition;
