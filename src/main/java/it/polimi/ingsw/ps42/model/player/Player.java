@@ -1,7 +1,8 @@
-package it.polimi.ingsw.ps42.model;
+package it.polimi.ingsw.ps42.model.player;
 
 import java.util.ArrayList;
 
+import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;

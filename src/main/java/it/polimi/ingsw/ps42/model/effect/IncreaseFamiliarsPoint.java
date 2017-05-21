@@ -1,7 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import it.polimi.ingsw.ps42.model.Player;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
+import it.polimi.ingsw.ps42.model.player.Player;
 
 public class IncreaseFamiliarsPoint extends Effect{
 	//In this effect all the familiars' points are increased
