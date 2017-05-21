@@ -48,7 +48,12 @@ public abstract class Action {
 	
 	public abstract void createRequest();		//Create a request to better define the action and put it in the player 
 	
+	public ActionType getType() {
+		return type;
+	}
 	
-	
+	public void addIncrement(int increment){
+		
+	}
 	
 }

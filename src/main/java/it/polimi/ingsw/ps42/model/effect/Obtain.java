@@ -13,7 +13,6 @@ public class Obtain extends Effect{
 
 	public Obtain(Packet costs, Packet gains) {
 		
-		// TODO Auto-generated constructor stub
 		super(EffectType.OBTAIN);
 		this.costs=costs;
 		this.gains=gains;

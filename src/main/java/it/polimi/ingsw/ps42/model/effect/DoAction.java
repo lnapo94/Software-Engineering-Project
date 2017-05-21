@@ -15,14 +15,19 @@ public class DoAction extends Effect{
 	private Packet discount;
 	private ActionPrototype actionPrototype;
 
-	public DoAction(EffectType typeOfEffect) {
-		super(typeOfEffect);
-		// TODO Auto-generated constructor stub
+	public DoAction(ActionType type, int actionLevel, Packet discount) {
+		super(EffectType.DO_ACTION);
+		this.type=type;
+		this.actionLevel=actionLevel;
+		this.discount=discount;
+		this.actionPrototype=new ActionPrototype(type, actionLevel, discount);
 	}
 
 	@Override
 	public void enableEffect(Player player) {
-		// TODO Auto-generated method stub
+		this.player=player;
+		
+		player.setBonusAction(actionPrototype);
 		
 	}
 
