@@ -1,8 +1,8 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import it.polimi.ingsw.ps42.model.Player;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
+import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
 public class IncreaseAction extends Effect {

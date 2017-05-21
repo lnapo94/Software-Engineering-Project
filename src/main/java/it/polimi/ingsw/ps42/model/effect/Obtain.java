@@ -2,8 +2,8 @@ package it.polimi.ingsw.ps42.model.effect;
 
 import java.util.ArrayList;
 
-import it.polimi.ingsw.ps42.model.Player;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
+import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
 public class Obtain extends Effect{
