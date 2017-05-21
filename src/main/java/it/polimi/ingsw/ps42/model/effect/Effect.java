@@ -8,14 +8,16 @@ public abstract class Effect {
 	//effect
 	
 	protected Player player;
-	private EffectType typeOfEffect;
+	protected EffectType typeOfEffect;
 	
-	public Effect(EffectType typeOfEffect) {
+	protected Effect(EffectType typeOfEffect) {
 		//Generic Constructor for all the class
+		this.typeOfEffect=typeOfEffect;
 	}
 	
 	
 	public abstract void enableEffect(Player player);
-	//This method is used to enable the exact kind of effect
-
+	//This method is used to enable the exact kind of effect (Strategy pattern)
+	
+	
 }
