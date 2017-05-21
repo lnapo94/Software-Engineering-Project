@@ -15,7 +15,7 @@ public class Familiar {
 	public Familiar(Player player, Color color) {
 		this.player = player;
 		this.color = color;
-		this.value = -1;
+		this.value = 0;
 		this.increment=0;
 		
 	}

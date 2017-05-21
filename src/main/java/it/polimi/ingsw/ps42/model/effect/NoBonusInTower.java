@@ -6,15 +6,15 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class NoBonusInTower extends Effect{
 	//This method set a player variable to disable the Tower Bonus
 
-	public NoBonusInTower(EffectType typeOfEffect) {
-		super(typeOfEffect);
+	public NoBonusInTower() {
+		super(EffectType.NO_TOWER_BONUS);
 		
 	}
 
 	@Override
 	public void enableEffect(Player player) {
-		
-		
+		this.player=player;
+		player.disableBonusInTower();
 	}
 
 }

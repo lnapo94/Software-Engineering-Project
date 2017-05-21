@@ -7,14 +7,13 @@ public class NoFirstActionBan extends Effect {
 	//Set a player variable, then the GameLogic knows the player cannot play the first action
 
 	public NoFirstActionBan(EffectType typeOfEffect) {
-		super(typeOfEffect);
-		// TODO Auto-generated constructor stub
+		super(EffectType.NO_FIRST_ACTION_BAN);
 	}
 
 	@Override
 	public void enableEffect(Player player) {
-		// TODO Auto-generated method stub
-		
+		this.player=player;
+		player.setCanPlay(false);
 	}
 
 }

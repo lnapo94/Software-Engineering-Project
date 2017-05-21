@@ -2,6 +2,8 @@ package it.polimi.ingsw.ps42.model.effect;
 
 import it.polimi.ingsw.ps42.model.enumeration.Color;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
+import it.polimi.ingsw.ps42.model.exception.WrongColorException;
+import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 
 public class IncreaseSingleFamiliar extends Effect{
@@ -10,15 +12,23 @@ public class IncreaseSingleFamiliar extends Effect{
 	private int value;
 	private Color color;
 
-	public IncreaseSingleFamiliar(EffectType typeOfEffect) {
-		super(typeOfEffect);
-		// TODO Auto-generated constructor stub
+	public IncreaseSingleFamiliar(int value, Color color) {
+		super(EffectType.INCREASE_SINGLE_FAMILIAR);
+		this.value=value;
+		this.color=color;
 	}
 
 	@Override
 	public void enableEffect(Player player) {
-		// TODO Auto-generated method stub
-		
+		//Increments the value of a single familiar for the current round
+		this.player=player;
+		try{
+			Familiar playerFamiliar=player.getFamiliar(color);
+			playerFamiliar.setIncrement(value);
+		}
+		catch (WrongColorException e) {
+			System.out.println("Incremento del familiare fallito perchè l'effetto è stato male inizializzato");
+		}
 	}
 
 }

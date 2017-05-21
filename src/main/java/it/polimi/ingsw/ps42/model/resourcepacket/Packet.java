@@ -10,7 +10,7 @@ public class Packet implements Iterable<Unit>   {
 	
 	private ArrayList<Unit> list;
 	public	Packet()
-	{	//Costruttore di un packet vuoto
+	{	//Builder of an empty packet
 		list = new ArrayList<>() ;
 	}
 	
@@ -19,7 +19,7 @@ public class Packet implements Iterable<Unit>   {
 		
 	}
 	public Packet(Map<Resource, Integer> resource)
-	{	//Costruttore di un packet a partire da una Map, usato in BonusBar per esempio
+	{	//Packet builder from a Map, used in BonusBar for e.g.
 		this();
 		resource.forEach((r, q) -> {
 			
@@ -45,10 +45,7 @@ public class Packet implements Iterable<Unit>   {
 	
 	public void removeUnit(Unit unit) {
 		
-				 this.list.remove(unit);
-			
-		
-		
+				 this.list.remove(unit);	
 	}
 	
 	@Override

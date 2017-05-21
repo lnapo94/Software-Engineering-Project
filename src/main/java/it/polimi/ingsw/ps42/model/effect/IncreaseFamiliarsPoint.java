@@ -1,6 +1,9 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import it.polimi.ingsw.ps42.model.enumeration.Color;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
+import it.polimi.ingsw.ps42.model.exception.WrongColorException;
+import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 
 public class IncreaseFamiliarsPoint extends Effect{
@@ -8,15 +11,28 @@ public class IncreaseFamiliarsPoint extends Effect{
 	
 	private int value;
 
-	public IncreaseFamiliarsPoint(EffectType typeOfEffect) {
-		super(typeOfEffect);
-		// TODO Auto-generated constructor stub
+	public IncreaseFamiliarsPoint(int value) {
+		super(EffectType.INCREASE_FAMILIARS);
+		this.value=value;
 	}
 
 	@Override
 	public void enableEffect(Player player) {
-		// TODO Auto-generated method stub
-		
+		//Increase the value of every familiar for the current round
+		this.player=player;
+		try{
+			Familiar playerFamiliar=player.getFamiliar(Color.ORANGE);
+			playerFamiliar.setIncrement(value);
+			playerFamiliar=player.getFamiliar(Color.BLACK);
+			playerFamiliar.setIncrement(value);
+			playerFamiliar=player.getFamiliar(Color.WHITE);
+			playerFamiliar.setIncrement(value);
+			playerFamiliar=player.getFamiliar(Color.NEUTRAL);
+			playerFamiliar.setIncrement(value);
+		}
+		catch (WrongColorException e) {
+			System.out.println("Incremento di tutti i familari fallito causa cattiva inizializzazione dell'effetto");
+		}
 	}
 
 }
