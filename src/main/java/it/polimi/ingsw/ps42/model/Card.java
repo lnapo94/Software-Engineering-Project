@@ -2,6 +2,11 @@ package it.polimi.ingsw.ps42.model;
 
 import java.util.ArrayList;
 
+import it.polimi.ingsw.ps42.model.effect.Effect;
+import it.polimi.ingsw.ps42.model.enumeration.Color;
+import it.polimi.ingsw.ps42.model.player.Player;
+import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
+
 public class Card {
 	/*Class for Card, when created is placed in a position and do not has a owner, 
 	 * the owner is setted only when a player takes the card. In every ArrayList 
@@ -10,7 +15,7 @@ public class Card {
 	 */
 	private String name;
 	private String description;
-	private String color;
+	private Color color;
 	private int period;
 	private int level;
 	private Player owner;
@@ -19,7 +24,7 @@ public class Card {
 	private ArrayList<Effect> immediateEffects;
 	private ArrayList<Effect> permanentEffects;
 	
-	public Card(String name, String description, String color, int period, 
+	public Card(String name, String description, Color color, int period, 
 			int level, ArrayList<Packet> costs, ArrayList<Effect> immediateEffects, ArrayList<Effect> permanentEffect){
 		
 		
@@ -33,7 +38,7 @@ public class Card {
 		return description;
 	}
 	
-	public String getColor() {
+	public Color getColor() {
 		return color;
 	}
 	
@@ -58,11 +63,11 @@ public class Card {
 	}
 	
 	public ArrayList<Effect> getImmediateEffect() {
-		return immediateEffect;
+		return immediateEffects;
 	}
 	
 	public ArrayList<Effect> getPermanentEffect() {
-		return permanentEffect;
+		return permanentEffects;
 	}
 	
 	public void setOwner(Player owner) {
