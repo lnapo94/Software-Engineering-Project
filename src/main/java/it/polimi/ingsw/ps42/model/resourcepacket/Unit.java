@@ -8,24 +8,37 @@ public class Unit {
 	private Resource resource;
 	private int quantity;
 	
-	public Unit(Resource resource, int quantity) {
+	public Unit(){
 		
 	}
 	
+	public Unit(Resource resource, int quantity) {
+		this.resource = resource;
+		this.quantity = quantity;
+	}
+	
 	public Resource getResource() {
+		return this.resource;
 		
 	}
 	
 	public int getQuantity() {
-		
+		return this.quantity;
+
 	}
 	
 	public void setResource(Resource resource) {
-		
+		this.resource = resource;
 	}
 	
 	public void setQuantity(int quantity) {
-		
+		this.quantity = quantity;
 	}
-
+	
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.resource + ":" + this.quantity;
+	}
 }
