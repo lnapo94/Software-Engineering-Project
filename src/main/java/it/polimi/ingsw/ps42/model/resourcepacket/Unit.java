@@ -8,10 +8,6 @@ public class Unit {
 	private Resource resource;
 	private int quantity;
 	
-	public Unit(){
-		
-	}
-	
 	public Unit(Resource resource, int quantity) {
 		this.resource = resource;
 		this.quantity = quantity;

@@ -10,21 +10,20 @@ public class Packet implements Iterable<Unit>   {
 	
 	private ArrayList<Unit> list;
 	public	Packet()
-	{
+	{	//Costruttore di un packet vuoto
 		list = new ArrayList<>() ;
 	}
 	
 	public Packet(ArrayList<Unit> list) {
+		this.list=list;
 		
 	}
 	public Packet(Map<Resource, Integer> resource)
-	{
-		
+	{	//Costruttore di un packet a partire da una Map, usato in BonusBar per esempio
+		this();
 		resource.forEach((r, q) -> {
 			
-		    Unit unit = null;
-		    unit.setResource(r);
-		    unit.setQuantity(q);
+		    Unit unit = new Unit(r,q);
 		    this.list.add(unit);
 		});
 	}
@@ -58,22 +57,15 @@ public class Packet implements Iterable<Unit>   {
 		return this.list.toString();
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		System.out.println("inizio: ");
-		Unit un = new Unit();
-		Resource res;
-		res = Resource.MONEY;
-		un.setQuantity(5);
-		un.setResource(res);
-		Packet packet = new Packet();
-		packet.addUnit(un);
-		
-		Unit un2 = new Unit(Resource.WOOD,10);
-		packet.addUnit(un2);
-	
-		System.out.println(packet.toString());
+		HashMap<Resource, Integer> res=new HashMap<>();
+		res.put(Resource.FAITHPOINT, 5);
+		res.put(Resource.WOOD, 3);
+		Packet p=new Packet(res);	
+		System.out.println(p.toString());
 	}
-
+	*/
 	@Override
 	public Iterator<Unit> iterator() {
 		// TODO Auto-generated method stub
