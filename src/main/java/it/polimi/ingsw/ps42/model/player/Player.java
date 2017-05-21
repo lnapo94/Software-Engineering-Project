@@ -14,6 +14,7 @@ import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.IsNotEmptyException;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
+import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
 public class Player {
 	//This class represents the model of the Player
@@ -131,17 +132,49 @@ public class Player {
 			temp = getCardList(card.getColor());
 			temp.add(card);
 		} catch (WrongColorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error in player.addCard(card): wrong color");
 		}
 	}
 	
 	public void increaseResource(Packet packet) {
-		//TODO Iterator in Packet
+		
+		//Temporary variables used in the FOR EACH
+		Resource tempResource;
+		int tempQuantity;
+		
+		for (Unit unit : packet) {
+			
+			tempResource = unit.getResource();
+			tempQuantity = unit.getQuantity();
+			
+			//Adding resources to the player nextResources HashMap
+			tempQuantity = tempQuantity + nextResources.get(tempResource);
+			
+			//Upload the value in the HashMap
+			nextResources.put(tempResource, tempQuantity);
+		}
 	}
 	
 	public void decreaseResource(Packet packet) {
-		//TODO Iterator in Packet
+		//Temporary variables used in the FOR EACH
+		Resource tempResource;
+		int tempQuantity;
+			
+		for (Unit unit : packet) {
+				
+			tempResource = unit.getResource();
+			tempQuantity = unit.getQuantity();
+				
+			//Adding resources to the player nextResources HashMap
+			tempQuantity = tempQuantity - nextResources.get(tempResource);
+			
+			if(tempQuantity < 0)
+				throw new ArithmeticException("tempQuantity in player.decreaseResource is"
+						+ " negative, unable to continue");
+			
+			//Upload the value in the HashMap
+			nextResources.put(tempResource, tempQuantity);
+		}
 	}
 	
 	public void addIncreaseEffect(IncreaseAction effect) {
