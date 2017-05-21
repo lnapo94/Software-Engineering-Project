@@ -3,6 +3,10 @@ package it.polimi.ingsw.ps42.model.action;
 import java.util.ArrayList;
 
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.player.Familiar;
+import it.polimi.ingsw.ps42.model.player.Player;
+import it.polimi.ingsw.ps42.model.position.Position;
+import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
 public abstract class Action {		
 	/*Class for basic action, requires the implementation of checkAction,

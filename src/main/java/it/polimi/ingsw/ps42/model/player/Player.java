@@ -6,6 +6,7 @@ import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.enumeration.Color;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
 public class Player {
@@ -54,15 +55,15 @@ public class Player {
 		
 	}
 	
-	public Familiar getFamiliar(String color) {
+	public Familiar getFamiliar(Color color) {
 		
 	}
 	
-	public void setFamiliarValue(String color, int value) {
+	public void setFamiliarValue(Color color, int value) {
 		
 	}
 	
-	public int getFamiliarValue(String color) {
+	public int getFamiliarValue(Color color) {
 		
 	}
 	
@@ -119,7 +120,7 @@ public class Player {
 		//Apply the no bonus in tower ban
 	}
 	
-	public ArrayList<Card> getCardList(String color) {
+	public ArrayList<Card> getCardList(Color color) {
 		//Return the correct cards
 	}
 	

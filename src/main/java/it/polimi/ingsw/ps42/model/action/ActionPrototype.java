@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.model.action;
 
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
 public class ActionPrototype {
 	/*Prototype of an action, created when a bonus action occurs, 

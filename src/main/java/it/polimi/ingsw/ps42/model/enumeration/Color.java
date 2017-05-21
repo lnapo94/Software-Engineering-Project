@@ -4,7 +4,8 @@ public enum Color {
 	//This enum represent all the familiar color
 	//"All" color indicates a particular state 
 	
-	ORANGE("Orange"), BLACK("Black"), WHITE("White"), NEUTRAL("Neutral"), ALL("All color");
+	ORANGE("Orange"), BLACK("Black"), WHITE("White"), NEUTRAL("Neutral"), ALL("All color"),
+	GREEN("Green"), YELLOW("Yellow"), BLUE("Blue"), VIOLET("Violet");
 	
 	private final String message;
 	
