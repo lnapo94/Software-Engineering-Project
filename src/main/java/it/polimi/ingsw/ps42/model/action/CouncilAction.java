@@ -9,7 +9,14 @@ import it.polimi.ingsw.ps42.model.position.Position;
 
 public class CouncilAction extends Action {
 
-
+	public CouncilAction(ActionType type, Familiar familiar, ArrayList<Position> tablePosition, int positionInTableList){
+		//Constructor for normal action
+	}
+	
+	public ConucilAction(ActionType type, Player player, ArrayList<Position> tablePosition, int positionInTableList){
+		//Constructor for bonus action
+	}
+	
 	@Override
 	public void checkAction() {
 		// TODO Auto-generated method stub
