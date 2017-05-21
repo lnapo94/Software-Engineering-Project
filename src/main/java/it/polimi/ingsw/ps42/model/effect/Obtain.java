@@ -1,29 +1,47 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import java.util.ArrayList;
 
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
 public class Obtain extends Effect{
-	//Obtain the indicated resources by paying of following costs
+	//Obtain the indicated resources by paying the following costs
 	
-	private ArrayList<Packet> costs;
-	private ArrayList<Packet> gains;
-	
-	//variable used to know when the effect is enabled (every time or just one time)
-	private boolean enableOnActivation;
+	private Packet costs;
+	private Packet gains;
 
-	public Obtain(EffectType typeOfEffect) {
-		super(typeOfEffect);
+	public Obtain(Packet costs, Packet gains) {
+		
 		// TODO Auto-generated constructor stub
+		super(EffectType.OBTAIN);
+		this.costs=costs;
+		this.gains=gains;
+	}
+	
+	public Packet getCosts() {
+		return costs;
+	}
+	
+	public Packet getGains() {
+		return gains;
 	}
 
+	
 	@Override
 	public void enableEffect(Player player) {
-		// TODO Auto-generated method stub
+		/*In this case the method decrease the cost and increase the gain 
+		 * in the player. The increase/decrease are done in the secondary 
+		 * HashMap of player resources
+		 */
+		
+		this.player=player;
+		player.decreaseResource(costs);
+		player.increaseResource(gains);
+
 		
 	}
+	
+	
 
 }
