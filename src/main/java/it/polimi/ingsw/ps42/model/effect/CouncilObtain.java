@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import it.polimi.ingsw.ps42.model.action.Request;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 
@@ -9,15 +10,17 @@ public class CouncilObtain extends Effect {
 	private int quantity;
 	private Request request;
 
-	public CouncilObtain(EffectType typeOfEffect) {
-		super(typeOfEffect);
-		// TODO Auto-generated constructor stub
+	public CouncilObtain(int quantity) {
+		super(EffectType.COUNCIL_OBTAIN);
+		this.quantity=quantity;
+		
 	}
 
 	@Override
 	public void enableEffect(Player player) {
-		// TODO Auto-generated method stub
 		
+		this.player=player;
+		//TO-DO: implementare un tipo di richiesta ad hoc?
 	}
 	
 

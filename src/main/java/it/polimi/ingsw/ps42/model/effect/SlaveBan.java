@@ -8,14 +8,17 @@ public class SlaveBan extends Effect {
 	
 	private int divisory;
 
-	public SlaveBan(EffectType typeOfEffect) {
-		super(typeOfEffect);
-		// TODO Auto-generated constructor stub
+	public SlaveBan(int divisory) {
+		super(EffectType.SLAVE_BAN);
+		this.divisory=divisory;
+		
 	}
 
 	@Override
 	public void enableEffect(Player player) {
-		// TODO Auto-generated method stub
+		this.player=player;
+		
+		//TO-DO: aggiungere a player un metodo per settare il divisore+var divisore. player.setDivisory(divisory);
 		
 	}
 	

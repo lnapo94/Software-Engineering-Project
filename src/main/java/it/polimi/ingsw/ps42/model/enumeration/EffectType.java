@@ -7,7 +7,7 @@ public enum EffectType {
 	FOR_EACH_OBTAIN("Obtain something for each resources"), COUNCIL_OBTAIN("Obtain council privilege"), 
 	INCREASE_FAMILIARS("Increase All Familiars"), INCREASE_SINGLE_FAMILIAR("Increase Single Familiar"), 
 	CARD_BAN("Card Ban"), NO_MARKET_BAN("No Market Ban"), NO_FIRST_ACTION_BAN("No First Action Ban"), 
-	YELLOW_COST_BAN("Yellow Cost Ban"), RESOURCE_BAN("Resource Ban"), NO_TOWER_BONUS("No bonus from tower position");
+	YELLOW_COST_BAN("Yellow Cost Ban"), SLAVE_BAN("Slave Ban"), NO_TOWER_BONUS("No bonus from tower position");
 	
 	private final String message;
 	

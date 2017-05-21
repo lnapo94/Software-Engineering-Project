@@ -6,14 +6,16 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class NoMarketBan extends Effect {
 	//Disable the Market for the player with the boolean variable setted to false
 
-	public NoMarketBan(EffectType typeOfEffect) {
-		super(typeOfEffect);
-		// TODO Auto-generated constructor stub
+	public NoMarketBan() {
+		
+		super(EffectType.NO_MARKET_BAN);
 	}
 
 	@Override
 	public void enableEffect(Player player) {
-		// TODO Auto-generated method stub
+		
+		this.player=player;
+		player.setNoMarketBan();
 		
 	}
 

@@ -13,6 +13,7 @@ public class IncreaseSingleFamiliar extends Effect{
 	private Color color;
 
 	public IncreaseSingleFamiliar(int value, Color color) {
+		//controllo sul colore passato?
 		super(EffectType.INCREASE_SINGLE_FAMILIAR);
 		this.value=value;
 		this.color=color;

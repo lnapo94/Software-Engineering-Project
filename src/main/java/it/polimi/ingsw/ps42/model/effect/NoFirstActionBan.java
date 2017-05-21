@@ -6,7 +6,7 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class NoFirstActionBan extends Effect {
 	//Set a player variable, then the GameLogic knows the player cannot play the first action
 
-	public NoFirstActionBan(EffectType typeOfEffect) {
+	public NoFirstActionBan() {
 		super(EffectType.NO_FIRST_ACTION_BAN);
 	}
 
