@@ -2,7 +2,6 @@ package it.polimi.ingsw.ps42.model.player;
 
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
-import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import java.util.HashMap;
 
 import it.polimi.ingsw.ps42.model.effect.Effect;

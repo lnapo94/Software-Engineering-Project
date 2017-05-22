@@ -46,10 +46,7 @@ public class Familiar {
 	}
 	
 	public boolean isNeutral() {
-		if(this.color == color.NEUTRAL)
-			return true;
-		else
-			return false;
+		return this.color == Color.NEUTRAL;
 	}
 	
 

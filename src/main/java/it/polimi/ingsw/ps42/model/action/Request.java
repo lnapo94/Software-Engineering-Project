@@ -1,5 +1,9 @@
 package it.polimi.ingsw.ps42.model.action;
 
+import java.util.ArrayList;
+
+import it.polimi.ingsw.ps42.model.Card;
+
 public class Request {
 	/*Class for asking a request to the player, 
 	 * e.g. choose between two effects or two costs or
@@ -9,7 +13,7 @@ public class Request {
 	private int choice;
 	private ArrayList<Integer> possibleChoice;
 	
-	public Request(Card card, ArrayList<Integer> possibleChioce){
+	public Request(Card card, ArrayList<Integer> possibleChoice){
 		
 	}
 	

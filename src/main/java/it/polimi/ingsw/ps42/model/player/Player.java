@@ -51,6 +51,7 @@ public class Player {
 	private boolean canStayInMarket;
 	private boolean canPlay;
 	private boolean enableBonusInTower;
+	private int divisory;
 	
 	//The arraylist used by the gamelogic to know more from the player
 	//e. g. which cost the player wants to pay
@@ -93,6 +94,7 @@ public class Player {
 		canStayInMarket = true;
 		canPlay = true;
 		enableBonusInTower = true;
+		divisory = 1;
 	}
 	
 	public String getPlayerID() {
@@ -241,6 +243,14 @@ public class Player {
 		enableBonusInTower = false;
 	}
 	
+	public void setDivisory(int divisory) {
+		this.divisory = divisory;
+	}
+	
+	public int getDivisory() {
+		return this.divisory;
+	}
+ 	
 	public CardList getCardList(Color color) throws WrongColorException {
 		//Return the correct cardlist
 		if(color == Color.GREEN)
@@ -277,7 +287,7 @@ public class Player {
 	public void synchResource() {
 		//After the gamelogic control for the effects in the cards, this method 
 		//upload the correct values of the resources HashMap
-		currentResources = nextResources;
+		copyResources(currentResources, nextResources);
 		initializeResources(nextResources);
 	}
 
@@ -309,6 +319,13 @@ public class Player {
 		map.put(Resource.SLAVE, 0);
 		map.put(Resource.STONE, 0);
 		map.put(Resource.WOOD, 0);
+	}
+	
+	private void copyResources(HashMap<Resource, Integer> destination, HashMap<Resource, Integer> source) {
+		//Copy the source HashMap in the destination HashMap
+		source.forEach((resource, quantity) -> {
+			destination.put(resource, quantity);
+		});
 	}
 	
 	
