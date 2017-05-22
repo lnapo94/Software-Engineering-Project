@@ -31,7 +31,7 @@ public class IncreaseFamiliarsPoint extends Effect{
 			playerFamiliar.setIncrement(value);
 		}
 		catch (WrongColorException e) {
-			System.out.println("Incremento di tutti i familari fallito causa cattiva inizializzazione dell'effetto");
+			System.out.println("Familiars increase failed beacause of a wrong initialization of the effect");
 		}
 	}
 

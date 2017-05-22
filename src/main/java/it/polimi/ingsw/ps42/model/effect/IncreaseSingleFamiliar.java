@@ -13,7 +13,7 @@ public class IncreaseSingleFamiliar extends Effect{
 	private Color color;
 
 	public IncreaseSingleFamiliar(int value, Color color) {
-		//controllo sul colore passato?
+		
 		super(EffectType.INCREASE_SINGLE_FAMILIAR);
 		this.value=value;
 		this.color=color;
@@ -28,7 +28,7 @@ public class IncreaseSingleFamiliar extends Effect{
 			playerFamiliar.setIncrement(value);
 		}
 		catch (WrongColorException e) {
-			System.out.println("Incremento del familiare fallito perchè l'effetto è stato male inizializzato");
+			System.out.println("Familiar increase failed beacause of a wrong initialization of the effect");
 		}
 	}
 

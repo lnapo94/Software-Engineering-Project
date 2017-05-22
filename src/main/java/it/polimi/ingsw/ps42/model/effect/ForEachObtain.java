@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
 
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
@@ -23,8 +24,16 @@ public class ForEachObtain extends Effect{
 	public void enableEffect(Player player) {
 		
 		this.player=player;
-		for (Unit unit : requirements) {
-			//TO-DO:aggiungere metodo get risorse in player+ discutere gestione OR/AND dell'effetto
+		int quantity=0;
+		int quantityToObtain=0;
+		Packet packet=new Packet();
+		for (Unit unit1 : requirements) {
+			quantity=player.getResource(unit1.getResource());	//ottengo da giocatore la quantità della risorsa richiesta 
+			quantity=quantity/unit1.getQuantity();				//divido questa quantità per quella richiesta 
+			for (Unit unit2 : gains) {
+				quantityToObtain=quantity*unit2.getQuantity();		//la quantità finale da ottenere va moltiplicata per la quantità in gains
+				packet.addUnit(new Unit(unit2.getResource(), quantityToObtain));	
+			}
 		}
 	}
 
