@@ -73,50 +73,61 @@ public class Card {
 		return level;
 	}
 	
-	public void checkPlayerResources(Player player) {
-		//Check if the player can pay the card costs
-		
-		for (Packet packet : costs) {
-			//This FOR EACH statement controls all the packet
-			
-			//canPay is used to control all the unit in one packet
-			//If a unit in a packet it's higher than the player costs, that packet cannot be used
-			//to pay the card
-			//Else it can be used, than it is added to the possible choice 
-			boolean canPay = true;
-			for (Unit unit : packet) {
-				if (unit.getQuantity() > player.getResource(unit.getResource())) {
-					canPay = false;
-				}
-			}
-			if (canPay == true) {
-				possibleChoice.add(costs.indexOf(packet));
-			}
-		}
+	public ArrayList<Packet> getCosts() {
+		//Return a copy of costs array
+		return copy(costs);
 	}
 	
-	private void payCard() {
+	public ArrayList<Packet> getRequirements() {
+		//Return a copy of requirements array
+		return copy(requirements);
+	}
+	
+	public int getNumberOfImmediate() {
+		if(immediateEffects == null)
+			return 0;
+		return immediateEffects.size();
+	}
+	
+	public int getNumberOfPermanent() {
+		if(permanentEffects == null)
+			return 0;
+		return permanentEffects.size();
+	}
+
+	public int getNumberOfFinal() {
+		if(finalEffects == null)
+			return 0;
+		return finalEffects.size();
+	}
+	
+	public void payCard(Packet discount) {
+		//Pay the current card
+		//If you have a discount, the resource will be added to the player
 		if (costs.size() == 1) {
-			owner.decreaseResource(costs.get(0));
+			payCard(0, discount);
 		}
 		else if (costs.size() > 1) {
 			createRequest();
 		}
 	}
 	
+	public void payCard(int choice, Packet discount) {
+		//Pay the current card with the chosen cost
+		if(costs.isEmpty() || costs == null)
+			System.out.println("DEBUG: Costs array in card is empty");
+		if(discount != null) {
+			owner.increaseResource(discount);
+		}
+		owner.decreaseResource(costs.get(choice));
+	}
+	
 	public void setOwner(Player owner) {
 		this.owner = owner;
-		payCard();
 	}
 	
 	public void enableImmediateEffect(){	
 		//Enables the immediate effects of the card, it may require a request to the  player
-		if(immediateEffects.size() == 1) {
-			
-		}
-		else if(immediateEffects.size() > 1) {
-			
-		}
 	}
 	
 	public void enablePermanentEffect(){	
@@ -130,16 +141,17 @@ public class Card {
 	
 	public void enableImmediateEffect(int choice){		
 		//Enables only the immediate effect passed 
-		
+		enableEffect(choice, immediateEffects);
 	}
 	
 	public void enablePermanentEffect(int choice){		
-		//Enables only the immediate effect passed
-		
+		//Enables only the permanent effect passed
+		enableEffect(choice, permanentEffects);
 	}
 	
 	public void enableFinalEffect(int choice) {
 		//Enable the specific final effect among the effects in the arraylist
+		enableEffect(choice, finalEffects);
 	}
 	
 	//Private Methods for internal use
@@ -152,6 +164,20 @@ public class Card {
 		for (Integer i : possibleChoice) {
 			possibleChoice.remove(i);
 		}
+	}
+	
+	private ArrayList<Packet> copy(ArrayList<Packet> start) {
+		//Copy the start arraylist
+		ArrayList<Packet> temp = new ArrayList<>();
+		for (Packet packet : start)
+			temp.add(packet);
+		return temp;
+	}
+	
+	private void enableEffect(int choice, ArrayList<Effect> effect) {
+		if(effect == null || effect.isEmpty())
+			System.out.println("DEBUG: Effect array is empty");
+		effect.get(choice).enableEffect(owner);
 	}
 	
 	//TODO
