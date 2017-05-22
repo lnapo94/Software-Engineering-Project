@@ -19,5 +19,8 @@ public abstract class Effect {
 	public abstract void enableEffect(Player player);
 	//This method is used to enable the exact kind of effect (Strategy pattern)
 	
+	public EffectType getTypeOfEffect() {
+		return typeOfEffect;
+	}
 	
 }

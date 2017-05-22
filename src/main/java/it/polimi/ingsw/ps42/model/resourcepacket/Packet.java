@@ -9,15 +9,12 @@ import it.polimi.ingsw.ps42.model.enumeration.Resource;
 public class Packet implements Iterable<Unit>   {
 	
 	private ArrayList<Unit> list;
+	
 	public	Packet()
 	{	//Builder of an empty packet
 		list = new ArrayList<>() ;
 	}
 	
-	public Packet(ArrayList<Unit> list) {
-		this.list=list;
-		
-	}
 	public Packet(Map<Resource, Integer> resource)
 	{	//Packet builder from a Map, used in BonusBar for e.g.
 		this();
@@ -33,14 +30,14 @@ public class Packet implements Iterable<Unit>   {
 		
 	}
 	
-	public void setPacket(ArrayList<Unit> list) {
-		this.list = list;
-		
-	}
-	
 	public void addUnit(Unit unit) {
-		this.list.add(unit);
-		
+		int quantity=0;
+		for (Unit tempUnit : list) {
+			if(tempUnit.getResource()==unit.getResource()){
+				quantity =tempUnit.getQuantity()+unit.getQuantity();
+				tempUnit.setQuantity(quantity);
+			}
+		}	
 	}
 	
 	public void removeUnit(Unit unit) {

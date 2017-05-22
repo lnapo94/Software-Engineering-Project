@@ -25,7 +25,7 @@ public class CardBan extends Effect{
 			deck.removeAll();
 		}
 		catch (WrongColorException e) {
-			System.out.println("Scomunica fallita causa sbagliata implementazione dell'effetto");
+			System.out.println("Ban failed beacause of a wrong initialization of the effect");
 		}
 		
 	}

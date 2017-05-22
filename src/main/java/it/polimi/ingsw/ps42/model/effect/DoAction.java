@@ -13,21 +13,20 @@ public class DoAction extends Effect{
 	private ActionType type;
 	private int actionLevel;
 	private Packet discount;
-	private ActionPrototype actionPrototype;
 
 	public DoAction(ActionType type, int actionLevel, Packet discount) {
 		super(EffectType.DO_ACTION);
 		this.type=type;
 		this.actionLevel=actionLevel;
 		this.discount=discount;
-		this.actionPrototype=new ActionPrototype(type, actionLevel, discount);
+		
 	}
 
 	@Override
 	public void enableEffect(Player player) {
 		this.player=player;
 		
-		player.setBonusAction(actionPrototype);
+		player.setBonusAction(new ActionPrototype(type, actionLevel, discount));
 		
 	}
 

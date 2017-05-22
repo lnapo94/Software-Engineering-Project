@@ -18,7 +18,7 @@ public class SlaveBan extends Effect {
 	public void enableEffect(Player player) {
 		this.player=player;
 		
-		//TO-DO: aggiungere a player un metodo per settare il divisore+var divisore. player.setDivisory(divisory);
+		player.setDivisory(divisory);
 		
 	}
 	

@@ -2,17 +2,20 @@ package it.polimi.ingsw.ps42.model.effect;
 
 import it.polimi.ingsw.ps42.model.enumeration.Color;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
+import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.player.CardList;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
+import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
 import java.util.ArrayList;
+
 
 import it.polimi.ingsw.ps42.model.Card;
 
 public class CardCostBan extends Effect{
-	//At the end of the match, the gamelogic calculate every cost of the indicated cards
+	//At the end of the match, the gamelogic calculate the cost of woods and stones of the indicated cards
 	//and remove victory points from the player resources
 	
 	private Color color;
@@ -25,17 +28,36 @@ public class CardCostBan extends Effect{
 	@Override
 	public void enableEffect(Player player) {
 		this.player=player;
+		int banCost=0;
 		try{
-			CardList deck=player.getCardList(color);
-			for (Card card : deck) {
-				ArrayList<Packet> costs=card.getCosts();
-				//TO-DO: discutere assegnamento scomunica se solo su un costo o solo su carte gialle
+			CardList deck=player.getCardList(color);	
+			for (Card singleCard : deck) {							//For each card of the player with the def. color
+				ArrayList<Packet> costs=singleCard.getCosts();		//Obtain for every cost the quantity of wood and stone
+				for (Packet singleCost : costs) {
+					banCost+=defineCost(singleCost);
+				}
 			}
-		
+			Unit u=new Unit(Resource.VICTORYPOINT, banCost);	//Convert the total amount in victory point to be subtracted later
+			Packet p=new Packet();
+			p.addUnit(u);
+			player.decreaseResource(p);							//Apply the ban to the player
 		}
 		catch (WrongColorException e) {
-			System.out.println("Applicazione della scomunica fallita causa sbagliata inizializzazione dell'effetto");
+			System.out.println("Ban failed beacause of a wrong initialization of the effect");
 		}
+	}
+	
+	private int defineCost (Packet cost){
+		//Defines the single cost of a single card in terms of Woods and Stones
+		ArrayList<Unit> tempUnit = cost.getPacket();
+		int quantity=0;
+		for (Unit singleUnit : tempUnit) {
+			if(singleUnit.getResource()==Resource.WOOD || singleUnit.getResource()==Resource.STONE){
+				quantity+=singleUnit.getQuantity();
+			}
+		}
+		return quantity;
+		
 	}
 
 }
