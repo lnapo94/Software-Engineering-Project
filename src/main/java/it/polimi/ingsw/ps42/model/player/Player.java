@@ -156,6 +156,7 @@ public class Player {
 	}
 	
 	public void decreaseResource(Packet packet) {
+		
 		//Temporary variables used in the FOR EACH
 		Resource tempResource;
 		int tempQuantity;
@@ -177,7 +178,15 @@ public class Player {
 		}
 	}
 	
+	public int getResource(Resource resource) {
+		//This method return the quantity of the indicated resource
+		return currentResources.get(resource);
+	}
+	
 	public void addIncreaseEffect(IncreaseAction effect) {
+		//Add an IncreaseAction effect to the player's arraylist
+		//necessary in gamelogic to increase an action correctly 
+		
 		increaseEffect.add(effect);
 	}
 	
@@ -289,7 +298,7 @@ public class Player {
 		this.bonusAction = bonusAction;
 	}
 	
-	//Private Methods only for the player
+	//Private Methods only for the Player class
 	
 	private void initializeResources(HashMap<Resource, Integer> map) {
 		//This method initialize a HashMap with all the type of Resources
