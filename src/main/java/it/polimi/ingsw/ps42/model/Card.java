@@ -206,9 +206,6 @@ public class Card {
 	
 	//TODO
 	/*
-	 * Implementare i vari metodi enable stando attenti alla creazione corretta delle varie
-	 * richieste.
-	 * Ricordarsi inoltre che una richiesta, una volta creata, svuota l'arraylist delle
-	 * possibili scelte
+	 * DA TESTARE ASSOLUTAMENTE
 	 */
 }
