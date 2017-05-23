@@ -14,19 +14,21 @@ public class CardBan extends Effect{
 	
 	public CardBan(Color color) {
 		super(EffectType.CARD_BAN);
+		//TO-DO: decidere se tenere separati colori carte e colori familiari->aggiungi controllo
 		this.color=color;
 	}
 
 	@Override
 	public void enableEffect(Player player) {
-		this.player=player;
-		try{
-			CardList deck=player.getCardList(color);
-			deck.removeAll();
-		}
-		catch (WrongColorException e) {
-			System.out.println("Ban failed beacause of a wrong initialization of the effect");
-		}
+		
+			this.player=player;
+			try{
+				CardList deck=player.getCardList(color);
+				deck.removeAll();
+			}
+			catch (WrongColorException e) {
+				System.out.println("Ban failed beacause of a wrong initialization of the effect");
+			}
 		
 	}
 

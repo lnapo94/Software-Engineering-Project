@@ -35,6 +35,7 @@ public class ForEachObtain extends Effect{
 				packet.addUnit(new Unit(unit2.getResource(), quantityToObtain));	
 			}
 		}
+		player.increaseResource(packet);
 	}
 
 }
