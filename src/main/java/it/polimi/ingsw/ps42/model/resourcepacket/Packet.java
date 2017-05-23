@@ -31,13 +31,23 @@ public class Packet implements Iterable<Unit>   {
 	}
 	
 	public void addUnit(Unit unit) {
-		int quantity=0;
-		for (Unit tempUnit : list) {
-			if(tempUnit.getResource()==unit.getResource()){
-				quantity =tempUnit.getQuantity()+unit.getQuantity();
-				tempUnit.setQuantity(quantity);
-			}
-		}	
+
+		int pos=search(unit.getResource());
+		if(pos!=-1){
+			Unit tempUnit=list.get(pos);
+			tempUnit.setQuantity(tempUnit.getQuantity()+unit.getQuantity());
+		}
+		else{
+			list.add(new Unit(unit.getResource(),unit.getQuantity()));
+		}
+	}
+	
+	private int search(Resource resource){
+		for (Unit unit : list) {
+			if(unit.getResource()==resource)
+				return list.indexOf(unit);
+		}
+		return -1;			//Resource is not in the list
 	}
 	
 	public void removeUnit(Unit unit) {
