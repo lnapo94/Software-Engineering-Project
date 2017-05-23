@@ -59,10 +59,9 @@ public class Player {
 	
 	
 	
-	public Player(String ID, BonusBar bonusBar) {
+	public Player(String ID) {
 		//Construct the Player
 		this.ID = ID;
-		this.bonusBar = bonusBar;
 		
 		//Create the Familiar
 		orange = new Familiar(this, Color.ORANGE);
@@ -99,6 +98,10 @@ public class Player {
 	
 	public String getPlayerID() {
 		return this.ID;
+	}
+	
+	public void setBonusBar(BonusBar bonusBar) {
+		this.bonusBar = bonusBar;
 	}
 	
 	public Familiar getFamiliar(Color color) throws WrongColorException{
@@ -169,7 +172,7 @@ public class Player {
 			tempQuantity = unit.getQuantity();
 				
 			//Adding resources to the player nextResources HashMap
-			tempQuantity = tempQuantity - nextResources.get(tempResource);
+			tempQuantity = nextResources.get(tempResource) - tempQuantity;
 			
 			if(tempQuantity < 0)
 				throw new ArithmeticException("tempQuantity in player.decreaseResource is"
@@ -288,7 +291,13 @@ public class Player {
 		//After the gamelogic control for the effects in the cards, this method 
 		//upload the correct values of the resources HashMap
 		copyResources(currentResources, nextResources);
-		initializeResources(nextResources);
+	}
+	
+	public void restoreResource() {
+		//Can be used when a control goes wrong
+		//Copy the currentResources Hashmap in nextResources
+		//This method maybe is useless
+		copyResources(nextResources, currentResources);
 	}
 
 	
@@ -327,14 +336,4 @@ public class Player {
 			destination.put(resource, quantity);
 		});
 	}
-	
-	
-	
-	
-	
-	
-	
-
-	
-
 }
