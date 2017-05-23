@@ -15,20 +15,27 @@ public class BonusBar {
 	private Effect productBonus;
 	private Effect yieldBonus;
 	
+	private boolean hasBeenInitialized=false;
 	
-	public BonusBar(Player player, Effect productBonus, Effect yieldBonus) {
+	public BonusBar(Effect productBonus, Effect yieldBonus) {
 		//Advanced BonusBar for advanced game. Loaded from file
 		//TO-DO: Check this code when implementing advanced mode
-		this.player=player;
 		this.productBonus=productBonus;
 		this.yieldBonus=yieldBonus;
 	}
 	
-	public BonusBar(Player player) {
+	public BonusBar() {
 		//Simple BonusBar for the game. Is the same for all the player 
-		this.player=player;
 		buildDefaultYieldBonus();
 		buildDefaultProductBonus();
+		
+	}
+	
+	public void setPlayer(Player player) {		//Method to set the player, the set-up must be performed only once
+		if(!hasBeenInitialized){
+			this.player = player;
+			hasBeenInitialized=true;
+		}
 		
 	}
 	
@@ -51,14 +58,20 @@ public class BonusBar {
 		this.productBonus=new Obtain(costPacket, bonusPacket);
 		
 	}
-	public void yieldBonus() {
+	public void yieldBonus() throws NullPointerException {
 		//Apply the yield bonus when the player goes to the yield position 
-		yieldBonus.enableEffect(player);
+		if(player!=null){
+			yieldBonus.enableEffect(player);
+		}
+		else throw new NullPointerException("The bonus bar do not has a player! Set the player before applying the bonus");
 	}
 	
-	public void productBonus() {
+	public void productBonus() throws NullPointerException {
 		//Apply the product bonus when the player goes to the product position
-		productBonus.enableEffect(player);
+		if(player!=null){
+			productBonus.enableEffect(player);
+		}
+		else throw new NullPointerException("The bonus bar do not has a player! Set the player before applying the bonus");
 	}
 
 }
