@@ -151,7 +151,7 @@ public class Card {
 			//Control all the effectList
 			checkEffect(effectList);
 			
-			if(effectList.size() == 1 && effectList.size() == 0) {
+			if(effectList.size() == 1 && possibleChoice.size() == 0) {
 				//If there is only one effectList and it isn't an ObtainEffect
 				enableEffect(0, effectList);
 			}
@@ -162,7 +162,7 @@ public class Card {
 	
 	private void enableEffect(int choice, ArrayList<Effect> effectList) {
 		if(effectList != null && !( effectList.isEmpty() ) )
-			effectList.get(0).enableEffect(owner);
+			effectList.get(choice).enableEffect(owner);
 	}
 	
 	private void checkEffect(ArrayList<Effect> effectList) {
