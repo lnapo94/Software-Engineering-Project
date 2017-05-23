@@ -2,15 +2,16 @@ package it.polimi.ingsw.ps42.model;
 
 import java.util.ArrayList;
 
-import org.hamcrest.core.IsInstanceOf;
-
 import it.polimi.ingsw.ps42.model.action.Request;
 import it.polimi.ingsw.ps42.model.effect.Effect;
+import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.Color;
+import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.exception.EmptyException;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
+
 
 public class Card {
 	/*Class for Card, when created is placed in a position and do not has a owner, 
@@ -75,109 +76,132 @@ public class Card {
 	
 	public ArrayList<Packet> getCosts() {
 		//Return a copy of costs array
-		return copy(costs);
+		return copyPacketList(costs);
 	}
 	
 	public ArrayList<Packet> getRequirements() {
 		//Return a copy of requirements array
-		return copy(requirements);
+		return copyPacketList(requirements);
 	}
 	
-	public int getNumberOfImmediate() {
-		if(immediateEffects == null)
-			return 0;
-		return immediateEffects.size();
-	}
-	
-	public int getNumberOfPermanent() {
-		if(permanentEffects == null)
-			return 0;
-		return permanentEffects.size();
-	}
-
-	public int getNumberOfFinal() {
-		if(finalEffects == null)
-			return 0;
-		return finalEffects.size();
-	}
-	
-	public void payCard(Packet discount) {
-		//Pay the current card
-		//If you have a discount, the resource will be added to the player
-		if (costs.size() == 1) {
-			payCard(0, discount);
-		}
-		else if (costs.size() > 1) {
-			createRequest();
-		}
-	}
-	
-	public void payCard(int choice, Packet discount) {
-		//Pay the current card with the chosen cost
-		if(costs.isEmpty() || costs == null)
-			System.out.println("DEBUG: Costs array in card is empty");
-		if(discount != null) {
-			owner.increaseResource(discount);
-		}
-		owner.decreaseResource(costs.get(choice));
-	}
-	
-	public void setOwner(Player owner) {
+	public void setPlayer(Player owner) {
 		this.owner = owner;
 	}
 	
-	public void enableImmediateEffect(){	
-		//Enables the immediate effects of the card, it may require a request to the  player
+	public void payCard(int choice, Packet discount) {
+		//Apply the chosen card cost
+		if(!( costs.isEmpty() ) && costs != null) {
+			if(discount != null) {
+				owner.increaseResource(discount);
+			}
+			owner.decreaseResource(costs.get(choice));
+		}
+	}
+
+	public void payCard(int choice) {
+		//Apply the chosen card cost without a discount
+		payCard(choice, null);
 	}
 	
-	public void enablePermanentEffect(){	
-		//Enables the permanent effects of the card, it may require a request to the player
-		
+	/*	IMMEDIATE EFFECT */
+	public void enableImmediateEffect() {
+		enableEffect(immediateEffects);
 	}
 	
-	public void enableFinalEffect() {
-		//Enable the final effect at the end of the game
-	}
-	
-	public void enableImmediateEffect(int choice){		
-		//Enables only the immediate effect passed 
+	public void enableImmediateEffect(int choice) {
 		enableEffect(choice, immediateEffects);
 	}
+	/* END IMMEDIATE EFFECT */
 	
-	public void enablePermanentEffect(int choice){		
-		//Enables only the permanent effect passed
+	/*	PERMANENT EFFECT */
+	public void enablePermanentEffect() {
+		enableEffect(permanentEffects);
+	}
+	
+	public void enablePermanentEffect(int choice) {
 		enableEffect(choice, permanentEffects);
+	}
+	/*	END PERMANENT EFFECT */
+	
+	/* FINAL EFFECT */
+	public void enableFinalEffect() {
+		enableEffect(finalEffects);
 	}
 	
 	public void enableFinalEffect(int choice) {
-		//Enable the specific final effect among the effects in the arraylist
 		enableEffect(choice, finalEffects);
 	}
+	/* END FINAL EFFECT */
 	
-	//Private Methods for internal use
-	
+	//PRIVATE METHODS FOR CARD CLASS
 	private void createRequest() {
-		if (possibleChoice.size() < 1) {
-			throw new EmptyException("Error in card: possibleChoice array is empty");
+		//ONLY PRIVATE request
+		//Used only to support effect
+		if(possibleChoice.size() == 0) {
+			throw new EmptyException("possibleChoice in Card Class is empty");
 		}
-		owner.addRequest(new Request(this, possibleChoice));
-		for (Integer i : possibleChoice) {
-			possibleChoice.remove(i);
+		Request request = new Request(this, possibleChoice);
+		owner.addRequest(request);
+	}
+	
+	private void enableEffect(ArrayList<Effect> effectList) {
+		if(effectList != null && !( effectList.isEmpty() ) ) {
+			//If the effectList exist
+			
+			//Control all the effectList
+			checkEffect(effectList);
+			
+			if(effectList.size() == 1 && effectList.size() == 0) {
+				//If there is only one effectList and it isn't an ObtainEffect
+				enableEffect(0, effectList);
+			}
+			else
+				createRequest();
 		}
 	}
 	
-	private ArrayList<Packet> copy(ArrayList<Packet> start) {
-		//Copy the start arraylist
+	private void enableEffect(int choice, ArrayList<Effect> effectList) {
+		if(effectList != null && !( effectList.isEmpty() ) )
+			effectList.get(0).enableEffect(owner);
+	}
+	
+	private void checkEffect(ArrayList<Effect> effectList) {
+		//Control the effect and create the possibleChoice arraylist
+		
+		for(Effect effect : effectList) {
+			//For each effect in effectList
+			
+			if(effect.getTypeOfEffect() == EffectType.OBTAIN) {
+				//Check if effect is an OBTAIN effect
+				//In this case, control the costs of this effect
+				
+				Obtain obtainEffect = (Obtain) effect;
+				Packet packet = obtainEffect.getCosts();
+				
+				//Boolean is used to control that all the packet can be payed
+				boolean checkCanApplyEffect = true;
+				
+				for(Unit unit : packet) {
+					//For each unit, control if player can pay the effect costs
+					//If he can't pay, the boolean goes to false
+					if(unit.getQuantity() > owner.getResource(unit.getResource()))
+						checkCanApplyEffect = false;
+				}
+				
+				//If player can pay, the boolean is true, then add this index to
+				//the possibleChoice
+				if(checkCanApplyEffect)
+					possibleChoice.add(effectList.indexOf(effect));
+			}
+		}
+	}
+	
+	private ArrayList<Packet> copyPacketList(ArrayList<Packet> start) {
 		ArrayList<Packet> temp = new ArrayList<>();
-		for (Packet packet : start)
+		for(Packet packet : start) {
 			temp.add(packet);
+		}
 		return temp;
-	}
-	
-	private void enableEffect(int choice, ArrayList<Effect> effect) {
-		if(effect == null || effect.isEmpty())
-			System.out.println("DEBUG: Effect array is empty");
-		effect.get(choice).enableEffect(owner);
 	}
 	
 	//TODO
