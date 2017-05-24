@@ -13,17 +13,23 @@ public class TestClaudio {
 	
 	public static void main(String[] args) {
 		
-		//BonusBar bonusBar=new BonusBar();
+		BonusBar bonusBar=new BonusBar();
 		
-		//Player p1=new Player("provaGiocatore", bonusBar);
+		Player p1=new Player("provaGiocatore");
+		p1.setBonusBar(bonusBar);
+		
 		Packet packet=new Packet();
 		System.out.println(packet);
 		packet.addUnit(new Unit(Resource.STONE, 5));
+		packet.addUnit(new Unit(Resource.WOOD, 10));
 		System.out.println(packet);
-		/*p1.increaseResource(packet);
+		p1.increaseResource(packet);
+		p1.synchResource();
 		System.out.println(p1.getResource(Resource.STONE));
+		System.out.println(p1.getResource(Resource.WOOD));
 		p1.enableBonus(ActionType.PRODUCE);
-		System.out.println(p1.getResource(Resource.STONE));*/
-		
+		p1.synchResource();
+		System.out.println(p1.getResource(Resource.STONE));
+		System.out.println(p1.getResource(Resource.WOOD));	
 	}
 }
