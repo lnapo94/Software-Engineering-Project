@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.ingsw.ps42.model.action.Request;
 import it.polimi.ingsw.ps42.model.effect.Effect;
@@ -25,18 +26,18 @@ public class Card {
 	private int period;
 	private int level;
 	private Player owner;
-	private ArrayList<Packet> costs;
-	private ArrayList<Packet> requirements;
-	private ArrayList<Effect> immediateEffects;
-	private ArrayList<Effect> permanentEffects;
-	private ArrayList<Effect> finalEffects;
+	private List<Packet> costs;
+	private List<Packet> requirements;
+	private List<Effect> immediateEffects;
+	private List<Effect> permanentEffects;
+	private List<Effect> finalEffects;
 	
 	//ArrayList used for check if player can pay to obtain the card or enable the effect
-	private ArrayList<Integer> possibleChoice;
+	private List<Integer> possibleChoice;
 	
 	public Card(String name, String description, Color color, int period, 
-			int level, ArrayList<Packet> costs, ArrayList<Effect> immediateEffects, ArrayList<Packet> requirements,
-			ArrayList<Effect> permanentEffect, ArrayList<Effect> finalEffects){
+			int level, List<Packet> costs, List<Effect> immediateEffects, List<Packet> requirements,
+			List<Effect> permanentEffect, List<Effect> finalEffects){
 		//Construct the card
 		
 		this.name = name;
@@ -74,12 +75,12 @@ public class Card {
 		return level;
 	}
 	
-	public ArrayList<Packet> getCosts() {
+	public List<Packet> getCosts() {
 		//Return a copy of costs array
 		return copyPacketList(costs);
 	}
 	
-	public ArrayList<Packet> getRequirements() {
+	public List<Packet> getRequirements() {
 		//Return a copy of requirements array
 		return copyPacketList(requirements);
 	}
@@ -90,7 +91,7 @@ public class Card {
 	
 	public void payCard(int choice, Packet discount) {
 		//Apply the chosen card cost
-		if(!( costs.isEmpty() ) && costs != null) {
+		if(costs != null && !( costs.isEmpty() ) ) {
 			if(discount != null) {
 				owner.increaseResource(discount);
 			}
@@ -144,7 +145,7 @@ public class Card {
 		owner.addRequest(request);
 	}
 	
-	private void enableEffect(ArrayList<Effect> effectList) {
+	private void enableEffect(List<Effect> effectList) {
 		if(effectList != null && !( effectList.isEmpty() ) ) {
 			//If the effectList exist
 			
@@ -160,12 +161,12 @@ public class Card {
 		}
 	}
 	
-	private void enableEffect(int choice, ArrayList<Effect> effectList) {
+	private void enableEffect(int choice, List<Effect> effectList) {
 		if(effectList != null && !( effectList.isEmpty() ) )
 			effectList.get(choice).enableEffect(owner);
 	}
 	
-	private void checkEffect(ArrayList<Effect> effectList) {
+	private void checkEffect(List<Effect> effectList) {
 		//Control the effect and create the possibleChoice arraylist
 		
 		for(Effect effect : effectList) {
@@ -196,8 +197,8 @@ public class Card {
 		}
 	}
 	
-	private ArrayList<Packet> copyPacketList(ArrayList<Packet> start) {
-		ArrayList<Packet> temp = new ArrayList<>();
+	private List<Packet> copyPacketList(List<Packet> start) {
+		List<Packet> temp = new ArrayList<>();
 		for(Packet packet : start) {
 			temp.add(packet);
 		}

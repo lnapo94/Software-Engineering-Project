@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.model.position;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
@@ -11,9 +12,9 @@ public class YieldAndProductPosition extends Position {
 	
 	/*Implementation for both the Yield and Product position since 
 	 * they do the same job but on different type of cards:
-	 * they allow the player to do a Yeld/Product action
+	 * they allow the player to do a Yield/Product action
 	*/
-	private ArrayList<Familiar> bonusFamiliar;
+	private List<Familiar> bonusFamiliar;
 	
 	public YieldAndProductPosition(ActionType type, int level, Obtain bonus, int malus) {
 		super(type, level, bonus, malus);
@@ -27,7 +28,7 @@ public class YieldAndProductPosition extends Position {
 		
 	}
 	
-	public ArrayList<Familiar> getBonusFamiliar() {			//Returns all the bonus Familiar in the position
+	public List<Familiar> getBonusFamiliar() {			//Returns all the bonus Familiar in the position
 		return bonusFamiliar;
 	}
 	

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ps42.model.position;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
@@ -12,14 +12,15 @@ public class MarketPosition extends Position {
 	 * player a certain amount of resources  
 	*/
 	
+	private List<Familiar> bonusFamiliar;
+	
+	
 	public MarketPosition(ActionType type, int level, Obtain bonus, int malus) {
 		super(type, level, bonus, malus);
 		// TODO Auto-generated constructor stub
 	}
 	
-	private ArrayList<Familiar> bonusFamiliar;
-	
-	public ArrayList<Familiar> getBonusFamiliar() {
+	public List<Familiar> getBonusFamiliar() {
 		return bonusFamiliar;
 	}
 	public void setBonusFamiliar(Familiar familiar) {

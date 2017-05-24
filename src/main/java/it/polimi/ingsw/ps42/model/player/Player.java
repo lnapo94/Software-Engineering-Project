@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps42.model.player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
@@ -40,8 +41,8 @@ public class Player {
 	//HashMap used for control the correct resource when a card is enabled
 	private HashMap<Resource, Integer> nextResources;
 	
-	private ArrayList<Effect> banList;
-	private ArrayList<IncreaseAction> increaseEffect;
+	private List<Effect> banList;
+	private List<IncreaseAction> increaseEffect;
 	
 	
 	private ActionPrototype bonusAction;
@@ -55,7 +56,7 @@ public class Player {
 	
 	//The arraylist used by the gamelogic to know more from the player
 	//e. g. which cost the player wants to pay
-	private ArrayList<Request> requests;
+	private List<Request> requests;
 	
 	
 	
@@ -271,16 +272,16 @@ public class Player {
 		
 	}
 	
-	public void setRequests(ArrayList<Request> requests) {
+	public void setRequests(List<Request> requests) {
 		//Set the request arraylist
 		this.requests = requests;
 	}
 	
-	public ArrayList<Request> getRequests() {
+	public List<Request> getRequests() {
 		//Get all the request in player, but this method remove all the requests arraylist
 		//from the player
 		
-		ArrayList<Request> temp = this.requests;
+		List<Request> temp = this.requests;
 		this.requests = null;
 		return temp;
 	}

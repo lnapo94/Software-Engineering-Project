@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ps42.model.action;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.ingsw.ps42.model.Card;
 
@@ -11,9 +11,9 @@ public class Request {
 	 */
 	private Card card;
 	private int choice;
-	private ArrayList<Integer> possibleChoice;
+	private List<Integer> possibleChoice;
 	
-	public Request(Card card, ArrayList<Integer> possibleChoice){
+	public Request(Card card, List<Integer> possibleChoice){
 		
 	}
 	

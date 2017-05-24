@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps42.model.player;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import it.polimi.ingsw.ps42.model.Card;
 
@@ -11,7 +12,7 @@ public class CardList implements Iterable<Card>{
 	
 	private static final int MAX_SIZE = 6;
 	
-	private ArrayList<Card> list;
+	private List<Card> list;
 	
 	public CardList() {
 		//Construct the Card ArrayList
