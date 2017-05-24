@@ -12,11 +12,9 @@ public class ActionCreator {
 	
 	public Action actionFactory(ActionType type, Familiar familiar, ArrayList<Position> tablePosition, int positionInTableList){
 		//Returns the required action
-		
 	}
 	
 	public Action actionFactory(ActionType type, Player player, ArrayList<Position> tablePosition, int positionInTableList){
 		//Returns the required action, usually called when a bonus action occurs (no familiar)
-		
 	}
 }

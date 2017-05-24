@@ -101,7 +101,10 @@ public class Player {
 	}
 	
 	public void setBonusBar(BonusBar bonusBar) {
+		//Set the bonusBar from gamelogic to the player
+		//Then set the player variable in bonusBar
 		this.bonusBar = bonusBar;
+		this.bonusBar.setPlayer(this);
 	}
 	
 	public Familiar getFamiliar(Color color) throws WrongColorException{
