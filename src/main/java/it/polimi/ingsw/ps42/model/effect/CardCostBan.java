@@ -1,5 +1,8 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import java.util.List;
+
+import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.enumeration.Color;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
@@ -8,11 +11,6 @@ import it.polimi.ingsw.ps42.model.player.CardList;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
-
-import java.util.ArrayList;
-
-
-import it.polimi.ingsw.ps42.model.Card;
 
 public class CardCostBan extends Effect{
 	//At the end of the match, the gamelogic calculate the cost of woods and stones of the indicated cards
@@ -32,7 +30,7 @@ public class CardCostBan extends Effect{
 		try{
 			CardList deck=player.getCardList(color);	
 			for (Card singleCard : deck) {							//For each card of the player with the def. color
-				ArrayList<Packet> costs=singleCard.getCosts();		//Obtain for every cost the quantity of wood and stone
+				List<Packet> costs=singleCard.getCosts();		//Obtain for every cost the quantity of wood and stone
 				for (Packet singleCost : costs) {
 					banCost+=defineCost(singleCost);
 				}
@@ -49,7 +47,7 @@ public class CardCostBan extends Effect{
 	
 	private int defineCost (Packet cost){
 		//Defines the single cost of a single card in terms of Woods and Stones
-		ArrayList<Unit> tempUnit = cost.getPacket();
+		List<Unit> tempUnit = cost.getPacket();
 		int quantity=0;
 		for (Unit singleUnit : tempUnit) {
 			if(singleUnit.getResource()==Resource.WOOD || singleUnit.getResource()==Resource.STONE){
