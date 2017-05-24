@@ -24,8 +24,8 @@ public class ForEachObtain extends Effect{
 	public void enableEffect(Player player) {
 		
 		this.player=player;
-		int quantity=0;
-		int quantityToObtain=0;
+		int quantity;
+		int quantityToObtain;
 		Packet packet=new Packet();
 		for (Unit unit1 : requirements) {
 			quantity=player.getResource(unit1.getResource());	//ottengo da giocatore la quantità della risorsa richiesta 
