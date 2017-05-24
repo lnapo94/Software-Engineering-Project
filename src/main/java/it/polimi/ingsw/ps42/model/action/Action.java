@@ -8,13 +8,15 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.Position;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
-public abstract class Action {		
+public abstract class Action {	
+	
 	/*Class for basic action, requires the implementation of checkAction,
 	* doAction, createRequest
 	*/
+	
 	private ActionType type;
 	private Familiar familiar;
-	private Player player;
+	protected Player player;
 	private int positionValue;
 	private ArrayList<Position> tableLocation;
 	private Packet discount;

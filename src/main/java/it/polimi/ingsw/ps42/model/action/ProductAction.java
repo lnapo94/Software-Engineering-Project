@@ -11,10 +11,12 @@ public class ProductAction extends Action {
 
 	public ProductAction(ActionType type, Familiar familiar, ArrayList<Position> tablePosition, int positionInTableList){
 		//Constructor for normal action
+		super(type, familiar, tablePosition, positionInTableList);
 	}
 	
 	public ProductAction(ActionType type, Player player, ArrayList<Position> tablePosition, int positionInTableList){
 		//Constructor for bonus action
+		super(type, player, tablePosition, positionInTableList);
 	}
 	
 	@Override

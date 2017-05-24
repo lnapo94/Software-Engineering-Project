@@ -11,10 +11,12 @@ public class CouncilAction extends Action {
 
 	public CouncilAction(ActionType type, Familiar familiar, ArrayList<Position> tablePosition, int positionInTableList){
 		//Constructor for normal action
+		super(type, familiar, tablePosition, positionInTableList);
 	}
 	
-	public ConucilAction(ActionType type, Player player, ArrayList<Position> tablePosition, int positionInTableList){
+	public CouncilAction(ActionType type, Player player, ArrayList<Position> tablePosition, int positionInTableList){
 		//Constructor for bonus action
+		super(type, player, tablePosition, positionInTableList);
 	}
 	
 	@Override

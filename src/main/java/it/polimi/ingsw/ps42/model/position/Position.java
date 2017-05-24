@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps42.model.position;
 
+import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.player.Familiar;
 
 public abstract class Position {
 
@@ -39,8 +41,7 @@ public abstract class Position {
 		
 	}
 	public boolean isEmpty(){			//Checks if there is a familiar in the position
-		
-		
+		return this.familiar == null;		
 	}
 	
 }

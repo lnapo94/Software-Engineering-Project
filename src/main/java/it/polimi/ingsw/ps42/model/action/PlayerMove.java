@@ -21,7 +21,7 @@ public class PlayerMove {
 	}
 	
 	public Action parse() {
-		
+		return null;
 	}
 	
 	
