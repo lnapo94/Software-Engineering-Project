@@ -138,7 +138,7 @@ public class Card {
 	private void createRequest() {
 		//ONLY PRIVATE request
 		//Used only to support effect
-		if(possibleChoice.size() == 0) {
+		if(possibleChoice.isEmpty()) {
 			throw new EmptyException("possibleChoice in Card Class is empty");
 		}
 		Request request = new Request(this, possibleChoice);

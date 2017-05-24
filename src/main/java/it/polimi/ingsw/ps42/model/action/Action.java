@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ps42.model.action;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.player.Familiar;
@@ -18,14 +18,14 @@ public abstract class Action {
 	private Familiar familiar;
 	protected Player player;
 	private int positionValue;
-	private ArrayList<Position> tableLocation;
+	private List<Position> tableLocation;
 	private Packet discount;
 	
 	
-	public Action(ActionType type, Familiar familiar,ArrayList<Position> tablePosition, int positionInTableList){
+	public Action(ActionType type, Familiar familiar,List<Position> tablePosition, int positionInTableList){
 		//Constructor for normal action, player is get from familiar
 	}
-	public Action(ActionType type, Player player,ArrayList<Position> tablePosition, int positionInTableList){
+	public Action(ActionType type, Player player,List<Position> tablePosition, int positionInTableList){
 		//Constructor for bonus action (no familiar involved, so requires the player) 
 		
 	}

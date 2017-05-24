@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ps42.model;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import it.polimi.ingsw.ps42.model.effect.Effect;
@@ -13,7 +13,7 @@ import it.polimi.ingsw.ps42.model.position.YieldAndProductPosition;
 public class Table {
 	// this is the class of the table
 
-	private ArrayList<Player> player;
+	private List<Player> player;
 	private int orangeDie;
 	private int blackDie;
 	private int whiteDie;
@@ -22,14 +22,14 @@ public class Table {
 	private TowerPosition[] blueTower;
 	private TowerPosition[] violetTower;
 	private MarketPosition[] market;
-	private ArrayList<YieldAndProductPosition> yield;
-	private ArrayList<YieldAndProductPosition> product;
+	private List<YieldAndProductPosition> yield;
+	private List<YieldAndProductPosition> product;
 	private YieldAndProductPosition firstYield;
 	private YieldAndProductPosition firstProduct;
 	private Effect firstBan;
 	private Effect secondBan;
 	private Effect thirdBan;
-	private ArrayList<CouncilPosition> council;
+	private List<CouncilPosition> council;
 
 	// constructrs
 
@@ -48,22 +48,22 @@ public class Table {
 
 	}
 
-	public void placeGreenTower(ArrayList<Card> cards) {
+	public void placeGreenTower(List<Card> cards) {
 		// init cards in green tower
 
 	}
 
-	public void placeYellowTower(ArrayList<Card> cards) {
+	public void placeYellowTower(List<Card> cards) {
 		// init cards in Yellow tower
 
 	}
 
-	public void placeVioletTower(ArrayList<Card> cards) {
+	public void placeVioletTower(List<Card> cards) {
 		// init cards in Violet tower
 
 	}
 
-	public void placeBlueTower(ArrayList<Card> cards) {
+	public void placeBlueTower(List<Card> cards) {
 		// init cards in Blue tower
 
 	}
@@ -96,7 +96,7 @@ public class Table {
 
 	}
 
-	public ArrayList<CouncilPosition> getNewOrder(){
+	public List<CouncilPosition> getNewOrder(){
 		return council;
 
 	}
@@ -105,7 +105,7 @@ public class Table {
 
 	}
 
-	public ArrayList<CouncilPosition> resetTable() 
+	public List<CouncilPosition> resetTable() 
 	{
 		return council;
 
