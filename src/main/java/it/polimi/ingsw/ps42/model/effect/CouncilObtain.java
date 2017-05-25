@@ -25,7 +25,7 @@ public class CouncilObtain extends Effect {
 		
 		this.player=player;
 		CouncilRequest request=new CouncilRequest(possibleConversion, quantity);
-		player.addCouncil(request);
+		player.addCouncilRequests(request);
 		
 	}
 	
