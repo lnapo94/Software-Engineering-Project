@@ -147,43 +147,47 @@ public class Player {
 	
 	public void increaseResource(Packet packet) {
 		
-		//Temporary variables used in the FOR EACH
-		Resource tempResource;
-		int tempQuantity;
-		
-		for (Unit unit : packet) {
+		if(packet != null) {
+			//Temporary variables used in the FOR EACH
+			Resource tempResource;
+			int tempQuantity;
 			
-			tempResource = unit.getResource();
-			tempQuantity = unit.getQuantity();
-			
-			//Adding resources to the player nextResources HashMap
-			tempQuantity = tempQuantity + nextResources.get(tempResource);
-			
-			//Upload the value in the HashMap
-			nextResources.put(tempResource, tempQuantity);
+			for (Unit unit : packet) {
+				
+				tempResource = unit.getResource();
+				tempQuantity = unit.getQuantity();
+				
+				//Adding resources to the player nextResources HashMap
+				tempQuantity = tempQuantity + nextResources.get(tempResource);
+				
+				//Upload the value in the HashMap
+				nextResources.put(tempResource, tempQuantity);
+			}
 		}
 	}
 	
 	public void decreaseResource(Packet packet) {
 		
-		//Temporary variables used in the FOR EACH
-		Resource tempResource;
-		int tempQuantity;
-			
-		for (Unit unit : packet) {
+		if(packet != null) {
+			//Temporary variables used in the FOR EACH
+			Resource tempResource;
+			int tempQuantity;
 				
-			tempResource = unit.getResource();
-			tempQuantity = unit.getQuantity();
+			for (Unit unit : packet) {
+					
+				tempResource = unit.getResource();
+				tempQuantity = unit.getQuantity();
+					
+				//Adding resources to the player nextResources HashMap
+				tempQuantity = nextResources.get(tempResource) - tempQuantity;
 				
-			//Adding resources to the player nextResources HashMap
-			tempQuantity = nextResources.get(tempResource) - tempQuantity;
-			
-			if(tempQuantity < 0)
-				throw new ArithmeticException("tempQuantity in player.decreaseResource is"
-						+ " negative, unable to continue");
-			
-			//Upload the value in the HashMap
-			nextResources.put(tempResource, tempQuantity);
+				if(tempQuantity < 0)
+					throw new ArithmeticException("tempQuantity in player.decreaseResource is"
+							+ " negative, unable to continue");
+				
+				//Upload the value in the HashMap
+				nextResources.put(tempResource, tempQuantity);
+			}
 		}
 	}
 	

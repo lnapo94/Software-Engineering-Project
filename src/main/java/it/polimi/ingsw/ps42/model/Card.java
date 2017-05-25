@@ -152,7 +152,7 @@ public class Card {
 			//Control all the effectList
 			checkEffect(effectList);
 			
-			if(effectList.size() == 1 && possibleChoice.size() == 0) {
+			if(effectList.size() == 1 && possibleChoice.isEmpty()) {
 				//If there is only one effectList and it isn't an ObtainEffect
 				enableEffect(0, effectList);
 			}
@@ -181,18 +181,19 @@ public class Card {
 				
 				//Boolean is used to control that all the packet can be payed
 				boolean checkCanApplyEffect = true;
-				
-				for(Unit unit : packet) {
-					//For each unit, control if player can pay the effect costs
-					//If he can't pay, the boolean goes to false
-					if(unit.getQuantity() > owner.getResource(unit.getResource()))
-						checkCanApplyEffect = false;
+				if(packet != null) {
+					for(Unit unit : packet) {
+						//For each unit, control if player can pay the effect costs
+						//If he can't pay, the boolean goes to false
+						if(unit.getQuantity() > owner.getResource(unit.getResource()))
+							checkCanApplyEffect = false;
+					}
+					
+					//If player can pay, the boolean is true, then add this index to
+					//the possibleChoice
+					if(checkCanApplyEffect)
+						possibleChoice.add(effectList.indexOf(effect));
 				}
-				
-				//If player can pay, the boolean is true, then add this index to
-				//the possibleChoice
-				if(checkCanApplyEffect)
-					possibleChoice.add(effectList.indexOf(effect));
 			}
 		}
 	}
@@ -207,6 +208,9 @@ public class Card {
 	
 	//TODO
 	/*
-	 * DA TESTARE ASSOLUTAMENTE
+	 * Con 2 effetti obtain, uno con costo null e l'altro con un certo costo, succede che:
+	 * il primo viene considerato a null, quindi immediatamente applicabile
+	 * il secondo invece ha bisogno di una richiesta.
+	 * Il primo però non viene aggiunto alla lista di possibili richieste
 	 */
 }
