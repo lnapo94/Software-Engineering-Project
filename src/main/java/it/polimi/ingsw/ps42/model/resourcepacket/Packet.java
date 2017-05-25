@@ -46,6 +46,11 @@ public class Packet implements Iterable<Unit>   {
 		}
 	}
 	
+	public boolean isGreater(Packet packet){
+		
+		
+		
+	}
 	private int search(Resource resource) throws ElementNotFoundException{
 		for (Unit unit : list) {
 			if(unit.getResource()==resource)
@@ -66,15 +71,6 @@ public class Packet implements Iterable<Unit>   {
 		return this.list.toString();
 	}
 	
-	/*public static void main(String[] args) {
-		System.out.println("inizio: ");
-		HashMap<Resource, Integer> res=new HashMap<>();
-		res.put(Resource.FAITHPOINT, 5);
-		res.put(Resource.WOOD, 3);
-		Packet p=new Packet(res);	
-		System.out.println(p.toString());
-	}
-	*/
 	@Override
 	public Iterator<Unit> iterator() {
 		// TODO Auto-generated method stub

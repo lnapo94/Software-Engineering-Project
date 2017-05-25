@@ -21,6 +21,7 @@ public class CouncilObtain extends Effect {
 		
 		this.player=player;
 		//TO-DO: implementare un tipo di richiesta ad hoc?
+		
 	}
 	
 

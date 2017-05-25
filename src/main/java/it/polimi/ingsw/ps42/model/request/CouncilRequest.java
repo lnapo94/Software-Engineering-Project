@@ -2,27 +2,30 @@ package it.polimi.ingsw.ps42.model.request;
 
 import java.util.List;
 
-import it.polimi.ingsw.ps42.model.Card;
-import it.polimi.ingsw.ps42.model.enumeration.Resource;
+import it.polimi.ingsw.ps42.model.effect.Obtain;
+import it.polimi.ingsw.ps42.model.player.Player;
 
-public class CouncilRequest extends Request {
+public class CouncilRequest {
 	
-	private List<Resource> choice;
+	private List<Obtain> choice;
 	private final int quantity;
+	private final List<Obtain> possibleChoice;
 	
-	public CouncilRequest(Card card, int quantity) {
-		super(card);
+	public CouncilRequest(List<Obtain> possibleChoice, int quantity) {
+		this.possibleChoice=possibleChoice;
 		this.quantity=quantity;
 	}
 	
-	public List<Resource> getChoice() {
-		return choice;
+	public List<Obtain> getChoice() {
+		return possibleChoice;
 	}
 	
+	public boolean addChoice(int index){
+		//controlla scelta diversa da altre
+		return false;
+	}
 	
-	@Override
-	public void apply() {
-		// TODO Auto-generated method stub
+	public void apply(Player player) {
 		
 	}
 
