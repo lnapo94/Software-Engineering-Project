@@ -47,8 +47,25 @@ public class Packet implements Iterable<Unit>   {
 	}
 	
 	public boolean isGreater(Packet packet){
+		//Checks if the packet has almost all the resources of the packet passed
+		if(packet!=null){
+			int index;
+			for (Unit unit : packet) {
+				try{
+					index=search(unit.getResource());
+					Unit tempUnit=this.list.get(index);
+					if(tempUnit.getQuantity()<unit.getQuantity()) //This means the packet has less quantity of a single resource of the packet passed
+						return false;
+				}
+				catch (ElementNotFoundException e) {		//This means the packet miss a Resource of the packet passed
+					return false;
+				}
+				
+			}
+			
+		}
 		
-		
+		return true;		//this mean the packet passed is either empty or every units is less/equal than the units of the instance
 		
 	}
 	private int search(Resource resource) throws ElementNotFoundException{

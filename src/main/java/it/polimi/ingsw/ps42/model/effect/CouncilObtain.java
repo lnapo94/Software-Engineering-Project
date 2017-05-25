@@ -1,17 +1,21 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import java.util.List;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
+import it.polimi.ingsw.ps42.model.request.CouncilRequest;
 import it.polimi.ingsw.ps42.model.request.Request;
 
 public class CouncilObtain extends Effect {
 	//Create a request for the gamelogic to obtain the resources from the council privileges
 	
-	private int quantity;
-	private Request request;
+	private final int quantity;
+	private final List<Obtain> possibleConversion;
 
-	public CouncilObtain(int quantity) {
+	public CouncilObtain(int quantity,List<Obtain> possibleConversion ) {
 		super(EffectType.COUNCIL_OBTAIN);
+		this.possibleConversion=possibleConversion;
 		this.quantity=quantity;
 		
 	}
@@ -20,7 +24,8 @@ public class CouncilObtain extends Effect {
 	public void enableEffect(Player player) {
 		
 		this.player=player;
-		//TO-DO: implementare un tipo di richiesta ad hoc?
+		CouncilRequest request=new CouncilRequest(possibleConversion, quantity);
+		player.addCouncil(request);
 		
 	}
 	
