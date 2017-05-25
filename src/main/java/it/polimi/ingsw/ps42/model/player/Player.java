@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import it.polimi.ingsw.ps42.model.Card;
+import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
@@ -22,6 +23,9 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 public class Player {
 	//This class represents the model of the Player
 	
+	//Max number of player's cards in each StaticList
+	private static final int MAX_CARDS = 6;
+	
 	//The ID used in the server
 	private final String ID;
 	
@@ -32,10 +36,10 @@ public class Player {
 	private Familiar neutral;
 	
 	//The player's cards. It will be six for each array at most 
-	private CardList greenCards;
-	private CardList yellowCards;
-	private CardList blueCards;
-	private CardList violetCards;
+	private StaticList<Card> greenCards;
+	private StaticList<Card> yellowCards;
+	private StaticList<Card> blueCards;
+	private StaticList<Card> violetCards;
 	
 	//HashMap used for save the current resources
 	private HashMap<Resource, Integer> currentResources;
@@ -74,10 +78,10 @@ public class Player {
 		neutral = new Familiar(this, FamiliarColor.NEUTRAL);
 		
 		//Initialize the cards arrays
-		greenCards = new CardList();
-		yellowCards = new CardList();
-		blueCards = new CardList();
-		violetCards = new CardList();
+		greenCards = new StaticList<>(MAX_CARDS);
+		yellowCards = new StaticList<>(MAX_CARDS);
+		blueCards = new StaticList<>(MAX_CARDS);
+		violetCards = new StaticList<>(MAX_CARDS);
 		
 		//Initialize the Resources HashMaps
 		currentResources = new HashMap<>();
@@ -112,7 +116,7 @@ public class Player {
 		this.bonusBar.setPlayer(this);
 	}
 	
-	public Familiar getFamiliar(FamiliarColor color) throws WrongColorException{
+	public Familiar getFamiliar(FamiliarColor color) {
 		//Returns the selected familiar
 		//If color isn't correct, throw an exception
 		if(color == FamiliarColor.ORANGE)
@@ -123,8 +127,7 @@ public class Player {
 			return white;
 		if(color == FamiliarColor.NEUTRAL)
 			return neutral;
-		throw new WrongColorException("Wrong color in player.getFamiliar method");
-		
+		throw new WrongColorException("Error in player.getFamiliar(color): maybe the passed color is wrong");
 	}
 	
 	public void setFamiliarValue(FamiliarColor color, int value) {
@@ -140,7 +143,7 @@ public class Player {
 	}
 	
 	public void addCard(Card card) {
-		CardList temp;
+		StaticList<Card> temp;
 		try {
 			temp = getCardList(card.getColor());
 			temp.add(card);
@@ -266,7 +269,7 @@ public class Player {
 		return this.divisory;
 	}
  	
-	public CardList getCardList(CardColor color) throws WrongColorException {
+	public StaticList<Card> getCardList(CardColor color) throws WrongColorException {
 		//Return the correct cardlist
 		if(color == CardColor.GREEN)
 			return greenCards;

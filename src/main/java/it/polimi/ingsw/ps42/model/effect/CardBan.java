@@ -1,9 +1,9 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
-import it.polimi.ingsw.ps42.model.player.CardList;
 import it.polimi.ingsw.ps42.model.player.Player;
 
 public class CardBan extends Effect{
@@ -23,7 +23,7 @@ public class CardBan extends Effect{
 		
 			this.player=player;
 			try{
-				CardList deck=player.getCardList(color);
+				StaticList deck=player.getCardList(color);
 				deck.removeAll();
 			}
 			catch (WrongColorException e) {
