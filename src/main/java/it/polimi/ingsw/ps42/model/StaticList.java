@@ -44,9 +44,10 @@ public class StaticList<E> implements Iterable<E>{
 	
 	public void removeAll() {
 		//Remove all the element from the StaticList
-		for (E element : list) {
+		for(E element : list) {
 			remove(element);
 		}
+		list.remove(0);
 	}
 	
 	public int size() {
@@ -76,7 +77,7 @@ public class StaticList<E> implements Iterable<E>{
 
 		@Override
 		public boolean hasNext() {
-			return index < MAX_SIZE;
+			return index < size();
 		}
 
 		@Override
