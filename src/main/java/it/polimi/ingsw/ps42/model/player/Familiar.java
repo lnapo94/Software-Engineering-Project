@@ -1,18 +1,18 @@
 package it.polimi.ingsw.ps42.model.player;
 
-import it.polimi.ingsw.ps42.model.enumeration.Color;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 
 public class Familiar {
 	//This class represent the familiar in the game. It is linked to player
 	
 	private Player player;
-	private Color color;
+	private FamiliarColor color;
 	private int value;
 	
 	//This variable represent the temporary value of familiar for checking in gamelogic
 	private int increment;
 	
-	public Familiar(Player player, Color color) {
+	public Familiar(Player player, FamiliarColor color) {
 		this.player = player;
 		this.color = color;
 		this.value = 0;
@@ -24,7 +24,7 @@ public class Familiar {
 		return this.player;
 	}
 	
-	public Color getColor() {
+	public FamiliarColor getColor() {
 		return this.color;
 		
 	}
@@ -46,7 +46,7 @@ public class Familiar {
 	}
 	
 	public boolean isNeutral() {
-		return this.color == Color.NEUTRAL;
+		return this.color == FamiliarColor.NEUTRAL;
 	}
 	
 

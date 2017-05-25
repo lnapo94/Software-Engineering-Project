@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import it.polimi.ingsw.ps42.model.enumeration.Color;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
@@ -10,9 +10,9 @@ public class IncreaseSingleFamiliar extends Effect{
 	//This effect increase only one familiar's value
 	
 	private int value;
-	private Color color;
+	private FamiliarColor color;
 
-	public IncreaseSingleFamiliar(int value, Color color) {
+	public IncreaseSingleFamiliar(int value, FamiliarColor color) {
 		
 		super(EffectType.INCREASE_SINGLE_FAMILIAR);
 		this.value=value;

@@ -3,13 +3,13 @@ package it.polimi.ingsw.ps42.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.ingsw.ps42.model.action.Request;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
-import it.polimi.ingsw.ps42.model.enumeration.Color;
+import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.exception.EmptyException;
 import it.polimi.ingsw.ps42.model.player.Player;
+import it.polimi.ingsw.ps42.model.request.Request;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
@@ -22,7 +22,7 @@ public class Card {
 	 */
 	private String name;
 	private String description;
-	private Color color;
+	private CardColor color;
 	private int period;
 	private int level;
 	private Player owner;
@@ -35,7 +35,7 @@ public class Card {
 	//ArrayList used for check if player can pay to obtain the card or enable the effect
 	private List<Integer> possibleChoice;
 	
-	public Card(String name, String description, Color color, int period, 
+	public Card(String name, String description, CardColor color, int period, 
 			int level, List<Packet> costs, List<Effect> immediateEffects, List<Packet> requirements,
 			List<Effect> permanentEffect, List<Effect> finalEffects){
 		//Construct the card
@@ -63,7 +63,7 @@ public class Card {
 		return description;
 	}
 	
-	public Color getColor() {
+	public CardColor getColor() {
 		return color;
 	}
 	
@@ -141,6 +141,7 @@ public class Card {
 		if(possibleChoice.isEmpty()) {
 			throw new EmptyException("possibleChoice in Card Class is empty");
 		}
+		
 		Request request = new Request(this, possibleChoice);
 		owner.addRequest(request);
 	}

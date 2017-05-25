@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import it.polimi.ingsw.ps42.model.enumeration.Color;
+import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.player.CardList;
@@ -9,10 +9,10 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class CardBan extends Effect{
 	//At the end of the match, delete the corresponding cards in the player list
 	
-	private Color color;
+	private CardColor color;
 	
 	
-	public CardBan(Color color) {
+	public CardBan(CardColor color) {
 		super(EffectType.CARD_BAN);
 		//TO-DO: decidere se tenere separati colori carte e colori familiari->aggiungi controllo
 		this.color=color;

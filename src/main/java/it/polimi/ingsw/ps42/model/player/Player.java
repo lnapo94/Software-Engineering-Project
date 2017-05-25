@@ -6,14 +6,16 @@ import java.util.List;
 
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
-import it.polimi.ingsw.ps42.model.action.Request;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
-import it.polimi.ingsw.ps42.model.enumeration.Color;
+import it.polimi.ingsw.ps42.model.enumeration.CardColor;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.IsNotEmptyException;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
+import it.polimi.ingsw.ps42.model.request.CouncilRequest;
+import it.polimi.ingsw.ps42.model.request.Request;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
@@ -57,6 +59,7 @@ public class Player {
 	//The arraylist used by the gamelogic to know more from the player
 	//e. g. which cost the player wants to pay
 	private List<Request> requests;
+	private List<CouncilRequest> councilRequests;
 	
 	
 	
@@ -65,10 +68,10 @@ public class Player {
 		this.ID = ID;
 		
 		//Create the Familiar
-		orange = new Familiar(this, Color.ORANGE);
-		black = new Familiar(this, Color.BLACK);
-		white = new Familiar(this, Color.WHITE);
-		neutral = new Familiar(this, Color.NEUTRAL);
+		orange = new Familiar(this, FamiliarColor.ORANGE);
+		black = new Familiar(this, FamiliarColor.BLACK);
+		white = new Familiar(this, FamiliarColor.WHITE);
+		neutral = new Familiar(this, FamiliarColor.NEUTRAL);
 		
 		//Initialize the cards arrays
 		greenCards = new CardList();
@@ -86,6 +89,7 @@ public class Player {
 		banList = new ArrayList<>();
 		increaseEffect = new ArrayList<>();
 		requests = new ArrayList<>();
+		councilRequests = new ArrayList<>();
 		
 		//Set the Player bonusAction to null (required by gamelogic)
 		bonusAction = null;
@@ -108,22 +112,22 @@ public class Player {
 		this.bonusBar.setPlayer(this);
 	}
 	
-	public Familiar getFamiliar(Color color) throws WrongColorException{
+	public Familiar getFamiliar(FamiliarColor color) throws WrongColorException{
 		//Returns the selected familiar
 		//If color isn't correct, throw an exception
-		if(color == Color.ORANGE)
+		if(color == FamiliarColor.ORANGE)
 			return orange;
-		if(color == Color.BLACK)
+		if(color == FamiliarColor.BLACK)
 			return black;
-		if(color == Color.WHITE)
+		if(color == FamiliarColor.WHITE)
 			return white;
-		if(color == Color.NEUTRAL)
+		if(color == FamiliarColor.NEUTRAL)
 			return neutral;
 		throw new WrongColorException("Wrong color in player.getFamiliar method");
 		
 	}
 	
-	public void setFamiliarValue(Color color, int value) {
+	public void setFamiliarValue(FamiliarColor color, int value) {
 		try {
 			getFamiliar(color).setValue(value);
 		} catch (WrongColorException e) {
@@ -131,7 +135,7 @@ public class Player {
 		}
 	}
 	
-	public int getFamiliarValue(Color color) throws WrongColorException {
+	public int getFamiliarValue(FamiliarColor color) throws WrongColorException {
 		return getFamiliar(color).getValue();
 	}
 	
@@ -262,23 +266,18 @@ public class Player {
 		return this.divisory;
 	}
  	
-	public CardList getCardList(Color color) throws WrongColorException {
+	public CardList getCardList(CardColor color) throws WrongColorException {
 		//Return the correct cardlist
-		if(color == Color.GREEN)
+		if(color == CardColor.GREEN)
 			return greenCards;
-		if(color == Color.YELLOW)
+		if(color == CardColor.YELLOW)
 			return yellowCards;
-		if(color == Color.BLUE)
+		if(color == CardColor.BLUE)
 			return blueCards;
-		if(color == Color.VIOLET)
+		if(color == CardColor.VIOLET)
 			return violetCards;
 		throw new WrongColorException("Error in player.getCardList(color), color isn't correct");
 		
-	}
-	
-	public void setRequests(List<Request> requests) {
-		//Set the request arraylist
-		this.requests = requests;
 	}
 	
 	public List<Request> getRequests() {
@@ -286,8 +285,18 @@ public class Player {
 		//from the player
 		
 		List<Request> temp = this.requests;
-		this.requests = null;
+		this.requests = new ArrayList<>();
 		return temp;
+	}
+	
+	public List<CouncilRequest> getCouncilRequests() {
+		List<CouncilRequest> temp = this.councilRequests;
+		this.councilRequests = new ArrayList<>();
+		return temp;
+	}
+	
+	public void addCouncilRequests(CouncilRequest councilRequest) {
+		councilRequests.add(councilRequest);
 	}
 	
 	public void addRequest(Request request) {

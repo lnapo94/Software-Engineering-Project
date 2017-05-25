@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
-import it.polimi.ingsw.ps42.model.enumeration.Color;
+import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
@@ -35,7 +35,7 @@ public class CardTest {
 		effects.add(obtain2);
 		
 		//Create a card with a cost and a player who pays the card
-		Card card = new Card("Prova", "description", Color.GREEN, 1, 3, 
+		Card card = new Card("Prova", "description", CardColor.GREEN, 1, 3, 
 				costs, effects, null, null, null);
 		
 		Player p1 = new Player("CIAO");

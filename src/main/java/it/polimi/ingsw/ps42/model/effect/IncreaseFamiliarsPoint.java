@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import it.polimi.ingsw.ps42.model.enumeration.Color;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
@@ -21,13 +21,13 @@ public class IncreaseFamiliarsPoint extends Effect{
 		//Increase the value of every familiar for the current round
 		this.player=player;
 		try{
-			Familiar playerFamiliar=player.getFamiliar(Color.ORANGE);
+			Familiar playerFamiliar=player.getFamiliar(FamiliarColor.ORANGE);
 			playerFamiliar.setIncrement(value);
-			playerFamiliar=player.getFamiliar(Color.BLACK);
+			playerFamiliar=player.getFamiliar(FamiliarColor.BLACK);
 			playerFamiliar.setIncrement(value);
-			playerFamiliar=player.getFamiliar(Color.WHITE);
+			playerFamiliar=player.getFamiliar(FamiliarColor.WHITE);
 			playerFamiliar.setIncrement(value);
-			playerFamiliar=player.getFamiliar(Color.NEUTRAL);
+			playerFamiliar=player.getFamiliar(FamiliarColor.NEUTRAL);
 			playerFamiliar.setIncrement(value);
 		}
 		catch (WrongColorException e) {
