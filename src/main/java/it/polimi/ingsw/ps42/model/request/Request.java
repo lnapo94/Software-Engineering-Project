@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps42.model.request;
 import java.util.List;
 
 import it.polimi.ingsw.ps42.model.Card;
+import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 
 public class Request {
 
@@ -24,26 +25,31 @@ public class Request {
 		return possibleChoice;
 	}
 	
-	public void setChoice(int choice) {
-		//TO-DO: fai controlli
-		this.choice = choice;
-		
+	public void setChoice(int choice) throws WrongChoiceException {
+		if(validChoice(choice)){
+			this.choice = choice;
+		}
+		else throw new WrongChoiceException("The choice for this request is not valid");
 	}
 	
+	public boolean validChoice(int choice){
+		return possibleChoice.contains(choice);
+		
+	}
 	public int getChoice() {
 		return choice;
 	}
 	
 	public void enableImmediateEffect(){
-		
+		card.enableImmediateEffect(choice);
 	}
 	
 	public void enablePermanentEffect(){
-		
+		card.enablePermanentEffect(choice);
 	}
 	
 	public void finalEffect(){
-		
+		card.enableFinalEffect(choice);
 	}
 	
 	

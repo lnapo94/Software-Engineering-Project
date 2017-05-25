@@ -1,9 +1,11 @@
 package it.polimi.ingsw.ps42.model.position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 
 public class MarketPosition extends Position {
@@ -12,19 +14,29 @@ public class MarketPosition extends Position {
 	 * player a certain amount of resources  
 	*/
 	
-	private List<Familiar> bonusFamiliar;
+	private List<Familiar> bonusFamiliars;
 	
 	
 	public MarketPosition(ActionType type, int level, Obtain bonus, int malus) {
 		super(type, level, bonus, malus);
-		// TODO Auto-generated constructor stub
+		bonusFamiliars=new ArrayList<Familiar>();
+		
 	}
 	
 	public List<Familiar> getBonusFamiliar() {
-		return bonusFamiliar;
+		return bonusFamiliars;
 	}
-	public void setBonusFamiliar(Familiar familiar) {
+	public void addBonusFamiliar(Familiar familiar) throws FamiliarInWrongPosition {
+		if(super.canStay(familiar)){
+			this.bonusFamiliars.add(familiar);
+			applyPositionEffect(familiar);
+			this.bonusFamiliars.add(familiar);
+		}
+		else throw new FamiliarInWrongPosition("The bonus Familiar does not satisfy the position pre-requirements");
+	}
+	public void removeBonusFamiliars(){
 		
+		this.bonusFamiliars=new ArrayList<Familiar>();
 	}
 
 }

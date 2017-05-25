@@ -5,7 +5,7 @@ import java.util.List;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.request.CouncilRequest;
-import it.polimi.ingsw.ps42.model.request.Request;
+
 
 public class CouncilObtain extends Effect {
 	//Create a request for the gamelogic to obtain the resources from the council privileges

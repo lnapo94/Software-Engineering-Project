@@ -14,12 +14,13 @@ public class TowerPosition  extends Position {
 	
 	public TowerPosition(ActionType type, int level, Obtain bonus, int malus) {
 		super(type, level, bonus, malus);
+		
 	}
 	
 	public void setCard(Card card) {
 		this.card = card;
 	}
-	public Card getCard() {			//Returns the card, used to check if the card may be taken from the palyer
+	public Card getCard() {			//Returns the card, used to check if the card may be taken from the player
 		return card;
 	}
 	public boolean hasCard(Card card){		//Check if there is a card in the position
@@ -27,6 +28,6 @@ public class TowerPosition  extends Position {
 		
 	}
 	public void removeCard(){		//Remove the card from the position
-		
+		this.card=null;
 	}
 }
