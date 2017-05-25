@@ -3,11 +3,11 @@ package it.polimi.ingsw.ps42.model.effect;
 import java.util.List;
 
 import it.polimi.ingsw.ps42.model.Card;
+import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
-import it.polimi.ingsw.ps42.model.player.CardList;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
@@ -28,7 +28,7 @@ public class CardCostBan extends Effect{
 		this.player=player;
 		int banCost=0;
 		try{
-			CardList deck=player.getCardList(color);	
+			StaticList<Card> deck = player.getCardList(color);	
 			for (Card singleCard : deck) {							//For each card of the player with the def. color
 				List<Packet> costs=singleCard.getCosts();		//Obtain for every cost the quantity of wood and stone
 				for (Packet singleCost : costs) {

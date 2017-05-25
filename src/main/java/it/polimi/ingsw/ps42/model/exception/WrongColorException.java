@@ -1,6 +1,6 @@
 package it.polimi.ingsw.ps42.model.exception;
 
-public class WrongColorException extends Exception{
+public class WrongColorException extends RuntimeException{
 
 	/**
 	 * 
