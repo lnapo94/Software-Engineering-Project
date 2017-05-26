@@ -44,8 +44,8 @@ public class Table {
 	private YieldAndProductPosition firstProduct;
 	
 	//The other position for Yield and Product, now they have a malus
-	private StaticList<YieldAndProductPosition> yield;
-	private StaticList<YieldAndProductPosition> product;
+	private List<YieldAndProductPosition> yield;
+	private List<YieldAndProductPosition> product;
 
 	//The 3 ban chosen at the beginning of the match
 	private Effect firstBan;
@@ -76,9 +76,9 @@ public class Table {
 		this(player1, player2);
 		players.add(player3);
 		
-		//Construct all the Product and Yield positions
-		createSinglePosition(yield,ActionType.YIELD);
-		createSinglePosition(product, ActionType.PRODUCE);
+		//Initialize the the other yield and product positions
+		yield = new ArrayList<>();
+		product = new ArrayList<>();
 		
 	}
 
@@ -114,12 +114,6 @@ public class Table {
 		 */
 	}
 	
-	//PRIVATE METHOD TO CONSTRUCT THE POSITIONS
-	private void createSinglePosition(StaticList<YieldAndProductPosition> list, ActionType type) {
-		for(YieldAndProductPosition position : list) {
-			position = new YieldAndProductPosition(type, 1, null, -3);
-		}
-	}
 	
 	//PRIVATE METHOD TO POSITIONING THE CARDS IN TOWER
 	private void placeCards(StaticList<Card> cards, StaticList<TowerPosition> tower) {
@@ -239,11 +233,11 @@ public class Table {
 		return null;
 	}
 	
-	public StaticList<YieldAndProductPosition> getOtherYield() {
+	public List<YieldAndProductPosition> getOtherYield() {
 		return yield;
 	}
 
-	public StaticList<YieldAndProductPosition> getOtherProduct() {
+	public List<YieldAndProductPosition> getOtherProduct() {
 		return product;
 	}
 
