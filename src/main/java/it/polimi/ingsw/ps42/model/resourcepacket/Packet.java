@@ -54,7 +54,7 @@ public class Packet implements Iterable<Unit>   {
 				try{
 					index=search(unit.getResource());
 					Unit tempUnit=this.list.get(index);
-					if(tempUnit.getQuantity()<unit.getQuantity()) //This means the packet has less quantity of a single resource of the packet passed
+					if(!tempUnit.isGreater(unit)) //This means the packet has less quantity of a single resource of the packet passed
 						return false;
 				}
 				catch (ElementNotFoundException e) {		//This means the packet miss a Resource of the packet passed
@@ -84,13 +84,11 @@ public class Packet implements Iterable<Unit>   {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return this.list.toString();
 	}
 	
 	@Override
 	public Iterator<Unit> iterator() {
-		// TODO Auto-generated method stub
 		return new UnitIterator();
 	}
 	private class UnitIterator implements Iterator<Unit> {
@@ -99,13 +97,11 @@ public class Packet implements Iterable<Unit>   {
 		
 		@Override
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
 			return index < list.size() ;
 		}
 
 		@Override
 		public Unit next() {
-			// TODO Auto-generated method stub
 			Unit unitTemp = list.get(index);
 			index++;
 			return unitTemp;

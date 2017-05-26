@@ -31,10 +31,14 @@ public class Unit {
 		this.quantity = quantity;
 	}
 	
-	
+	public boolean isGreater(Unit unit){
+		if(unit.getResource()==resource){
+			return this.quantity>=unit.getQuantity();
+		}
+		else return false;
+	}
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return this.resource + ":" + this.quantity;
 	}
 }
