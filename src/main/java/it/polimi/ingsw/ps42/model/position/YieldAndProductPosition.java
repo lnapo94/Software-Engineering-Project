@@ -19,10 +19,10 @@ public class YieldAndProductPosition extends Position {
 	
 	public YieldAndProductPosition(ActionType type, int level, Obtain bonus, int malus) {
 		super(type, level, bonus, malus);
-		bonusFamiliars=new ArrayList<Familiar>();
+		bonusFamiliars = new ArrayList<>();
 	}
 	
-	public void enableCards(ArrayList<Card> cards){		//Enables the permanent effect of all the cards in the arrayList
+	public void enableCards(List<Card> cards){		//Enables the permanent effect of all the cards in the arrayList
 		if(cards!=null){
 			for (Card card : cards) {
 				card.enablePermanentEffect();
@@ -44,7 +44,7 @@ public class YieldAndProductPosition extends Position {
 	}
 	public void removeBonusFamiliars(){			//Removes all the bonus familiar from the position
 		
-		this.bonusFamiliars=new ArrayList<Familiar>();
+		this.bonusFamiliars=new ArrayList<>();
 	}
 	
 

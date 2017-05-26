@@ -19,7 +19,7 @@ public class MarketPosition extends Position {
 	
 	public MarketPosition(ActionType type, int level, Obtain bonus, int malus) {
 		super(type, level, bonus, malus);
-		bonusFamiliars=new ArrayList<Familiar>();
+		bonusFamiliars=new ArrayList<>();
 		
 	}
 	
@@ -36,7 +36,7 @@ public class MarketPosition extends Position {
 	}
 	public void removeBonusFamiliars(){
 		
-		this.bonusFamiliars=new ArrayList<Familiar>();
+		this.bonusFamiliars=new ArrayList<>();
 	}
 
 }

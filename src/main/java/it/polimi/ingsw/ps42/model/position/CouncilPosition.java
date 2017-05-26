@@ -25,6 +25,7 @@ public class CouncilPosition extends Position {
 		
 	}
 	
+	@Override
 	public void setFamiliar(Familiar familiar) throws FamiliarInWrongPosition {
 		
 		super.setFamiliar(familiar);

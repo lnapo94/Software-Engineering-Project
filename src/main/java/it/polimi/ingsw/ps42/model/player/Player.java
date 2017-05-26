@@ -269,7 +269,7 @@ public class Player {
 		return this.divisory;
 	}
  	
-	public StaticList<Card> getCardList(CardColor color) throws WrongColorException {
+	public StaticList<Card> getCardList(CardColor color) {
 		//Return the correct cardlist
 		if(color == CardColor.GREEN)
 			return greenCards;
