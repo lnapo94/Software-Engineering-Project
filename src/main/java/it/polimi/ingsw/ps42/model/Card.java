@@ -183,14 +183,14 @@ public class Card {
 		//If the effect is obtain, cast the effect to get the obtain costs
 		if(effect.getTypeOfEffect() == EffectType.OBTAIN) {
 			Obtain obtainEffect = (Obtain)effect;
-			Packet costs = obtainEffect.getCosts();
+			Packet obtainCosts = obtainEffect.getCosts();
 			
 			//If there is at least one cost
-			if(costs != null) {
+			if(obtainCosts != null) {
 				//Check if player can pay
 				//If player can pay this cost, then checker = false because the effect cannot be immediately consumed
 				//Else the effect cannot be payed nor added to the possible choice array
-				checker = checkPlayerCanPay(costs);
+				checker = checkPlayerCanPay(obtainCosts);
 				if(checker == true) {
 					possibleChoice.add(index);
 					checker = false;

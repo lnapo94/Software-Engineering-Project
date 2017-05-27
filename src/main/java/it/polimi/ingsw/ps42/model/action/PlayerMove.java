@@ -18,12 +18,25 @@ public class PlayerMove {
 	
 	public PlayerMove(ActionType type, FamiliarColor familiarColor, int position, int increaseValue) {
 		//Construct the player move
+		this.type = type;
+		this.familiarColor = familiarColor;
+		this.position = position;
+		this.increaseValue = increaseValue;
 	}
 	
-	public Action parse() {
-		return null;
+	public ActionType getActionType() {
+		return type;
 	}
 	
+	public FamiliarColor getFamiliarColor() {
+		return familiarColor;
+	}
 	
-
+	public int getPosition() {
+		return position;
+	}
+	
+	public int getIncrementWithSlave() {
+		return increaseValue;
+	}
 }
