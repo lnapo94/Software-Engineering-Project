@@ -7,6 +7,7 @@ import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 
 public class YieldAndProductPosition extends Position {
@@ -29,8 +30,12 @@ public class YieldAndProductPosition extends Position {
 	public void enableCards(List<Card> cards, Familiar familiar){		//Enables the permanent effect of all the cards in the arrayList
 		if(cards!=null && familiar!=null){
 			for (Card card : cards) { 
-				if(canApply(card, familiar))			//Checks if the effect of the card can be applied 
-					card.enablePermanentEffect();
+				if(canApply(card, familiar))
+					try {
+						card.enablePermanentEffect();
+					} catch (NotEnoughResourcesException e) {
+						System.out.println("The player can not afford this effect");
+					}
 			}
 		}
 	}
