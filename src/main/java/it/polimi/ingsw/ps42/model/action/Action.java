@@ -6,7 +6,6 @@ import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
-import it.polimi.ingsw.ps42.model.position.Position;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
@@ -19,30 +18,24 @@ public abstract class Action {
 	private ActionType type;
 	protected Familiar familiar;
 	protected Player player;
-	protected int positionValue;
-	protected List<Position> tableLocation;
 	protected Packet discount;
 	protected int actionValue;
 	
 	
-	public Action(ActionType type, Familiar familiar,List<Position> tablePosition, int positionInTableList){
+	public Action(ActionType type, Familiar familiar){
 		//Constructor for normal action, player is get from familiar
 		
 		this.type=type;
 		this.familiar=familiar;
 		this.player=familiar.getPlayer();
-		this.positionValue=positionInTableList;
-		this.tableLocation=tablePosition;
 		this.actionValue=familiar.getValue();
 			
 	}
-	public Action(ActionType type, Player player,List<Position> tablePosition, int positionInTableList, int actionValue){
+	public Action(ActionType type, Player player, int actionValue){
 		//Constructor for bonus action (no familiar involved, so requires the player) 
 		
 		this.type=type;
 		this.player=player;
-		this.positionValue=positionInTableList;
-		this.tableLocation=tablePosition;
 		this.actionValue=actionValue;
 	}
 	
@@ -83,7 +76,7 @@ public abstract class Action {
 	
 	public void addIncrement(int increment){
 		
-		
+		this.familiar.setIncrement(increment);
 	}
 	
 }
