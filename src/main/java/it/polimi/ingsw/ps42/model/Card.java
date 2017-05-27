@@ -7,7 +7,7 @@ import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
-import it.polimi.ingsw.ps42.model.exception.EmptyException;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.request.Request;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
@@ -105,7 +105,7 @@ public class Card {
 	}
 	
 	/*	IMMEDIATE EFFECT */
-	public void enableImmediateEffect() {
+	public void enableImmediateEffect() throws NotEnoughResourcesException {
 		enableEffect(immediateEffects);
 	}
 	
@@ -115,7 +115,7 @@ public class Card {
 	/* END IMMEDIATE EFFECT */
 	
 	/*	PERMANENT EFFECT */
-	public void enablePermanentEffect() {
+	public void enablePermanentEffect() throws NotEnoughResourcesException {
 		enableEffect(permanentEffects);
 	}
 	
@@ -125,7 +125,7 @@ public class Card {
 	/*	END PERMANENT EFFECT */
 	
 	/* FINAL EFFECT */
-	public void enableFinalEffect() {
+	public void enableFinalEffect() throws NotEnoughResourcesException {
 		enableEffect(finalEffects);
 	}
 	
@@ -135,68 +135,78 @@ public class Card {
 	/* END FINAL EFFECT */
 	
 	//PRIVATE METHODS FOR CARD CLASS
-	private void createRequest() {
+	private void createRequest() throws NotEnoughResourcesException {
 		//ONLY PRIVATE request
 		//Used only to support effect
 		if(possibleChoice.isEmpty()) {
-			throw new EmptyException("possibleChoice in Card Class is empty");
+			throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this effect");
 		}
 		
 		Request request = new Request(this, possibleChoice);
 		owner.addRequest(request);
 	}
 	
-	private void enableEffect(List<Effect> effectList) {
+	private void enableEffect(List<Effect> effectList) throws NotEnoughResourcesException {
 		if(effectList != null && !( effectList.isEmpty() ) ) {
 			//If the effectList exist
-			
-			//Control all the effectList
-			checkEffect(effectList);
-			
-			if(effectList.size() == 1 && possibleChoice.isEmpty()) {
-				//If there is only one effectList and it isn't an ObtainEffect
+			if(canEnableNowEffect(effectList))
 				enableEffect(0, effectList);
-			}
 			else
 				createRequest();
 		}
 	}
 	
 	private void enableEffect(int choice, List<Effect> effectList) {
-		if(effectList != null && !( effectList.isEmpty() ) )
 			effectList.get(choice).enableEffect(owner);
 	}
 	
-	private void checkEffect(List<Effect> effectList) {
-		//Control the effect and create the possibleChoice arraylist
+	private boolean canEnableNowEffect(List<Effect> effectList) {
+		//Control if the effect can be enabled immediately
 		
+		if(effectList.size() == 1) {
+			//If card has only one effect, control it and return if it is activated
+			return checkActivable(effectList.get(0), 0);	
+		}
 		for(Effect effect : effectList) {
-			//For each effect in effectList
+			//Else if card has more than one effect, control all the effect, and add it to the possibleChoice array
+			//But return false because the card need to know the user's choice
+			if(checkActivable(effect, effectList.indexOf(effect)))
+				possibleChoice.add(effectList.indexOf(effect));
+		}
+		return false;
+	}
+	
+	private boolean checkActivable(Effect effect, int index) {
+		//Return true if the effect can be enabled
+		boolean checker = true;
+		
+		//If the effect is obtain, cast the effect to get the obtain costs
+		if(effect.getTypeOfEffect() == EffectType.OBTAIN) {
+			Obtain obtainEffect = (Obtain)effect;
+			Packet costs = obtainEffect.getCosts();
 			
-			if(effect.getTypeOfEffect() == EffectType.OBTAIN) {
-				//Check if effect is an OBTAIN effect
-				//In this case, control the costs of this effect
-				
-				Obtain obtainEffect = (Obtain) effect;
-				Packet packet = obtainEffect.getCosts();
-				
-				//Boolean is used to control that all the packet can be payed
-				boolean checkCanApplyEffect = true;
-				if(packet != null) {
-					for(Unit unit : packet) {
-						//For each unit, control if player can pay the effect costs
-						//If he can't pay, the boolean goes to false
-						if(unit.getQuantity() > owner.getResource(unit.getResource()))
-							checkCanApplyEffect = false;
-					}
-					
-					//If player can pay, the boolean is true, then add this index to
-					//the possibleChoice
-					if(checkCanApplyEffect)
-						possibleChoice.add(effectList.indexOf(effect));
+			//If there is at least one cost
+			if(costs != null) {
+				//Check if player can pay
+				//If player can pay this cost, then checker = false because the effect cannot be immediately consumed
+				//Else the effect cannot be payed nor added to the possible choice array
+				checker = checkPlayerCanPay(costs);
+				if(checker == true) {
+					possibleChoice.add(index);
+					checker = false;
 				}
 			}
 		}
+		return checker;
+	}
+	
+	private boolean checkPlayerCanPay(Packet costs) {
+		//Check if the player can pay a packet of costs
+		for (Unit unit : costs) {
+			if(unit.getQuantity() > owner.getResource(unit.getResource()))
+					return false;
+		}
+		return true;
 	}
 	
 	private List<Packet> copyPacketList(List<Packet> start) {
@@ -206,12 +216,4 @@ public class Card {
 		}
 		return temp;
 	}
-	
-	//TODO
-	/*
-	 * Con 2 effetti obtain, uno con costo null e l'altro con un certo costo, succede che:
-	 * il primo viene considerato a null, quindi immediatamente applicabile
-	 * il secondo invece ha bisogno di una richiesta.
-	 * Il primo però non viene aggiunto alla lista di possibili richieste
-	 */
 }
