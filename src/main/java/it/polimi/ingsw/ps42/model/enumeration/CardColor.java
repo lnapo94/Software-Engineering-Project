@@ -11,7 +11,9 @@ public enum CardColor {
 	private CardColor(String message) {
 		this.message = message;
 	}
-	
+	public static CardColor parseInput(String color) {
+		return Enum.valueOf(CardColor.class, color.toUpperCase());
+	}
 	@Override
 	public String toString() {
 		return this.message;

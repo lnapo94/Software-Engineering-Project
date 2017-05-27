@@ -12,6 +12,9 @@ public enum FamiliarColor {
 		this.message = message;
 	}
 	
+	public static FamiliarColor parseInput(String color){
+		return Enum.valueOf(FamiliarColor.class, color.toUpperCase());
+	}
 	@Override
 	public String toString() {
 		return this.message;

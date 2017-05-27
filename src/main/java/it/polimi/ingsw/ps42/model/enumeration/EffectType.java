@@ -14,6 +14,9 @@ public enum EffectType {
 	private EffectType(String message) {
 		this.message = message;
 	}
+	public static EffectType parseInput(String color){
+		return Enum.valueOf(EffectType.class, color.toUpperCase());
+	}
 	
 	@Override
 	public String toString() {

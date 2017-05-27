@@ -2,12 +2,12 @@ package it.polimi.ingsw.ps42.model.position;
 
 import java.util.List;
 
+import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
-import it.polimi.ingsw.ps42.model.request.CouncilRequest;
 
 public class CouncilPosition extends Position {
 
@@ -17,11 +17,11 @@ public class CouncilPosition extends Position {
 	 * in the next round
 	*/
 	
-	private final List<Obtain> councilConversion;
+	private final CouncilObtain councilBonus;
 	
-	public CouncilPosition(ActionType type, int level, Obtain bonus, int malus, List<Obtain> councilConversion) {
+	public CouncilPosition(ActionType type, int level, Obtain bonus, int malus, CouncilObtain councilBonus) {
 		super(type, level, bonus, malus);
-		this.councilConversion=councilConversion;
+		this.councilBonus=councilBonus;
 		
 	}
 	
@@ -29,14 +29,13 @@ public class CouncilPosition extends Position {
 	public void setFamiliar(Familiar familiar) throws FamiliarInWrongPosition {
 		
 		super.setFamiliar(familiar);
-		applyCouncilPositionBonus(familiar);
+		applyCouncilPositionBonus(familiar.getPlayer());
 		
 	}
 	
-	private void applyCouncilPositionBonus(Familiar familiar){
+	public void applyCouncilPositionBonus(Player player){
 		
-		Player player=familiar.getPlayer();
-		player.addCouncilRequests(new CouncilRequest(this.councilConversion, 1));
+		councilBonus.enableEffect(player);
 	}
 	
 }
