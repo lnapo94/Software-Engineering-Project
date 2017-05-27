@@ -22,34 +22,36 @@ public abstract class Action {
 	protected int positionValue;
 	protected List<Position> tableLocation;
 	protected Packet discount;
+	protected int actionValue;
 	
 	
 	public Action(ActionType type, Familiar familiar,List<Position> tablePosition, int positionInTableList){
 		//Constructor for normal action, player is get from familiar
-		if(familiar!=null){
-			this.type=type;
-			this.familiar=familiar;
-			this.player=familiar.getPlayer();
-			this.positionValue=positionInTableList;
-			this.tableLocation=tablePosition;
-		}			
-		//else throw new WrongActionInitialization("The familiar is set to null");
+		
+		this.type=type;
+		this.familiar=familiar;
+		this.player=familiar.getPlayer();
+		this.positionValue=positionInTableList;
+		this.tableLocation=tablePosition;
+		this.actionValue=familiar.getValue();
+			
 	}
-	public Action(ActionType type, Player player,List<Position> tablePosition, int positionInTableList){
+	public Action(ActionType type, Player player,List<Position> tablePosition, int positionInTableList, int actionValue){
 		//Constructor for bonus action (no familiar involved, so requires the player) 
 		
 		this.type=type;
 		this.player=player;
 		this.positionValue=positionInTableList;
 		this.tableLocation=tablePosition;
+		this.actionValue=actionValue;
 	}
 	
 	public abstract void checkAction();		//Does all the required checks before the action is applicated 
 	
 	public abstract void doAction();		//Apply the player action 
 	
-	public void modifyActionValue(int value){		//Increments the value of the action 
-		
+	public void incrementActionValue(int value){		//Increments the value of the action 
+		actionValue+=value;
 		
 	}
 	
