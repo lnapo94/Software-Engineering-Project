@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.effect.Effect;
+import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.resourcepacket.*;
@@ -49,11 +50,13 @@ public class CardBuilder {
 		int level = askLevel();
 		List<Packet> costs = askCosts();
 		List<Packet> requirements = askRequirements();
-		List<Effect> immediateEffects = askImmediateEffect();
-		List<Effect> permanentEffect = askPermanentEffect();
-		List<Effect> finalEffect = askFinalEffect();
+		List<Effect> immediateEffects = askEffects("immediato");
+		List<Effect> permanentEffect = askEffects("permanente");
+		List<Effect> finalEffect = askEffects("finale");
+		
 		Card card = new Card(name, description, color, period, level, costs, 
 				immediateEffects, requirements, permanentEffect, finalEffect );
+		addCardToFile(card);
 	}
 	
 	private String askName(){
@@ -90,12 +93,12 @@ public class CardBuilder {
 	private List<Packet> askCosts(){
 		String response;
 		ArrayList<Packet> costs=new ArrayList<>();
-		System.out.println("Creare nuovo costo?(no/si)");
+		System.out.println("Creare nuovo costo?(si/no)");
 		response = scanner.nextLine();
 		while(response.toUpperCase()!="NO"){
 			
 			costs.add(askPacket());
-			System.out.println("Creare nuovo costo?(no/si)");
+			System.out.println("Creare nuovo costo?(si/no)");
 			response = scanner.nextLine();	
 		}
 		return costs;
@@ -104,27 +107,30 @@ public class CardBuilder {
 	private List<Packet> askRequirements(){
 		String response;
 		ArrayList<Packet> requirements = new ArrayList<>();
-		System.out.println("Creare nuovo requisito?(no/si)");
+		System.out.println("Creare nuovo requisito?(si/no)");
 		response = scanner.nextLine();
 		while(response.toUpperCase()!="NO"){
 			
 			requirements.add(askPacket());
-			System.out.println("Creare nuovo requisito?(no/si)");
+			System.out.println("Creare nuovo requisito?(si/no)");
 			response = scanner.nextLine();	
 		}
 		return requirements;
 	}
 	
-	private List<Effect> askImmediateEffect(){
-		return null;
-	}
-	
-	private List<Effect> askPermanentEffect(){
-		return null;
-	}
-	
-	private List<Effect> askFinalEffect(){
-		return null;
+	private List<Effect> askEffects(String effectType){
+		
+		ArrayList<Effect> effects = new ArrayList<>();
+		String response;
+		System.out.println("Creare nuovo effetto " +effectType+ "? (si/no)");
+		response = scanner.nextLine();
+		while(response.toUpperCase()!="NO"){
+			
+			effects.add(askEffect());
+			System.out.println("Creare nuovo effetto " +effectType+ "?(si/no)");
+			response = scanner.nextLine();	
+		}
+		return effects;
 	}
 	
 	private Packet askPacket(){
@@ -138,11 +144,34 @@ public class CardBuilder {
 			packet.addUnit(new Unit(Resource.parseInput(resource), quantity));
 			System.out.println("Vuoi aggiungere altro?(si/no)");
 			response=scanner.nextLine();
+			System.out.println("stato attuale: "+packet);
 		}
 		while(response.toUpperCase()!="NO");
 		return packet;
 	}
 	
+	private Effect askEffect(){
+		
+		Effect effect = null;
+		System.out.println("Tipo ? ");
+		String effectType=scanner.nextLine();
+		switch (effectType.toUpperCase()) {
+		case "OBTAIN":
+			effect = askObtain();
+			break;
+
+		default:
+			System.out.println("tipo non valido");
+			break;
+		}
+		return effect;
+		
+	}
+	
+	private Obtain askObtain(){
+		
+		return null;
+	}
 	private void addCardToFile(Card card){
 		
 		gson.toJson(card, buffer);

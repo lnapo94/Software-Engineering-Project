@@ -14,8 +14,8 @@ public enum Resource {
 		this.message = message;
 	}
 	
-	public static Resource parseInput(String color){
-		return Enum.valueOf(Resource.class, color.toUpperCase());
+	public static Resource parseInput(String resource){
+		return Enum.valueOf(Resource.class, resource.toUpperCase());
 	}
 	@Override
 	public String toString() {

@@ -12,8 +12,8 @@ public enum ActionType {
 		
 		this.message=message;
 	}
-	public static ActionType parseInput(String color){
-		return Enum.valueOf(ActionType.class, color.toUpperCase());
+	public static ActionType parseInput(String actionType){
+		return Enum.valueOf(ActionType.class, actionType.toUpperCase());
 	}
 	@Override
 	public String toString(){
