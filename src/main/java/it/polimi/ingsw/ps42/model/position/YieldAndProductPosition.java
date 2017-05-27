@@ -22,14 +22,18 @@ public class YieldAndProductPosition extends Position {
 		bonusFamiliars = new ArrayList<>();
 	}
 	
-	public void enableCards(List<Card> cards){		//Enables the permanent effect of all the cards in the arrayList
-		if(cards!=null){
-			for (Card card : cards) {
-				card.enablePermanentEffect();
+	public void enableCards(List<Card> cards){		//Enables the permanent effect of all the cards in the arrayList for the first familiar placed
+		enableCards(cards, super.getFamiliar());
+	}
+	
+	public void enableCards(List<Card> cards, Familiar familiar){		//Enables the permanent effect of all the cards in the arrayList
+		if(cards!=null && familiar!=null){
+			for (Card card : cards) { 
+				if(canApply(card, familiar))			//Checks if the effect of the card can be applied 
+					card.enablePermanentEffect();
 			}
 		}
 	}
-	
 	public void addBonusFamiliar(Familiar familiar) throws FamiliarInWrongPosition {		//Adds a bonus Familiar in the position, requires a Leader Card activation
 		if(canStay(familiar)){
 			this.bonusFamiliars.add(familiar);
@@ -47,5 +51,9 @@ public class YieldAndProductPosition extends Position {
 		this.bonusFamiliars=new ArrayList<>();
 	}
 	
+	private boolean canApply(Card card, Familiar familiar){
+		
+		return card.getLevel()<= (familiar.getValue()+familiar.getIncrement());	//TO-DO: discutere se serve anche l'incremento o basta il valore
+	}
 
 }

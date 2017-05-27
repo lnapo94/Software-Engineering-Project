@@ -41,7 +41,7 @@ public class IncreaseAction extends Effect {
 		
 		if(type==action.getType()){
 			action.addIncrement(value);
-			action.setDiscount(discount);
+			action.addDiscount(discount);
 		}
 	}
 	

@@ -227,11 +227,8 @@ public class Player {
 		}
 	}
 	
-	public void enableIncreaseEffect() {
-		//Apply effects present in IncreaseEffect list
-		for(IncreaseAction e : increaseEffect) {
-			e.enableEffect(this);
-		}
+	public List<IncreaseAction> getIncreaseEffect() {
+		return increaseEffect;
 	}
 	
 	public boolean canPlay() {
