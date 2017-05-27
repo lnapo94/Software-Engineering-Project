@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps42.model.action;
 import java.util.List;
 
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.enumeration.Response;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.YieldAndProductPosition;
@@ -27,9 +28,9 @@ public class ProductAction extends Action {
 	}
 	
 	@Override
-	public void checkAction() {
+	public Response checkAction() {
 		// TODO Auto-generated method stub
-		
+		return Response.FAILURE;		
 	}
 
 	@Override
@@ -37,13 +38,5 @@ public class ProductAction extends Action {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void createRequest() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
 
 }

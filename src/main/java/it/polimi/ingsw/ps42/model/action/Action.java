@@ -4,6 +4,7 @@ import java.util.List;
 
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.enumeration.Response;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
@@ -39,7 +40,7 @@ public abstract class Action {
 		this.actionValue=actionValue;
 	}
 	
-	public abstract void checkAction();		//Does all the required checks before the action is applicated 
+	public abstract Response checkAction();		//Does all the required checks before the action is applicated 
 	
 	public abstract void doAction();		//Apply the player action 
 	
@@ -48,7 +49,7 @@ public abstract class Action {
 		
 	}
 	
-	private void checkIncreaseEffect(){			//Checks if the player has some increase effects active and apply them
+	protected void checkIncreaseEffect(){			//Checks if the player has some increase effects active and apply them
 		List<IncreaseAction> playerIncreaseAction = player.getIncreaseEffect();
 		
 		for (IncreaseAction increaseAction : playerIncreaseAction) {
@@ -68,7 +69,6 @@ public abstract class Action {
 			
 	}
 	
-	public abstract void createRequest();		//Create a request to better define the action and put it in the player 
 	
 	public ActionType getType() {
 		return type;

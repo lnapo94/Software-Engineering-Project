@@ -12,7 +12,9 @@ public class ActionPrototype {
 	private Packet discount;
 	
 	public ActionPrototype(ActionType type, int level, Packet discount){
-		
+		this.type = type;
+		this.level = level;
+		this.discount = discount;
 	}
 	
 	public ActionType getType() {
@@ -25,7 +27,7 @@ public class ActionPrototype {
 		return discount;
 	}
 	
-	public void checkAction(Action action){
-		
+	public boolean checkAction(Action action){
+		return false;
 	}
 }

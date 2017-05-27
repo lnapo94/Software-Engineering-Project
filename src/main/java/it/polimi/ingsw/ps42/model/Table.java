@@ -252,5 +252,14 @@ public class Table {
 	public List<Obtain> getCouncilBonuses() {
 		return councilBonuses;
 	}
+	
+	public CouncilPosition getFreeCouncilPosition() {
+		CouncilPosition councilPosition = new CouncilPosition(ActionType.COUNCIL, 1, null, 0, null);
+		council.add(councilPosition);
+		return councilPosition;
+		/*TODO
+		 * Creare da file i possibili privilegi (ultimo valore null in Costruttore)
+		 */
+	}
 
 }
