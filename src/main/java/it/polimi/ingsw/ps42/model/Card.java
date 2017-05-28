@@ -169,7 +169,7 @@ public class Card {
 	//PRIVATE METHODS FOR CARD CLASS
 	private void controlPossibleChoice() throws NotEnoughResourcesException {
 		//ONLY PRIVATE request
-		//Used only to support effect
+		//Used only to verify if the arrays of choices isn't empty
 		if(possibleChoice.isEmpty() || possibleChoiceIndex.isEmpty()) 
 			throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this effect");
 	}
