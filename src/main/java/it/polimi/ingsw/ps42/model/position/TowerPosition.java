@@ -23,7 +23,7 @@ public class TowerPosition  extends Position {
 	public Card getCard() {			//Returns the card, used to check if the card may be taken from the player
 		return card;
 	}
-	public boolean hasCard(Card card){		//Check if there is a card in the position
+	public boolean hasCard(){		//Check if there is a card in the position
 		return card == null;
 		
 	}
