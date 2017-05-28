@@ -70,7 +70,11 @@ public class CardBuilder {
 				immediateEffects, requirements, permanentEffect, finalEffect );
 		
 		card.setPlayer(null);
-		addCardToFile(card);
+		
+		Card card2 = new Card("prova", "descrizione", CardColor.GREEN, 2, 2, null, null, null, null, null);
+		card2.setPlayer(null);
+		
+		addCardToFile(card2);
 	}
 	
 	public void close() throws IOException{

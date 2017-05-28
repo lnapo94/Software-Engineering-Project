@@ -13,6 +13,7 @@ public abstract class Effect {
 	protected Effect(EffectType typeOfEffect) {
 		//Generic Constructor for all the class
 		this.typeOfEffect=typeOfEffect;
+		this.player = null;
 	}
 	
 	
