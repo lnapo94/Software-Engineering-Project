@@ -6,6 +6,7 @@ import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
+import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -48,7 +49,7 @@ public abstract class Action {
 	
 	public abstract Response checkAction();		//Does all the required checks before the action is applicated 
 	
-	public abstract void doAction();		//Apply the player action 
+	public abstract void doAction() throws FamiliarInWrongPosition;		//Apply the player action 
 
 	
 	protected void checkIncreaseEffect(){			//Checks if the player has some increase effects active and apply them
@@ -74,6 +75,10 @@ public abstract class Action {
 	
 	public ActionType getType() {
 		return type;
+	}
+	
+	public int getActionValue() {
+		return actionValue;
 	}
 	
 	public void addIncrement(int increment){

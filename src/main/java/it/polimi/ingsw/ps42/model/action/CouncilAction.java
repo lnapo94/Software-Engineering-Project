@@ -29,7 +29,7 @@ public class CouncilAction extends Action {
 	public Response checkAction() {
 		if(familiar != null) {
 			checkIncreaseEffect();
-			if(familiar.getIncrement() + actionValue < tablePosition.getLevel())
+			if(actionValue < tablePosition.getLevel())
 				return Response.FAILURE;
 		}
 		return Response.SUCCESS;
