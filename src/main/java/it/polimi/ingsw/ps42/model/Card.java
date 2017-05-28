@@ -10,6 +10,9 @@ import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.request.CardRequest;
+import it.polimi.ingsw.ps42.model.request.FinalRequest;
+import it.polimi.ingsw.ps42.model.request.ImmediateRequest;
+import it.polimi.ingsw.ps42.model.request.PermanentRequest;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
@@ -33,7 +36,8 @@ public class Card {
 	private List<Effect> finalEffects;
 	
 	//ArrayList used for check if player can pay to obtain the card or enable the effect
-	private List<Integer> possibleChoice;
+	private List<Printable> possibleChoice;
+	private List<Integer> possibleChoiceIndex;
 	
 	public Card(String name, String description, CardColor color, int period, 
 			int level, List<Packet> costs, List<Effect> immediateEffects, List<Packet> requirements,
@@ -53,6 +57,7 @@ public class Card {
 		
 		//Construct the arraylist
 		this.possibleChoice = new ArrayList<>();
+		this.possibleChoiceIndex = new ArrayList<>();
 	}
 	
 	public String getName() {
@@ -106,7 +111,16 @@ public class Card {
 	
 	/*	IMMEDIATE EFFECT */
 	public void enableImmediateEffect() throws NotEnoughResourcesException {
-		enableEffect(immediateEffects);
+		if(immediateEffects != null && !( immediateEffects.isEmpty() ) ) {
+			//If the effectList exist
+			if(canEnableNowEffect(immediateEffects))
+				enableEffect(0, immediateEffects);
+			else{
+				controlPossibleChoice();
+				CardRequest request = new ImmediateRequest(this, possibleChoiceIndex, possibleChoice);
+				owner.addRequest(request);
+			}
+		}
 	}
 	
 	public void enableImmediateEffect(int choice) {
@@ -116,7 +130,16 @@ public class Card {
 	
 	/*	PERMANENT EFFECT */
 	public void enablePermanentEffect() throws NotEnoughResourcesException {
-		enableEffect(permanentEffects);
+		if(permanentEffects != null && !( permanentEffects.isEmpty() ) ) {
+			//If the effectList exist
+			if(canEnableNowEffect(permanentEffects))
+				enableEffect(0, permanentEffects);
+			else {
+				controlPossibleChoice();
+				CardRequest request = new PermanentRequest(this, possibleChoiceIndex, possibleChoice);
+				owner.addRequest(request);
+			}
+		}
 	}
 	
 	public void enablePermanentEffect(int choice) {
@@ -126,7 +149,16 @@ public class Card {
 	
 	/* FINAL EFFECT */
 	public void enableFinalEffect() throws NotEnoughResourcesException {
-		enableEffect(finalEffects);
+		if(finalEffects != null && !( finalEffects.isEmpty() ) ) {
+			//If the effectList exist
+			if(canEnableNowEffect(finalEffects))
+				enableEffect(0, finalEffects);
+			else {
+				controlPossibleChoice();
+				CardRequest request = new FinalRequest(this, possibleChoiceIndex, possibleChoice);
+				owner.addRequest(request);
+			}
+		}
 	}
 	
 	public void enableFinalEffect(int choice) {
@@ -135,25 +167,11 @@ public class Card {
 	/* END FINAL EFFECT */
 	
 	//PRIVATE METHODS FOR CARD CLASS
-	private void createRequest() throws NotEnoughResourcesException {
+	private void controlPossibleChoice() throws NotEnoughResourcesException {
 		//ONLY PRIVATE request
 		//Used only to support effect
-		if(possibleChoice.isEmpty()) {
+		if(possibleChoice.isEmpty() || possibleChoiceIndex.isEmpty()) 
 			throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this effect");
-		}
-		
-		CardRequest request = new CardRequest(this, possibleChoice);
-		owner.addRequest(request);
-	}
-	
-	private void enableEffect(List<Effect> effectList) throws NotEnoughResourcesException {
-		if(effectList != null && !( effectList.isEmpty() ) ) {
-			//If the effectList exist
-			if(canEnableNowEffect(effectList))
-				enableEffect(0, effectList);
-			else
-				createRequest();
-		}
 	}
 	
 	private void enableEffect(int choice, List<Effect> effectList) {
@@ -170,8 +188,10 @@ public class Card {
 		for(Effect effect : effectList) {
 			//Else if card has more than one effect, control all the effect, and add it to the possibleChoice array
 			//But return false because the card need to know the user's choice
-			if(checkActivable(effect, effectList.indexOf(effect)))
-				possibleChoice.add(effectList.indexOf(effect));
+			if(checkActivable(effect, effectList.indexOf(effect))) {
+				possibleChoiceIndex.add(effectList.indexOf(effect));
+				possibleChoice.add(effect);
+			}
 		}
 		return false;
 	}
@@ -192,7 +212,8 @@ public class Card {
 				//Else the effect cannot be payed nor added to the possible choice array
 				checker = checkPlayerCanPay(obtainCosts);
 				if(checker == true) {
-					possibleChoice.add(index);
+					possibleChoice.add(effect);
+					possibleChoiceIndex.add(index);
 					checker = false;
 				}
 			}
