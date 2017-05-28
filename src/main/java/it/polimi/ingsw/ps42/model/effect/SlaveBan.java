@@ -21,6 +21,12 @@ public class SlaveBan extends Effect {
 		player.setDivisory(divisory);
 		
 	}
+
+	@Override
+	public String print() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

@@ -5,10 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 
-public class Packet implements Iterable<Unit>   {
+public class Packet implements Iterable<Unit>, Printable {
 	
 	private List<Unit> list;
 	
@@ -107,6 +108,11 @@ public class Packet implements Iterable<Unit>   {
 			return unitTemp;
 		}
 		
+	}
+	@Override
+	public String print() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

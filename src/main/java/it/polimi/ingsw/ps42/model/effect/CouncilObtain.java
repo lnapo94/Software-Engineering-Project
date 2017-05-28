@@ -28,6 +28,12 @@ public class CouncilObtain extends Effect {
 		player.addCouncilRequests(request);
 		
 	}
+
+	@Override
+	public String print() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

@@ -17,4 +17,10 @@ public class NoBonusInTower extends Effect{
 		player.disableBonusInTower();
 	}
 
+	@Override
+	public String print() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -9,7 +9,7 @@ import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Player;
-import it.polimi.ingsw.ps42.model.request.Request;
+import it.polimi.ingsw.ps42.model.request.CardRequest;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
@@ -142,7 +142,7 @@ public class Card {
 			throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this effect");
 		}
 		
-		Request request = new Request(this, possibleChoice);
+		CardRequest request = new CardRequest(this, possibleChoice);
 		owner.addRequest(request);
 	}
 	

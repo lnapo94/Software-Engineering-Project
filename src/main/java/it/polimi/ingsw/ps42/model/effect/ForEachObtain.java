@@ -38,4 +38,10 @@ public class ForEachObtain extends Effect{
 		player.increaseResource(packet);
 	}
 
+	@Override
+	public String print() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

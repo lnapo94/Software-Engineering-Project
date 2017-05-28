@@ -16,4 +16,10 @@ public class NoFirstActionBan extends Effect {
 		player.setCanPlay(false);
 	}
 
+	@Override
+	public String print() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

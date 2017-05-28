@@ -1,9 +1,10 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 
-public abstract class Effect {
+public abstract class Effect implements Printable{
 	//This is the abstract class for all the game effects, such as Immediate, Permanent and Ban
 	//effect
 	

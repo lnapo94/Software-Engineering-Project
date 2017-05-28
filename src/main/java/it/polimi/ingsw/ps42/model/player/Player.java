@@ -16,7 +16,7 @@ import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.IsNotEmptyException;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.request.CouncilRequest;
-import it.polimi.ingsw.ps42.model.request.Request;
+import it.polimi.ingsw.ps42.model.request.CardRequest;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
@@ -62,7 +62,7 @@ public class Player {
 	
 	//The arraylist used by the gamelogic to know more from the player
 	//e. g. which cost the player wants to pay
-	private List<Request> requests;
+	private List<CardRequest> requests;
 	private List<CouncilRequest> councilRequests;
 	
 	
@@ -280,11 +280,11 @@ public class Player {
 		
 	}
 	
-	public List<Request> getRequests() {
+	public List<CardRequest> getRequests() {
 		//Get all the request in player, but this method remove all the requests arraylist
 		//from the player
 		
-		List<Request> temp = this.requests;
+		List<CardRequest> temp = this.requests;
 		this.requests = new ArrayList<>();
 		return temp;
 	}
@@ -299,7 +299,7 @@ public class Player {
 		councilRequests.add(councilRequest);
 	}
 	
-	public void addRequest(Request request) {
+	public void addRequest(CardRequest request) {
 		//Add a single request in arraylist
 		requests.add(request);
 	}

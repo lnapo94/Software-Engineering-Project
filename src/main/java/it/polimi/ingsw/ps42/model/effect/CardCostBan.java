@@ -58,4 +58,10 @@ public class CardCostBan extends Effect{
 		
 	}
 
+	@Override
+	public String print() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

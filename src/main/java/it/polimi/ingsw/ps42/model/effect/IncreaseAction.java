@@ -44,6 +44,12 @@ public class IncreaseAction extends Effect {
 			action.addDiscount(discount);
 		}
 	}
+
+	@Override
+	public String print() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

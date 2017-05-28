@@ -19,4 +19,10 @@ public class NoMarketBan extends Effect {
 		
 	}
 
+	@Override
+	public String print() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
