@@ -69,10 +69,8 @@ public class CardBuilder {
 		Card card = new Card(name, description, color, period, level, costs, 
 				immediateEffects, requirements, permanentEffect, finalEffect );
 		
-		System.out.println(card.getDescription());
-		
-		Card card2= new Card("prova", "descrizione", CardColor.GREEN, 2, 2, null, null, null, null, null);
-		addCardToFile(card2);
+		card.setPlayer(null);
+		addCardToFile(card);
 	}
 	
 	public void close() throws IOException{
@@ -263,7 +261,7 @@ public class CardBuilder {
 		String response;
 		ActionType type;
 		int actionLevel;
-		Packet discount = null;
+		Packet discount = new Packet();
 		System.out.println("Tipo azione?");
 		response = scanner.nextLine();
 		type = ActionType.parseInput(response);
@@ -282,7 +280,7 @@ public class CardBuilder {
 		String response;
 		ActionType type;
 		int value;
-		Packet discount = null;
+		Packet discount = new Packet();
 		System.out.println("Tipo azione?");
 		response = scanner.nextLine();
 		type = ActionType.parseInput(response);
@@ -298,8 +296,8 @@ public class CardBuilder {
 
 	private Effect askForEachObtain() {
 		
-		Packet requirements = null;
-		Packet gains = null;
+		Packet requirements = new Packet();
+		Packet gains = new Packet();
 		String response;
 		System.out.println("Aggiungere requisiti? (si/no)");
 		response = scanner.nextLine();
@@ -313,8 +311,8 @@ public class CardBuilder {
 	}
 
 	private Effect askObtain(){
-		Packet costs = null;
-		Packet gains = null;
+		Packet costs = new Packet();
+		Packet gains = new Packet();
 		String response;
 		System.out.println("Aggiungere costi? (si/no)");
 		response = scanner.nextLine();
@@ -328,10 +326,11 @@ public class CardBuilder {
 	}
 	private void addCardToFile(Card card) throws IOException{
 		
-		System.out.println(card);
 		String parse = gson.toJson(card);
 		System.out.println(parse);
 		writer.append(parse);
 	}
+	
+
 	
 }
