@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps42.model.position;
 
-import java.util.List;
 
 import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
 import it.polimi.ingsw.ps42.model.effect.Obtain;

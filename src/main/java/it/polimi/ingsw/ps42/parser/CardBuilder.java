@@ -36,25 +36,28 @@ public class CardBuilder {
 	
 	public CardBuilder(String fileName) throws IOException {
 		
-		initGson(gson);
-		writer=new FileWriter(fileName);
+		initGson();
+		writer=new FileWriter(fileName, true);
 		buffer=new BufferedWriter(writer);
 		scanner=new Scanner(System.in);
 		
-		councilConversion = askCouncilConversion();
+		//councilConversion = askCouncilConversion();
 	}
 	
-	private void initGson(Gson gson){
+	private void initGson(){
 		
-		GsonBuilder builder=new GsonBuilder().setPrettyPrinting();
-		builder.registerTypeAdapter(Effect.class, new Serializer());
+		GsonBuilder builder=new GsonBuilder().serializeNulls().setPrettyPrinting();
 		
-		gson=builder.create();
+		this.gson = builder.registerTypeAdapter(Effect.class, new Serializer()).create();
 		
+	}
+	
+	public Gson getGson() {
+		return gson;
 	}
 	
 	public void addCard() throws IOException {
-		
+		/*
 		String name = askName();
 		String description = askDescription();
 		CardColor color = askCardColor();
@@ -71,8 +74,11 @@ public class CardBuilder {
 		
 		card.setPlayer(null);
 		
-		Card card2 = new Card("prova", "descrizione", CardColor.GREEN, 2, 2, null, null, null, null, null);
+		*/
+
+		Card card2= new Card("aa", "desc", CardColor.BLUE, 2, 3, null, null,null, null, null);
 		card2.setPlayer(null);
+		String parse =gson.toJson(card2) ;
 		
 		addCardToFile(card2);
 	}
@@ -156,7 +162,7 @@ public class CardBuilder {
 		return effects;
 	}
 	
-	private Packet askPacket(){
+	public Packet askPacket(){
 		String response;
 		Packet packet=new Packet();
 		do{
@@ -314,7 +320,7 @@ public class CardBuilder {
 		return new ForEachObtain(requirements, gains);
 	}
 
-	private Effect askObtain(){
+	public Effect askObtain(){
 		Packet costs = new Packet();
 		Packet gains = new Packet();
 		String response;
@@ -328,11 +334,11 @@ public class CardBuilder {
 			gains=askPacket();
 		return new Obtain(costs, gains);
 	}
-	private void addCardToFile(Card card) throws IOException{
+	public void addCardToFile(Card card) throws IOException{
 		
 		String parse = gson.toJson(card);
-		System.out.println(parse);
-		writer.append(parse);
+		System.out.println("parse: "+parse);
+		buffer.append(parse);
 	}
 	
 
