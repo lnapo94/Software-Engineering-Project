@@ -30,7 +30,8 @@ public class ProductAction extends Action {
 	
 	@Override
 	public Response checkAction() {
-		// TODO Auto-generated method stub
+		
+		
 		return Response.FAILURE;		
 	}
 
