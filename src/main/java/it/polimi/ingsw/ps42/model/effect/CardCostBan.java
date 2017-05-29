@@ -38,7 +38,8 @@ public class CardCostBan extends Effect{
 			Unit u=new Unit(Resource.VICTORYPOINT, banCost);	//Convert the total amount in victory point to be subtracted later
 			Packet p=new Packet();
 			p.addUnit(u);
-			player.decreaseResource(p);							//Apply the ban to the player
+			//TODO GESTIRE ECCEZIONE
+			//player.decreaseResource(p);							//Apply the ban to the player
 		}
 		catch (WrongColorException e) {
 			System.out.println("Ban failed beacause of a wrong initialization of the effect");
