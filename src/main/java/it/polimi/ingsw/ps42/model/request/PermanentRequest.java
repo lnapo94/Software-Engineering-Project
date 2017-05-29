@@ -9,13 +9,11 @@ public class PermanentRequest extends CardRequest{
 
 	public PermanentRequest(Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice) {
 		super(card, possibleChoiceIndex, possibleChoice);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void apply() {
-		// TODO Auto-generated method stub
-		
+		card.enablePermanentEffect(possibleChoiceIndex.get(userChoice));
 	}
 
 }
