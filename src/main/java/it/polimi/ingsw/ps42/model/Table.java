@@ -177,7 +177,7 @@ public class Table {
 		List<Player> temp = new ArrayList<>();
 		for(CouncilPosition position : council) {
 			temp.add(position.getFamiliar().getPlayer());
-			
+			council.remove(position);
 			//Remove also the familiar
 			position.removeFamiliar();
 		}

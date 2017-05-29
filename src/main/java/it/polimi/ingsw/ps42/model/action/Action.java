@@ -25,6 +25,19 @@ public abstract class Action {
 	protected Packet discount;
 	protected int actionValue;
 	
+	/*	actionValue is the current value of the action. We have two possibilities for the
+	*	action: a "normal" action, in which the player move the familiar in one position
+	*	and a "bonus" action, in which the player select only a position, without positioning
+	*	any familiar. In this last case, we have an action value, taken from the card, and we
+	*	haven't a value taken from the familiar. So we need a variable to have the correct
+	*	value, to do some control, to rise a bonus action and so on...
+	*	Then we decide to use this variable also for the "normal" action with familiar, and we
+	*	set it while the action is constructed
+	*/
+	
+	/*	The increment the player wants to do is in familiar.getIncrement, the others kinds
+	 * 	of increments are stored in actionValue
+	 */
 	
 	public Action(ActionType type, Familiar familiar) throws NotEnoughResourcesException{
 		//Constructor for normal action, player is get from familiar
