@@ -30,14 +30,22 @@ public class ProductAction extends Action {
 	
 	@Override
 	public Response checkAction() {
-		
+		/*
+		 * First: Check ban 
+		 * Second: Check increase effect
+		 * Third: Check the first free position (if the first is occupied check if you are the only familiar of that player, pay attention to neutral familiar)
+		 * Fourth: Apply position bonus and malus
+		 */
 		
 		return Response.FAILURE;		
 	}
 
 	@Override
 	public void doAction() {
-		// TODO Auto-generated method stub
+		
+		/* First: Take Product cards from player and enable them through the position method 
+		 * (the requests are handled by the game logic)
+		 */
 		
 	}
 

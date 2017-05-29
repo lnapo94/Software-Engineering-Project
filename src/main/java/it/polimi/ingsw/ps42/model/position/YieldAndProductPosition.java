@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.ps42.model.Card;
+import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
@@ -23,14 +24,11 @@ public class YieldAndProductPosition extends Position {
 		bonusFamiliars = new ArrayList<>();
 	}
 	
-	public void enableCards(List<Card> cards){		//Enables the permanent effect of all the cards in the arrayList for the first familiar placed
-		enableCards(cards, super.getFamiliar());
-	}
 	
-	public void enableCards(List<Card> cards, Familiar familiar){		//Enables the permanent effect of all the cards in the arrayList
-		if(cards!=null && familiar!=null){
+	public void enableCards(StaticList<Card> cards, int actionValue){		//Enables the permanent effect of all the cards in the arrayList
+		if(cards!=null ){
 			for (Card card : cards) { 
-				if(canApply(card, familiar))
+				//Controllo su valore azione poichè passo solo carte del giocatore e il valore dell'azione
 					try {
 						card.enablePermanentEffect();
 					} catch (NotEnoughResourcesException e) {
@@ -56,9 +54,5 @@ public class YieldAndProductPosition extends Position {
 		this.bonusFamiliars=new ArrayList<>();
 	}
 	
-	private boolean canApply(Card card, Familiar familiar){
-		
-		return card.getLevel()<= (familiar.getValue()+familiar.getIncrement());	//TO-DO: discutere se serve anche l'incremento o basta il valore
-	}
 
 }
