@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps42.model.effect;
 
 
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
@@ -35,7 +36,11 @@ public class Obtain extends Effect{
 		 */
 		
 		this.player=player;
-		player.decreaseResource(costs);
+		try {
+			player.decreaseResource(costs);
+		} catch (NotEnoughResourcesException e) {
+			throw new ArithmeticException("Effect was enabled, but it can't be payed");
+		}
 		player.increaseResource(gains);
 
 		

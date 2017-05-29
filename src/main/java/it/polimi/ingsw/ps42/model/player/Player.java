@@ -14,6 +14,7 @@ import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.IsNotEmptyException;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.request.CardRequest;
 import it.polimi.ingsw.ps42.model.request.CouncilRequest;
@@ -174,7 +175,7 @@ public class Player {
 		}
 	}
 	
-	public void decreaseResource(Packet packet) {
+	public void decreaseResource(Packet packet) throws NotEnoughResourcesException {
 		
 		if(packet != null) {
 			//Temporary variables used in the FOR EACH
@@ -190,7 +191,7 @@ public class Player {
 				tempQuantity = nextResources.get(tempResource) - tempQuantity;
 				
 				if(tempQuantity < 0)
-					throw new ArithmeticException("tempQuantity in player.decreaseResource is"
+					throw new NotEnoughResourcesException("tempQuantity in player.decreaseResource is"
 							+ " negative, unable to continue");
 				
 				//Upload the value in the HashMap

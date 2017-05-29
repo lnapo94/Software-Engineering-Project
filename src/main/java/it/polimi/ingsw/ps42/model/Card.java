@@ -94,7 +94,7 @@ public class Card {
 		this.owner = owner;
 	}
 	
-	public void payCard(int choice, Packet discount) {
+	public void payCard(int choice, Packet discount) throws NotEnoughResourcesException {
 		//Apply the chosen card cost
 		if(costs != null && !( costs.isEmpty() ) ) {
 			if(discount != null) {
@@ -104,7 +104,7 @@ public class Card {
 		}
 	}
 
-	public void payCard(int choice) {
+	public void payCard(int choice) throws NotEnoughResourcesException {
 		//Apply the chosen card cost without a discount
 		payCard(choice, null);
 	}
