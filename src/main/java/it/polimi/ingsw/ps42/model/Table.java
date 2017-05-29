@@ -222,15 +222,11 @@ public class Table {
 	
 	//GETTER FOR THE YIELD AND PRODUCT
 	public YieldAndProductPosition getFirstYield() {
-		if(firstYield.isEmpty())
-			return firstYield;
-		return null;
+		return firstYield;
 	}
 	
 	public YieldAndProductPosition getFirstProduct() {
-		if(firstProduct.isEmpty())
-			return firstProduct;
-		return null;
+		return firstProduct;
 	}
 	
 	public List<YieldAndProductPosition> getOtherYield() {
