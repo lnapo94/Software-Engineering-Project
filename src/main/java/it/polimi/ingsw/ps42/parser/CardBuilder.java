@@ -77,6 +77,7 @@ public class CardBuilder {
 	public void close() throws IOException{
 		
 		buffer.close();
+		writer.close();
 		scanner.close();
 	}
 	private String askName(){
