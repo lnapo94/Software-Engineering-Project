@@ -22,6 +22,7 @@ import it.polimi.ingsw.ps42.model.effect.NoBonusInTower;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
+import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.resourcepacket.*;
@@ -41,7 +42,7 @@ public class CardBuilder {
 		buffer=new BufferedWriter(writer);
 		scanner=new Scanner(System.in);
 		
-		//councilConversion = askCouncilConversion();
+		councilConversion = askCouncilConversion();
 	}
 	
 	private void initGson(){
@@ -52,12 +53,8 @@ public class CardBuilder {
 		
 	}
 	
-	public Gson getGson() {
-		return gson;
-	}
-	
 	public void addCard() throws IOException {
-		/*
+		
 		String name = askName();
 		String description = askDescription();
 		CardColor color = askCardColor();
@@ -74,13 +71,7 @@ public class CardBuilder {
 		
 		card.setPlayer(null);
 		
-		*/
-
-		Card card2= new Card("aa", "desc", CardColor.BLUE, 2, 3, null, null,null, null, null);
-		card2.setPlayer(null);
-		String parse =gson.toJson(card2) ;
-		
-		addCardToFile(card2);
+		addCardToFile(card);
 	}
 	
 	public void close() throws IOException{
@@ -103,6 +94,8 @@ public class CardBuilder {
 	private CardColor askCardColor(){
 		
 		System.out.println("inserisci colore della carta");
+		System.out.println(CardColor.BLUE.toString()+" "+CardColor.GREEN.toString()+" "
+			+CardColor.VIOLET.toString()+" "+CardColor.YELLOW.toString());
 		return CardColor.parseInput(scanner.nextLine());
 	}
 	
@@ -167,6 +160,9 @@ public class CardBuilder {
 		Packet packet=new Packet();
 		do{
 			System.out.println("Tipo Risorsa? ");
+			System.out.println(Resource.FAITHPOINT.toString()+" "+Resource.MILITARYPOINT.toString()+" "
+					+Resource.MONEY.toString()+" "+Resource.SLAVE.toString()+" "+Resource.STONE.toString()+" "
+					+Resource.VICTORYPOINT.toString()+" "+Resource.WOOD.toString());
 			String resource=scanner.nextLine();
 			System.out.println("Quantità?" );
 			int quantity = Integer.parseInt(scanner.nextLine());
@@ -183,6 +179,10 @@ public class CardBuilder {
 		
 		Effect effect = null;
 		System.out.println("Tipo ? ");
+		System.out.println(EffectType.OBTAIN.toString()+" "+EffectType.FOR_EACH_OBTAIN.toString()+" "
+				+EffectType.INCREASE_ACTION.toString()+" "+EffectType.DO_ACTION+" "+ EffectType.COUNCIL_OBTAIN.toString()+
+				" "+EffectType.INCREASE_FAMILIARS.toString()+" "+EffectType.INCREASE_SINGLE_FAMILIAR.toString()+" "+
+				EffectType.NO_TOWER_BONUS.toString());
 		String effectType=scanner.nextLine();
 		switch (effectType.toUpperCase()) {
 		case "OBTAIN":
@@ -337,7 +337,6 @@ public class CardBuilder {
 	public void addCardToFile(Card card) throws IOException{
 		
 		String parse = gson.toJson(card);
-		System.out.println("parse: "+parse);
 		buffer.append(parse);
 	}
 	
