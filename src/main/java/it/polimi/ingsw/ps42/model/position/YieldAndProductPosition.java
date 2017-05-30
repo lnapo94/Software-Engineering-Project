@@ -29,11 +29,13 @@ public class YieldAndProductPosition extends Position {
 		if(cards!=null ){
 			for (Card card : cards) { 
 				//Controllo su valore azione poichè passo solo carte del giocatore e il valore dell'azione
+				if(card.getLevel()<= actionValue){
 					try {
 						card.enablePermanentEffect();
 					} catch (NotEnoughResourcesException e) {
 						System.out.println("The player can not afford this effect");
 					}
+				}
 			}
 		}
 	}

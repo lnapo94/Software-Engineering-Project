@@ -43,7 +43,8 @@ public class ProductAction extends Action {
 	@Override
 	public void doAction() {
 		
-		/* First: Take Product cards from player and enable them through the position method 
+		/* Zero: Syncronize player resources
+		 * First: Take Product cards from player and enable them through the position method 
 		 * (the requests are handled by the game logic)
 		 */
 		

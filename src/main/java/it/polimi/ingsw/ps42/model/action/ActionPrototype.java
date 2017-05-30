@@ -29,7 +29,7 @@ public class ActionPrototype {
 	
 	public boolean checkAction(Action action){
 		//If the action passed respect the parameters of the action prototype it will pass the check
-
+		//TO-DO: controllo su take all
 		if(action.getType() == this.type && action.getActionValue() <= this.level)
 			return true;
 		return false;
