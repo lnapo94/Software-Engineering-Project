@@ -94,19 +94,25 @@ public class Card {
 		this.owner = owner;
 	}
 	
-	public void payCard(int choice, Packet discount) throws NotEnoughResourcesException {
-		//Apply the chosen card cost
-		if(costs != null && !( costs.isEmpty() ) ) {
-			if(discount != null) {
-				owner.increaseResource(discount);
-			}
-			owner.decreaseResource(costs.get(choice));
-		}
+	public void payCard(Player player, Packet discount, int choice) throws NotEnoughResourcesException {
+		if(discount != null)
+			player.increaseResource(discount);
+		player.decreaseResource(costs.get(choice));
 	}
-
-	public void payCard(int choice) throws NotEnoughResourcesException {
-		//Apply the chosen card cost without a discount
-		payCard(choice, null);
+	
+	public void payCard(Player player, Packet discount) throws NotEnoughResourcesException {
+		if(costs != null) {
+			if(costs.size() == 1) {
+				payCard(player, discount, 0);
+			}
+			else
+				for(Packet cost : costs) {
+					if(checkPlayerCanPay(cost, player)) {
+						possibleChoice.add(cost);
+						possibleChoiceIndex.add(costs.indexOf(cost));
+					}
+				}
+		}
 	}
 	
 	/*	IMMEDIATE EFFECT */
