@@ -40,13 +40,13 @@ public class CardTest {
 				costs, effects, null, null, null);
 		
 		Player p1 = new Player("CIAO");
-		p1.increaseResource(cost);
+		//p1.increaseResource(cost);
 		p1.synchResource();
 		
 		System.out.println("Player money: " + p1.getResource(Resource.MONEY));
 		card.setPlayer(p1);
 		try {
-			card.payCard(0);
+			card.payCard(p1, null);
 		} catch (NotEnoughResourcesException e1) {
 			System.out.println("Unable to pay the card");
 		}
@@ -62,6 +62,7 @@ public class CardTest {
 	
 		card.enableImmediateEffect(1);
 		p1.synchResource();
+		System.out.println("Player money: " + p1.getResource(Resource.MONEY));
 	}	
 
 }

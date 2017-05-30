@@ -101,18 +101,21 @@ public class Card {
 	}
 	
 	public void payCard(Player player, Packet discount) throws NotEnoughResourcesException {
-		if(costs != null) {
-			if(costs.size() == 1) {
-				payCard(player, discount, 0);
-			}
-			else
-				for(Packet cost : costs) {
-					if(checkPlayerCanPay(cost, player)) {
-						possibleChoice.add(cost);
-						possibleChoiceIndex.add(costs.indexOf(cost));
-					}
+		if(checkRequirements(player)) {
+			if(costs != null) {
+				if(costs.size() == 1)
+					payCard(player, discount, 0);
+				else {
+					for(Packet cost : costs)
+						if(checkPlayerCanPay(cost, player)) {
+							possibleChoice.add(cost);
+							possibleChoiceIndex.add(costs.indexOf(cost));
+						}
 				}
+			}
 		}
+		else
+			throw new NotEnoughResourcesException("Player hasn't enough requirements");
 	}
 	
 	/*	IMMEDIATE EFFECT */
@@ -246,6 +249,17 @@ public class Card {
 					return false;
 		}
 		return true;
+	}
+	
+	private boolean checkRequirements(Player player) {
+		if(requirements == null)
+			return true;
+		
+		for(Packet requirement : requirements) {
+			if(checkPlayerCanPay(requirement, player))
+				return true;
+		}
+		return false;
 	}
 	
 	private List<Packet> copyPacketList(List<Packet> start) {
