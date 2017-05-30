@@ -45,7 +45,11 @@ public class CardTest {
 		
 		System.out.println("Player money: " + p1.getResource(Resource.MONEY));
 		card.setPlayer(p1);
-		card.payCard(0);
+		try {
+			card.payCard(0);
+		} catch (NotEnoughResourcesException e1) {
+			System.out.println("Unable to pay the card");
+		}
 		p1.synchResource();
 		System.out.println("Player money: " + p1.getResource(Resource.MONEY));
 		

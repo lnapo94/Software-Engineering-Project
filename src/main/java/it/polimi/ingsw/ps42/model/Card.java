@@ -166,6 +166,13 @@ public class Card {
 	}
 	/* END FINAL EFFECT */
 	
+	public Packet checkCosts(Player player) {
+		for(Packet cost : costs)
+			if(checkPlayerCanPay(cost, player))
+				return cost;
+		return null;
+	}
+	
 	//PRIVATE METHODS FOR CARD CLASS
 	private void controlPossibleChoice() throws NotEnoughResourcesException {
 		//ONLY PRIVATE request
@@ -210,7 +217,7 @@ public class Card {
 				//Check if player can pay
 				//If player can pay this cost, then checker = false because the effect cannot be immediately consumed
 				//Else the effect cannot be payed nor added to the possible choice array
-				checker = checkPlayerCanPay(obtainCosts);
+				checker = checkOwnerCanPay(obtainCosts);
 				if(checker == true) {
 					possibleChoice.add(effect);
 					possibleChoiceIndex.add(index);
@@ -221,10 +228,15 @@ public class Card {
 		return checker;
 	}
 	
-	private boolean checkPlayerCanPay(Packet costs) {
-		//Check if the player can pay a packet of costs
+	private boolean checkOwnerCanPay(Packet costs) {
+		//Check if the owner can pay an effect
+		return checkPlayerCanPay(costs, owner);
+	}
+	
+	private boolean checkPlayerCanPay(Packet costs, Player player) {
+		//Check if a generic player can pay a packet of costs
 		for (Unit unit : costs) {
-			if(unit.getQuantity() > owner.getResource(unit.getResource()))
+			if(unit.getQuantity() > player.getResource(unit.getResource()))
 					return false;
 		}
 		return true;
