@@ -40,7 +40,7 @@ public abstract class Position {
 		return type;
 	}
 	public void setFamiliar(Familiar familiar) throws FamiliarInWrongPosition{	//Invoked when the player move the familiar in this very position 
-		if(this.canStay(familiar)){
+		if( familiar != null ){		//TO-DO:decidere come gestire caso familiar==null
 			applyPositionEffect(familiar);
 			this.familiar=familiar;
 		}

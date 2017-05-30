@@ -25,14 +25,22 @@ public class CouncilAction extends Action {
 		this.tablePosition = tablePosition;
 	}
 	
+	private boolean checkActionValue(){
+		return actionValue >= tablePosition.getLevel();
+	}
 	@Override
 	public Response checkAction() {
-		if(familiar != null) {
-			checkIncreaseEffect();
-			if(actionValue < tablePosition.getLevel())
-				return Response.FAILURE;
+		if( player.canPlay() ){
+			if(familiar != null) {		//If is a normal action check increase effect and position malus
+				checkIncreaseEffect();
+				addIncrement(-tablePosition.getMalus());
+				if( !checkActionValue())
+					return Response.FAILURE;
+			}
+			//If is a bonus action 
+			return Response.SUCCESS;
 		}
-		return Response.SUCCESS;
+		else return Response.CANNOT_PLAY;
 	}
 
 	@Override
