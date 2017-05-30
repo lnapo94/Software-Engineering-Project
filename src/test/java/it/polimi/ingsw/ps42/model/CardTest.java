@@ -16,7 +16,7 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 public class CardTest {
 
 	@Test
-	public void test() {
+	public void test() throws NotEnoughResourcesException {
 		//Create a costs array
 		Packet cost = new Packet();
 		Packet cost2 = new Packet();
@@ -66,7 +66,12 @@ public class CardTest {
 	
 		card.enableImmediateEffect(1);
 		p1.synchResource();
+
 		System.out.println("Player money: " + p1.getResource(Resource.MONEY));
 	}	
 
-}
+	}
+	
+
+
+
