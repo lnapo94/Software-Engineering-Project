@@ -5,6 +5,8 @@ import java.util.List;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
+import it.polimi.ingsw.ps42.model.exception.EmptyException;
+import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -14,7 +16,7 @@ public class ProductAction extends Action {
 	
 	private List<YieldAndProductPosition> tablePosition;
 	private YieldAndProductPosition firstPosition;
-	
+	private YieldAndProductPosition firstFreePosition;		//The position used to enable the action
 	
 	public ProductAction(ActionType type, Familiar familiar, List<YieldAndProductPosition> tablePosition, YieldAndProductPosition firstPosition) throws NotEnoughResourcesException{
 		//Constructor for normal action
@@ -39,17 +41,25 @@ public class ProductAction extends Action {
 		 */
 		if(this.player.canPlay()){
 			checkIncreaseEffect();
-			if(familiar != null)		//If is a normal action get the first free position otherwise you can get the firstPosition
+			if(familiar != null){		//If is a normal action get the first free position otherwise you can get the firstPosition
 				if(canStay()){
-					YieldAndProductPosition position = getFirstFreePosition();
-					enablePositionBonus(position);
-					return checkLevel(position);
+					this.firstFreePosition = getFirstFreePosition();
+						try {
+							//Set the familiar and apply position bonus and malus 
+							//TO-DO: controllare metodo in position (valore azione/familiare)
+							firstFreePosition.setFamiliar(familiar);
+							return Response.SUCCESS;
+						} catch (FamiliarInWrongPosition e) {
+							return Response.FAILURE;
+						}
 				}
 				else
 					return Response.FAILURE;
+			}
 			else{		//If is a bonus action you get the first position
-				enablePositionBonus(firstPosition);
-				return checkLevel(firstPosition);
+				this.firstFreePosition = firstPosition;
+				enablePositionBonus();
+				return checkLevel();
 			}
 		}
 		else{
@@ -67,7 +77,8 @@ public class ProductAction extends Action {
 			else
 				return true;
 		
-		else{
+		else if( tablePosition != null ) {
+			
 			//Check if the player has already a familiar in this zone and if the level of the action is sufficient
 			for (YieldAndProductPosition position : tablePosition) {
 				
@@ -75,14 +86,17 @@ public class ProductAction extends Action {
 					if(!position.getFamiliar().isNeutral() || !familiar.isNeutral()){
 						return false;	//There would be two familiar of the same player, none of them neutral
 					}
+					if( firstPosition.getFamiliar().getPlayer() == familiar.getPlayer())
+						return false;	//There would be three familiar of the same player
 				}
 			}
+			return true;
 		}
-		return true;
+		return false; 	//The extra-product position are disabled
 	}
 	
-	private Response checkLevel( YieldAndProductPosition position){
-		if( this.actionValue < position.getLevel())
+	private Response checkLevel(){
+		if( this.actionValue < firstFreePosition.getLevel())
 			return Response.FAILURE;
 		else 
 			return Response.SUCCESS;
@@ -97,15 +111,15 @@ public class ProductAction extends Action {
 					return position;
 			}
 		}
-		//TO-DO: discutere cosa fare se non si trova una pos libera (chiedo a tavolo una nuova pos?)
-		return null;
+		throw new EmptyException("The Product action was not able to find a free position for the action");
 	}
 	
-	private void enablePositionBonus(YieldAndProductPosition position){
+	private void enablePositionBonus(){
 		//Add the bonus to the player and add the malus to the action (the action value may become negative)
-		Obtain bonus = position.getBonus();
-		bonus.enableEffect(player);
-		int malus = position.getMalus();
+		Obtain bonus = firstFreePosition.getBonus();
+		if(bonus != null && familiar != null)	//If is a bonus action the player do not get the position bonus
+			bonus.enableEffect(player);
+		int malus = firstFreePosition.getMalus();
 		this.addIncrement(-malus);
 		
 	}
@@ -116,7 +130,11 @@ public class ProductAction extends Action {
 		/* Zero: Syncronize player resources
 		 * First: Take Product cards from player and enable them through the position method 
 		 * (the requests are handled by the game logic)
+		 * Second: Enable bonusBar Bonuses
 		 */
+		
+		player.synchResource();
+		
 		
 	}
 

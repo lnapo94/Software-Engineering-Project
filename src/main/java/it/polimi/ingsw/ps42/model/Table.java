@@ -69,6 +69,12 @@ public class Table {
 		//Add the player
 		this(player1, player2, player3);
 		players.add(player4);
+		
+		//Add all the required position for a 4-player game (7 max, so 2 more than a 3-player game)
+		for(int i=0 ; i<2; i++){
+			yield.add(new YieldAndProductPosition(ActionType.YIELD , 1, null, 3));
+			product.add(new YieldAndProductPosition(ActionType.PRODUCE, 1, null, 3));
+		}
 	}
 
 	public Table(Player player1, Player player2, Player player3) {
@@ -76,10 +82,15 @@ public class Table {
 		this(player1, player2);
 		players.add(player3);
 		
-		//Initialize the the other yield and product positions
+		//Initialize the other yield and product positions
 		yield = new ArrayList<>();
 		product = new ArrayList<>();
 		
+		//Add all the required position for a 3-player game (5 max)
+		for(int i=0 ; i<5; i++){
+			yield.add(new YieldAndProductPosition(ActionType.YIELD , 1, null, 3));
+			product.add(new YieldAndProductPosition(ActionType.PRODUCE, 1, null, 3));
+		}
 	}
 
 	public Table(Player player1, Player player2) {
