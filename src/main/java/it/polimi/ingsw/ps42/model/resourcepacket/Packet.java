@@ -78,9 +78,9 @@ public class Packet implements Iterable<Unit>, Printable {
 		throw new ElementNotFoundException("Method search in packet, no unit present in list");
 	}
 	
-	public void removeUnit(Unit unit) {
-		
-				 this.list.remove(unit);	
+	public void removeUnit(Unit unit) throws ElementNotFoundException {
+		int index = search(unit.getResource());
+		this.list.remove(index);
 	}
 	
 	@Override
