@@ -16,7 +16,7 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 public class CardTest {
 
 	@Test
-	public void test() {
+	public void test() throws NotEnoughResourcesException {
 		//Create a costs array
 		Packet cost = new Packet();
 		Unit unit = new Unit(Resource.MONEY, 10);
@@ -58,6 +58,7 @@ public class CardTest {
 	
 		card.enableImmediateEffect(1);
 		p1.synchResource();
-	}	
+	}
+	
 
 }
