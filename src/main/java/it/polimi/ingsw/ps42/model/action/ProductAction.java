@@ -2,7 +2,6 @@ package it.polimi.ingsw.ps42.model.action;
 
 import java.util.List;
 
-import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
@@ -39,8 +38,10 @@ public class ProductAction extends Action {
 		 * First: Check ban 
 		 * Second: Check increase effect
 		 * Third: Check the first free position (if the first is occupied check if you are the only familiar of that player, pay attention to neutral familiar)
-		 * Fourth: Apply position bonus and malus
+		 * Fourth: Check action value
+		 * Fifth: Apply position bonus and malus
 		 */
+		
 		if(this.player.canPlay()){
 			checkIncreaseEffect();
 			if(familiar != null){		//If is a normal action get the first free position otherwise you can get the firstPosition
@@ -122,17 +123,20 @@ public class ProductAction extends Action {
 	public void doAction() {
 		
 		/* Zero: Syncronize player resources
-		 * First: Take Product cards from player and enable them through the position method 
+		 * First: Take Yield/Product cards from player and enable them through the position method 
 		 * (the requests are handled by the game logic)
 		 * Second: Enable bonusBar Bonuses
 		 */
 		
-		//Pay for the slave
+		//Synch player resources (pay for the increment)
 		player.synchResource();
+		
+		//Enable card effects
 		if( getType() == ActionType.PRODUCE )
 			firstFreePosition.enableCards( player.getCardList(CardColor.YELLOW), actionValue);
 		if( getType() == ActionType.YIELD )
 			firstFreePosition.enableCards( player.getCardList(CardColor.GREEN), actionValue);
+		//Enable BonusBar bonuses
 		player.enableBonus(ActionType.PRODUCE);
 		
 	}
