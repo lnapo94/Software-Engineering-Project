@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps42.model.action;
 
 import it.polimi.ingsw.ps42.model.Table;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 
@@ -9,7 +10,7 @@ public class ActionCreator {
 	//Factory of Action, gives methods to build different kind of Action
 	Action action;
 	
-	public ActionCreator(Player player, Table table, PlayerMove playerMove, int actionValue) {
+	public ActionCreator(Player player, Table table, PlayerMove playerMove, int actionValue) throws NotEnoughResourcesException{
 		//Create the static variable for the action
 		ActionType type = playerMove.getActionType();
 		int actionIncrement = playerMove.getIncrementWithSlave();
