@@ -10,6 +10,7 @@ import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.ForEachObtain;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
@@ -56,7 +57,20 @@ public class PlayerTest {
 				null, effects, null, null, null); 
 		player.addCard(c2);
 		c2.setPlayer(player);
-		c2.enableImmediateEffect();
+		c2.enableImmediateEffect();	
+		
+		// verify  all get method
+		assertTrue("Resource in unit must be MONEY", "Player 1" == player.getPlayerID());
+		Familiar orange = new Familiar(player,FamiliarColor.ORANGE);
+		System.out.println(orange.toString());
+		System.out.println(player.getFamiliar(FamiliarColor.ORANGE).toString());
+		assertTrue("Resource in unit must be MONEY", orange == player.getFamiliar(FamiliarColor.ORANGE));
+		//assertTrue("Resource in unit must be MONEY", "Player 1" == player.getPlayerID());
+		//assertTrue("Resource in unit must be MONEY", "Player 1" == player.getPlayerID());
+		//assertTrue("Resource in unit must be MONEY", "Player 1" == player.getPlayerID());
+		
+	
+		
 	}
 
 }

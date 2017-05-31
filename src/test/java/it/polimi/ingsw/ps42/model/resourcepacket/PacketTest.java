@@ -10,11 +10,13 @@ import java.util.Map;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
+import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 
 public class PacketTest {
 
+
 	@Test
-	public void test() {
+	public void test() throws ElementNotFoundException {
 		//Testing the Packet and the Unit
 		
 		/*UNIT Test*/
@@ -77,24 +79,40 @@ public class PacketTest {
 			}
 			if(u.getResource() == Resource.SLAVE) {
 				assertEquals("Created a Packet from a Map, Expected 20", 20, u.getQuantity());
-				assertTrue("Expected Faith Point", Resource.SLAVE == u.getResource());
+				assertTrue("Expected SLAVE", Resource.SLAVE == u.getResource());
 				unitSlave.setQuantity(10);
 				assertTrue("Expected Faith Point", true == u.isGreater(unitSlave));
 
 			}
 		}
-		// controle isGreater
+		// Check  isGreater & removeunit
 		Packet packet3 = new Packet(map);
 		packet2 = new Packet(map);
 		packet2.addUnit(unitSlave);
-		unitSlave.setQuantity(unitSlave.getQuantity()*2);
+		
 		System.out.println( "unitaSlave: " + unitSlave.toString());
 		packet2.removeUnit(unitSlave);
 		
 		System.out.println( "packet3: " + packet3.toString());
 		System.out.println( "packet2: " + packet2.toString());
 		
+		// Check  isGreater p3 = p3
+		assertTrue("Expected ", true == packet3.isGreater(packet3));
+		System.out.println("control if packe3 is grater than packet 2 ");
+		System.out.println( "packet3: " + packet3.toString());
+		System.out.println( "packet2: " + packet2.toString());
 		
+		packet2.addUnit(unitSlave);
+		// Check  isGreater p2 > p3
+		assertTrue("Expected ", true == packet2.isGreater(packet3));
+		System.out.println("control if packe3 is grater than packet 2 ");
+		System.out.println( "packet3: " + packet3.toString());
+		System.out.println( "packet2: " + packet2.toString());
+		// Check  isGreater p3 > null
+		assertTrue("Expected ", true == packet2.isGreater(null));
+		System.out.println("control if packe3 is grater than packet 2 ");
+		System.out.println( "packet3: " + packet3.toString());
+		System.out.println( "packet2: " + packet2.toString());
 		
 		
 	}
