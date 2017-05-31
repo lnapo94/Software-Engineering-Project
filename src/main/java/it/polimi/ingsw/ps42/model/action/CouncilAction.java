@@ -19,9 +19,9 @@ public class CouncilAction extends Action {
 		this.tablePosition = tablePosition;
 	}
 	
-	public CouncilAction(ActionType type, Player player, CouncilPosition tablePosition){
+	public CouncilAction(ActionType type, Player player, CouncilPosition tablePosition, int actionIncrement) throws NotEnoughResourcesException{
 		//Constructor for bonus action
-		super(type, player, 1);
+		super(type, player, 1, actionIncrement);
 		this.tablePosition = tablePosition;
 	}
 	

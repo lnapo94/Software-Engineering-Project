@@ -22,9 +22,9 @@ public class MarketAction extends Action {
 		this.positionInTableList = positionInTableList;
 	}
 	
-	public MarketAction(ActionType type, Player player, StaticList<MarketPosition> tablePosition, int positionInTableList){
+	public MarketAction(ActionType type, Player player, StaticList<MarketPosition> tablePosition, int positionInTableList, int actionIncrement) throws NotEnoughResourcesException{
 		//Constructor for bonus action 
-		super(type, player, 1);
+		super(type, player, 1, actionIncrement);
 		this.tablePosition = tablePosition;
 		this.positionInTableList = positionInTableList;
 	}

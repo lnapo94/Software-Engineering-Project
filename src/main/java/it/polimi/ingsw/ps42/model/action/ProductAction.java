@@ -25,9 +25,10 @@ public class ProductAction extends Action {
 		this.tablePosition = tablePosition;
 		this.firstPosition = firstPosition;
 	}
-	public ProductAction(ActionType type, Player player, List<YieldAndProductPosition> tablePosition, YieldAndProductPosition firstPosition, int actionValue){
+	public ProductAction(ActionType type, Player player, List<YieldAndProductPosition> tablePosition,
+			YieldAndProductPosition firstPosition, int actionValue, int actionIncrement) throws NotEnoughResourcesException {
 		//Constructor for bonus action
-		super(type, player, actionValue);
+		super(type, player, actionValue, actionIncrement);
 		this.tablePosition = tablePosition;
 		this.firstPosition = firstPosition;
 	}

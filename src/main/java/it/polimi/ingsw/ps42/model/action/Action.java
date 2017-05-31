@@ -47,17 +47,28 @@ public abstract class Action {
 		this.player=familiar.getPlayer();
 		
 		//Control if player has enough slave to increment his familiar
-		if(player.getResource(Resource.SLAVE) > familiar.getIncrement())
-			throw new NotEnoughResourcesException("Player hasn't enough slaves to increment the action");
 		
+		int slaveToPay = familiar.getIncrement() * player.getDivisory();
+		paySlave(slaveToPay);
 		this.actionValue = familiar.getIncrement() + familiar.getValue();
 	}
-	public Action(ActionType type, Player player, int actionValue){
+	public Action(ActionType type, Player player, int actionValue, int actionIncrement) throws NotEnoughResourcesException {
 		//Constructor for bonus action (no familiar involved, so requires the player) 
 		
-		this.type=type;
-		this.player=player;
-		this.actionValue=actionValue;
+		this.type = type;
+		this.player = player;
+		this.actionValue = actionValue;
+		
+		//Check player slave resources
+		paySlave(actionIncrement);
+		this.actionValue += actionIncrement;
+	}
+	
+	private void paySlave(int slaveToPay) throws NotEnoughResourcesException {
+		
+		Packet slavePacket = new Packet();
+		slavePacket.addUnit(new Unit(Resource.SLAVE, slaveToPay));
+		player.decreaseResource(slavePacket);
 	}
 	
 	public abstract Response checkAction();		//Does all the required checks before the action is applicated 
