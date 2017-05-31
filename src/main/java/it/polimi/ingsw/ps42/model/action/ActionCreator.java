@@ -12,42 +12,67 @@ public class ActionCreator {
 	public ActionCreator(Player player, Table table, PlayerMove playerMove, int actionValue) {
 		//Create the static variable for the action
 		ActionType type = playerMove.getActionType();
+		int actionIncrement = playerMove.getIncrementWithSlave();
 		Familiar familiar = player.getFamiliar(playerMove.getFamiliarColor());
-		
+		if(familiar != null)
+			familiar.setIncrement(actionIncrement);
 		
 		//Create the action, from the type of action selected
 		switch(type) {
 		case TAKE_GREEN :
 			if(familiar == null) 
-				action = new TakeCardAction(type, player, table.getGreenTower(), playerMove.getPosition(), actionValue);
+				action = new TakeCardAction(type, player, table.getGreenTower(), playerMove.getPosition(), actionValue, actionIncrement);
+			else
+				action = new TakeCardAction(type, familiar, table.getGreenTower(), playerMove.getPosition());
 			break;
 			
 		case TAKE_YELLOW :
-			action = new TakeCardAction(type, player, table.getYellowTower(), playerMove.getPosition(), actionValue);
+			if(familiar == null) 
+				action = new TakeCardAction(type, player, table.getYellowTower(), playerMove.getPosition(), actionValue, actionIncrement);
+			else
+				action = new TakeCardAction(type, familiar, table.getYellowTower(), playerMove.getPosition());
 			break;
 			
 		case TAKE_BLUE :
-			action = new TakeCardAction(type, player, table.getBlueTower(), playerMove.getPosition(), actionValue);
+			if(familiar == null) 
+				action = new TakeCardAction(type, player, table.getBlueTower(), playerMove.getPosition(), actionValue, actionIncrement);
+			else
+				action = new TakeCardAction(type, familiar, table.getBlueTower(), playerMove.getPosition());
 			break;
 		
 		case TAKE_VIOLET :
-			action = new TakeCardAction(type, player, table.getVioletTower(), playerMove.getPosition(), actionValue);
+			if(familiar == null) 
+				action = new TakeCardAction(type, player, table.getVioletTower(), playerMove.getPosition(), actionValue, actionIncrement);
+			else
+				action = new TakeCardAction(type, familiar, table.getVioletTower(), playerMove.getPosition());
 			break;
 		
 		case YIELD :
-			action = new YieldAction(type, player, table.getOtherYield(), table.getFirstYield(), actionValue);
+			if(familiar == null)
+				action = new YieldAndProductAction(type, player, table.getOtherYield(), table.getFirstYield(), actionValue, actionIncrement);
+			else
+				action = new YieldAndProductAction(type, familiar, table.getOtherYield(), table.getFirstYield());
 			break;
 		
 		case PRODUCE :
-			action = new ProductAction(type, player, table.getOtherProduct(), table.getFirstProduct(), actionValue);
+			if(familiar == null)
+				action = new YieldAndProductAction(type, player, table.getOtherProduct(), table.getFirstProduct(), actionValue, actionIncrement);
+			else
+				action = new YieldAndProductAction(type, familiar, table.getOtherProduct(), table.getFirstProduct());
 			break;
 		
 		case MARKET :
-			action = new MarketAction(type, player, table.getMarket(), playerMove.getPosition());
+			if(familiar == null)
+				action = new MarketAction(type, player, table.getMarket(), playerMove.getPosition(), actionIncrement);
+			else
+				action = new MarketAction(type, familiar, table.getMarket(), playerMove.getPosition());
 			break;
 		
 		case COUNCIL :
-			action = new CouncilAction(type, player, table.getFreeCouncilPosition());
+			if(familiar == null)
+				action = new CouncilAction(type, player, table.getFreeCouncilPosition(), actionIncrement);
+			else
+				action = new CouncilAction(type, familiar, table.getFreeCouncilPosition());
 			break;
 			
 		default :

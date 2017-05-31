@@ -5,6 +5,7 @@ import java.util.List;
 
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
@@ -28,9 +29,10 @@ public class TakeCardAction extends Action{
 		this.tablePosition = tablePosition;
 		this.positionInTableList = positionInTableList;
 	}
-	public TakeCardAction(ActionType type, Player player, StaticList<TowerPosition> tablePosition, int positionInTableList, int actionValue){
+	public TakeCardAction(ActionType type, Player player, StaticList<TowerPosition> tablePosition, 
+			int positionInTableList, int actionValue, int actionIncrement) throws NotEnoughResourcesException{
 		//Constructor for bonus action
-		super(type, player, actionValue);
+		super(type, player, actionValue, actionIncrement);
 		this.tablePosition = tablePosition;
 		this.positionInTableList = positionInTableList;
 	}
@@ -54,19 +56,27 @@ public class TakeCardAction extends Action{
 		//Take the chosen position
 		TowerPosition position = tablePosition.get(positionInTableList);
 		
-		if(!position.isEmpty())
+		if(!position.isEmpty()) {
+			player.restoreResource();
 			return Response.FAILURE;
+		}
 		
-		if(!checkMyFamiliar())
+		if(!checkMyFamiliar()) {
+			player.restoreResource();
 			return Response.FAILURE;
+		}
 		
 		actionValue = actionValue - position.getMalus();
 		
-		if(position.getLevel() > actionValue)
+		if(position.getLevel() > actionValue) {
+			player.restoreResource();
 			return Response.FAILURE;
+		}
 		
-		if(!position.hasCard())
+		if(!position.hasCard()) {
+			player.restoreResource();
 			return Response.FAILURE;
+		}
 		
 		//Fourth: if the position has a bonus, apply it to the player
 		if(position.getBonus() != null && familiar != null) {
@@ -74,6 +84,7 @@ public class TakeCardAction extends Action{
 				position.setFamiliar(familiar);
 			} catch (FamiliarInWrongPosition e) {
 				System.out.println("[DEBUG]: familiar can't be positioned here");
+				player.restoreResource();
 				return Response.FAILURE;
 			}
 		}
@@ -119,7 +130,13 @@ public class TakeCardAction extends Action{
 		position.getCard().setPlayer(player);
 		player.addCard(position.getCard());
 		player.synchResource();
-		//TODO position.getCard().enableImmediateEffect();
+		try {
+			position.getCard().enableImmediateEffect();
+			if(position.getCard().getColor() == CardColor.BLUE)
+				position.getCard().enablePermanentEffect();
+		} catch (NotEnoughResourcesException e) {
+			System.out.println("[DEBUG]: Player can not pay for enable the immediate effect");
+		}
 		position.removeCard();
 		
 	}

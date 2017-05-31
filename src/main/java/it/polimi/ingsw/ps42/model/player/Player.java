@@ -129,6 +129,8 @@ public class Player {
 			return white;
 		if(color == FamiliarColor.NEUTRAL)
 			return neutral;
+		if(color == null)
+			return null;
 		throw new WrongColorException("Error in player.getFamiliar(color): maybe the passed color is wrong");
 	}
 	
