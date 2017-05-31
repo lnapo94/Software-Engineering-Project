@@ -12,6 +12,7 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.request.CardRequest;
 import it.polimi.ingsw.ps42.model.request.FinalRequest;
 import it.polimi.ingsw.ps42.model.request.ImmediateRequest;
+import it.polimi.ingsw.ps42.model.request.PayRequest;
 import it.polimi.ingsw.ps42.model.request.PermanentRequest;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
@@ -94,19 +95,32 @@ public class Card {
 		this.owner = owner;
 	}
 	
-	public void payCard(int choice, Packet discount) throws NotEnoughResourcesException {
-		//Apply the chosen card cost
-		if(costs != null && !( costs.isEmpty() ) ) {
-			if(discount != null) {
-				owner.increaseResource(discount);
-			}
-			owner.decreaseResource(costs.get(choice));
-		}
+	
+	/*	PAY A CARD METHODS	*/
+	public void payCard(Player player, int choice) throws NotEnoughResourcesException {
+		player.decreaseResource(costs.get(choice));
 	}
-
-	public void payCard(int choice) throws NotEnoughResourcesException {
-		//Apply the chosen card cost without a discount
-		payCard(choice, null);
+	
+	public void payCard(Player player, Packet discount) throws NotEnoughResourcesException {
+		if(costs != null && !costs.isEmpty()) {
+			if(!checkRequirements(player))
+				throw new NotEnoughResourcesException("Player hasn't the requirements");
+			if(discount != null)
+				player.increaseResource(discount);
+			if(costs.size() == 1 && checkPlayerCanPay(costs.get(0), player))
+				payCard(player, 0);
+			if(costs.size() > 1) {
+				for(Packet cost : costs) {
+					if(checkPlayerCanPay(cost, player)) {
+						possibleChoice.add(cost);
+						possibleChoiceIndex.add(costs.indexOf(cost));
+					}
+				}
+				controlPossibleChoice();
+				CardRequest request = new PayRequest(player, this, possibleChoiceIndex, possibleChoice);
+				player.addRequest(request);
+			}
+		}
 	}
 	
 	/*	IMMEDIATE EFFECT */
@@ -166,12 +180,19 @@ public class Card {
 	}
 	/* END FINAL EFFECT */
 	
+	public Packet checkCosts(Player player) {
+		for(Packet cost : costs)
+			if(checkPlayerCanPay(cost, player))
+				return cost;
+		return null;
+	}
+	
 	//PRIVATE METHODS FOR CARD CLASS
 	private void controlPossibleChoice() throws NotEnoughResourcesException {
 		//ONLY PRIVATE request
 		//Used only to verify if the arrays of choices isn't empty
 		if(possibleChoice.isEmpty() || possibleChoiceIndex.isEmpty()) 
-			throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this effect");
+			throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this");
 	}
 	
 	private void enableEffect(int choice, List<Effect> effectList) {
@@ -210,7 +231,7 @@ public class Card {
 				//Check if player can pay
 				//If player can pay this cost, then checker = false because the effect cannot be immediately consumed
 				//Else the effect cannot be payed nor added to the possible choice array
-				checker = checkPlayerCanPay(obtainCosts);
+				checker = checkOwnerCanPay(obtainCosts);
 				if(checker == true) {
 					possibleChoice.add(effect);
 					possibleChoiceIndex.add(index);
@@ -221,13 +242,31 @@ public class Card {
 		return checker;
 	}
 	
-	private boolean checkPlayerCanPay(Packet costs) {
-		//Check if the player can pay a packet of costs
+	private boolean checkOwnerCanPay(Packet costs) {
+		//Check if the owner can pay an effect
+		return checkPlayerCanPay(costs, owner);
+	}
+	
+	private boolean checkPlayerCanPay(Packet costs, Player player) {
+		//Check if a generic player can pay a packet of costs
 		for (Unit unit : costs) {
-			if(unit.getQuantity() > owner.getResource(unit.getResource()))
+			if(unit.getQuantity() > player.getResource(unit.getResource()))
 					return false;
 		}
 		return true;
+	}
+	
+	private boolean checkRequirements(Player player) {
+		for(Packet requirement : requirements) {
+			boolean checker = true;
+			for(Unit unit : requirement) {
+				if(unit.getQuantity() > player.getResource(unit.getResource()))
+					checker = false;
+			}
+			if(checker == true)
+				return checker;
+		}
+		return false;
 	}
 	
 	private List<Packet> copyPacketList(List<Packet> start) {

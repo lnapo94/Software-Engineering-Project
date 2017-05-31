@@ -186,6 +186,9 @@ public class Player {
 					
 				tempResource = unit.getResource();
 				tempQuantity = unit.getQuantity();
+				
+				if(currentResources.get(tempResource) - tempQuantity < 0 )
+					throw new NotEnoughResourcesException("Not Enough resource in player currentResources");
 					
 				//Adding resources to the player nextResources HashMap
 				tempQuantity = nextResources.get(tempResource) - tempQuantity;
