@@ -10,7 +10,7 @@ import it.polimi.ingsw.ps42.model.position.CouncilPosition;
 
 public class CouncilAction extends Action {
 
-	//Private Variables
+	//Private Variables, the game logic must ask to the table the first free council position
 	private CouncilPosition tablePosition;
 
 	public CouncilAction(ActionType type, Familiar familiar, CouncilPosition tablePosition) throws NotEnoughResourcesException{

@@ -27,8 +27,7 @@ public class BuilderTester {
 		CardBuilder b2=new CardBuilder("prova2.json");
 		b2.addCard();
 		b2.close();
-		*/
-		/*
+		
 		CardLoader loader = new CardLoader("prova2.json");
 		List<Card> deck = loader.getCards();
 		loader.close();

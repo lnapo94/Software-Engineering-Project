@@ -4,6 +4,7 @@ import java.util.List;
 
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
 import it.polimi.ingsw.ps42.model.exception.EmptyException;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
@@ -44,21 +45,23 @@ public class ProductAction extends Action {
 			if(familiar != null){		//If is a normal action get the first free position otherwise you can get the firstPosition
 				if(canStay()){
 					this.firstFreePosition = getFirstFreePosition();
+					this.addIncrement( -firstFreePosition.getMalus() );
+					if( checkAction() == Response.SUCCESS )	
 						try {
-							//Set the familiar and apply position bonus and malus 
-							//TO-DO: controllare metodo in position (valore azione/familiare)
-							firstFreePosition.setFamiliar(familiar);
-							return Response.SUCCESS;
-						} catch (FamiliarInWrongPosition e) {
-							return Response.FAILURE;
-						}
+								//Set the familiar and apply position bonus and malus 
+								firstFreePosition.setFamiliar(familiar);
+								return Response.SUCCESS;
+							} catch (FamiliarInWrongPosition e) {
+								return Response.FAILURE;
+							}
+					else return Response.LOW_LEVEL;		//CheckAction control failed
 				}
-				else
+				else		//Unable to do this move due to canStay()
 					return Response.FAILURE;
 			}
 			else{		//If is a bonus action you get the first position
 				this.firstFreePosition = firstPosition;
-				enablePositionBonus();
+				this.addIncrement( -firstFreePosition.getMalus() );
 				return checkLevel();
 			}
 		}
@@ -92,12 +95,12 @@ public class ProductAction extends Action {
 			}
 			return true;
 		}
-		return false; 	//The extra-product position are disabled
+		return false; 	//The extra-product position are disabled (2-player game)
 	}
 	
 	private Response checkLevel(){
 		if( this.actionValue < firstFreePosition.getLevel())
-			return Response.FAILURE;
+			return Response.LOW_LEVEL;
 		else 
 			return Response.SUCCESS;
 	}
@@ -114,16 +117,6 @@ public class ProductAction extends Action {
 		throw new EmptyException("The Product action was not able to find a free position for the action");
 	}
 	
-	private void enablePositionBonus(){
-		//Add the bonus to the player and add the malus to the action (the action value may become negative)
-		Obtain bonus = firstFreePosition.getBonus();
-		if(bonus != null && familiar != null)	//If is a bonus action the player do not get the position bonus
-			bonus.enableEffect(player);
-		int malus = firstFreePosition.getMalus();
-		this.addIncrement(-malus);
-		
-	}
-	
 	@Override
 	public void doAction() {
 		
@@ -133,8 +126,13 @@ public class ProductAction extends Action {
 		 * Second: Enable bonusBar Bonuses
 		 */
 		
+		//Pay for the slave
 		player.synchResource();
-		
+		if( getType() == ActionType.PRODUCE )
+			firstFreePosition.enableCards( player.getCardList(CardColor.YELLOW), actionValue);
+		if( getType() == ActionType.YIELD )
+			firstFreePosition.enableCards( player.getCardList(CardColor.GREEN), actionValue);
+		player.enableBonus(ActionType.PRODUCE);
 		
 	}
 
