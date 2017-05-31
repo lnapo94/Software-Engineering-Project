@@ -28,10 +28,12 @@ public class BuilderTester {
 		b2.addCard();
 		b2.close();
 		*/
+		/*
 		CardLoader loader = new CardLoader("prova2.json");
 		List<Card> deck = loader.getCards();
 		loader.close();
 		System.out.println(deck.get(0).getName() + " "+ deck.get(0).getDescription());
+		*/
 	}
 
 }
