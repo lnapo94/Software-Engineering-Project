@@ -1,15 +1,19 @@
 package it.polimi.ingsw.ps42.model.action;
 
 
+import java.util.List;
+
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
+import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.TowerPosition;
+import it.polimi.ingsw.ps42.model.request.RequestInterface;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
@@ -65,8 +69,13 @@ public class TakeCardAction extends Action{
 			return Response.FAILURE;
 		
 		//Fourth: if the position has a bonus, apply it to the player
-		if(position.getBonus() != null) {
-			position.getBonus().enableEffect(player);
+		if(position.getBonus() != null && familiar != null) {
+			try {
+				position.setFamiliar(familiar);
+			} catch (FamiliarInWrongPosition e) {
+				System.out.println("[DEBUG]: familiar can't be positioned here");
+				return Response.FAILURE;
+			}
 		}
 		
 		//Fifth: verify if there aren't any other player in the tower, else
@@ -78,6 +87,7 @@ public class TakeCardAction extends Action{
 				player.decreaseResource(moneyMalus);
 			} catch (NotEnoughResourcesException e) {
 				player.restoreResource();
+				position.removeFamiliar();
 				return Response.LOW_LEVEL;
 			}
 		}
@@ -85,6 +95,7 @@ public class TakeCardAction extends Action{
 			position.getCard().payCard(player, discount);
 		} catch (NotEnoughResourcesException e) {
 			player.restoreResource();
+			position.removeFamiliar();
 			return Response.LOW_LEVEL;
 		}
 		return Response.SUCCESS;
@@ -92,11 +103,25 @@ public class TakeCardAction extends Action{
 
 	@Override
 	public void doAction() {
-		//Zero: check player request, if player has one request, satisfy it and stop
-		//Take the card to the player, set player in card, remove card from the position, in case set familiar 
-		//First: synchResource	
-		//Second: enable immediateEffect
-		//Pensare agli effetti permanenti carte blu
+		/*	Method used to apply an Action
+		 * 	In this case, control if there is a request in player and apply it
+		 * 	Then do some operation for setting the card to the player 
+		 * 	Finally, synch all the player resources to apply all the changes 
+		 */
+		
+		List<RequestInterface> requests = player.getRequests();
+		if(requests != null && !requests.isEmpty()) {
+			for(RequestInterface request : requests)
+				request.apply();
+		}
+		
+		TowerPosition position = tablePosition.get(positionInTableList);
+		position.getCard().setPlayer(player);
+		player.addCard(position.getCard());
+		player.synchResource();
+		//TODO position.getCard().enableImmediateEffect();
+		position.removeCard();
+		
 	}
 	
 	private boolean checkMyFamiliar() {

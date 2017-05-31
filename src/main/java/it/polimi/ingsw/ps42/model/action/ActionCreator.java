@@ -14,10 +14,12 @@ public class ActionCreator {
 		ActionType type = playerMove.getActionType();
 		Familiar familiar = player.getFamiliar(playerMove.getFamiliarColor());
 		
+		
 		//Create the action, from the type of action selected
 		switch(type) {
 		case TAKE_GREEN :
-			action = new TakeCardAction(type, player, table.getGreenTower(), playerMove.getPosition(), actionValue);
+			if(familiar == null) 
+				action = new TakeCardAction(type, player, table.getGreenTower(), playerMove.getPosition(), actionValue);
 			break;
 			
 		case TAKE_YELLOW :
