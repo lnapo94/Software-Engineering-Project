@@ -12,6 +12,7 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.request.CardRequest;
 import it.polimi.ingsw.ps42.model.request.FinalRequest;
 import it.polimi.ingsw.ps42.model.request.ImmediateRequest;
+import it.polimi.ingsw.ps42.model.request.PayRequest;
 import it.polimi.ingsw.ps42.model.request.PermanentRequest;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
@@ -110,6 +111,8 @@ public class Card {
 						if(checkPlayerCanPay(cost, player)) {
 							possibleChoice.add(cost);
 							possibleChoiceIndex.add(costs.indexOf(cost));
+							CardRequest request = new PayRequest(player, this, discount, possibleChoiceIndex, possibleChoice);
+							player.addRequest(request);
 						}
 				}
 			}
@@ -187,7 +190,7 @@ public class Card {
 		//ONLY PRIVATE request
 		//Used only to verify if the arrays of choices isn't empty
 		if(possibleChoice.isEmpty() || possibleChoiceIndex.isEmpty()) 
-			throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this effect");
+			throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this");
 	}
 	
 	private void enableEffect(int choice, List<Effect> effectList) {

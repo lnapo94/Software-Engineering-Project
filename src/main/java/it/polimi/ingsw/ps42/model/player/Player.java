@@ -186,12 +186,14 @@ public class Player {
 					
 				tempResource = unit.getResource();
 				tempQuantity = unit.getQuantity();
+				
+				if(currentResources.get(tempResource) - tempQuantity < 0 )
+					throw new NotEnoughResourcesException("Not Enough resource in player currentResources");
 					
 				//Adding resources to the player nextResources HashMap
 				tempQuantity = nextResources.get(tempResource) - tempQuantity;
 				
-				//TODO
-				if((currentResources.get(tempResource) - tempQuantity) < 0)
+				if(tempQuantity < 0)
 					throw new NotEnoughResourcesException("tempQuantity in player.decreaseResource is"
 							+ " negative, unable to continue");
 				
