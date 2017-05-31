@@ -84,6 +84,7 @@ public class TakeCardAction extends Action{
 		try {
 			position.getCard().payCard(player, discount);
 		} catch (NotEnoughResourcesException e) {
+			player.restoreResource();
 			return Response.LOW_LEVEL;
 		}
 		return Response.SUCCESS;

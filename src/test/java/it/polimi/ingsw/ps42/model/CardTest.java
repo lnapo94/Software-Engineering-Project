@@ -19,12 +19,16 @@ public class CardTest {
 	public void test() {
 		//Create a costs array
 		Packet cost = new Packet();
+		Packet cost2 = new Packet();
 		Unit unit = new Unit(Resource.MONEY, 10);
+		Unit unit2 = new Unit(Resource.SLAVE, 5);
 		
 		ArrayList<Packet> costs = new ArrayList<>();
 		costs.add(cost);
+		costs.add(cost2);
 		
 		cost.addUnit(unit);
+		cost2.addUnit(unit2);
 		//End creation
 		
 		//Create an obtain effect for the card
@@ -37,16 +41,16 @@ public class CardTest {
 		
 		//Create a card with a cost and a player who pays the card
 		Card card = new Card("Prova", "description", CardColor.GREEN, 1, 3, 
-				costs, effects, null, null, null);
+				costs, effects, costs, null, null);
 		
 		Player p1 = new Player("CIAO");
-		//p1.increaseResource(cost);
+		p1.increaseResource(cost);
 		p1.synchResource();
 		
 		System.out.println("Player money: " + p1.getResource(Resource.MONEY));
 		card.setPlayer(p1);
 		try {
-			card.payCard(p1, null);
+			card.payCard(p1, cost);
 		} catch (NotEnoughResourcesException e1) {
 			System.out.println("Unable to pay the card");
 		}

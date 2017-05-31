@@ -95,30 +95,32 @@ public class Card {
 		this.owner = owner;
 	}
 	
-	public void payCard(Player player, Packet discount, int choice) throws NotEnoughResourcesException {
-		if(discount != null)
-			player.increaseResource(discount);
+	
+	/*	PAY A CARD METHODS	*/
+	public void payCard(Player player, int choice) throws NotEnoughResourcesException {
 		player.decreaseResource(costs.get(choice));
 	}
 	
 	public void payCard(Player player, Packet discount) throws NotEnoughResourcesException {
-		if(checkRequirements(player)) {
-			if(costs != null) {
-				if(costs.size() == 1)
-					payCard(player, discount, 0);
-				else {
-					for(Packet cost : costs)
-						if(checkPlayerCanPay(cost, player)) {
-							possibleChoice.add(cost);
-							possibleChoiceIndex.add(costs.indexOf(cost));
-							CardRequest request = new PayRequest(player, this, discount, possibleChoiceIndex, possibleChoice);
-							player.addRequest(request);
-						}
+		if(costs != null && !costs.isEmpty()) {
+			if(!checkRequirements(player))
+				throw new NotEnoughResourcesException("Player hasn't the requirements");
+			if(discount != null)
+				player.increaseResource(discount);
+			if(costs.size() == 1 && checkPlayerCanPay(costs.get(0), player))
+				payCard(player, 0);
+			if(costs.size() > 1) {
+				for(Packet cost : costs) {
+					if(checkPlayerCanPay(cost, player)) {
+						possibleChoice.add(cost);
+						possibleChoiceIndex.add(costs.indexOf(cost));
+					}
 				}
+				controlPossibleChoice();
+				CardRequest request = new PayRequest(player, this, possibleChoiceIndex, possibleChoice);
+				player.addRequest(request);
 			}
 		}
-		else
-			throw new NotEnoughResourcesException("Player hasn't enough requirements");
 	}
 	
 	/*	IMMEDIATE EFFECT */
@@ -255,12 +257,14 @@ public class Card {
 	}
 	
 	private boolean checkRequirements(Player player) {
-		if(requirements == null)
-			return true;
-		
 		for(Packet requirement : requirements) {
-			if(checkPlayerCanPay(requirement, player))
-				return true;
+			boolean checker = true;
+			for(Unit unit : requirement) {
+				if(unit.getQuantity() > player.getResource(unit.getResource()))
+					checker = false;
+			}
+			if(checker == true)
+				return checker;
 		}
 		return false;
 	}
