@@ -32,7 +32,6 @@ public class IncreaseFamiliarsPoint extends Effect{
 		}
 		catch (WrongColorException e) {
 			System.out.println("Familiars increase failed beacause of a wrong initialization of the effect");
-			//TO-DO:aggiungere metodo in wrong color exception che permetta append di un messaggio
 		}
 	}
 

@@ -30,6 +30,7 @@ public class Familiar {
 	
 	public void setValue(int value) {
 		this.value = value;
+		player.familiarBan();
 	}
 	
 	public int getValue() {

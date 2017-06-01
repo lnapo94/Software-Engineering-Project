@@ -176,7 +176,7 @@ public class Player {
 				nextResources.put(tempResource, tempQuantity);
 				
 				//Check if player has a ban, in that case enable it
-				if(ban.getTypeOfEffect() == EffectType.OBTAIN_BAN) {
+				if(ban != null && ban.getTypeOfEffect() == EffectType.OBTAIN_BAN) {
 					ObtainBan obtainBan = (ObtainBan) ban;
 					obtainBan.setResource(tempResource);
 					obtainBan.enableEffect(this);
@@ -211,6 +211,16 @@ public class Player {
 				nextResources.put(tempResource, tempQuantity);
 			}
 		}
+	}
+	
+	public void setBan(Effect ban) {
+		if(this.ban == null)
+			this.ban = ban;
+	}
+	
+	public void familiarBan() {
+		if(ban != null && ban.getTypeOfEffect() == EffectType.INCREASE_FAMILIARS)
+			ban.enableEffect(this);
 	}
 	
 	public void setToZero(Resource resource) {
