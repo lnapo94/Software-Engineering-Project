@@ -26,7 +26,19 @@ public class Obtain extends Effect{
 	public Packet getGains() {
 		return gains;
 	}
-
+	
+	public boolean checkPayBan( Packet packet){
+		//Method to be invoked to know if the increased resources in player have to be penalized by the ban
+		
+		return packet.isGreater(gains);
+		
+	}
+	
+	public void enableBan( Player player) throws NotEnoughResourcesException {
+		
+		this.player = player;
+		player.decreaseResource(gains);
+	}
 	
 	@Override
 	public void enableEffect(Player player) {
