@@ -88,7 +88,7 @@ public class CardTest {
 
 
 		System.out.println("Player money: " + p1.getResource(Resource.MONEY));
-	}	
+		
 
 
 		
@@ -114,7 +114,7 @@ public class CardTest {
 		System.out.println("2# case: card cost = player resources");
 		System.out.println("Player money: " + p1.getResource(Resource.MONEY));
 		card.setPlayer(p1);
-		card.payCard(0);
+		card.payCard(p1, 0);
 		p1.synchResource();
 		System.out.println("Player money: " + p1.getResource(Resource.MONEY));
 		
@@ -151,7 +151,7 @@ public class CardTest {
 	System.out.println("2# case: card cost = player resources");
 	System.out.println("Player money: " + p1.getResource(Resource.MONEY));
 	card.setPlayer(p1);
-	card.payCard(0);
+	card.payCard(p1, 0);
 	p1.synchResource();
 	System.out.println("Player money: " + p1.getResource(Resource.MONEY));
 	
@@ -172,8 +172,8 @@ public class CardTest {
 		
 
 	}
-}
-	
+
+}	
 
 
 
