@@ -44,10 +44,7 @@ public class StaticList<E> implements Iterable<E>{
 	
 	public void removeAll() {
 		//Remove all the element from the StaticList
-		for(E element : list) {
-			remove(element);
-		}
-		list.remove(0);
+		list = new ArrayList<>();
 	}
 	
 	public int size() {

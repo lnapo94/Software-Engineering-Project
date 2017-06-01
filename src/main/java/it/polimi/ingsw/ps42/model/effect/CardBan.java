@@ -15,7 +15,6 @@ public class CardBan extends Effect{
 	
 	public CardBan(CardColor color) {
 		super(EffectType.CARD_BAN);
-		//TO-DO: decidere se tenere separati colori carte e colori familiari->aggiungi controllo
 		this.color=color;
 	}
 
