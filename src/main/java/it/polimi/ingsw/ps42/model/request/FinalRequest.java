@@ -13,7 +13,7 @@ public class FinalRequest extends CardRequest{
 
 	@Override
 	public void apply() {
-		card.enablePermanentEffect(possibleChoiceIndex.get(userChoice));
+		card.enableFinalEffect(possibleChoiceIndex.get(userChoice));
 	}
 
 }

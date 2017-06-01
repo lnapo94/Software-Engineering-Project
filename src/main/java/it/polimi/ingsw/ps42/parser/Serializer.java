@@ -18,6 +18,7 @@ public class Serializer implements JsonSerializer<Object>, JsonDeserializer<Obje
 	
 	private static final String CLASS_KEY="CLASS_META_KEY";	
 
+	@Override
 	public Object deserialize(JsonElement el, Type type, JsonDeserializationContext context) throws JsonParseException {
 		
 		JsonObject jsonObj=el.getAsJsonObject();
@@ -31,6 +32,7 @@ public class Serializer implements JsonSerializer<Object>, JsonDeserializer<Obje
 		}	
 	}
 	
+	@Override
 	public JsonElement serialize(Object obj, Type tipo, JsonSerializationContext context) {
 		
 		JsonElement jsonObj= context.serialize(obj, obj.getClass());
