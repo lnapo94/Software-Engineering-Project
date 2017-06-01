@@ -9,8 +9,10 @@ import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
+import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
+import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.IsNotEmptyException;
@@ -48,7 +50,8 @@ public class Player {
 	//HashMap used for control the correct resource when a card is enabled
 	private HashMap<Resource, Integer> nextResources;
 	
-	private List<Effect> banList;
+	//Only for the firsts four bans in manual and for familiar decrease
+	private Effect ban;
 	private List<IncreaseAction> increaseEffect;
 	
 	
@@ -91,7 +94,6 @@ public class Player {
 		initializeResources(nextResources);
 		
 		//Initialize the Ban, the Increase Effect and the Request arraylists
-		banList = new ArrayList<>();
 		increaseEffect = new ArrayList<>();
 		requests = new ArrayList<>();
 		councilRequests = new ArrayList<>();
@@ -173,6 +175,7 @@ public class Player {
 				//Upload the value in the HashMap
 				nextResources.put(tempResource, tempQuantity);
 			}
+			//TODO Risolvere questione ban
 		}
 	}
 	
@@ -223,13 +226,6 @@ public class Player {
 		}
 		else if(type == ActionType.YIELD) {
 			bonusBar.yieldBonus();
-		}
-	}
-	
-	public void enableBan() {
-		//Apply bans present in banList
-		for(Effect ban : banList) {
-			ban.enableEffect(this);
 		}
 	}
 	
