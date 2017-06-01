@@ -16,7 +16,6 @@ import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.IsNotEmptyException;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
-import it.polimi.ingsw.ps42.model.request.CardRequest;
 import it.polimi.ingsw.ps42.model.request.CouncilRequest;
 import it.polimi.ingsw.ps42.model.request.RequestInterface;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
@@ -306,7 +305,7 @@ public class Player {
 		councilRequests.add(councilRequest);
 	}
 	
-	public void addRequest(CardRequest request) {
+	public void addRequest(RequestInterface request) {
 		//Add a single request in arraylist
 		requests.add(request);
 	}
