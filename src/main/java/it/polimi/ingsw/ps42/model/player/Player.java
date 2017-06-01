@@ -9,7 +9,7 @@ import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
-import it.polimi.ingsw.ps42.model.effect.Obtain;
+import it.polimi.ingsw.ps42.model.effect.ObtainBan;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
@@ -174,8 +174,14 @@ public class Player {
 				
 				//Upload the value in the HashMap
 				nextResources.put(tempResource, tempQuantity);
+				
+				//Check if player has a ban, in that case enable it
+				if(ban.getTypeOfEffect() == EffectType.OBTAIN_BAN) {
+					ObtainBan obtainBan = (ObtainBan) ban;
+					obtainBan.setResource(tempResource);
+					obtainBan.enableEffect(this);
+				}
 			}
-			//TODO Risolvere questione ban
 		}
 	}
 	
@@ -205,6 +211,12 @@ public class Player {
 				nextResources.put(tempResource, tempQuantity);
 			}
 		}
+	}
+	
+	public void setToZero(Resource resource) {
+		//Set a player resource to zero. This method is used in ObtainBan in case
+		//the decrease resource goes under zero
+		nextResources.put(resource, 0);
 	}
 	
 	public int getResource(Resource resource) {
