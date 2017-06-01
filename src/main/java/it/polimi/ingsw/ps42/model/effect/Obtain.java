@@ -34,6 +34,12 @@ public class Obtain extends Effect{
 		
 	}
 	
+	public void enableBan( Player player) throws NotEnoughResourcesException {
+		
+		this.player = player;
+		player.decreaseResource(gains);
+	}
+	
 	@Override
 	public void enableEffect(Player player) {
 		/*In this case the method decrease the cost and increase the gain 
