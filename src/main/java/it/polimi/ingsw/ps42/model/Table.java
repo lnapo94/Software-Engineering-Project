@@ -95,11 +95,10 @@ public class Table {
 
 	public Table(Player player1, Player player2) {
 		//2 players constructor
+		constructor();
+		players = new ArrayList<>();
 		players.add(player1);
 		players.add(player2);
-		
-		
-		constructor();
 	}
 	
 	//PRIVATE CONSTRUCTOR FOR ALL THE SIMILIAR OPERATION IN THE CONSTRUCTION
