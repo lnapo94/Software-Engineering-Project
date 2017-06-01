@@ -87,6 +87,7 @@ public class CardTest {
 		p1.synchResource();
 
 
+
 		System.out.println("Player money: " + p1.getResource(Resource.MONEY));
 		
 
