@@ -66,7 +66,7 @@ public class TakeCardTest {
 		
 		List<Packet> costs = new ArrayList<>();
 		costs.add(cost1);
-		costs.add(cost1); //CHANGED
+		costs.add(cost2);
 		
 		//Create one immediate effect for the card
 		Packet effect1 = new Packet();
