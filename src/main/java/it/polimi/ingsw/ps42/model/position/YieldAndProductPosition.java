@@ -56,5 +56,9 @@ public class YieldAndProductPosition extends Position {
 		this.bonusFamiliars=new ArrayList<>();
 	}
 	
+	@Override
+	public YieldAndProductPosition clone() {
+		return new YieldAndProductPosition(getType(), getLevel(), getBonus(), getMalus());
+	}
 
 }

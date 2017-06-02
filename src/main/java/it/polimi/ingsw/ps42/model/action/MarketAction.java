@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.model.action;
 
+
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,6 +14,7 @@ import it.polimi.ingsw.ps42.model.position.CouncilPosition;
 import it.polimi.ingsw.ps42.model.position.MarketPosition;
 import it.polimi.ingsw.ps42.model.position.TowerPosition;
 import it.polimi.ingsw.ps42.model.position.YieldAndProductPosition;
+import it.polimi.ingsw.ps42.parser.PositionLoader;
 
 public class Table {
 	//This is the Table Class
@@ -37,6 +39,8 @@ public class Table {
 	
 	//The Market can have only 4 position, each with an obtain effect different
 	private StaticList<MarketPosition> market;
+	//Loader for the market
+	private PositionLoader marketLoader;
 	
 	//The two first positions, the former for an Yield action, the latter for a Product action
 	//In this two positions there aren't any malus
@@ -71,10 +75,29 @@ public class Table {
 		players.add(player4);
 		
 		//Add all the required position for a 4-player game (7 max, so 2 more than a 3-player game)
-		for(int i=0 ; i<2; i++){
-			yield.add(new YieldAndProductPosition(ActionType.YIELD , 1, null, 3));
-			product.add(new YieldAndProductPosition(ActionType.PRODUCE, 1, null, 3));
+		PositionLoader loader;
+		try {
+			loader = new PositionLoader("/src/otherPosititions/");
+			YieldAndProductPosition position = loader.getNextYieldAndProductPosition();
+			for(int i=0 ; i<2; i++){
+				yield.add(position.clone());
+				product.add(position.clone());
+			}
+			loader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		
+		//Add two more position for 4 players, then close the file
+		market.add(marketLoader.getNextMarketPosition());
+		market.add(marketLoader.getNextMarketPosition());
+		try {
+			marketLoader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+	
 	}
 
 	public Table(Player player1, Player player2, Player player3) {
@@ -87,10 +110,26 @@ public class Table {
 		product = new ArrayList<>();
 		
 		//Add all the required position for a 3-player game (5 max)
-		for(int i=0 ; i<5; i++){
-			yield.add(new YieldAndProductPosition(ActionType.YIELD , 1, null, 3));
-			product.add(new YieldAndProductPosition(ActionType.PRODUCE, 1, null, 3));
+		PositionLoader loader;
+		try {
+			loader = new PositionLoader("/src/otherPosititions/");
+			YieldAndProductPosition position = loader.getNextYieldAndProductPosition();
+			for(int i=0 ; i<5; i++){
+				yield.add(position.clone());
+				product.add(position.clone());
+			}
+			loader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		
+		//If there is only three players, table has only two market position
+		try {
+			marketLoader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public Table(Player player1, Player player2) {
@@ -99,6 +138,13 @@ public class Table {
 		players = new ArrayList<>();
 		players.add(player1);
 		players.add(player2);
+		
+		//If there is only two players, table has only two market position
+		try {
+			marketLoader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//PRIVATE CONSTRUCTOR FOR ALL THE SIMILIAR OPERATION IN THE CONSTRUCTION
@@ -110,18 +156,72 @@ public class Table {
 		blueTower = new StaticList<>(FLOORS);
 		violetTower = new StaticList<>(FLOORS);
 		
+		towersConstructor();
+		
 		//Setting the First positions (Yield and Product)
-		firstYield = new YieldAndProductPosition(ActionType.YIELD, 1, null, 0);
-		firstProduct = new YieldAndProductPosition(ActionType.PRODUCE, 1, null, 0);
+		PositionLoader loader;
+		try {
+			loader = new PositionLoader("/src/firstsPositions");
+			firstYield = loader.getNextYieldAndProductPosition();
+			firstProduct = loader.getNextYieldAndProductPosition();
+			loader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		//Setting the council
 		council = new ArrayList<>();
 		
-		/*	TODO
-		 * 	Load from file the three Ban and the councilBonuses
-		 * 	Also load all the tower position
-		 * 	Load the first 2 market position (money and slave)
-		 */
+		//Setting the market and load the first 2 position
+		market = new StaticList<>(4);
+		try {
+			marketLoader = new PositionLoader("/src/market");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		market.add(marketLoader.getNextMarketPosition());
+		market.add(marketLoader.getNextMarketPosition());
+	}
+	
+	//PRIVATE METHOD TO CONSTRUCT THE 4 TOWER
+	private void towersConstructor() {
+		try {
+			//Load greenTower
+			PositionLoader loader = new PositionLoader("/src/greenTower");
+			TowerPosition position;
+			position = loader.getNextTowerPosition();
+			while(position != null) {
+				greenTower.add(position);
+				position = loader.getNextTowerPosition();
+			}
+			
+			//Load yellowTower
+			loader.setFileName("/src/yellowTower");
+			position = loader.getNextTowerPosition();
+			while(position != null) {
+				yellowTower.add(position);
+				position = loader.getNextTowerPosition();
+			}
+			
+			//Load blueTower
+			loader.setFileName("/src/blueTower");
+			position = loader.getNextTowerPosition();
+			while(position != null) {
+				blueTower.add(position);
+				position = loader.getNextTowerPosition();
+			}
+			
+			//Load violetTower
+			loader.setFileName("/src/violetTower");
+			position = loader.getNextTowerPosition();
+			while(position != null) {
+				violetTower.add(position);
+				position = loader.getNextTowerPosition();
+			}
+			loader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
