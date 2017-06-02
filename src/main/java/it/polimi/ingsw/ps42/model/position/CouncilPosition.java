@@ -18,8 +18,8 @@ public class CouncilPosition extends Position {
 	
 	private final CouncilObtain councilBonus;
 	
-	public CouncilPosition(ActionType type, int level, Obtain bonus, int malus, CouncilObtain councilBonus) {
-		super(type, level, bonus, malus);
+	public CouncilPosition( int level, Obtain bonus, int malus, CouncilObtain councilBonus) {
+		super( ActionType.COUNCIL, level, bonus, malus);
 		this.councilBonus=councilBonus;
 		
 	}

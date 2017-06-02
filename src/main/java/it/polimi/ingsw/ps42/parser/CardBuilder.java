@@ -1,8 +1,6 @@
 package it.polimi.ingsw.ps42.parser;
 
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,25 +25,15 @@ import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.resourcepacket.*;
 
-public class CardBuilder {
+public class CardBuilder extends Builder {
 	
-	private Gson gson;
-	private FileWriter writer;
-	private BufferedWriter buffer;
-	private Scanner scanner;
-	private List<Obtain> councilConversion;
-	
-	public CardBuilder(String fileName) throws IOException {
+
+	public CardBuilder(String fileName, String councilConversionFile) throws IOException {
 		
-		initGson();
-		writer=new FileWriter(fileName, true);
-		buffer=new BufferedWriter(writer);
-		scanner=new Scanner(System.in);
-		
-		councilConversion = askCouncilConversion();
+		super(fileName, councilConversionFile);
 	}
 	
-	private void initGson(){
+	protected void initGson(){
 		
 		GsonBuilder builder=new GsonBuilder().serializeNulls().setPrettyPrinting();
 		
@@ -74,12 +62,6 @@ public class CardBuilder {
 		addCardToFile(card);
 	}
 	
-	public void close() throws IOException{
-		
-		buffer.close();
-		writer.close();
-		scanner.close();
-	}
 	private String askName(){
 		
 		System.out.println("inserisci il nome della carta");
@@ -154,26 +136,6 @@ public class CardBuilder {
 			response = scanner.nextLine();	
 		}
 		return effects;
-	}
-	
-	public Packet askPacket(){
-		String response;
-		Packet packet=new Packet();
-		do{
-			System.out.println("Tipo Risorsa? ");
-			System.out.println(Resource.FAITHPOINT.toString()+" "+Resource.MILITARYPOINT.toString()+" "
-					+Resource.MONEY.toString()+" "+Resource.SLAVE.toString()+" "+Resource.STONE.toString()+" "
-					+Resource.VICTORYPOINT.toString()+" "+Resource.WOOD.toString());
-			String resource=scanner.nextLine();
-			System.out.println("Quantità?" );
-			int quantity = Integer.parseInt(scanner.nextLine());
-			packet.addUnit(new Unit(Resource.parseInput(resource), quantity));
-			System.out.println("Vuoi aggiungere altro?(si/no)");
-			response=scanner.nextLine();
-			System.out.println("stato attuale: "+packet);
-		}
-		while(response.toUpperCase().equals("SI"));
-		return packet;
 	}
 	
 	private Effect askEffect(){
@@ -252,21 +214,7 @@ public class CardBuilder {
 		return new CouncilObtain(quantity, councilConversion);
 	}
 
-	private List<Obtain> askCouncilConversion(){
-		
-		System.out.println("--CREAZIONE CONVERSIONI PRIVILEGI DEL CONSIGLIO--");
-		List<Obtain> conversion = new ArrayList<>();
-		String response;
-		do{
-			Packet gain = askPacket();
-			conversion.add(new Obtain( null, gain));
-			System.out.println("Aggiungere altra conversione?");
-			response = scanner.nextLine();
-		}
-		while(response.toUpperCase().equals("SI"));
-		System.out.println("--FINE CREAZIONE LISTA CONVERSIONI PER PRIVILEGI DEL CONSIGLIO--");
-		return conversion;
-	}
+
 	private Effect askDoAction() {
 		
 		String response;
@@ -321,7 +269,7 @@ public class CardBuilder {
 		return new ForEachObtain(requirements, gains);
 	}
 
-	public Effect askObtain(){
+	private Effect askObtain(){
 		Packet costs = new Packet();
 		Packet gains = new Packet();
 		String response;
