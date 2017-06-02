@@ -7,6 +7,7 @@ import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
@@ -38,11 +39,12 @@ public class CardCostBan extends Effect{
 			Unit u=new Unit(Resource.VICTORYPOINT, banCost);	//Convert the total amount in victory point to be subtracted later
 			Packet p=new Packet();
 			p.addUnit(u);
-			//TODO GESTIRE ECCEZIONE
-			//player.decreaseResource(p);							//Apply the ban to the player
+			player.decreaseResource(p); 						//Apply the ban to the player
 		}
 		catch (WrongColorException e) {
 			System.out.println("Ban failed beacause of a wrong initialization of the effect");
+		} catch (NotEnoughResourcesException e) {
+			player.setToZero(Resource.VICTORYPOINT);
 		}
 	}
 	

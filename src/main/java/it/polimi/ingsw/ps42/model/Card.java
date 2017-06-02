@@ -271,8 +271,10 @@ public class Card {
 	
 	private List<Packet> copyPacketList(List<Packet> start) {
 		List<Packet> temp = new ArrayList<>();
-		for(Packet packet : start) {
-			temp.add(packet);
+		if(start != null) {
+			for(Packet packet : start) {
+				temp.add(packet);
+			}
 		}
 		return temp;
 	}
