@@ -1,43 +1,42 @@
 package it.polimi.ingsw.ps42.parser;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonStreamParser;
+import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
-public abstract class Builder {
+public class CouncilPositionBuilder {
 
-	protected Gson gson;
-	protected FileWriter writer;
-	protected BufferedWriter buffer;
-	protected Scanner scanner;
-	protected List<Obtain> councilConversion;
+
+	private Gson gson;
+	private FileWriter writer;
+	private BufferedWriter buffer;
+	private Scanner scanner;
 	
 	
-	public Builder(String fileName, String councilConversionFile) throws IOException {
-		
+	public CouncilPositionBuilder( String fileName) throws IOException{
+	
 		initGson();
 		writer = new FileWriter(fileName, true);
 		buffer = new BufferedWriter(writer);
-		scanner = new Scanner(System.in);
-		
-		councilConversion = getCouncilConversion(councilConversionFile);
+		scanner = new Scanner(System.in);	
+	
 	}
 	
-	protected abstract void initGson();
+	private void initGson(){
+		
+		GsonBuilder builder=new GsonBuilder().serializeNulls().setPrettyPrinting();		
+		this.gson = builder.create();
+		
+	}
 	
 	public void close() throws IOException{
 		
@@ -46,30 +45,24 @@ public abstract class Builder {
 		scanner.close();
 	}
 	
-	private List<Obtain> getCouncilConversion( String fileName) throws IOException{
+	public void addConversion() throws IOException {
 		
-		System.out.println("--CREAZIONE CONVERSIONI PRIVILEGI DEL CONSIGLIO--");
-		List<Obtain> conversion = new ArrayList<>();
-		
-		Gson tempGson = new Gson();
-		FileReader tempReader = new FileReader(fileName);
-		BufferedReader tempBuffer = new BufferedReader(tempReader);
-		JsonStreamParser tempParser = new JsonStreamParser(tempBuffer);
-		
-		while( tempParser.hasNext()){
-			JsonElement element = tempParser.next();
-			if( element.isJsonObject() )
-				conversion.add( tempGson.fromJson(element, Obtain.class));
-		}
-		
-		tempBuffer.close();
-		tempReader.close();
-		
-		System.out.println("--FINE CREAZIONE LISTA CONVERSIONI PER PRIVILEGI DEL CONSIGLIO--");
-		return conversion;
+		Obtain conversion = askConversion();
+		String parse = gson.toJson(conversion);
+		buffer.append(parse);
 	}
 	
-	protected Packet askPacket(){
+	private Obtain askConversion(){
+		
+		Packet costs = new Packet();
+		Packet gains = new Packet();
+		
+		System.out.println("Aggiunta nuova conversione in corso...");
+		gains=askPacket();
+		return new Obtain(costs, gains);
+	}
+	
+	private Packet askPacket(){
 		String response;
 		Packet packet=new Packet();
 		do{
@@ -89,4 +82,5 @@ public abstract class Builder {
 		return packet;
 	}
 	
+
 }
