@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps42;
+package it.polimi.ingsw.ps42.model;
 
 import static org.junit.Assert.*;
 
