@@ -8,6 +8,7 @@ import com.google.gson.JsonStreamParser;
 
 public class FaithPathLoader extends Loader {
 
+	//TO-DO: discutere formattazione file e sua gestione in game logic
 	public FaithPathLoader( String fileName ) throws IOException{
 	
 		super( fileName);

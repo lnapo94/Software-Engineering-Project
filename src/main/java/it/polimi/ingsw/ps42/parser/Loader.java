@@ -24,6 +24,7 @@ public abstract class Loader  {
 	
 	public void setFileName(String fileName) throws IOException{
 		
+		close();
 		reader = new FileReader(fileName);
 		buffer = new BufferedReader(reader);
 		initGson();

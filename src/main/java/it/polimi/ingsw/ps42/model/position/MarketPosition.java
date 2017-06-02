@@ -17,8 +17,8 @@ public class MarketPosition extends Position {
 	private List<Familiar> bonusFamiliars;
 	
 	
-	public MarketPosition(ActionType type, int level, Obtain bonus, int malus) {
-		super(type, level, bonus, malus);
+	public MarketPosition( int level, Obtain bonus, int malus) {
+		super( ActionType.MARKET, level, bonus, malus);
 		bonusFamiliars=new ArrayList<>();
 		
 	}
