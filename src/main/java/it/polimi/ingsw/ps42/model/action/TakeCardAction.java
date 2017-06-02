@@ -61,7 +61,7 @@ public class TakeCardAction extends Action{
 			return Response.FAILURE;
 		}
 		
-		if(!checkMyFamiliar()) {
+		if(position.getFamiliar() != null && !checkMyFamiliar()) {
 			player.restoreResource();
 			return Response.FAILURE;
 		}
@@ -79,9 +79,10 @@ public class TakeCardAction extends Action{
 		}
 		
 		//Fourth: if the position has a bonus, apply it to the player
-		if(position.getBonus() != null && familiar != null) {
+		if(familiar != null) {
 			try {
 				position.setFamiliar(familiar);
+				player.synchResource();
 			} catch (FamiliarInWrongPosition e) {
 				System.out.println("[DEBUG]: familiar can't be positioned here");
 				player.restoreResource();
@@ -89,15 +90,19 @@ public class TakeCardAction extends Action{
 			}
 		}
 		
+		//Create a moneyMalus packet
+		Packet moneyMalus = new Packet();
+		moneyMalus.addUnit(new Unit(Resource.MONEY, 3));
+		
 		//Fifth: verify if there aren't any other player in the tower, else
 		//decrease money in player
 		if(isAnotherFamiliar()) {
-			Packet moneyMalus = new Packet();
-			moneyMalus.addUnit(new Unit(Resource.MONEY, 3));
 			try {
 				player.decreaseResource(moneyMalus);
+				player.synchResource();
 			} catch (NotEnoughResourcesException e) {
-				player.restoreResource();
+				position.resetBonus(player);
+				player.synchResource();
 				position.removeFamiliar();
 				return Response.LOW_LEVEL;
 			}
@@ -105,7 +110,10 @@ public class TakeCardAction extends Action{
 		try {
 			position.getCard().payCard(player, discount);
 		} catch (NotEnoughResourcesException e) {
-			player.restoreResource();
+			position.resetBonus(player);
+			if(isAnotherFamiliar())
+				player.increaseResource(moneyMalus);
+			player.synchResource();
 			position.removeFamiliar();
 			return Response.LOW_LEVEL;
 		}

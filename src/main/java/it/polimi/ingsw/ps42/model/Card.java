@@ -103,7 +103,7 @@ public class Card {
 	
 	public void payCard(Player player, Packet discount) throws NotEnoughResourcesException {
 		if(costs != null && !costs.isEmpty()) {
-			if(!checkRequirements(player))
+			if(requirements != null && !checkRequirements(player))
 				throw new NotEnoughResourcesException("Player hasn't the requirements");
 			if(discount != null)
 				player.increaseResource(discount);

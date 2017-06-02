@@ -3,7 +3,10 @@ package it.polimi.ingsw.ps42.model.position;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
+import it.polimi.ingsw.ps42.model.player.Player;
+import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
 public abstract class Position {
 
@@ -65,6 +68,15 @@ public abstract class Position {
 	
 	protected boolean canStay(Familiar familiar){
 		return (familiar.getValue()-this.malus)>=this.level;
+	}
+	
+	public void resetBonus(Player player) {
+		Packet packet = bonus.getGains();
+		try {
+			player.decreaseResource(packet);
+		} catch (NotEnoughResourcesException e) {
+			System.out.println("[DEBUG]: error in position.resetBonus");
+		}
 	}
 	
 }

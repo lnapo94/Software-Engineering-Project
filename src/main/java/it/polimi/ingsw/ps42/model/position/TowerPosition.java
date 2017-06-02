@@ -24,7 +24,7 @@ public class TowerPosition  extends Position {
 		return card;
 	}
 	public boolean hasCard(){		//Check if there is a card in the position
-		return card == null;
+		return card != null;
 		
 	}
 	public void removeCard(){		//Remove the card from the position
