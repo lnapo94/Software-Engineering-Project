@@ -1,12 +1,9 @@
 package it.polimi.ingsw.ps42.parser;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonStreamParser;
@@ -14,21 +11,15 @@ import com.google.gson.JsonStreamParser;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 
-public class CardLoader {
+public class CardLoader extends Loader {
 
-	private Gson gson;
-	private FileReader reader;
-	private BufferedReader buffer;
-	private JsonStreamParser parser;
 	
 	public CardLoader(String fileName) throws IOException {
 		
-		reader = new FileReader(fileName);
-		buffer = new BufferedReader(reader);
-		initGson();
+		super(fileName);
 	}
 	
-	private void initGson(){
+	protected void initGson(){
 		
 		GsonBuilder builder = new GsonBuilder().registerTypeAdapter(Effect.class, new Serializer());
 		gson = builder.create();
@@ -36,19 +27,6 @@ public class CardLoader {
 		
 	}
 	
-	public void setFileName(String fileName) throws IOException{
-		
-		reader = new FileReader(fileName);
-		buffer = new BufferedReader(reader);
-		initGson();
-		
-	}
-	
-	public void close() throws IOException {
-		
-		buffer.close();
-		reader.close();
-	}
 	public List<Card> getCards(){
 		
 		ArrayList<Card> deck = new ArrayList<>();
@@ -62,5 +40,5 @@ public class CardLoader {
 		
 		return deck;
 	}
-	
+
 }
