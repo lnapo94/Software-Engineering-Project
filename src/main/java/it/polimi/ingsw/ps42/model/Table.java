@@ -60,8 +60,8 @@ public class Table {
 	//a player can book a better position in the next round
 	private List<CouncilPosition> council;
 	
-	//List of Obtain which represents the Council Bonuses
-	private List<Obtain> councilBonuses;
+	//A council position to copy
+	private CouncilPosition councilCopy;
 
 	//The four Constructors. We have a constructor for each kind of match
 	//For example: with 2 players the table hasn't all the position
@@ -85,7 +85,7 @@ public class Table {
 			}
 			loader.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Unable to open the file");
 		}
 		
 		//Add two more position for 4 players, then close the file
@@ -113,7 +113,7 @@ public class Table {
 			}
 			loader.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Unable to open the file");
 		}
 	}
 
@@ -144,7 +144,7 @@ public class Table {
 			firstProduct = loader.getNextYieldAndProductPosition();
 			loader.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Unable to open the file");
 		}
 		
 		//Setting the council
@@ -155,10 +155,20 @@ public class Table {
 		try {
 			marketLoader = new PositionLoader("/src/market");
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Unable to open the file");
 		}
 		market.add(marketLoader.getNextMarketPosition());
 		market.add(marketLoader.getNextMarketPosition());
+		
+		//Initialize the councilLoader
+		PositionLoader councilLoader;
+		try {
+			councilLoader = new PositionLoader("/src/councilBonus");
+			councilCopy = councilLoader.getNextCouncilPosition();
+			councilLoader.close();
+		} catch (IOException e) {
+			System.out.println("Unable to open the file");
+		}
 	}
 	
 	//PRIVATE METHOD TO CONSTRUCT THE 4 TOWER
@@ -198,7 +208,7 @@ public class Table {
 			}
 			loader.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Unable to open the file");
 		}
 	}
 	
@@ -332,13 +342,8 @@ public class Table {
 		return council;
 	}
 	
-	//RETURN THE COUNCIL BONUS
-	public List<Obtain> getCouncilBonuses() {
-		return councilBonuses;
-	}
-	
 	public CouncilPosition getFreeCouncilPosition() {
-		CouncilPosition councilPosition = new CouncilPosition(ActionType.COUNCIL, 1, null, 0, null);
+		CouncilPosition councilPosition = councilCopy.clone();
 		council.add(councilPosition);
 		return councilPosition;
 		/*TODO
