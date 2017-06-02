@@ -91,13 +91,6 @@ public class Table {
 		//Add two more position for 4 players, then close the file
 		market.add(marketLoader.getNextMarketPosition());
 		market.add(marketLoader.getNextMarketPosition());
-		try {
-			marketLoader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	
-	
 	}
 
 	public Table(Player player1, Player player2, Player player3) {
@@ -122,14 +115,6 @@ public class Table {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		//If there is only three players, table has only two market position
-		try {
-			marketLoader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	public Table(Player player1, Player player2) {
@@ -138,13 +123,6 @@ public class Table {
 		players = new ArrayList<>();
 		players.add(player1);
 		players.add(player2);
-		
-		//If there is only two players, table has only two market position
-		try {
-			marketLoader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	//PRIVATE CONSTRUCTOR FOR ALL THE SIMILIAR OPERATION IN THE CONSTRUCTION
