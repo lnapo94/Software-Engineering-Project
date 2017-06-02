@@ -39,8 +39,8 @@ public class CouncilPosition extends Position {
 	
 	@Override
 	public CouncilPosition clone(){
-		//TO-DO da implementare 
-		return null;
+		//verificare se councilBonus da problemi
+		return new CouncilPosition(this.getLevel(), this.getBonus(), this.getMalus(), councilBonus);
 		
 	}
 	

@@ -7,9 +7,14 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.position.CouncilPosition;
+import it.polimi.ingsw.ps42.model.position.MarketPosition;
 import it.polimi.ingsw.ps42.model.position.Position;
+import it.polimi.ingsw.ps42.model.position.TowerPosition;
+import it.polimi.ingsw.ps42.model.position.YieldAndProductPosition;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
 public class PositionBuilder extends Builder {
@@ -41,13 +46,36 @@ public class PositionBuilder extends Builder {
 		int level = askLevel();
 		Obtain bonus = askBonus();
 		int malus = askMalus();
+		Position position;
 		
+		if(type == ActionType.COUNCIL){
+			CouncilObtain councilBouns = new CouncilObtain( 1 , councilConversion);
+			position = new CouncilPosition(level, bonus, malus, councilBouns);
+		}
+		
+		else if(type == ActionType.MARKET) {
+			position = new MarketPosition(level, bonus, malus);
+		}
+		else if(type == ActionType.PRODUCE || type == ActionType.YIELD)
+			position = new YieldAndProductPosition(type, level, bonus, malus);
+
+		else if( type == ActionType.TAKE_BLUE || type == ActionType.TAKE_GREEN ||
+					type == ActionType.TAKE_YELLOW || type == ActionType.TAKE_VIOLET )
+			
+			position = new TowerPosition(type, level, bonus, malus);
+		
+		else throw new IOException();		//Wrong name passed
+		
+		addPositionToFile( position);
 		
 	}
 	
 	private ActionType askActionType(){
-		
-		return null;
+		System.out.println("inserisci il tipo di azione legato alla posizione");
+		System.out.println( ActionType.TAKE_BLUE + " "+ ActionType.TAKE_GREEN + " "+ ActionType.TAKE_VIOLET+ " "+
+							ActionType.TAKE_YELLOW+ " "+ ActionType.COUNCIL +" "+ ActionType.MARKET +" "+
+							ActionType.PRODUCE +" "+ ActionType.YIELD);
+		return ActionType.parseInput( scanner.nextLine());
 	}
 	
 	private int askLevel(){
@@ -72,4 +100,12 @@ public class PositionBuilder extends Builder {
 			gains=askPacket();
 		return new Obtain(costs, gains);
 	}
+	
+	private void addPositionToFile( Position position ) throws IOException {
+		
+		String parse = gson.toJson(position);
+		buffer.write(parse);
+	}
+	
+
 }

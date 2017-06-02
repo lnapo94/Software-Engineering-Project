@@ -29,7 +29,7 @@ public class CouncilRequest {
 	
 	public void addChoice(int index) throws WrongChoiceException {
 		//Adds a choice only if this is present in the possibleChoice ArrayList
-		if(validChoice(index) && possibleChoice.size()>quantity){
+		if(validChoice(index)){
 			this.choice.add(possibleChoice.remove(index));
 		}
 		else throw new WrongChoiceException("The choice for this request is not valid");
@@ -40,6 +40,7 @@ public class CouncilRequest {
 		//Checks if the choice made is a valid index
 		return possibleChoice.size()>choice;
 	}
+	
 	public boolean apply(Player player) {
 		
 		if(choice.size()==quantity){
@@ -51,5 +52,5 @@ public class CouncilRequest {
 		else return false;
 	}
 
-	
+		
 }

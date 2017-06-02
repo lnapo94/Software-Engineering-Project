@@ -21,8 +21,6 @@ public class ForEachObtainTest {
 
 	private Player player;
 	private Card cardImmediate;
-	private Card cardPermanent;
-	private Card cardFinal;
 	
 	
 	@Before

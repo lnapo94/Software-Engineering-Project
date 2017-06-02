@@ -36,7 +36,6 @@ public class CardBuilder extends Builder {
 	protected void initGson(){
 		
 		GsonBuilder builder=new GsonBuilder().serializeNulls().setPrettyPrinting();
-		
 		this.gson = builder.registerTypeAdapter(Effect.class, new Serializer()).create();
 		
 	}
@@ -283,6 +282,7 @@ public class CardBuilder extends Builder {
 			gains=askPacket();
 		return new Obtain(costs, gains);
 	}
+	
 	public void addCardToFile(Card card) throws IOException{
 		
 		String parse = gson.toJson(card);
