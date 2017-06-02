@@ -37,4 +37,11 @@ public class CouncilPosition extends Position {
 		councilBonus.enableEffect(player);
 	}
 	
+	@Override
+	public CouncilPosition clone(){
+		//TO-DO da implementare 
+		return null;
+		
+	}
+	
 }
