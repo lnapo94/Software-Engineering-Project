@@ -29,9 +29,23 @@ public class ActionPrototype {
 	
 	public boolean checkAction(Action action){
 		//If the action passed respect the parameters of the action prototype it will pass the check
-		//TO-DO: controllo su take all
-		if(action.getType() == this.type && action.getActionValue() <= this.level)
+
+		if( checkType( action ) && action.getActionValue() <= this.level)
 			return true;
 		return false;
+	}
+	
+	private boolean checkType(Action action){
+		//Checks if the action passed respect the prototype, considering the take-all action type
+		if( this.type == ActionType.TAKE_ALL){
+			if( action.getType() == ActionType.TAKE_BLUE || action.getType() == ActionType.TAKE_GREEN
+					|| action.getType() == ActionType.TAKE_VIOLET || action.getType() == ActionType.TAKE_YELLOW)
+				return true;
+
+			else return false;
+		}
+		
+		else return this.type == action.getType();
+			
 	}
 }

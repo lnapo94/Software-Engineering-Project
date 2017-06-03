@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.Card;
+import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
@@ -21,6 +22,7 @@ public class DoActionTest {
 
 	private Player player;
 	private Card card;
+	private Packet discount;
 	
 	@Before
 	public void setup(){
@@ -32,16 +34,26 @@ public class DoActionTest {
 		playerResources.addUnit(new Unit(Resource.WOOD, 2));
 		player.increaseResource(playerResources);
 		player.synchResource();
+		
+		//Build the discount
+		discount = new Packet();
+		discount.addUnit(new Unit(Resource.WOOD, 3));
+		
 		//Build the cards with a DoAction Effect
 		
 		//Build the card costs
-		Packet cost = new Packet();
-		cost.addUnit(new Unit(Resource.MONEY, 2));
+		Packet cost1 = new Packet();
+		cost1.addUnit(new Unit(Resource.MONEY, 2));
 		ArrayList<Packet> costs = new ArrayList<>();
-		costs.add(cost);
+		costs.add(cost1);
+
+		Packet cost2 = new Packet();
+		cost2.addUnit(new Unit(Resource.WOOD, 5));
+		costs.add(cost2);
 		
 		//Build the effects
 		ArrayList<Effect> immediateEffects = new ArrayList<>();
+		immediateEffects.add(buildEasyEffect());
 		immediateEffects.add(buildEasyEffect());
 		
 		//Build the card
@@ -59,16 +71,34 @@ public class DoActionTest {
 	public void test() {
 		
 		setup();
-		
-		player.addCard(card);
-		card.setPlayer(player);
-		
+
 		assertEquals( 2, player.getResource(Resource.WOOD));
 		assertEquals( 6, player.getResource(Resource.MONEY));
 		
 		try {
+			//Pay the card cost that use the player discount
+			card.payCard(player, discount);
+			RequestInterface payRequest = player.getRequests().get(0);
+			payRequest.setChoice(1);
+			payRequest.apply();
+			card.setPlayer(player);
+			player.addCard(card);
+			player.synchResource();
+			
+			//Check player has correctly payed the card cost
+			assertEquals( 0, player.getResource(Resource.WOOD));
+			assertEquals( 6, player.getResource(Resource.MONEY));
+			
 			card.enableImmediateEffect();
-			//TO-DO finire il test
+			RequestInterface effectRequest = player.getRequests().get(0);
+			effectRequest.setChoice(1);
+			effectRequest.apply();
+			
+			ActionPrototype bonusAction = player.getBonusAction();
+			
+			assertEquals(2 , bonusAction.getLevel());
+			assertEquals(ActionType.MARKET, bonusAction.getType());
+			
 			
 		} catch (NotEnoughResourcesException e) {
 	
