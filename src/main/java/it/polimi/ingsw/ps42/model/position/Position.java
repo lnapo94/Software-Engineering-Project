@@ -29,7 +29,9 @@ public abstract class Position {
 	
 	public Obtain getBonus() {
 		//Clone of the position bonus to avoid problem from position clone in the setup
-		return new Obtain(bonus.getCosts(), bonus.getGains());
+		if(bonus != null) 
+			return new Obtain(bonus.getCosts(), bonus.getGains());
+		return null;
 	}
 	public int getMalus() {
 		return malus;

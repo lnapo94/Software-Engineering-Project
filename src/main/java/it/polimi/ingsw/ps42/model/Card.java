@@ -105,13 +105,17 @@ public class Card {
 		if(costs != null && !costs.isEmpty()) {
 			if(requirements != null && !checkRequirements(player))
 				throw new NotEnoughResourcesException("Player hasn't the requirements");
-			if(discount != null)
+			if(discount != null) {
 				player.increaseResource(discount);
-			if(costs.size() == 1 && checkPlayerCanPay(costs.get(0), player))
+				player.synchResource();
+			}
+			if(costs.size() == 1 && checkPlayerCanPay(costs.get(0), player, discount))
 				payCard(player, 0);
+			else
+				throw new NotEnoughResourcesException("Player hasn't the requirements");
 			if(costs.size() > 1) {
 				for(Packet cost : costs) {
-					if(checkPlayerCanPay(cost, player)) {
+					if(checkPlayerCanPay(cost, player, discount)) {
 						possibleChoice.add(cost);
 						possibleChoiceIndex.add(costs.indexOf(cost));
 					}
@@ -182,7 +186,7 @@ public class Card {
 	
 	public Packet checkCosts(Player player) {
 		for(Packet cost : costs)
-			if(checkPlayerCanPay(cost, player))
+			if(checkPlayerCanPay(cost, player, null))
 				return cost;
 		return null;
 	}
@@ -231,7 +235,7 @@ public class Card {
 				//Check if player can pay
 				//If player can pay this cost, then checker = false because the effect cannot be immediately consumed
 				//Else the effect cannot be payed nor added to the possible choice array
-				checker = checkOwnerCanPay(obtainCosts);
+				checker = checkOwnerCanPay(obtainCosts, null);
 				if(checker == true) {
 					possibleChoice.add(effect);
 					possibleChoiceIndex.add(index);
@@ -242,16 +246,24 @@ public class Card {
 		return checker;
 	}
 	
-	private boolean checkOwnerCanPay(Packet costs) {
+	private boolean checkOwnerCanPay(Packet costs, Packet discount) {
 		//Check if the owner can pay an effect
-		return checkPlayerCanPay(costs, owner);
+		return checkPlayerCanPay(costs, owner, discount);
 	}
 	
-	private boolean checkPlayerCanPay(Packet costs, Player player) {
+	private boolean checkPlayerCanPay(Packet costs, Player player, Packet discount) {
 		//Check if a generic player can pay a packet of costs
 		for (Unit unit : costs) {
-			if(unit.getQuantity() > player.getResource(unit.getResource()))
+			if(unit.getQuantity() > player.getResource(unit.getResource())) {
+					if(discount != null)
+						try {
+							player.decreaseResource(discount);
+							player.synchResource();
+						} catch (NotEnoughResourcesException e) {
+							System.out.println("[DEBUG]: problem in checkPlayerCanPay");
+						}
 					return false;
+			}
 		}
 		return true;
 	}

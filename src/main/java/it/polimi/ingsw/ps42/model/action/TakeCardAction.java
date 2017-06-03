@@ -101,7 +101,8 @@ public class TakeCardAction extends Action{
 				player.decreaseResource(moneyMalus);
 				player.synchResource();
 			} catch (NotEnoughResourcesException e) {
-				position.resetBonus(player);
+				if(position.getBonus() != null)
+					position.resetBonus(player);
 				player.synchResource();
 				position.removeFamiliar();
 				return Response.LOW_LEVEL;
@@ -110,7 +111,8 @@ public class TakeCardAction extends Action{
 		try {
 			position.getCard().payCard(player, discount);
 		} catch (NotEnoughResourcesException e) {
-			position.resetBonus(player);
+			if(position.getBonus() != null)
+				position.resetBonus(player);
 			if(isAnotherFamiliar())
 				player.increaseResource(moneyMalus);
 			player.synchResource();
