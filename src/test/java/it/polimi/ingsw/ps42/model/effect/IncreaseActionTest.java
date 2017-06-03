@@ -3,6 +3,8 @@ package it.polimi.ingsw.ps42.model.effect;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,6 +12,7 @@ import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.action.TakeCardAction;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
@@ -51,12 +54,18 @@ public class IncreaseActionTest {
 		tower.add(third);
 		tower.add(fourth);
 		
+		//Create a cost for the card
+		Packet cost = new Packet();
+		cost.addUnit(new Unit(Resource.MONEY, 2));
+		ArrayList<Packet> costs = new ArrayList<>();
+		costs.add(cost);
 		//Add a card to tower
-		Card c = new Card("", "", null, 0, 0, null, null, null, null, null);
+		Card c = new Card("", "", CardColor.GREEN, 0, 0, costs, null, null, null, null);
 		first.setCard(c);
 		second.setCard(c);
 		third.setCard(c);
 		fourth.setCard(c);
+		
 		
 		//Create the action, player can take a card from the second floor
 		action = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.WHITE), tower, 1);
@@ -66,9 +75,12 @@ public class IncreaseActionTest {
 	public void test() {
 		//At this point, player has an IncreaseEffect, so he can take the card
 		//from the first or the second floor
+		assertEquals(0, action.getActionValue());
 		Response checker = action.checkAction();
+		action.doAction();
 		assertTrue(checker == Response.SUCCESS);
 		assertEquals(3, action.getActionValue());
+		assertEquals(1, p1.getCardList(CardColor.GREEN).size());
 	}
 
 }
