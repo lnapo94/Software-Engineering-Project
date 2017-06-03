@@ -3,7 +3,6 @@ package it.polimi.ingsw.ps42.model.effect;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -52,13 +51,15 @@ public class SlaveBanTest {
 		//Build the cards
 		card = new Card("cardSlaveBan", "", CardColor.BLUE, 2 , 2, costs,null , null , null, null);
 		
+		ban = new SlaveBan(2);
 	}
 	
 	
 	@Test
 	public void test() {
 		
-		player.setBan(ban);
+		ban.enableEffect(player);
+		player.setBan( ban );
 		//Get the player familiar
 
 		familiar = player.getFamiliar(FamiliarColor.BLACK);
@@ -68,11 +69,11 @@ public class SlaveBanTest {
 		
 		try {
 			card.payCard(player, null);
-			List<RequestInterface> request = player.getRequests();
-			assertEquals(1, player.getRequests().size());
-			RequestInterface firstRequest = request.get(0);
-			firstRequest.apply();
+			RequestInterface request = player.getRequests().get(0);
+			request.setChoice(0);
+			request.apply();
 			
+			assertEquals(2, player.getDivisory());
 			
 			
 		} catch (NotEnoughResourcesException e) {

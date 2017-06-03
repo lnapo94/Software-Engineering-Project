@@ -47,6 +47,7 @@ public class MarketAction extends Action {
 					if(checkActionValue() )
 						//Checks if the action has a sufficient level for the position
 						return Response.SUCCESS;
+					else return Response.LOW_LEVEL;
 				}
 			else 
 				return Response.FAILURE;		//The position is occupied or the player ha a market ban
