@@ -1,10 +1,6 @@
 package it.polimi.ingsw.ps42.parser;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
-
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.ps42.model.effect.CouncilObtain;

@@ -102,24 +102,43 @@ public class Card {
 	}
 	
 	public void payCard(Player player, Packet discount) throws NotEnoughResourcesException {
+		
+		//First of all, control if card costs are null
 		if(costs != null && !costs.isEmpty()) {
+			
+			//Then check the requirements, maybe player can pay the card but he hasn't the requirements, such as enough military point
 			if(requirements != null && !checkRequirements(player))
 				throw new NotEnoughResourcesException("Player hasn't the requirements");
+			
+			//Then check if there is a discount to apply
 			if(discount != null) {
 				player.increaseResource(discount);
 				player.synchResource();
 			}
-			if(costs.size() == 1 && checkPlayerCanPay(costs.get(0), player, discount))
-				payCard(player, 0);
-			else
-				throw new NotEnoughResourcesException("Player hasn't the requirements");
+			
+			//At this point, card can have only one cost or higher
+			//If there is only one cost, control if player can pay it
+			//In this case, the player can pay immediately, without a request
+			if(costs.size() == 1) {
+				if(checkPlayerCanPay(costs.get(0), player, discount))
+					payCard(player, 0);
+				else
+					throw new NotEnoughResourcesException("Player hasn't enough resource");
+			}
+			
+			//This branch will enable only if there is more costs in card
 			if(costs.size() > 1) {
+				
+				//Then control the cost player can pay
 				for(Packet cost : costs) {
 					if(checkPlayerCanPay(cost, player, discount)) {
 						possibleChoice.add(cost);
 						possibleChoiceIndex.add(costs.indexOf(cost));
 					}
 				}
+				
+				//The costs player can afford will be send to the client. In this way player can choose which cost
+				//he want to pay
 				controlPossibleChoice();
 				CardRequest request = new PayRequest(player, this, possibleChoiceIndex, possibleChoice);
 				player.addRequest(request);

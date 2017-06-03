@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import it.polimi.ingsw.ps42.model.effect.Effect;
-import it.polimi.ingsw.ps42.model.effect.Obtain;
-import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.CouncilPosition;
