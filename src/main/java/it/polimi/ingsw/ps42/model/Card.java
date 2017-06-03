@@ -86,10 +86,10 @@ public class Card {
 		return copyPacketList(costs);
 	}
 	
-	public List<Packet> getRequirements() {
+	/*public List<Packet> getRequirements() {
 		//Return a copy of requirements array
 		return copyPacketList(requirements);
-	}
+	}*/
 	
 	public void setPlayer(Player owner) {
 		this.owner = owner;
@@ -142,6 +142,7 @@ public class Card {
 				controlPossibleChoice();
 				CardRequest request = new PayRequest(player, this, possibleChoiceIndex, possibleChoice);
 				player.addRequest(request);
+				resetPossibleChoice();
 			}
 		}
 	}
@@ -156,6 +157,7 @@ public class Card {
 				controlPossibleChoice();
 				CardRequest request = new ImmediateRequest(this, possibleChoiceIndex, possibleChoice);
 				owner.addRequest(request);
+				resetPossibleChoice();
 			}
 		}
 	}
@@ -175,6 +177,7 @@ public class Card {
 				controlPossibleChoice();
 				CardRequest request = new PermanentRequest(this, possibleChoiceIndex, possibleChoice);
 				owner.addRequest(request);
+				resetPossibleChoice();
 			}
 		}
 	}
@@ -194,6 +197,7 @@ public class Card {
 				controlPossibleChoice();
 				CardRequest request = new FinalRequest(this, possibleChoiceIndex, possibleChoice);
 				owner.addRequest(request);
+				resetPossibleChoice();
 			}
 		}
 	}
@@ -203,14 +207,19 @@ public class Card {
 	}
 	/* END FINAL EFFECT */
 	
-	public Packet checkCosts(Player player) {
+	/*public Packet checkCosts(Player player) {
 		for(Packet cost : costs)
 			if(checkPlayerCanPay(cost, player, null))
 				return cost;
 		return null;
-	}
+	}*/
 	
 	//PRIVATE METHODS FOR CARD CLASS
+	private void resetPossibleChoice() {
+		this.possibleChoice = new ArrayList<>();
+		this.possibleChoiceIndex = new ArrayList<>();
+	}
+	
 	private void controlPossibleChoice() throws NotEnoughResourcesException {
 		//ONLY PRIVATE request
 		//Used only to verify if the arrays of choices isn't empty
@@ -310,3 +319,12 @@ public class Card {
 		return temp;
 	}
 }
+/*	TODO
+ *	Risolvere problema, esempio:
+ *	Vi sono 2 effetti dentro carta, un Obtain e un ForEachObtain
+ *	Si verifica quindi che siano attivabili, il primo non lo è, mentre il secondo si
+ *	però si è già nella situazione in cui vi è più di un effetto dentro carta e ciò 
+ *	prevede la creazione di una richiesta. Visto che però la richiesta conterrebbe solo
+ *	un effetto di tipo ForEachObtain, sarebbe utile evitare questa creazione e attivare
+ *	subito l'effetto
+ */
