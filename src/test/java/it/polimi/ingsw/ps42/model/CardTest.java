@@ -254,6 +254,7 @@ public class CardTest {
 			cannotEnableObtainEffect.synchResource();
 		}
 		
+		//After, the canTakeCard player has only one money, but 5 faithpoint, and before he has had 0
 		assertEquals(1, canTakeCard.getResource(Resource.MONEY));
 		assertEquals(0, canTakeCard.getResource(Resource.STONE));
 		assertEquals(3, canTakeCard.getResource(Resource.WOOD));
