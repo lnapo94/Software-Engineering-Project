@@ -37,6 +37,14 @@ public abstract class Builder {
 		councilConversion = getCouncilConversion(councilConversionFile);
 	}
 	
+	public Builder(String fileName) throws IOException{
+		
+		initGson();
+		writer = new FileWriter(fileName, true);
+		buffer = new BufferedWriter(writer);
+		scanner = new Scanner(System.in);
+		
+	}
 	protected abstract void initGson();
 	
 	public void close() throws IOException{
