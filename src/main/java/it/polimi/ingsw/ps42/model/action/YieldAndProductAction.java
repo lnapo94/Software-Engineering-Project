@@ -48,7 +48,7 @@ public class YieldAndProductAction extends Action {
 				if(canStay()){
 					this.firstFreePosition = getFirstFreePosition();
 					this.addIncrement( -firstFreePosition.getMalus() );
-					if( checkAction() == Response.SUCCESS )	
+					if( checkLevel() == Response.SUCCESS )	
 						try {
 								//Set the familiar and apply position bonus and malus 
 								firstFreePosition.setFamiliar(familiar);
