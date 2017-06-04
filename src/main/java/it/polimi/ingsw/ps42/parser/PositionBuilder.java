@@ -21,6 +21,11 @@ public class PositionBuilder extends Builder {
 		super(fileName, councilConversionFile);
 	}
 	
+	public PositionBuilder( String fileName) throws IOException {
+		
+		super(fileName);
+	}
+	
 	protected void initGson(){
 		
 		GsonBuilder builder=new GsonBuilder().serializeNulls().setPrettyPrinting();
@@ -101,6 +106,14 @@ public class PositionBuilder extends Builder {
 		
 		String parse = gson.toJson(position);
 		buffer.write(parse);
+	}
+	
+	public static void main(String[] args) throws IOException {
+		PositionBuilder builder = new PositionBuilder("violetTowerPosition.json");
+		for (int i = 0; i < 4; i++) {
+			builder.addPosition();
+		}
+		builder.close();
 	}
 	
 

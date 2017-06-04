@@ -1,0 +1,75 @@
+{
+  "card": null,
+  "type": "TAKE_GREEN",
+  "familiar": null,
+  "bonus": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": []
+    },
+    "player": null,
+    "typeOfEffect": "OBTAIN"
+  },
+  "malus": 0,
+  "level": 1
+}{
+  "card": null,
+  "type": "TAKE_GREEN",
+  "familiar": null,
+  "bonus": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": []
+    },
+    "player": null,
+    "typeOfEffect": "OBTAIN"
+  },
+  "malus": 0,
+  "level": 3
+}{
+  "card": null,
+  "type": "TAKE_GREEN",
+  "familiar": null,
+  "bonus": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 1
+        }
+      ]
+    },
+    "player": null,
+    "typeOfEffect": "OBTAIN"
+  },
+  "malus": 0,
+  "level": 5
+}{
+  "card": null,
+  "type": "TAKE_GREEN",
+  "familiar": null,
+  "bonus": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 2
+        }
+      ]
+    },
+    "player": null,
+    "typeOfEffect": "OBTAIN"
+  },
+  "malus": 0,
+  "level": 7
+}
