@@ -62,7 +62,7 @@ public class TakeCardTest {
 		cost1.addUnit(new Unit(Resource.MILITARYPOINT, 2));
 		
 		Packet cost2 = new Packet();
-		cost2.addUnit(new Unit(Resource.MONEY, 2));
+		cost2.addUnit(new Unit(Resource.MONEY, 2)); 
 		
 		List<Packet> costs = new ArrayList<>();
 		costs.add(cost1);
@@ -125,5 +125,5 @@ public class TakeCardTest {
 			System.out.println("ERROR");
 		}
 	}
-
+	
 }
