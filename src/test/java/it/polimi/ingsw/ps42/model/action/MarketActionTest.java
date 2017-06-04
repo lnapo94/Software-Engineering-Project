@@ -10,6 +10,7 @@ import org.junit.Test;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
+import it.polimi.ingsw.ps42.model.effect.NoFirstActionBan;
 import it.polimi.ingsw.ps42.model.effect.NoMarketBan;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
@@ -112,6 +113,17 @@ public class MarketActionTest {
 	}
 	
 	@Before
+	public void setupFamiliarIncrementFailAction() throws NotEnoughResourcesException{
+		
+		//Create an action with a familiar increment but that can not be performed because of a ban
+		setup();
+		Effect ban = new NoFirstActionBan();
+		ban.enableEffect(player);
+		action = new MarketAction(ActionType.MARKET, incrementedFamiliar, tablePosition, 1);
+		
+	}
+	
+	@Before
 	public void setupLowLevelAction(){
 		
 		setup();
@@ -160,6 +172,7 @@ public class MarketActionTest {
 	@Before
 	public void setupIncreasedAction() throws NotEnoughResourcesException{
 		//Add to the player an increase effect and check if the action can be performed
+		setup();
 		Effect increaseEffect = new IncreaseAction(ActionType.MARKET, 2, null);
 		increaseEffect.enableEffect(player);
 		
@@ -171,54 +184,77 @@ public class MarketActionTest {
 	public void test() {
 		//Test different kind of market action
 		assertEquals(5, player.getResource(Resource.SLAVE));
+		assertEquals(0, player.getResource(Resource.MONEY));
 		
+		//Simple Action Test
 		setupSimpleAction();
+		assertEquals(Response.SUCCESS, marketAction.checkAction());
 		player.synchResource();
 		assertEquals(5, player.getResource(Resource.SLAVE));
-		
-		assertEquals(Response.SUCCESS, marketAction.checkAction());
+		assertEquals(0, player.getResource(Resource.MONEY));
 		try {
 			//Do the action and check the position bonus income (2 money)
 			marketAction.doAction();
 			assertEquals( 2, player.getResource(Resource.MONEY));
+			assertEquals(5, player.getResource(Resource.SLAVE));
 		} catch (FamiliarInWrongPosition e1) {
 			e1.printStackTrace();
 		}
 		
 		
+		//Fail to create Action Test
 		setupFailAction();
 		player.synchResource();
 		assertEquals(5, player.getResource(Resource.SLAVE));
 		//Nothings to do since the action fails to create
 		
+		
+		//Familiar Incremented Action Test
 		setupFamiliarIncrementAction();
+		assertEquals(Response.SUCCESS, marketActionIncremented.checkAction() );
 		player.synchResource();
 		assertEquals(2, player.getResource(Resource.SLAVE));
-		
-		assertEquals(Response.SUCCESS, marketActionIncremented.checkAction() );
-		
+		assertEquals(0, player.getResource(Resource.MONEY));
 		try {
 			//Do the action and check the position bonus income (4 money)
 			marketActionIncremented.doAction();
 			assertEquals( 4, player.getResource(Resource.MONEY));
+			assertEquals(2, player.getResource(Resource.SLAVE));
 		} catch (FamiliarInWrongPosition e1) {
 			e1.printStackTrace();
 		}
 		
-		setupLowLevelAction();
-		player.synchResource();
-		assertEquals(5, player.getResource(Resource.SLAVE));
 		
+		//Familiar Incremented Fail to Play Action Test
+		try {
+			setupFamiliarIncrementFailAction();
+			assertEquals(Response.CANNOT_PLAY, action.checkAction());
+			player.restoreResource();
+			assertEquals(5, player.getResource(Resource.SLAVE));
+			assertEquals(0, player.getResource(Resource.MONEY));
+		} catch (NotEnoughResourcesException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		//Low level Familiar Action Test
+		setupLowLevelAction();
 		assertEquals(Response.LOW_LEVEL , action.checkAction());
+		player.restoreResource();
+		assertEquals(5, player.getResource(Resource.SLAVE));
+		assertEquals(0, player.getResource(Resource.MONEY));
 		//Nothing to do since the action do not passed the check
 		
+		
+		//Occupied position Action Test
 		try {
 			
-			setupOccupiedPositionAction();
-			player.synchResource();
-			assertEquals(5, player.getResource(Resource.SLAVE));
-			
+			setupOccupiedPositionAction();	
 			assertEquals(Response.FAILURE, action.checkAction());
+
+			player.restoreResource();
+			assertEquals(5, player.getResource(Resource.SLAVE));
+			assertEquals(0, player.getResource(Resource.MONEY));
 			//Nothing to do since the action do not passed the check
 			
 		} catch (FamiliarInWrongPosition e) {
@@ -227,38 +263,42 @@ public class MarketActionTest {
 			e.printStackTrace();
 		}
 		
+		
+		//Market Ban Action Test
 		try {
 			setupBanAction();
-			player.synchResource();
-			assertEquals(5, player.getResource(Resource.SLAVE));
-			
 			assertEquals( Response.FAILURE, action.checkAction());
+			player.restoreResource();
+			assertEquals(5, player.getResource(Resource.SLAVE));
+			assertEquals(0, player.getResource(Resource.MONEY));
 			//Nothing to do since the action do not passed the check
 			
 		} catch (NotEnoughResourcesException e) {
 			e.printStackTrace();
 		}
 		
+		
+		//Market Bonus Action Test
 		try {
-			setupBonusAction();
+			setupBonusAction();	
+			assertEquals(Response.SUCCESS, action.checkAction());
 			player.synchResource();
 			assertEquals( 5, player.getResource(Resource.SLAVE));
 			assertEquals(0 , player.getResource(Resource.MONEY));
-			
-			assertEquals(Response.SUCCESS, action.checkAction());
 			action.doAction();
 			assertEquals(2 , player.getResource(Resource.MONEY));
 		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {
 			e.printStackTrace();
 		}
 	
+		
+		//Increased by Increase Effect Action Test
 		try {
 			setupIncreasedAction();
+			assertEquals(Response.SUCCESS, action.checkAction() );
 			player.synchResource();
 			assertEquals( 5, player.getResource(Resource.SLAVE));
 			assertEquals( 0, player.getResource(Resource.MONEY));
-			
-			assertEquals(Response.SUCCESS, action.checkAction() );
 			action.doAction();
 			assertEquals(4 , player.getResource(Resource.MONEY));
 		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {

@@ -107,7 +107,7 @@ public abstract class Action {
 	
 	public void addIncrement(int increment){
 		
-		this.actionValue += this.actionValue + increment;
+		this.actionValue = this.actionValue + increment;
 	}
 	
 	//Method used in other classes to control if the player can do the action

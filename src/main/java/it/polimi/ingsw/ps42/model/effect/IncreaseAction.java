@@ -39,12 +39,21 @@ public class IncreaseAction extends Effect {
 	public void activeIncrease(Action action){
 		//Increase the current action and add a discount if equals the type of the effect
 		
-		if(type==action.getType()){
+		if( checkType(action)){
 			action.addIncrement(value);
 			action.addDiscount(discount);
 		}
 	}
 
+	private boolean checkType(Action action){
+		if( type == ActionType.TAKE_ALL){
+			if( action.getType() == ActionType.TAKE_BLUE || action.getType() == ActionType.TAKE_GREEN
+					|| action.getType() == ActionType.TAKE_VIOLET || action.getType() == ActionType.TAKE_YELLOW)
+				return true;
+			else return false;
+		}
+		else return type == action.getType();
+	}
 	@Override
 	public String print() {
 		// TODO Auto-generated method stub
