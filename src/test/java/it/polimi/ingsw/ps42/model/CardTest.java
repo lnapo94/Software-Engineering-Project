@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps42.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,7 +183,11 @@ public class CardTest {
 	}
 
 	@Test
-	public void test() throws NotEnoughResourcesException {
+	public void test1() throws NotEnoughResourcesException {
+		
+		//canTakeCard player has resources to activate the Obtain Effect
+		//while cannotEnableObtainEffect can only enable the For Each Obtain
+		
 		firstCard.payCard(canTakeCard, null);
 		secondCard.payCard(cannotEnableObtainEffect, null);
 		
@@ -246,6 +252,7 @@ public class CardTest {
 		requests.get(0).apply();
 		
 		canTakeCard.synchResource();		
+		
 		cannotEnableObtainEffect.synchResource();
 		
 		//After, the canTakeCard player has only one money, but 5 faithpoint, and before he has had 0
@@ -262,5 +269,63 @@ public class CardTest {
 		assertEquals(1, cannotEnableObtainEffect.getResource(Resource.MILITARYPOINT));
 		
 		}
+	
+	@Test
+	public void test2() {
+		//The player cannotPay can't pay the card costs
+		try {
+			firstCard.payCard(cannotPay, null);
+			fail();
+		} catch (NotEnoughResourcesException e) {
+			assertTrue(true);
+		}
+		
+		//While the player canTakeCard can pay
+		
+		try {
+			firstCard.payCard(canTakeCard, null);
+			
+			//Select the second cost for example
+			
+			List<RequestInterface> requests = canTakeCard.getRequests();
+			assertEquals(1, requests.size());
+			
+			RequestInterface request = requests.get(0);
+			request.setChoice(1);
+			request.apply();
+			canTakeCard.synchResource();
+			
+			//Verify if player requests list is empty
+			assertEquals(0, canTakeCard.getRequests().size());
+			
+			//Verify if card has been payed
+			assertEquals(3, canTakeCard.getResource(Resource.MONEY));
+			assertEquals(3, canTakeCard.getResource(Resource.STONE));
+			assertEquals(0, canTakeCard.getResource(Resource.WOOD));
+			
+		} catch (NotEnoughResourcesException e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void test3() {
+		//hasNotRequirements player cannot take the card because he hasn't the correct
+		//requirement
+		
+		//Card has two costs: 2 Money and 3 Stone or 2 Money and 3 Wood
+		//hasNotRequirements player has the resources to satisfy one cost, but he hasn't the requirements of the card
+		//so the payment doesn't continue
+		assertEquals(3, hasNotRequirements.getResource(Resource.MONEY));
+		assertEquals(3, hasNotRequirements.getResource(Resource.STONE));
+		assertEquals(0, hasNotRequirements.getResource(Resource.WOOD));
+		
+		try {
+			firstCard.payCard(hasNotRequirements, null);
+			fail();
+		} catch (NotEnoughResourcesException e) {
+			assertTrue(true);
+		}
+	}
 	
 }
