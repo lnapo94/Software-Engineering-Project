@@ -29,6 +29,11 @@ public class CardBuilder extends Builder {
 		super(fileName, councilConversionFile);
 	}
 	
+	public CardBuilder(String fileName) throws IOException {
+		
+		super(fileName);
+	}
+	
 	protected void initGson(){
 		
 		GsonBuilder builder=new GsonBuilder().serializeNulls().setPrettyPrinting();
@@ -279,12 +284,11 @@ public class CardBuilder extends Builder {
 		return new Obtain(costs, gains);
 	}
 	
-	public void addCardToFile(Card card) throws IOException{
+	private void addCardToFile(Card card) throws IOException{
 		
 		String parse = gson.toJson(card);
 		buffer.append(parse);
 	}
-	
 
 	
 }
