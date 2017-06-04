@@ -15,6 +15,7 @@ import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
@@ -30,19 +31,26 @@ public class YieldAndProductActionTest {
 	private YieldAndProductPosition firstProductPosition;
 	private List<YieldAndProductPosition> otherPositions;
 	private Player player;
+	private Player secondPlayer;
 
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("ID 1");
+		secondPlayer = new Player("ID 2");
 		
 		BonusBar bar = new BonusBar();
 		
 		player.setBonusBar(bar);
 		bar.setPlayer(player);
 		
+		BonusBar bar2 = new BonusBar();
+		secondPlayer.setBonusBar(bar2);
+		bar2.setPlayer(secondPlayer);
+		
 		createPositions();
 		
 		createSomeCards(player);
+		createSomeCards(secondPlayer);
 	}
 
 	@Test
@@ -78,22 +86,32 @@ public class YieldAndProductActionTest {
 			fail();
 		}
 	}
-	
+
 	@Test
 	public void test3() {
-		//In this test green cards are activated
+		
+		//First player can do an action, while second player can't do it because
+		//he hasn't enough familiar value
+		
+		//Increase familiars in players
+		player.setFamiliarValue(FamiliarColor.ORANGE, 4);
+		secondPlayer.setFamiliarValue(FamiliarColor.ORANGE, 2);
+		
+		Action action;
 		try {
-			Action action = new YieldAndProductAction(ActionType.YIELD, player, otherPositions, firstProductPosition, 4, 0);
+			action = new YieldAndProductAction(ActionType.PRODUCE, player.getFamiliar(FamiliarColor.ORANGE), otherPositions, firstProductPosition);
 			assertTrue(Response.SUCCESS == action.checkAction());
 			action.doAction();
 			player.synchResource();
-			assertEquals(2, player.getResource(Resource.MONEY));
-			assertEquals(3, player.getResource(Resource.MILITARYPOINT));
-		} catch (NotEnoughResourcesException e) {
-			fail();
-		} catch (FamiliarInWrongPosition e) {
+			assertEquals(4, player.getResource(Resource.MONEY));
+			assertEquals(1, player.getResource(Resource.MILITARYPOINT));
+			
+			action = new YieldAndProductAction(ActionType.PRODUCE, secondPlayer.getFamiliar(FamiliarColor.ORANGE), otherPositions, firstProductPosition);
+			assertTrue(Response.LOW_LEVEL == action.checkAction());
+		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {
 			fail();
 		}
+
 	}
 	
 	private void createPositions() {
