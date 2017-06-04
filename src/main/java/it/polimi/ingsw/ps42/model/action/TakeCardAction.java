@@ -78,6 +78,25 @@ public class TakeCardAction extends Action{
 			return Response.FAILURE;
 		}
 		
+		//Control how much green cards the player has in his list
+		if(this.getType() == ActionType.TAKE_GREEN) {
+			int militaryPointQuantity = player.getResource(Resource.MILITARYPOINT);
+			int greenCardsInPlayer = player.getCardList(CardColor.GREEN).size();
+			
+			//Control if player can have enough military point
+			if(militaryPointQuantity < 3 && greenCardsInPlayer == 2)
+				return Response.FAILURE;
+			
+			if(militaryPointQuantity < 7 && greenCardsInPlayer == 3)
+				return Response.FAILURE;
+			
+			if(militaryPointQuantity < 12 && greenCardsInPlayer == 4)
+				return Response.FAILURE;
+			
+			if(militaryPointQuantity < 18 && greenCardsInPlayer == 5)
+				return Response.FAILURE;
+		}
+		
 		//Fourth: if the position has a bonus, apply it to the player
 		if(familiar != null) {
 			try {
