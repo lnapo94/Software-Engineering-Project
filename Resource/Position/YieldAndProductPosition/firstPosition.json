@@ -1,0 +1,33 @@
+{
+  "bonusFamiliars": [],
+  "type": "YIELD",
+  "familiar": null,
+  "bonus": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": []
+    },
+    "player": null,
+    "typeOfEffect": "OBTAIN"
+  },
+  "malus": 0,
+  "level": 1
+}{
+  "bonusFamiliars": [],
+  "type": "PRODUCE",
+  "familiar": null,
+  "bonus": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": []
+    },
+    "player": null,
+    "typeOfEffect": "OBTAIN"
+  },
+  "malus": 0,
+  "level": 1
+}

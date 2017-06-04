@@ -1,0 +1,89 @@
+{
+  "bonusFamiliars": [],
+  "type": "MARKET",
+  "familiar": null,
+  "bonus": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 5
+        }
+      ]
+    },
+    "player": null,
+    "typeOfEffect": "OBTAIN"
+  },
+  "malus": 0,
+  "level": 1
+}{
+  "bonusFamiliars": [],
+  "type": "MARKET",
+  "familiar": null,
+  "bonus": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": [
+        {
+          "resource": "SLAVE",
+          "quantity": 5
+        }
+      ]
+    },
+    "player": null,
+    "typeOfEffect": "OBTAIN"
+  },
+  "malus": 0,
+  "level": 1
+}{
+  "bonusFamiliars": [],
+  "type": "MARKET",
+  "familiar": null,
+  "bonus": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": [
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 3
+        },
+        {
+          "resource": "MONEY",
+          "quantity": 2
+        }
+      ]
+    },
+    "player": null,
+    "typeOfEffect": "OBTAIN"
+  },
+  "malus": 0,
+  "level": 1
+}{
+  "bonusFamiliars": [],
+  "type": "MARKET",
+  "familiar": null,
+  "bonus": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": [
+        {
+          "resource": "STONE",
+          "quantity": 7
+        }
+      ]
+    },
+    "player": null,
+    "typeOfEffect": "OBTAIN"
+  },
+  "malus": 0,
+  "level": 1
+}
