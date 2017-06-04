@@ -139,7 +139,9 @@ public class Card {
 				
 				//The costs player can afford will be send to the client. In this way player can choose which cost
 				//he want to pay
-				controlPossibleChoice();
+				if(possibleChoice.isEmpty() || possibleChoiceIndex.isEmpty()) 
+					throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this");
+				
 				CardRequest request = new PayRequest(player, this, possibleChoiceIndex, possibleChoice);
 				player.addRequest(request);
 				resetPossibleChoice();
@@ -154,10 +156,13 @@ public class Card {
 			if(canEnableNowEffect(immediateEffects))
 				enableEffect(0, immediateEffects);
 			else{
-				controlPossibleChoice();
-				CardRequest request = new ImmediateRequest(this, possibleChoiceIndex, possibleChoice);
-				owner.addRequest(request);
-				resetPossibleChoice();
+				if(controlPossibleChoice(immediateEffects))
+					resetPossibleChoice();
+				else {
+					CardRequest request = new ImmediateRequest(this, possibleChoiceIndex, possibleChoice);
+					owner.addRequest(request);
+					resetPossibleChoice();
+				}
 			}
 		}
 	}
@@ -174,10 +179,13 @@ public class Card {
 			if(canEnableNowEffect(permanentEffects))
 				enableEffect(0, permanentEffects);
 			else {
-				controlPossibleChoice();
-				CardRequest request = new PermanentRequest(this, possibleChoiceIndex, possibleChoice);
-				owner.addRequest(request);
-				resetPossibleChoice();
+				if(controlPossibleChoice(permanentEffects))
+					resetPossibleChoice();
+				else {
+					CardRequest request = new PermanentRequest(this, possibleChoiceIndex, possibleChoice);
+					owner.addRequest(request);
+					resetPossibleChoice();
+				}
 			}
 		}
 	}
@@ -194,10 +202,13 @@ public class Card {
 			if(canEnableNowEffect(finalEffects))
 				enableEffect(0, finalEffects);
 			else {
-				controlPossibleChoice();
-				CardRequest request = new FinalRequest(this, possibleChoiceIndex, possibleChoice);
-				owner.addRequest(request);
-				resetPossibleChoice();
+				if(controlPossibleChoice(finalEffects))
+					resetPossibleChoice();
+				else {
+					CardRequest request = new FinalRequest(this, possibleChoiceIndex, possibleChoice);
+					owner.addRequest(request);
+					resetPossibleChoice();
+				}
 			}
 		}
 	}
@@ -220,11 +231,21 @@ public class Card {
 		this.possibleChoiceIndex = new ArrayList<>();
 	}
 	
-	private void controlPossibleChoice() throws NotEnoughResourcesException {
+	private boolean controlPossibleChoice(List<Effect> effectList) throws NotEnoughResourcesException {
 		//ONLY PRIVATE request
 		//Used only to verify if the arrays of choices isn't empty
 		if(possibleChoice.isEmpty() || possibleChoiceIndex.isEmpty()) 
 			throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this");
+		
+		if(possibleChoice.size() == 1) {
+			Effect effect = effectList.get(possibleChoiceIndex.get(0));
+			if(effect.getTypeOfEffect() != EffectType.OBTAIN) {
+				effect.enableEffect(owner);
+				return true;	
+			}
+
+		}
+		return false;
 	}
 	
 	private void enableEffect(int choice, List<Effect> effectList) {
@@ -319,12 +340,3 @@ public class Card {
 		return temp;
 	}
 }
-/*	TODO
- *	Risolvere problema, esempio:
- *	Vi sono 2 effetti dentro carta, un Obtain e un ForEachObtain
- *	Si verifica quindi che siano attivabili, il primo non lo è, mentre il secondo si
- *	però si è già nella situazione in cui vi è più di un effetto dentro carta e ciò 
- *	prevede la creazione di una richiesta. Visto che però la richiesta conterrebbe solo
- *	un effetto di tipo ForEachObtain, sarebbe utile evitare questa creazione e attivare
- *	subito l'effetto
- */

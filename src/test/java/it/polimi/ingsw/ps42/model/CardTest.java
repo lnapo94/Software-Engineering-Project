@@ -244,15 +244,9 @@ public class CardTest {
 		//Apply the Obtain Effect
 		requests.get(0).setChoice(1);
 		requests.get(0).apply();
-		canTakeCard.synchResource();
 		
-		requests = cannotEnableObtainEffect.getRequests();
-		
-		for(RequestInterface request : requests) {
-			request.setChoice(0);
-			request.apply();
-			cannotEnableObtainEffect.synchResource();
-		}
+		canTakeCard.synchResource();		
+		cannotEnableObtainEffect.synchResource();
 		
 		assertEquals(1, canTakeCard.getResource(Resource.MONEY));
 		assertEquals(0, canTakeCard.getResource(Resource.STONE));
@@ -266,6 +260,6 @@ public class CardTest {
 		assertEquals(1, cannotEnableObtainEffect.getResource(Resource.FAITHPOINT));
 		assertEquals(1, cannotEnableObtainEffect.getResource(Resource.MILITARYPOINT));
 		
-	}
-
+		}
+	
 }
