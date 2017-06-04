@@ -35,10 +35,11 @@ public class CouncilAction extends Action {
 				checkIncreaseEffect();
 				addIncrement(-tablePosition.getMalus());
 				if( !checkActionValue())
-					return Response.FAILURE;
+					return Response.LOW_LEVEL;
+				else return Response.SUCCESS;
 			}
 			//If is a bonus action 
-			return Response.SUCCESS;
+			else return Response.SUCCESS;
 		}
 		else return Response.CANNOT_PLAY;
 	}
@@ -54,5 +55,6 @@ public class CouncilAction extends Action {
 				System.out.println("[DEBUG]: There is a wrong familiar in council Positions");
 			}
 		}
+		player.synchResource();
 	}
 }

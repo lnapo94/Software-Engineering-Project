@@ -32,7 +32,6 @@ public class MarketActionTest {
 	private Familiar incrementedFamiliar;
 	private StaticList<MarketPosition> tablePosition;
 	private Action marketAction;
-	private Action marketActionFail;
 	private Action marketActionIncremented;
 	private Action action;
 	
@@ -89,9 +88,13 @@ public class MarketActionTest {
 	public void setupFailAction(){
 		
 		setup();
-		//Create an action that can not be performed
+		//Create an action that can not be performed since the player can not pay the familiar increment
+		Familiar tempFamiliar = player.getFamiliar(FamiliarColor.ORANGE);
+		tempFamiliar.setValue(1);
+		tempFamiliar.setIncrement(7);
 		try {
-			marketActionFail = new MarketAction(ActionType.MARKET, familiar, tablePosition, 1);
+			action = new MarketAction(ActionType.MARKET, tempFamiliar, tablePosition, 1);
+			assertTrue(false);
 		} catch (NotEnoughResourcesException e) {
 			assertTrue(true);
 
@@ -182,7 +185,7 @@ public class MarketActionTest {
 	
 	@Test
 	public void test() {
-		//Test different kind of market action
+		//Test different kinds of market actions
 		assertEquals(5, player.getResource(Resource.SLAVE));
 		assertEquals(0, player.getResource(Resource.MONEY));
 		
