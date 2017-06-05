@@ -50,7 +50,7 @@ public class MarketAction extends Action {
 					else return Response.LOW_LEVEL;
 				}
 			else 
-				return Response.FAILURE;		//The position is occupied or the player ha a market ban
+				return Response.FAILURE;		//The position is occupied or the player has a market ban
 			}
 			else								//If is a bonus action then only check action value
 				if( checkActionValue())
@@ -76,6 +76,7 @@ public class MarketAction extends Action {
 			//If is a bonus action, apply the effect directly to the player 
 			Obtain bonus = tablePosition.get(positionInTableList).getBonus();
 			bonus.enableEffect(player);		
+			tablePosition.get(positionInTableList).applyCouncilBonus(player);
 		}
 		
 		player.synchResource();  	 //Synchronize the resources in player

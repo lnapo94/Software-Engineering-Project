@@ -55,7 +55,13 @@ public class PositionBuilder extends Builder {
 		}
 		
 		else if(type == ActionType.MARKET) {
-			position = new MarketPosition(level, bonus, malus);
+			String response;
+			CouncilObtain councilBonus = null;
+			System.out.println("Vuoi aggiungere un bonus privilegio del consiglio?(si/no)");
+			response = scanner.nextLine();
+			if( response.toUpperCase().equals("SI"))
+				councilBonus = askCouncilObtain();
+			position = new MarketPosition(level, bonus, malus, councilBonus );
 		}
 		else if(type == ActionType.PRODUCE || type == ActionType.YIELD)
 			position = new YieldAndProductPosition(type, level, bonus, malus);
@@ -108,8 +114,16 @@ public class PositionBuilder extends Builder {
 		buffer.write(parse);
 	}
 	
+	private CouncilObtain askCouncilObtain(){
+
+		System.out.println("inserisci la quantità di privilegi del consiglio");
+		int quantity = Integer.parseInt(scanner.nextLine());
+
+		return new CouncilObtain(quantity, councilConversion);
+	}
+	
 	public static void main(String[] args) throws IOException {
-		PositionBuilder builder = new PositionBuilder("violetTowerPosition.json");
+		PositionBuilder builder = new PositionBuilder("marketPosition.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
 		for (int i = 0; i < 4; i++) {
 			builder.addPosition();
 		}

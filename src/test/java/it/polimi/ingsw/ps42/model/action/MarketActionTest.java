@@ -2,12 +2,14 @@ package it.polimi.ingsw.ps42.model.action;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.StaticList;
+import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
 import it.polimi.ingsw.ps42.model.effect.NoFirstActionBan;
@@ -19,9 +21,11 @@ import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
+import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.MarketPosition;
+import it.polimi.ingsw.ps42.model.request.CouncilRequest;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
@@ -34,6 +38,7 @@ public class MarketActionTest {
 	private Action marketAction;
 	private Action marketActionIncremented;
 	private Action action;
+	private CouncilObtain councilBonus;
 	
 	@Before
 	public void setup(){
@@ -62,8 +67,24 @@ public class MarketActionTest {
 		Obtain bonus1 = new Obtain(null, gains1);
 		Obtain bonus2 = new Obtain(null, gains2);
 		
-		MarketPosition position1 = new MarketPosition(0, bonus1, 0);
-		MarketPosition position2 = new MarketPosition(0, bonus2, 3);
+		//Create the CouncilObtain Bonus
+		List<Obtain> possibleConversion = new ArrayList<>();
+		
+		Packet councilGains1 = new Packet();
+		councilGains1.addUnit(new Unit(Resource.MILITARYPOINT, 2));
+
+		Packet councilGains2 = new Packet();
+		councilGains2.addUnit(new Unit(Resource.FAITHPOINT, 2));
+		
+		Obtain councilBonus1 = new Obtain(null, councilGains1);
+		Obtain councilBonus2 = new Obtain(null, councilGains2);
+		possibleConversion.add(councilBonus1);
+		possibleConversion.add(councilBonus2);
+		
+		councilBonus = new CouncilObtain(2, possibleConversion);
+		
+		MarketPosition position1 = new MarketPosition(0, bonus1, 0, null);
+		MarketPosition position2 = new MarketPosition(0, bonus2, 3, null);
 		
 		tablePosition = new StaticList<>(4);
 		tablePosition.add(position1);
@@ -131,7 +152,7 @@ public class MarketActionTest {
 		
 		setup();
 		//Create an action with a position level higher than the familiar
-		MarketPosition position3 = new MarketPosition(4, null, 0);
+		MarketPosition position3 = new MarketPosition(4, null, 0, null);
 		tablePosition.add(position3);
 		try {
 			action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 2);
@@ -144,12 +165,12 @@ public class MarketActionTest {
 	public void setupOccupiedPositionAction() throws FamiliarInWrongPosition, NotEnoughResourcesException {
 		//Create a position occupied and try to perform an action on that position
 		setup();
-		MarketPosition position3 = new MarketPosition(0, null, 0);
+		MarketPosition position3 = new MarketPosition(0, null, 0, null);
 		Familiar tempFamiliar = new Familiar(player, FamiliarColor.BLACK);
 		
 		position3.setFamiliar( tempFamiliar);
 		tablePosition.add(position3);
-		action = new MarketAction(ActionType.MARKET, tempFamiliar, tablePosition, 2);
+		action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 2);
 	}
 	
 	@Before
@@ -180,6 +201,17 @@ public class MarketActionTest {
 		increaseEffect.enableEffect(player);
 		
 		action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 1);
+		
+	}
+	
+	@Before
+	public void setupCouncilObtainMarketAction() throws NotEnoughResourcesException{
+		//Create a market position with a councilObtain bonus and perform an action on that position
+		setup();
+
+		MarketPosition position3 = new MarketPosition(0, null, 0, councilBonus);		
+		tablePosition.add(position3);
+		action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 2);
 		
 	}
 	
@@ -305,6 +337,31 @@ public class MarketActionTest {
 			action.doAction();
 			assertEquals(4 , player.getResource(Resource.MONEY));
 		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {
+			e.printStackTrace();
+		}
+		
+		//CouncilObtain effect for a Market Action Test
+		try {
+			setupCouncilObtainMarketAction();
+			assertEquals(Response.SUCCESS, action.checkAction());
+			player.synchResource();
+			assertEquals( 5, player.getResource(Resource.SLAVE));
+			assertEquals( 0, player.getResource(Resource.MONEY));
+			assertEquals( 0, player.getResource(Resource.MILITARYPOINT));
+			assertEquals( 0, player.getResource(Resource.FAITHPOINT));
+			action.doAction();
+			//Get the request and answer to it
+			CouncilRequest request = player.getCouncilRequests().get(0);
+			request.addChoice(0);
+			request.addChoice(0);
+			request.apply(player);
+			player.synchResource();
+			
+			assertEquals( 5, player.getResource(Resource.SLAVE));
+			assertEquals( 0, player.getResource(Resource.MONEY));
+			assertEquals( 2, player.getResource(Resource.MILITARYPOINT));
+			assertEquals( 2, player.getResource(Resource.FAITHPOINT));
+		} catch (NotEnoughResourcesException | FamiliarInWrongPosition | WrongChoiceException e) {
 			e.printStackTrace();
 		}
 		

@@ -1,4 +1,5 @@
 {
+  "councilBonus": null,
   "bonusFamiliars": [],
   "type": "MARKET",
   "familiar": null,
@@ -20,6 +21,7 @@
   "malus": 0,
   "level": 1
 }{
+  "councilBonus": null,
   "bonusFamiliars": [],
   "type": "MARKET",
   "familiar": null,
@@ -41,6 +43,7 @@
   "malus": 0,
   "level": 1
 }{
+  "councilBonus": null,
   "bonusFamiliars": [],
   "type": "MARKET",
   "familiar": null,
@@ -66,6 +69,92 @@
   "malus": 0,
   "level": 1
 }{
+  "councilBonus": {
+    "quantity": 2,
+    "possibleConversion": [
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "STONE",
+              "quantity": 1
+            },
+            {
+              "resource": "WOOD",
+              "quantity": 1
+            }
+          ]
+        },
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "SLAVE",
+              "quantity": 2
+            }
+          ]
+        },
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MONEY",
+              "quantity": 2
+            }
+          ]
+        },
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      }
+    ],
+    "player": null,
+    "typeOfEffect": "COUNCIL_OBTAIN"
+  },
   "bonusFamiliars": [],
   "type": "MARKET",
   "familiar": null,
@@ -74,12 +163,7 @@
       "list": []
     },
     "gains": {
-      "list": [
-        {
-          "resource": "STONE",
-          "quantity": 7
-        }
-      ]
+      "list": []
     },
     "player": null,
     "typeOfEffect": "OBTAIN"
