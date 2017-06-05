@@ -75,7 +75,7 @@ public class Table {
 		//Add all the required position for a 4-player game (7 max, so 2 more than a 3-player game)
 		PositionLoader loader;
 		try {
-			loader = new PositionLoader("/src/otherPosititions/");
+			loader = new PositionLoader("Resource//Position//YieldAndProductPosition//otherPosition.json");
 			YieldAndProductPosition position = loader.getNextYieldAndProductPosition();
 			for(int i=0 ; i<2; i++){
 				yield.add(position.clone());
@@ -103,7 +103,7 @@ public class Table {
 		//Add all the required position for a 3-player game (5 max)
 		PositionLoader loader;
 		try {
-			loader = new PositionLoader("/src/otherPosititions/");
+			loader = new PositionLoader("Resource//Position//YieldAndProductPosition//otherPosition.json");
 			YieldAndProductPosition position = loader.getNextYieldAndProductPosition();
 			for(int i=0 ; i<5; i++){
 				yield.add(position.clone());
@@ -137,7 +137,7 @@ public class Table {
 		//Setting the First positions (Yield and Product)
 		PositionLoader loader;
 		try {
-			loader = new PositionLoader("/src/firstsPositions");
+			loader = new PositionLoader("Resource//Position//YieldAndProductPosition//firstPosition.json");
 			firstYield = loader.getNextYieldAndProductPosition();
 			firstProduct = loader.getNextYieldAndProductPosition();
 			loader.close();
@@ -151,7 +151,7 @@ public class Table {
 		//Setting the market and load the first 2 position
 		market = new StaticList<>(4);
 		try {
-			marketLoader = new PositionLoader("/src/market");
+			marketLoader = new PositionLoader("Resource//Position//MarketPosition//marketPosition.json");
 		} catch (IOException e) {
 			System.out.println("Unable to open the file");
 		}
@@ -161,7 +161,7 @@ public class Table {
 		//Initialize the councilLoader
 		PositionLoader councilLoader;
 		try {
-			councilLoader = new PositionLoader("/src/councilBonus");
+			councilLoader = new PositionLoader("Resource//Position//CouncilPosition//councilPosition.json");
 			councilCopy = councilLoader.getNextCouncilPosition();
 			councilLoader.close();
 		} catch (IOException e) {
@@ -173,7 +173,7 @@ public class Table {
 	private void towersConstructor() {
 		try {
 			//Load greenTower
-			PositionLoader loader = new PositionLoader("/src/greenTower");
+			PositionLoader loader = new PositionLoader("Resource//Position//TowerPosition//greenTowerPosition.json");
 			TowerPosition position;
 			position = loader.getNextTowerPosition();
 			while(position != null) {
@@ -182,7 +182,7 @@ public class Table {
 			}
 			
 			//Load yellowTower
-			loader.setFileName("/src/yellowTower");
+			loader.setFileName("Resource//Position//TowerPosition//yellowTowerPosition.json");
 			position = loader.getNextTowerPosition();
 			while(position != null) {
 				yellowTower.add(position);
@@ -190,7 +190,7 @@ public class Table {
 			}
 			
 			//Load blueTower
-			loader.setFileName("/src/blueTower");
+			loader.setFileName("Resource//Position//TowerPosition//blueTowerPosition.json");
 			position = loader.getNextTowerPosition();
 			while(position != null) {
 				blueTower.add(position);
@@ -198,7 +198,7 @@ public class Table {
 			}
 			
 			//Load violetTower
-			loader.setFileName("/src/violetTower");
+			loader.setFileName("Resource//Position//TowerPosition//violetTowerPosition.json");
 			position = loader.getNextTowerPosition();
 			while(position != null) {
 				violetTower.add(position);
@@ -344,9 +344,6 @@ public class Table {
 		CouncilPosition councilPosition = councilCopy.clone();
 		council.add(councilPosition);
 		return councilPosition;
-		/*TODO
-		 * Creare da file i possibili privilegi (ultimo valore null in Costruttore)
-		 */
 	}
 
 }
