@@ -73,15 +73,8 @@ public class Table {
 		players.add(player4);
 		
 		//Add all the required position for a 4-player game (7 max, so 2 more than a 3-player game)
-		PositionLoader loader;
 		try {
-			loader = new PositionLoader("Resource//Position//YieldAndProductPosition//otherPosition.json");
-			YieldAndProductPosition position = loader.getNextYieldAndProductPosition();
-			for(int i=0 ; i<2; i++){
-				yield.add(position.clone());
-				product.add(position.clone());
-			}
-			loader.close();
+			yieldAndProductConstructor(2);
 		} catch (IOException e) {
 			System.out.println("Unable to open the file");
 		}
@@ -101,15 +94,8 @@ public class Table {
 		product = new ArrayList<>();
 		
 		//Add all the required position for a 3-player game (5 max)
-		PositionLoader loader;
 		try {
-			loader = new PositionLoader("Resource//Position//YieldAndProductPosition//otherPosition.json");
-			YieldAndProductPosition position = loader.getNextYieldAndProductPosition();
-			for(int i=0 ; i<5; i++){
-				yield.add(position.clone());
-				product.add(position.clone());
-			}
-			loader.close();
+			yieldAndProductConstructor(5);
 		} catch (IOException e) {
 			System.out.println("Unable to open the file");
 		}
@@ -121,6 +107,17 @@ public class Table {
 		players = new ArrayList<>();
 		players.add(player1);
 		players.add(player2);
+	}
+	
+	//Private method for the construction of the yield and product position
+	private void yieldAndProductConstructor(int numberOfPosition) throws IOException {
+		PositionLoader loader = new PositionLoader("Resource//Position//YieldAndProductPosition//otherPosition.json");
+		YieldAndProductPosition position = loader.getNextYieldAndProductPosition();
+		for(int i=0 ; i<numberOfPosition; i++){
+			yield.add(position.clone());
+			product.add(position.clone());
+		}
+		loader.close();
 	}
 	
 	//PRIVATE CONSTRUCTOR FOR ALL THE SIMILIAR OPERATION IN THE CONSTRUCTION
@@ -268,7 +265,7 @@ public class Table {
 		thirdBan = ban;
 	}
 
-	public List<Player> getNewOrder(){
+	private List<Player> getNewOrder(){
 		//Return the new order of the player
 		List<Player> temp = new ArrayList<>();
 		for(CouncilPosition position : council) {
@@ -333,11 +330,48 @@ public class Table {
 		return product;
 	}
 
-	public List<CouncilPosition> resetTable() {
-		/*	TODO
-		 * 	RESET TAVOLO
-		 */
-		return council;
+	public List<Player> resetTable() {
+		//Reset all the tower position
+		for(int i = 0; i < FLOORS; i++) {
+			
+			greenTower.get(i).removeCard();
+			greenTower.get(i).removeFamiliar();
+			
+			yellowTower.get(i).removeCard();
+			yellowTower.get(i).removeFamiliar();
+			
+			blueTower.get(i).removeCard();
+			blueTower.get(i).removeFamiliar();
+			
+			violetTower.get(i).removeCard();
+			violetTower.get(i).removeFamiliar();
+		}
+		
+		//Reset Yield and Product first Position
+		firstYield.removeFamiliar();
+		firstYield.removeBonusFamiliars();
+		
+		firstProduct.removeFamiliar();
+		firstProduct.removeBonusFamiliars();
+		
+		//Reset the others Yield and Product Positions
+		for(YieldAndProductPosition position : yield) {
+			position.removeFamiliar();
+			position.removeBonusFamiliars();
+		}
+		
+		for(YieldAndProductPosition position : product) {
+			position.removeFamiliar();
+			position.removeBonusFamiliars();
+		}
+		
+		//Reset the market positions
+		for(MarketPosition position : market) {
+			position.removeFamiliar();
+			position.removeBonusFamiliars();
+		}
+		
+		return getNewOrder();
 	}
 	
 	public CouncilPosition getFreeCouncilPosition() {
