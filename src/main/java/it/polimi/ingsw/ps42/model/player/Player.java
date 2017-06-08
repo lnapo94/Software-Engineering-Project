@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps42.model.player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Observable;
 
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
@@ -23,7 +24,7 @@ import it.polimi.ingsw.ps42.model.request.RequestInterface;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
-public class Player {
+public class Player extends Observable{
 	//This class represents the model of the Player
 	
 	//Max number of player's cards in each StaticList

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.model.action;
 
 import java.util.List;
+import java.util.Observable;
 
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
@@ -13,7 +14,7 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
-public abstract class Action {	
+public abstract class Action extends Observable{	
 	
 	/*Class for basic action, requires the implementation of checkAction,
 	* doAction, createRequest

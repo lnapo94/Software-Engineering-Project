@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps42.model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Random;
 
 import it.polimi.ingsw.ps42.model.effect.Effect;
@@ -14,7 +15,7 @@ import it.polimi.ingsw.ps42.model.position.TowerPosition;
 import it.polimi.ingsw.ps42.model.position.YieldAndProductPosition;
 import it.polimi.ingsw.ps42.parser.PositionLoader;
 
-public class Table {
+public class Table extends Observable{
 	//This is the Table Class
 	//Necessary to group all the useful Model Classes
 	

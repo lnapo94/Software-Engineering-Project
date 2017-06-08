@@ -24,17 +24,17 @@ public class Card {
 	 * (Packet or Effect) the elements have to be considered in OR while IN the single 
 	 * Packet/Effect they are in AND
 	 */
-	private String name;
-	private String description;
-	private CardColor color;
-	private int period;
-	private int level;
+	private final String name;
+	private final String description;
+	private final CardColor color;
+	private final int period;
+	private final int level;
 	private Player owner;
-	private List<Packet> costs;
-	private List<Packet> requirements;
-	private List<Effect> immediateEffects;
-	private List<Effect> permanentEffects;
-	private List<Effect> finalEffects;
+	private final List<Packet> costs;
+	private final List<Packet> requirements;
+	private final List<Effect> immediateEffects;
+	private final List<Effect> permanentEffects;
+	private final List<Effect> finalEffects;
 	
 	//ArrayList used for check if player can pay to obtain the card or enable the effect
 	private List<Printable> possibleChoice;
