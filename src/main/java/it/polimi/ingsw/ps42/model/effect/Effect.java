@@ -25,4 +25,7 @@ public abstract class Effect implements Printable{
 		return typeOfEffect;
 	}
 	
+	@Override
+	public abstract Effect clone();
+	
 }

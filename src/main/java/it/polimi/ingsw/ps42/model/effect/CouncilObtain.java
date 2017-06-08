@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.ps42.message.CouncilRequest;
@@ -35,5 +36,13 @@ public class CouncilObtain extends Effect {
 		return null;
 	}
 	
+	@Override
+	public CouncilObtain clone() {
+		List<Obtain> cloneConversion = new ArrayList<>();
+		for (Obtain obtain : possibleConversion) {
+			cloneConversion.add(obtain.clone());
+		}
+		return new CouncilObtain(this.quantity, cloneConversion );
+	}
 
 }

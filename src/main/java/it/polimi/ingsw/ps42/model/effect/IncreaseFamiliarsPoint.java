@@ -41,4 +41,9 @@ public class IncreaseFamiliarsPoint extends Effect{
 		return null;
 	}
 
+	@Override
+	public IncreaseFamiliarsPoint clone() {
+		return new IncreaseFamiliarsPoint(this.value);
+	}
+	
 }

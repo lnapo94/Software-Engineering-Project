@@ -37,5 +37,11 @@ public class CardBan extends Effect{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public CardBan clone() {
+		CardColor cloneColor = this.color;
+		return new CardBan(cloneColor);
+	}
 
 }

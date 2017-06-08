@@ -44,4 +44,8 @@ public class ForEachObtain extends Effect{
 		return null;
 	}
 
+	@Override
+	public ForEachObtain clone() {
+		return new ForEachObtain(requirements.clone(), gains.clone());
+	}
 }

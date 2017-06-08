@@ -39,4 +39,10 @@ public class IncreaseSingleFamiliar extends Effect{
 		return null;
 	}
 
+	@Override
+	public IncreaseSingleFamiliar clone() {
+		FamiliarColor cloneColor = this.color;
+		return new IncreaseSingleFamiliar(this.value, cloneColor);
+	}
+	
 }
