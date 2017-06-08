@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.model.action;
 
+import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.model.Table;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;

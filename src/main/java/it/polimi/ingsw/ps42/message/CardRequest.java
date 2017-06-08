@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps42.model.request;
+package it.polimi.ingsw.ps42.message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.Printable;
 
-public abstract class CardRequest implements RequestInterface {
+public abstract class CardRequest extends Message implements RequestInterface {
 
 	/*Class for asking a request to the player, 
 	 * e.g. choose between two effects or two costs or

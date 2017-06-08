@@ -3,17 +3,17 @@ package it.polimi.ingsw.ps42.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.ingsw.ps42.message.CardRequest;
+import it.polimi.ingsw.ps42.message.FinalRequest;
+import it.polimi.ingsw.ps42.message.ImmediateRequest;
+import it.polimi.ingsw.ps42.message.PayRequest;
+import it.polimi.ingsw.ps42.message.PermanentRequest;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Player;
-import it.polimi.ingsw.ps42.model.request.CardRequest;
-import it.polimi.ingsw.ps42.model.request.FinalRequest;
-import it.polimi.ingsw.ps42.model.request.ImmediateRequest;
-import it.polimi.ingsw.ps42.model.request.PayRequest;
-import it.polimi.ingsw.ps42.model.request.PermanentRequest;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 

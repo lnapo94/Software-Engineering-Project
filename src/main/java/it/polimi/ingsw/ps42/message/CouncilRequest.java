@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps42.model.request;
+package it.polimi.ingsw.ps42.message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 import it.polimi.ingsw.ps42.model.player.Player;
 
-public class CouncilRequest {
+public class CouncilRequest extends Message {
 	
 	private List<Obtain> choice;
 	private final int quantity;

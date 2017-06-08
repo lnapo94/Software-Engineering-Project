@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps42.model.request;
+package it.polimi.ingsw.ps42.message;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps42.model.action;
+package it.polimi.ingsw.ps42.message;
 
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 
+import it.polimi.ingsw.ps42.message.CouncilRequest;
+import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
@@ -19,8 +21,6 @@ import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.IsNotEmptyException;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
-import it.polimi.ingsw.ps42.model.request.CouncilRequest;
-import it.polimi.ingsw.ps42.model.request.RequestInterface;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 

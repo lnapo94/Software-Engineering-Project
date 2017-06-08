@@ -2,9 +2,9 @@ package it.polimi.ingsw.ps42.model.effect;
 
 import java.util.List;
 
+import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
-import it.polimi.ingsw.ps42.model.request.CouncilRequest;
 
 
 public class CouncilObtain extends Effect {
