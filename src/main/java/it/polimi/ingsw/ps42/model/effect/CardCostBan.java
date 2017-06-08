@@ -66,5 +66,11 @@ public class CardCostBan extends Effect{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public CardCostBan clone() {
+		CardColor cloneColor = this.color;
+		return new CardCostBan(cloneColor);
+	}
 
 }
