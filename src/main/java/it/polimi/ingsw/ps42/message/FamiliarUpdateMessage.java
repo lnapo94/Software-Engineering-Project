@@ -2,7 +2,7 @@ package it.polimi.ingsw.ps42.message;
 
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 
-public class ResourceUpdateMessage extends Message {
+public class FamiliarUpdateMessage extends Message {
 
 	@Override
 	public void accept(Visitor v) {

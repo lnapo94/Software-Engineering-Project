@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps42.message;
 
 import java.util.List;
 
+import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
@@ -23,5 +24,11 @@ public class PayRequest extends CardRequest{
 		} catch (NotEnoughResourcesException e) {
 			throw new ArithmeticException("Card cannot be payed, control goes down");
 		}
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		// TODO Auto-generated method stub
+		
 	}
 }

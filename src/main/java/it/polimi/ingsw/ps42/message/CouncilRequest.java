@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps42.message;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -50,6 +51,12 @@ public class CouncilRequest extends Message {
 			return true;
 		}
 		else return false;
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		// TODO Auto-generated method stub
+		
 	}
 
 		

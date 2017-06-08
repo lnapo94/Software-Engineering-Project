@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps42.message;
 
 import java.util.List;
 
+import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.player.Player;
 
 public class LoginMessage extends Message{
@@ -14,6 +15,12 @@ public class LoginMessage extends Message{
 	
 	public void setAllPlayers(List<Player> allPlayers) {
 		this.allPlayers = allPlayers;
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

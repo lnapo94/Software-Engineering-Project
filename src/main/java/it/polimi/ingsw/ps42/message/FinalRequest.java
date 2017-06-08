@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps42.message;
 
 import java.util.List;
 
+import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.Printable;
 
@@ -14,6 +15,12 @@ public class FinalRequest extends CardRequest{
 	@Override
 	public void apply() {
 		card.enableFinalEffect(possibleChoiceIndex.get(userChoice));
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

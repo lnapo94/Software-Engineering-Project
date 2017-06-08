@@ -1,9 +1,10 @@
 package it.polimi.ingsw.ps42.message;
 
+import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 
-public class PlayerMove {
+public class PlayerMove extends Message{
 	//Class that contains the informations given from the player
 	//The gamelogic parse these information to create a complete Action
 	
@@ -38,5 +39,11 @@ public class PlayerMove {
 	
 	public int getIncrementWithSlave() {
 		return increaseValue;
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		// TODO Auto-generated method stub
+		
 	}
 }
