@@ -22,4 +22,8 @@ public class NoFirstActionBan extends Effect {
 		return null;
 	}
 
+	@Override
+	public NoFirstActionBan clone() {
+		return new NoFirstActionBan();
+	}
 }

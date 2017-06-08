@@ -25,4 +25,8 @@ public class NoMarketBan extends Effect {
 		return null;
 	}
 
+	@Override
+	public NoMarketBan clone() {
+		return new NoMarketBan();
+	}
 }

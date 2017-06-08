@@ -23,4 +23,8 @@ public class NoBonusInTower extends Effect{
 		return null;
 	}
 
+	@Override
+	public NoBonusInTower clone() {
+		return new NoBonusInTower();
+	}
 }

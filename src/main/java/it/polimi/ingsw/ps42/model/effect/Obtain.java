@@ -51,6 +51,9 @@ public class Obtain extends Effect{
 		return null;
 	}
 	
-	
+	@Override
+	public Obtain clone() {
+		return new Obtain(this.costs.clone(), this.costs.clone());
+	}
 
 }
