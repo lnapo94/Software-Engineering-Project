@@ -42,6 +42,11 @@ public class ObtainBan extends Effect{
 	}
 	
 	@Override
+	public ObtainBan clone() {
+		return new ObtainBan(new Unit(this.unit.getResource(), this.unit.getQuantity()));
+	}
+	
+	@Override
 	public String print() {
 		// TODO Auto-generated method stub
 		return null;

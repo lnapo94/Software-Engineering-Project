@@ -28,5 +28,8 @@ public class SlaveBan extends Effect {
 		return null;
 	}
 	
-
+	@Override
+	public SlaveBan clone() {
+		return new SlaveBan(divisory);
+	}
 }
