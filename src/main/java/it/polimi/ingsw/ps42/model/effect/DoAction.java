@@ -35,5 +35,12 @@ public class DoAction extends Effect{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public DoAction clone() {
+		Packet cloneDiscount = discount.clone();
+		ActionType cloneType = this.type;
+		return new DoAction(cloneType, this.actionLevel, cloneDiscount);
+	}
 
 }

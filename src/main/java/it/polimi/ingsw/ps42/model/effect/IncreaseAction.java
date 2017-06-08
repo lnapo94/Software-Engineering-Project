@@ -60,5 +60,10 @@ public class IncreaseAction extends Effect {
 		return null;
 	}
 	
+	@Override
+	public IncreaseAction clone() {
+		ActionType cloneType = this.type;
+		return new IncreaseAction(cloneType, this.value, discount.clone());
+	}
 
 }
