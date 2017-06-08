@@ -264,7 +264,7 @@ public class Card {
 			//But return false because the card need to know the user's choice
 			if(checkActivable(effect, effectList.indexOf(effect))) {
 				possibleChoiceIndex.add(effectList.indexOf(effect));
-				possibleChoice.add(effect);
+				possibleChoice.add(effect.clone());
 			}
 		}
 		return false;
@@ -286,7 +286,7 @@ public class Card {
 				//Else the effect cannot be payed nor added to the possible choice array
 				checker = checkOwnerCanPay(obtainCosts, null);
 				if(checker == true) {
-					possibleChoice.add(effect);
+					possibleChoice.add(effect.clone());
 					possibleChoiceIndex.add(index);
 					checker = false;
 				}
