@@ -9,7 +9,7 @@ import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 
-public class Packet implements Iterable<Unit>, Printable {
+public class Packet implements Iterable<Unit>, Printable, Cloneable {
 	
 	private List<Unit> list;
 	
@@ -113,6 +113,18 @@ public class Packet implements Iterable<Unit>, Printable {
 	public String print() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public Packet clone() {
+		Packet packet = new Packet();
+		
+		for(Unit unit : list) {
+			Unit temp = new Unit(unit.getResource(), unit.getQuantity());
+			packet.addUnit(temp);			
+		}
+		
+		return packet;
 	}
 	
 	

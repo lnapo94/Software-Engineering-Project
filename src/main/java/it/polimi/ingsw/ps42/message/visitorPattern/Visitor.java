@@ -9,7 +9,6 @@ import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.DiceMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
-import it.polimi.ingsw.ps42.message.LoginMessage;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
@@ -17,7 +16,6 @@ import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 public interface Visitor {
 	//All the methods to visit the messages
 	
-	public void visit(LoginMessage message);
 	public void visit(BonusBarMessage message);
 	public void visit(LeaderCardMessage message);
 	public void visit(BanMessage message);

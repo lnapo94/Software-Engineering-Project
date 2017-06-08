@@ -132,7 +132,7 @@ public class Card {
 				//Then control the cost player can pay
 				for(Packet cost : costs) {
 					if(checkPlayerCanPay(cost, player, discount)) {
-						possibleChoice.add(cost);
+						possibleChoice.add(cost.clone());
 						possibleChoiceIndex.add(costs.indexOf(cost));
 					}
 				}
@@ -334,7 +334,7 @@ public class Card {
 		List<Packet> temp = new ArrayList<>();
 		if(start != null) {
 			for(Packet packet : start) {
-				temp.add(packet);
+				temp.add(packet.clone());
 			}
 		}
 		return temp;

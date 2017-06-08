@@ -25,7 +25,7 @@ import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.MarketPosition;
-import it.polimi.ingsw.ps42.model.request.CouncilRequest;
+import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
