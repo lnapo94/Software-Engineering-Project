@@ -38,7 +38,9 @@ public class DoAction extends Effect{
 	
 	@Override
 	public DoAction clone() {
-		Packet cloneDiscount = discount.clone();
+		Packet cloneDiscount = null;
+		if(discount != null)
+			cloneDiscount = discount.clone(); 
 		ActionType cloneType = this.type;
 		return new DoAction(cloneType, this.actionLevel, cloneDiscount);
 	}
