@@ -17,8 +17,9 @@ public class PlayerMove extends Message{
 	//Increase value of an Action paying with slaves
 	private int increaseValue;
 	
-	public PlayerMove(ActionType type, FamiliarColor familiarColor, int position, int increaseValue) {
+	public PlayerMove(String playerID, ActionType type, FamiliarColor familiarColor, int position, int increaseValue) {
 		//Construct the player move
+		super(playerID);
 		this.type = type;
 		this.familiarColor = familiarColor;
 		this.position = position;
@@ -43,7 +44,7 @@ public class PlayerMove extends Message{
 
 	@Override
 	public void accept(Visitor v) {
-		// TODO Auto-generated method stub
-		
+		//Method used to start the visit
+		v.visit(this);
 	}
 }

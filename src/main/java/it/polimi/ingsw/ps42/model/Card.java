@@ -159,7 +159,7 @@ public class Card {
 				if(controlPossibleChoice(immediateEffects))
 					resetPossibleChoice();
 				else {
-					CardRequest request = new ImmediateRequest(this, possibleChoiceIndex, possibleChoice);
+					CardRequest request = new ImmediateRequest(owner.getPlayerID(), this, possibleChoiceIndex, possibleChoice);
 					owner.addRequest(request);
 					resetPossibleChoice();
 				}
@@ -182,7 +182,7 @@ public class Card {
 				if(controlPossibleChoice(permanentEffects))
 					resetPossibleChoice();
 				else {
-					CardRequest request = new PermanentRequest(this, possibleChoiceIndex, possibleChoice);
+					CardRequest request = new PermanentRequest(owner.getPlayerID(), this, possibleChoiceIndex, possibleChoice);
 					owner.addRequest(request);
 					resetPossibleChoice();
 				}
@@ -205,7 +205,7 @@ public class Card {
 				if(controlPossibleChoice(finalEffects))
 					resetPossibleChoice();
 				else {
-					CardRequest request = new FinalRequest(this, possibleChoiceIndex, possibleChoice);
+					CardRequest request = new FinalRequest(owner.getPlayerID(), this, possibleChoiceIndex, possibleChoice);
 					owner.addRequest(request);
 					resetPossibleChoice();
 				}

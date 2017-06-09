@@ -7,9 +7,10 @@ import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.Printable;
 
 public class PermanentRequest extends CardRequest{
+	//Used to know which permanent card effect player wants to enable
 
-	public PermanentRequest(Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice) {
-		super(card, possibleChoiceIndex, possibleChoice);
+	public PermanentRequest(String playerID, Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice) {
+		super(playerID, card, possibleChoiceIndex, possibleChoice);
 	}
 
 	@Override
@@ -19,8 +20,8 @@ public class PermanentRequest extends CardRequest{
 
 	@Override
 	public void accept(Visitor v) {
-		// TODO Auto-generated method stub
-		
+		//Method used to start the visit
+		v.visit(this);
 	}
 
 }

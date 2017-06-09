@@ -23,7 +23,8 @@ public abstract class CardRequest extends Message implements RequestInterface {
 	
 	protected Card card;
 	
-	public CardRequest(Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice) {
+	public CardRequest(String playerID, Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice) {
+		super(playerID);
 		this.card = card;
 		this.possibleChoice = possibleChoice;
 		this.possibleChoiceIndex = possibleChoiceIndex;

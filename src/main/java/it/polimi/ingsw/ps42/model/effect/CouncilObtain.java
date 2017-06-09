@@ -25,7 +25,7 @@ public class CouncilObtain extends Effect {
 	public void enableEffect(Player player) {
 		
 		this.player=player;
-		CouncilRequest request=new CouncilRequest(possibleConversion, quantity);
+		CouncilRequest request=new CouncilRequest(player.getPlayerID(), possibleConversion, quantity);
 		player.addCouncilRequests(request);
 		
 	}

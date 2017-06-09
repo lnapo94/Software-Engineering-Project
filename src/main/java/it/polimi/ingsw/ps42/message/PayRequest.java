@@ -9,11 +9,12 @@ import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Player;
 
 public class PayRequest extends CardRequest{
+	//This request is created to know which cost player wants to pay
 	
 	private Player player;
 	
 	public PayRequest(Player player, Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice) {
-		super(card, possibleChoiceIndex, possibleChoice);
+		super(player.getPlayerID(), card, possibleChoiceIndex, possibleChoice);
 		this.player = player;
 	}
 	
@@ -28,7 +29,7 @@ public class PayRequest extends CardRequest{
 
 	@Override
 	public void accept(Visitor v) {
-		// TODO Auto-generated method stub
-		
+		//Method used to start the visit
+		v.visit(this);
 	}
 }

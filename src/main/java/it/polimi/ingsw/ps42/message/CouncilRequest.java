@@ -9,12 +9,14 @@ import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 import it.polimi.ingsw.ps42.model.player.Player;
 
 public class CouncilRequest extends Message {
+	//Request used to know what kind of council player wants
 	
 	private List<Obtain> choice;
 	private final int quantity;
 	private final List<Obtain> possibleChoice;
 	
-	public CouncilRequest(List<Obtain> possibleChoice, int quantity) {
+	public CouncilRequest(String playerID, List<Obtain> possibleChoice, int quantity) {
+		super(playerID);
 		this.possibleChoice=possibleChoice;
 		this.quantity=quantity;
 		choice=new ArrayList<>();
@@ -55,8 +57,8 @@ public class CouncilRequest extends Message {
 
 	@Override
 	public void accept(Visitor v) {
-		// TODO Auto-generated method stub
-		
+		//Method used to start the visit
+		v.visit(this);
 	}
 
 		
