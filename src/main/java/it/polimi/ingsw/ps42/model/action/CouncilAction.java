@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.action;
 
+import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
+import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
@@ -54,6 +56,9 @@ public class CouncilAction extends Action {
 			} catch (FamiliarInWrongPosition e) {
 				System.out.println("[DEBUG]: There is a wrong familiar in council Positions");
 			}
+			Message familiarUpdate = new FamiliarUpdateMessage(player.getPlayerID(), familiar.getColor(), getType(), 0);
+			setChanged();
+			notifyObservers(familiarUpdate);
 		}
 		player.synchResource();
 	}

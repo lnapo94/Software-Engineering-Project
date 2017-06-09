@@ -2,6 +2,8 @@ package it.polimi.ingsw.ps42.model.action;
 
 import java.util.List;
 
+import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
+import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
@@ -132,12 +134,27 @@ public class YieldAndProductAction extends Action {
 		player.synchResource();
 		
 		//Enable card effects
-		if( getType() == ActionType.PRODUCE )
+		if( getType() == ActionType.PRODUCE ) {
 			firstFreePosition.enableCards( player.getCardList(CardColor.YELLOW), actionValue);
-		if( getType() == ActionType.YIELD )
+			//Enable BonusBar bonuses
+			player.enableBonus(ActionType.PRODUCE);
+		}
+		
+		if( getType() == ActionType.YIELD ) {
 			firstFreePosition.enableCards( player.getCardList(CardColor.GREEN), actionValue);
-		//Enable BonusBar bonuses
-		player.enableBonus(ActionType.PRODUCE);
+			//Enable BonusBar bonuses
+			player.enableBonus(ActionType.YIELD);
+		}
+		
+		//Notify
+		if(familiar != null) {
+			//Create the message for the view
+			Message familiarUpdate = new FamiliarUpdateMessage(player.getPlayerID(), familiar.getColor(), getType(), 0);
+		
+			//Notify the view of this change
+			setChanged();
+			notifyObservers(familiarUpdate);
+		}
 		
 	}
 

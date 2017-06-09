@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps42.model.action;
 
 
+import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
+import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
@@ -67,10 +69,14 @@ public class MarketAction extends Action {
 	@Override
 	public void doAction() throws FamiliarInWrongPosition {
 		if( familiar != null ){			
-			//If is a normal action: set the familiar (this will automatically add the position bonuses)
+			//If it is a normal action: set the familiar (this will automatically add the position bonuses)
 			
 			tablePosition.get(positionInTableList).setFamiliar(familiar);
-
+			
+			//Notify the view of the changes
+			Message familiarUpdate = new FamiliarUpdateMessage(player.getPlayerID(), familiar.getColor(), getType(), positionInTableList);
+			setChanged();
+			notifyObservers(familiarUpdate);
 		}
 		else{
 			//If is a bonus action, apply the effect directly to the player 
