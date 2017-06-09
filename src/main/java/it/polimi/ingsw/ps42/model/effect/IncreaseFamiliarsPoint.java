@@ -27,8 +27,6 @@ public class IncreaseFamiliarsPoint extends Effect{
 			playerFamiliar.setIncrement(value);
 			playerFamiliar=player.getFamiliar(FamiliarColor.WHITE);
 			playerFamiliar.setIncrement(value);
-			playerFamiliar=player.getFamiliar(FamiliarColor.NEUTRAL);
-			playerFamiliar.setIncrement(value);
 		}
 		catch (WrongColorException e) {
 			System.out.println("Familiars increase failed beacause of a wrong initialization of the effect");
