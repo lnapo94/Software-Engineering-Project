@@ -48,4 +48,13 @@ public class ActionPrototype {
 		else return this.type == action.getType();
 			
 	}
+	
+	@Override
+	public ActionPrototype clone() {
+		Packet cloneDiscount = null;
+		ActionType cloneType = this.type;
+		if( this.discount != null)
+			cloneDiscount = discount.clone();
+		return new ActionPrototype(cloneType, this.level, cloneDiscount);
+	}
 }

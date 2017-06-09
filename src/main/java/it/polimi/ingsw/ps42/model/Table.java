@@ -9,6 +9,7 @@ import java.util.Random;
 import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
+import it.polimi.ingsw.ps42.message.DiceMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
@@ -343,6 +344,11 @@ public class Table extends Observable{
 			player.getFamiliar(FamiliarColor.BLACK).setValue(blackDie);
 			player.getFamiliar(FamiliarColor.WHITE).setValue(whiteDie);
 		}
+		
+		//Notify the View of the new values of the dice
+		Message diceMessage = new DiceMessage(orangeDie, blackDie, whiteDie);
+		setChanged();
+		notifyObservers(diceMessage);
 		
 	}
 	//GETTER FOR THE TOWERS

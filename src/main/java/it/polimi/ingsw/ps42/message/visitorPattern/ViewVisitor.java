@@ -10,6 +10,7 @@ import it.polimi.ingsw.ps42.message.DiceMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.PlayerMove;
+import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 
@@ -83,6 +84,12 @@ public class ViewVisitor implements Visitor {
 
 	@Override
 	public void visit(CouncilRequest message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(PlayerToken message) {
 		// TODO Auto-generated method stub
 		
 	}

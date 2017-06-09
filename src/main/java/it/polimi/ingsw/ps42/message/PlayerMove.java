@@ -6,7 +6,7 @@ import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 
 public class PlayerMove extends Message{
 	//Class that contains the informations given from the player
-	//The gamelogic parse these information to create a complete Action
+	//The game logic parse these information to create a complete Action
 	
 	private ActionType type;
 	private FamiliarColor familiarColor;

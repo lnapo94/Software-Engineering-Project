@@ -7,6 +7,7 @@ import java.util.Observable;
 
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
@@ -384,5 +385,17 @@ public class Player extends Observable{
 		source.forEach((resource, quantity) -> {
 			destination.put(resource, quantity);
 		});
+	}
+	
+	public void askMove(){
+		
+		Message playerMoveMessage;
+		if( this.bonusAction != null )
+			playerMoveMessage = new PlayerToken(this.ID, this.bonusAction.clone());
+		else
+			playerMoveMessage = new PlayerToken(this.ID, null);
+		setChanged();
+		notifyObservers(playerMoveMessage);
+		
 	}
 }
