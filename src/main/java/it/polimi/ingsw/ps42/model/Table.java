@@ -7,12 +7,13 @@ import java.util.Observable;
 import java.util.Random;
 
 import it.polimi.ingsw.ps42.message.BanMessage;
+import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.model.effect.Effect;
-import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
+import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.CouncilPosition;
 import it.polimi.ingsw.ps42.model.position.MarketPosition;
@@ -67,6 +68,9 @@ public class Table extends Observable{
 	//A council position to copy
 	private CouncilPosition councilCopy;
 
+	//The Game BonusBar List loaded by file 
+	private List<BonusBar> gameBonusBar;
+	
 	//The four Constructors. We have a constructor for each kind of match
 	//For example: with 2 players the table hasn't all the position
 
@@ -224,23 +228,28 @@ public class Table extends Observable{
 	public void placeGreenTower(StaticList<Card> cards) {
 		//Initialize cards in green tower
 		placeCards(cards, greenTower);
+		notifyNewCardsInTower(cards, CardColor.GREEN);
 	}
 
 	public void placeYellowTower(StaticList<Card> cards) {
 		//Initialize cards in Yellow tower
 		placeCards(cards, yellowTower);
+		notifyNewCardsInTower(cards, CardColor.YELLOW);
 
 	}
 
 	public void placeVioletTower(StaticList<Card> cards) {
 		//Initialize cards in Violet tower
 		placeCards(cards, violetTower);
+		notifyNewCardsInTower(cards, CardColor.VIOLET);
 
 	}
 
 	public void placeBlueTower(StaticList<Card> cards) {
 		//Initialize cards in Blue tower
 		placeCards(cards, blueTower);
+		notifyNewCardsInTower(cards, CardColor.BLUE);
+
 	}
 	
 	private void notifyNewCardsInTower( StaticList<Card> deck, CardColor color){
@@ -254,8 +263,28 @@ public class Table extends Observable{
 		setChanged();
 		notifyObservers(cardsMessage);
 	}
-
-	//GETTER FOR THE BANS
+	
+	//SETTER FOR THE BONUS BAR
+	public void setBonusBarList(List<BonusBar> gameBonusBars){
+		this.gameBonusBar = gameBonusBars;
+	}
+	
+	public BonusBar removeBonusBar( int index){
+		return gameBonusBar.remove(index);
+	}
+	
+	public void askPlayerBonusBar( int indexForPlayer){
+		//Method that notify the View asking to choose between the available bonusBars
+		ArrayList<BonusBar> copyGameBonusBar = new ArrayList<>();
+		for (BonusBar bonusBar : gameBonusBar) {
+			copyGameBonusBar.add(bonusBar.clone());
+		}
+		Message bonusBarMessage = new BonusBarMessage( players.get(indexForPlayer).getPlayerID(), copyGameBonusBar);
+		setChanged();
+		notifyObservers(bonusBarMessage);
+	}
+	
+	//GETTER AND SETTER FOR THE BANS
 	public Effect getFirsBan(){
 		return firstBan;
 

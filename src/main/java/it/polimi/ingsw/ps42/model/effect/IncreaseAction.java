@@ -63,7 +63,10 @@ public class IncreaseAction extends Effect {
 	@Override
 	public IncreaseAction clone() {
 		ActionType cloneType = this.type;
-		return new IncreaseAction(cloneType, this.value, discount.clone());
+		Packet cloneDiscount = null;
+		if( discount != null)
+			cloneDiscount = discount.clone();
+		return new IncreaseAction(cloneType, this.value, cloneDiscount);
 	}
 
 }

@@ -46,6 +46,12 @@ public class ForEachObtain extends Effect{
 
 	@Override
 	public ForEachObtain clone() {
-		return new ForEachObtain(requirements.clone(), gains.clone());
+		Packet cloneRequirements = null;
+		Packet cloneGains = null;
+		if( requirements != null)
+			cloneRequirements = requirements.clone();
+		if( gains != null)
+			cloneGains = gains.clone();
+		return new ForEachObtain( cloneRequirements, cloneGains);
 	}
 }

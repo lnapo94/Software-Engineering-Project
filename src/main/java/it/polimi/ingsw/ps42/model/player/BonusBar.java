@@ -71,7 +71,7 @@ public class BonusBar {
 	}
 
 	@Override
-	protected BonusBar clone() {
+	public BonusBar clone() {
 
 		return new BonusBar(productBonus.clone(), yieldBonus.clone());
 	}
