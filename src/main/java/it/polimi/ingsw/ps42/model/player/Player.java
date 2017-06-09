@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Observable;
 
 import it.polimi.ingsw.ps42.message.CouncilRequest;
+import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
@@ -291,6 +292,12 @@ public class Player extends Observable{
 		return this.divisory;
 	}
  	
+	public void notifyNewBan(Message message){
+		//Method to be called from the game logic when a new ban is set to the player
+		setChanged();
+		notifyObservers(message);
+	}
+	
 	public StaticList<Card> getCardList(CardColor color) {
 		//Return the correct cardlist
 		if(color == CardColor.GREEN)

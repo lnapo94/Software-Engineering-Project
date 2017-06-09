@@ -13,8 +13,8 @@ public class CardsMessage extends Message {
 	private CardColor color;
 	private StaticList<Card> deck;
 	
-	public CardsMessage(String playerID, StaticList<Card> deck, CardColor color) {
-		super(playerID);
+	public CardsMessage( StaticList<Card> deck, CardColor color) {
+		super(null);
 		this.deck = deck;
 		this.color = color;
 	}

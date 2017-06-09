@@ -12,8 +12,8 @@ public class BanMessage extends Message{
 	private Effect secondEffect;
 	private Effect thirdEffect;
 	
-	public BanMessage( String playerID, Effect firstEffect, Effect secondEffect, Effect thirdEffect) {
-		super(playerID);
+	public BanMessage( Effect firstEffect, Effect secondEffect, Effect thirdEffect) {
+		super(null);
 		this.firstEffect = firstEffect;
 		this.secondEffect = secondEffect;
 		this.thirdEffect = thirdEffect;

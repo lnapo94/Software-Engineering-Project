@@ -9,8 +9,8 @@ public class DiceMessage extends Message{
 	private int black;
 	private int white;
 	
-	public DiceMessage(String playerID, int orange, int black, int white) {
-		super(playerID);
+	public DiceMessage( int orange, int black, int white) {
+		super(null);
 		this.orange = orange;
 		this.black = black;
 		this.white = white;

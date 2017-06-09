@@ -6,7 +6,12 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
+import it.polimi.ingsw.ps42.message.BanMessage;
+import it.polimi.ingsw.ps42.message.CardsMessage;
+import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.model.effect.Effect;
+import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.CouncilPosition;
@@ -237,6 +242,18 @@ public class Table extends Observable{
 		//Initialize cards in Blue tower
 		placeCards(cards, blueTower);
 	}
+	
+	private void notifyNewCardsInTower( StaticList<Card> deck, CardColor color){
+		//Method called every time a new deck of cards is set on a tower to notify the View
+		StaticList<Card> deckCopy = new StaticList<>(4);
+		for (Card card : deck) {
+			deckCopy.add(card.clone());
+		}
+		
+		Message cardsMessage = new CardsMessage(deck, color);
+		setChanged();
+		notifyObservers(cardsMessage);
+	}
 
 	//GETTER FOR THE BANS
 	public Effect getFirsBan(){
@@ -264,6 +281,13 @@ public class Table extends Observable{
 
 	public void addThirdBan(Effect ban) {
 		thirdBan = ban;
+		
+		//Notify each player's View of the three game's bans with a BanMessage
+
+		Message banMessage = new BanMessage( this.firstBan.clone(), this.secondBan.clone(), this.thirdBan.clone());
+		setChanged();
+		notifyObservers(banMessage);
+		
 	}
 
 	private List<Player> getNewOrder(){
