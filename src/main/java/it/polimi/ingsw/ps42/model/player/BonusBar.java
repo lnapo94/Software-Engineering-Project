@@ -12,23 +12,38 @@ public class BonusBar {
 	//or can have an advanced one (advanced mode)
 	
 	private Player player;
-	private Effect productBonus;
-	private Effect yieldBonus;
+	private final Effect productBonus;
+	private final Effect yieldBonus;
 	
 	private boolean hasBeenInitialized=false;
 	
 	public BonusBar(Effect productBonus, Effect yieldBonus) {
 		//Advanced BonusBar for advanced game. Loaded from file
 		//TO-DO: Check this code when implementing advanced mode
-		this.productBonus=productBonus;
-		this.yieldBonus=yieldBonus;
+		this.productBonus = productBonus;
+		this.yieldBonus = yieldBonus;
+
 	}
 	
 	public BonusBar() {
 		//Simple BonusBar for the game. Is the same for all the player 
-		buildDefaultYieldBonus();
-		buildDefaultProductBonus();
-		
+
+		//Build the default yield Bonus
+		HashMap<Resource, Integer> yieldBonus=new HashMap<>();
+		yieldBonus.put(Resource.SLAVE,1);
+		yieldBonus.put(Resource.WOOD,1);
+		yieldBonus.put(Resource.STONE, 1);
+		Packet yieldBonusPacket=new Packet(yieldBonus);
+		Packet yieldCostPacket=new Packet();		//the cost have to be null
+		this.yieldBonus=new Obtain(yieldCostPacket, yieldBonusPacket);
+
+		//Build the default product Bonus
+		HashMap<Resource,Integer> productBonus=new HashMap<>();
+		productBonus.put(Resource.MONEY, 2);
+		productBonus.put(Resource.MILITARYPOINT, 1);
+		Packet productBonusPacket=new Packet(productBonus);
+		Packet productCostPacket=new Packet(); 	//The cost have to be null
+		this.productBonus=new Obtain(productCostPacket, productBonusPacket);
 	}
 	
 	public void setPlayer(Player player) {		//Method to set the player, the set-up must be performed only once
@@ -39,25 +54,6 @@ public class BonusBar {
 		
 	}
 	
-	private void buildDefaultYieldBonus(){
-		HashMap<Resource, Integer> bonus=new HashMap<>();
-		bonus.put(Resource.SLAVE,1);
-		bonus.put(Resource.WOOD,1);
-		bonus.put(Resource.STONE, 1);
-		Packet bonusPacket=new Packet(bonus);
-		Packet costPacket=new Packet();		//the cost have to be null
-		this.yieldBonus=new Obtain(costPacket, bonusPacket);
-		
-	}
-	private void buildDefaultProductBonus(){
-		HashMap<Resource,Integer> bonus=new HashMap<>();
-		bonus.put(Resource.MONEY, 2);
-		bonus.put(Resource.MILITARYPOINT, 1);
-		Packet bonusPacket=new Packet(bonus);
-		Packet costPacket=new Packet(); 	//The cost have to be null
-		this.productBonus=new Obtain(costPacket, bonusPacket);
-		
-	}
 	public void yieldBonus() throws NullPointerException {
 		//Apply the yield bonus when the player goes to the yield position 
 		if(player!=null){
@@ -74,4 +70,9 @@ public class BonusBar {
 		else throw new NullPointerException("The bonus bar do not has a player! Set the player before applying the bonus");
 	}
 
+	@Override
+	protected BonusBar clone() {
+
+		return new BonusBar(productBonus.clone(), yieldBonus.clone());
+	}
 }
