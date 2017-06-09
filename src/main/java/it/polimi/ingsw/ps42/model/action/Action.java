@@ -3,6 +3,8 @@ package it.polimi.ingsw.ps42.model.action;
 import java.util.List;
 import java.util.Observable;
 
+import it.polimi.ingsw.ps42.message.CouncilRequest;
+import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
@@ -76,6 +78,35 @@ public abstract class Action extends Observable{
 	
 	public abstract void doAction() throws FamiliarInWrongPosition;		//Apply the player action 
 
+	public boolean playerHasRequests() {
+		//Control if player has some request, and in that case notify to the view
+		
+		List<RequestInterface> requests = player.getRequests();
+		
+		if(requests.isEmpty())
+			return false;
+		
+		notifyChangesToPlayer(requests);
+		return true;
+	}
+	
+	public boolean playerHasCouncilRequests() {
+		//Control if player has some council requests
+		
+		List<CouncilRequest> councilRequests = player.getCouncilRequests();
+		if(councilRequests.isEmpty())
+			return false;
+		
+		notifyChangesToPlayer(councilRequests);
+		return true;
+	}
+	
+	private void notifyChangesToPlayer(List<?> list) {
+		for(Object object : list) {
+			setChanged();
+			notifyObservers(object);
+		}
+	}
 	
 	protected void checkIncreaseEffect(){			//Checks if the player has some increase effects active and apply them
 		List<IncreaseAction> playerIncreaseAction = player.getIncreaseEffect();

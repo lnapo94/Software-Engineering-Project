@@ -3,6 +3,9 @@ package it.polimi.ingsw.ps42.model.action;
 
 import java.util.List;
 
+import it.polimi.ingsw.ps42.message.CardUpdateMessage;
+import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
+import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
@@ -168,7 +171,17 @@ public class TakeCardAction extends Action{
 		}
 		position.removeCard();
 		
+		//Notify the view
+		if(familiar != null) {
+			Message familiarUpdate = new FamiliarUpdateMessage(player.getPlayerID(), familiar.getColor(), getType(), positionInTableList);
+			setChanged();
+			notifyObservers(familiarUpdate);
+		}
+		Message cardUpdate = new CardUpdateMessage(player.getPlayerID(), getType(), positionInTableList);
+		setChanged();
+		notifyObservers(cardUpdate);
 	}
+
 	
 	private boolean checkMyFamiliar() {
 		for(TowerPosition tower : tablePosition) {

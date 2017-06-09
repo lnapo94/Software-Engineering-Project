@@ -339,4 +339,36 @@ public class Card {
 		}
 		return temp;
 	}
+	
+	@Override
+	public Card clone() {
+		//Create temporary arrays of card
+		ArrayList<Packet> tempRequirements = new ArrayList<>();
+		ArrayList<Packet> tempCosts = new ArrayList<>();
+		ArrayList<Effect> tempImmediateEffects = new ArrayList<>();
+		ArrayList<Effect> tempPermanentEffects = new ArrayList<>();
+		ArrayList<Effect> tempFinalEffects = new ArrayList<>();
+		
+		//Copy the requirements
+		for(Packet requirement : requirements)
+			tempRequirements.add(requirement.clone());
+		
+		//Copy the costs
+		for(Packet cost : costs)
+			tempCosts.add(cost.clone());
+		
+		//Copy the immediate effects
+		for(Effect immediateEffect : immediateEffects)
+			tempImmediateEffects.add(immediateEffect.clone());
+		
+		//Copy the immediate effects
+		for(Effect permanentEffect : immediateEffects)
+			tempPermanentEffects.add(permanentEffect.clone());
+		
+		//Copy the immediate effects
+		for(Effect finalEffect : immediateEffects)
+			tempFinalEffects.add(finalEffect.clone());
+		
+		return new Card(getName(), getDescription(), getColor(), getPeriod(), getLevel(), tempCosts, tempImmediateEffects, tempRequirements, tempPermanentEffects, tempFinalEffects);
+	}
 }
