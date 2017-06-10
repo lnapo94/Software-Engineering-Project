@@ -24,6 +24,9 @@ public class ControllerVisitor implements Visitor {
 		this.gameLogic = gameLogic;
 	}
 	
+	//TO-DO: aggiungere un messaggio per l'attivazione di una carta leader
+	//TO-DO: aggiungere un messaggio per la scelta sulle scomuniche(aggiungere ask in player)
+	
 	@Override
 	public void visit(BonusBarMessage message) {
 		/* Response message from the View about a BonusBar choice.
@@ -36,7 +39,7 @@ public class ControllerVisitor implements Visitor {
 
 	@Override
 	public void visit(LeaderCardMessage message) {
-		/*Response Messagr from the View about the Leader Card choice.
+		/* Response Message from the View about the Leader Card choice.
 		 * Give to the Game Logic the Leader Card chosen and the related player
 		 */
 		
@@ -44,7 +47,7 @@ public class ControllerVisitor implements Visitor {
 
 	@Override
 	public void visit(BanMessage message) {
-		/*Nothing to do (this message is only received by the View)
+		/* Nothing to do (this message is only received by the View)
 		 */
 		
 	}
