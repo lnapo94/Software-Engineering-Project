@@ -425,4 +425,12 @@ public class Player extends Observable{
 			notifyObservers(councilRequest);
 		}
 	}
+	
+	public void retrasmitMessage(Message message) {
+		//Called in case of error in message control flow
+		if(message.isRetrasmission()) {
+			setChanged();
+			notifyObservers(message);
+		}
+	}
 }
