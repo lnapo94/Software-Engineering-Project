@@ -13,9 +13,15 @@ public class PlayerToken extends Message{
 	private ActionPrototype actionPrototype;
 	
 	public PlayerToken(String playerID, ActionPrototype actionPrototype ) {
+		//Constructor for a bonus Action
 		super(playerID);
 		this.actionPrototype = actionPrototype;
 		this.playerMove = null;
+	}
+	
+	public PlayerToken(String playerID) {
+		//Constructor for a normal Action
+		this(playerID, null);
 	}
 
 	public ActionPrototype getActionPrototype() {
@@ -28,6 +34,10 @@ public class PlayerToken extends Message{
 	
 	public void setPlayerMove(PlayerMove playerMove) {
 		this.playerMove = playerMove;
+	}
+	
+	public boolean isBonusAction(){
+		return this.actionPrototype != null;
 	}
 	
 	@Override

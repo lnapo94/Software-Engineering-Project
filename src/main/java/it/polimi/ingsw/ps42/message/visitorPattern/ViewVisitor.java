@@ -13,84 +13,122 @@ import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
+import it.polimi.ingsw.ps42.view.View;
 
 public class ViewVisitor implements Visitor {
 
+	private View view;
+	
+	public ViewVisitor( View view) {
+		this.view = view;
+	}
+	
 	@Override
 	public void visit(BonusBarMessage message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model, the visitor has to 
+		 * call a method of the view for asking a BonusBar from
+		 * the possible choice (then re-forwarded to the game logic).
+		 */
 		
 	}
 
 	@Override
 	public void visit(LeaderCardMessage message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model, the visitor has to 
+		 * call a method of the view for asking a LeaderCard from
+		 * the possible choice (then re-forwarded to the game logic).
+		 */
 		
 	}
 
 	@Override
 	public void visit(BanMessage message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model at the start of the game, the visitor 
+		 * has to call a method of the View for setting the new Bans.
+		 */
 		
 	}
 
 	@Override
 	public void visit(DiceMessage message) {
-		// TODO Auto-generated method stub
-		
+		/*Message forwarded by the Model every round, the visitor 
+		 * has to call a method of the View for setting the dice value to every familiars.
+		 */
 	}
 
 	@Override
 	public void visit(CardsMessage message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model every round, the visitor has to
+		 * call a method of the View for setting the Cards received on the proper Tower.
+		 */
 		
 	}
 
 	@Override
 	public void visit(ResourceUpdateMessage message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model every time a call to the syncResources method in 
+		 * player is made, the visitor has to call a method of the View that update the 
+		 * resources of that player.
+		 */
 		
 	}
 
 	@Override
 	public void visit(FamiliarUpdateMessage message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model every time a Familiar is moved by a
+		 * player, the visitor has to call a method of the View that update the 
+		 * familiar's position of that player.
+		 */
 		
 	}
 
 	@Override
 	public void visit(CardUpdateMessage message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model every time a Card is taken by a
+		 * player, the visitor has to call a method of the View that update the 
+		 * cards of that Player and the state of the Table.
+		 */
 		
 	}
 
 	@Override
 	public void visit(BanUpdateMessage message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model at the end of a Period if the player
+		 * do not has the required faithPoint, the visitor has to call a method of the View that update the 
+		 * bans of that player.
+		 */
 		
 	}
 
 	@Override
 	public void visit(PlayerMove message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model every time a player has to perform a move, 
+		 * the visitor has to call a method of the View that ask a move to that player.
+		 */
 		
 	}
 
 	@Override
 	public void visit(RequestInterface message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model every time a player has some Requests, 
+		 * the visitor has to call a method of the View that ask to that player a choice.
+		 */
 		
 	}
 
 	@Override
 	public void visit(CouncilRequest message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model every time a player has some Council Requests, 
+		 * the visitor has to call a method of the View that ask to that player a choice.
+		 */		
 		
 	}
 
 	@Override
 	public void visit(PlayerToken message) {
-		// TODO Auto-generated method stub
+		/*Message forwarded by the Model every time a player has to perform a move, 
+		 * the visitor has to call a method of the View that ask a move to that player.
+		 */		
 		
 	}
 
