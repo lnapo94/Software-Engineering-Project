@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.RequestInterface;
+import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
@@ -340,7 +342,14 @@ public class Player extends Observable{
 	public void synchResource() {
 		//After the gamelogic control for the effects in the cards, this method 
 		//upload the correct values of the resources HashMap
+		//Notify the View with a ResourceUpdate Message
 		copyResources(currentResources, nextResources);
+		
+		HashMap<Resource, Integer> resourcesCopy = new HashMap<>();
+		copyResources(resourcesCopy, currentResources);
+		Message updateMessage = new ResourceUpdateMessage(ID, resourcesCopy);
+		setChanged();
+		notifyObservers(updateMessage);
 	}
 	
 	public void restoreResource() {
@@ -388,7 +397,7 @@ public class Player extends Observable{
 	}
 	
 	public void askMove(){
-		
+	//Method called by the game logic to ask a Move to the player	
 		Message playerMoveMessage;
 		if( this.bonusAction != null )
 			playerMoveMessage = new PlayerToken(this.ID, this.bonusAction.clone());
@@ -397,5 +406,23 @@ public class Player extends Observable{
 		setChanged();
 		notifyObservers(playerMoveMessage);
 		
+	}
+	
+	public void askRequest( List<CardRequest> requests){
+	//Method called by the game logic to ask a response to a generic Request
+		
+		for (CardRequest cardRequest : requests) {
+			setChanged();
+			notifyObservers(cardRequest);
+		}
+	}
+	
+	public void askCouncilRequest( List<CouncilRequest> requests){
+	//Method called by the game logic to ask a response to a Council Request
+			
+		for (CouncilRequest councilRequest : requests) {
+			setChanged();
+			notifyObservers(councilRequest);
+		}
 	}
 }
