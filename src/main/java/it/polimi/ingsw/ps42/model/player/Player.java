@@ -402,7 +402,7 @@ public class Player extends Observable{
 		if( this.bonusAction != null )
 			playerMoveMessage = new PlayerToken(this.ID, this.bonusAction.clone());
 		else
-			playerMoveMessage = new PlayerToken(this.ID, null);
+			playerMoveMessage = new PlayerToken(this.ID);
 		setChanged();
 		notifyObservers(playerMoveMessage);
 		
