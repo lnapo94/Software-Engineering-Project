@@ -28,10 +28,6 @@ public class GameLogic implements Observer{
 	//TO-DO:private BanLoader banLoader;
 	//TO-DO: Gestione e Caricamento dei Timer
 	
-	/* TO-DO: 
-	 * 2: aggiungere in player un retransmitMessage(Message) 
-	 * 3: 
-	 */
 	
 	public void handleAction(Action action){
 		/* 0: Stop the player timer.
