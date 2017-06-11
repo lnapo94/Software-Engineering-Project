@@ -10,6 +10,7 @@ import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.DiceMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
+import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.RequestInterface;
@@ -24,7 +25,6 @@ public class ControllerVisitor implements Visitor {
 		this.gameLogic = gameLogic;
 	}
 	
-	//TO-DO: aggiungere un messaggio per l'attivazione di una carta leader
 	//TO-DO: aggiungere un messaggio per la scelta sulle scomuniche(aggiungere ask in player)
 	
 	@Override
@@ -124,6 +124,15 @@ public class ControllerVisitor implements Visitor {
 		/*Nothing to do (this message is only received by the View)
 		 */
 		
+	}
+
+	@Override
+	public void visit(LeaderCardUpdateMessage message) {
+		/*
+		 * Someone requires to enable a specific card
+		 * Check if the card can be activated, if so move the card in the correct
+		 * arraylist in player and create a message
+		 */
 	}
 
 

@@ -9,6 +9,7 @@ import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.DiceMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
+import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.RequestInterface;
@@ -130,6 +131,13 @@ public class ViewVisitor implements Visitor {
 		 * the visitor has to call a method of the View that ask a move to that player.
 		 */		
 		
+	}
+
+	@Override
+	public void visit(LeaderCardUpdateMessage message) {
+		/*	
+		 * Set the card to the enabledLeaderCard player's array
+		 */
 	}
 
 
