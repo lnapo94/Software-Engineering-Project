@@ -42,6 +42,7 @@ public class CardBuilder extends Builder {
 	}
 	
 	public void addCard() throws IOException {
+		System.out.println("INIZIO PROCEDURA CREAZIONE NUOVA CARTA");
 		
 		String name = askName();
 		String description = askDescription();
@@ -60,6 +61,9 @@ public class CardBuilder extends Builder {
 		card.setPlayer(null);
 		
 		addCardToFile(card);
+		
+		System.out.println("FINE PROCEDURA CREAZIONE CARTA");
+		
 	}
 	
 	private String askName(){
@@ -103,7 +107,7 @@ public class CardBuilder extends Builder {
 		while(response.toUpperCase().equals("SI")){
 			
 			costs.add(askPacket());
-			System.out.println("Creare nuovo costo?(si/no)");
+			System.out.println("Aggiungere un altro costo?(si/no)");
 			response = scanner.nextLine();	
 		}
 		return costs;
@@ -117,7 +121,7 @@ public class CardBuilder extends Builder {
 		while(response.toUpperCase().equals("SI")){
 			
 			requirements.add(askPacket());
-			System.out.println("Creare nuovo requisito?(si/no)");
+			System.out.println("Aggiungere un altro requisito?(si/no)");
 			response = scanner.nextLine();	
 		}
 		return requirements;
@@ -132,7 +136,7 @@ public class CardBuilder extends Builder {
 		while(response.toUpperCase().equals("SI")){
 			
 			effects.add(askEffect());
-			System.out.println("Creare nuovo effetto " +effectType+ "?(si/no)");
+			System.out.println("Aggiungere un altro effetto " +effectType+ "?(si/no)");
 			response = scanner.nextLine();	
 		}
 		return effects;
@@ -141,7 +145,7 @@ public class CardBuilder extends Builder {
 	private Effect askEffect(){
 		
 		Effect effect = null;
-		System.out.println("Tipo ? ");
+		System.out.println("Tipo dell'Effetto? ");
 		System.out.println(EffectType.OBTAIN.toString()+" "+EffectType.FOR_EACH_OBTAIN.toString()+" "
 				+EffectType.INCREASE_ACTION.toString()+" "+EffectType.DO_ACTION+" "+ EffectType.COUNCIL_OBTAIN.toString()+
 				" "+EffectType.INCREASE_FAMILIARS.toString()+" "+EffectType.INCREASE_SINGLE_FAMILIAR.toString()+" "+
@@ -208,7 +212,7 @@ public class CardBuilder extends Builder {
 	private Effect askCouncilObtain() {
 		String response;
 		int quantity;
-		System.out.println("Quantità?");
+		System.out.println("Quantità di benefici del consiglio?");
 		response = scanner.nextLine();
 		quantity = Integer.parseInt(response);
 		return new CouncilObtain(quantity, councilConversion);
@@ -221,13 +225,13 @@ public class CardBuilder extends Builder {
 		ActionType type;
 		int actionLevel;
 		Packet discount = new Packet();
-		System.out.println("Tipo azione?");
+		System.out.println("Tipo azione bonus?");
 		response = scanner.nextLine();
 		type = ActionType.parseInput(response);
-		System.out.println("Valore azione?");
+		System.out.println("Valore azione bonus?");
 		response = scanner.nextLine();
 		actionLevel = Integer.parseInt(response);
-		System.out.println("Aggiungere sconto? (si/no)");
+		System.out.println("Aggiungere sconto all'azione? (si/no)");
 		response = scanner.nextLine();
 		if(response.toUpperCase().equals("SI") )
 			discount = askPacket();
@@ -240,13 +244,13 @@ public class CardBuilder extends Builder {
 		ActionType type;
 		int value;
 		Packet discount = new Packet();
-		System.out.println("Tipo azione?");
+		System.out.println("Tipo azione da incrementare?");
 		response = scanner.nextLine();
 		type = ActionType.parseInput(response);
-		System.out.println("Valore incremento?");
+		System.out.println("Valore incremento dell'azione?");
 		response = scanner.nextLine();
 		value = Integer.parseInt(response);
-		System.out.println("Aggiungere sconto? (si/no)");
+		System.out.println("Aggiungere sconto all'azione incrementata? (si/no)");
 		response = scanner.nextLine();
 		if(response.toUpperCase().equals("SI"))
 			discount = askPacket();
@@ -293,9 +297,9 @@ public class CardBuilder extends Builder {
 	public static void main(String[] args) {
 		try {
 			CardBuilder builder = new CardBuilder("greenCardsFirstPeriod.json");
-			builder.addCard();
-			builder.addCard();
-			builder.addCard();
+			
+			for(int i=0; i<8; i++)
+				builder.addCard();
 			builder.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

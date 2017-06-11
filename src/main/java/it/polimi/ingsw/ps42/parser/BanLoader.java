@@ -31,7 +31,7 @@ public class BanLoader extends Loader{
 		
 		ArrayList<Effect> effects = new ArrayList<>();
 		
-		while(parser.hasNext()){
+		if(parser.hasNext()){
 			
 			JsonElement element = parser.next();
 			if(element.isJsonObject())

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps42.parser;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.GsonBuilder;
 
@@ -23,9 +25,22 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
 public class BanBuilder extends Builder{
 
+	private class Set{
+		private List<Effect> effects;
+		public Set(){
+			effects = new ArrayList<>();
+		}
+		public void addEffect(Effect effect) {
+			this.effects.add(effect);
+		}
+	}
+	
+	private Set banSet;
+	
 	public BanBuilder(String fileName) throws IOException{
 		super(fileName);
-	
+		this.banSet = new Set();
+		
 	}
 	
 	@Override
@@ -37,15 +52,24 @@ public class BanBuilder extends Builder{
 	}
 	
 	public void addBan() throws IOException{
-		System.out.println("Inizio Procedura aggiunta di una nuove scomuniche");
+		System.out.println("Inizio Procedura aggiunta di una nuova scomunica");
 		
 		Effect ban = askBan();
-		
-		String parse = gson.toJson(ban);
-		buffer.append(parse);
+		ArrayList<Effect> temp = new ArrayList<>();
+		temp.add(ban);
+		System.out.println(gson.toJson(temp));
+		banSet.addEffect(ban);
 		
 	}
 	
+	@Override
+	public void close() throws IOException {
+
+		String parse = gson.toJson(banSet);
+		buffer.append(parse);
+		
+		super.close();
+	}
 	private Effect askBan(){
 		
 		Effect effect = null;

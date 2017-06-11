@@ -3,11 +3,11 @@ package it.polimi.ingsw.ps42.model.enumeration;
 public enum EffectType {
 	//Type of effect used in "normal" cards and ban cards
 	
-	OBTAIN("Obtain"), OBTAIN_BAN("Obtain Ban"), DO_ACTION("Do another Action"), INCREASE_ACTION("Increase an Action"), 
-	FOR_EACH_OBTAIN("Obtain something for each resources"), COUNCIL_OBTAIN("Obtain council privilege"), 
-	INCREASE_FAMILIARS("Increase All Familiars"), INCREASE_SINGLE_FAMILIAR("Increase Single Familiar"), 
-	CARD_BAN("Card Ban"), NO_MARKET_BAN("No Market Ban"), NO_FIRST_ACTION_BAN("No First Action Ban"), 
-	YELLOW_COST_BAN("Yellow Cost Ban"), SLAVE_BAN("Slave Ban"), NO_TOWER_BONUS("No bonus from tower position");
+	OBTAIN("Obtain"), OBTAIN_BAN("Obtain_Ban"), DO_ACTION("Do_Action"), INCREASE_ACTION("Increase_Action"), 
+	FOR_EACH_OBTAIN("For_Each_Obtain"), CARD_FOR_EACH_OBTAIN("Card_For_Each_Obtain"), COUNCIL_OBTAIN("Council_Obtain"), 
+	INCREASE_FAMILIARS("Increase_Familiars"), INCREASE_SINGLE_FAMILIAR("Increase_Single_Familiar"), 
+	CARD_BAN("Card_Ban"), NO_MARKET_BAN("No_Market_Ban"), NO_FIRST_ACTION_BAN("No_First_Action_Ban"), 
+	YELLOW_COST_BAN("Yellow_Cost_Ban"), SLAVE_BAN("Slave_Ban"), NO_TOWER_BONUS("No_Tower_Bonus");
 	
 	private final String message;
 	
