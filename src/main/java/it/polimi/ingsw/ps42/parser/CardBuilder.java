@@ -290,5 +290,17 @@ public class CardBuilder extends Builder {
 		buffer.append(parse);
 	}
 
-	
+	public static void main(String[] args) {
+		try {
+			CardBuilder builder = new CardBuilder("greenCardsFirstPeriod.json");
+			builder.addCard();
+			builder.addCard();
+			builder.addCard();
+			builder.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

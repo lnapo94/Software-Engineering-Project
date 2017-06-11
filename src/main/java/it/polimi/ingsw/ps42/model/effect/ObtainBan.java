@@ -13,7 +13,7 @@ public class ObtainBan extends Effect{
 	private Unit unit;
 	private Resource resource;
 	
-	protected ObtainBan(Unit cost) {
+	public ObtainBan(Unit cost) {
 		super(EffectType.OBTAIN_BAN);
 		this.unit = cost;
 		this.packet = new Packet();

@@ -33,7 +33,7 @@ public class Serializer implements JsonSerializer<Object>, JsonDeserializer<Obje
 	}
 	
 	@Override
-	public JsonElement serialize(Object obj, Type tipo, JsonSerializationContext context) {
+	public JsonElement serialize(Object obj, Type type, JsonSerializationContext context) {
 		
 		JsonElement jsonObj= context.serialize(obj, obj.getClass());
 		jsonObj.getAsJsonObject().addProperty(CLASS_KEY, obj.getClass().getCanonicalName());
