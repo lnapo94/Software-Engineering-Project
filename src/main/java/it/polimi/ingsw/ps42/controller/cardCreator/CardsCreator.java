@@ -42,7 +42,7 @@ public abstract class CardsCreator {
 	protected StaticList<Card> shuffle(StaticList<Card> cards) {
 		//TODO testing
 		//Shuffle the cards list
-		StaticList<Card> temporary = new StaticList<>(8);
+		StaticList<Card> temporary = new StaticList<>(CARDS_NUMBER);
 		Random random = new Random();
 		
 		while(!cards.isEmpty()) {
