@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 
+import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.Message;
