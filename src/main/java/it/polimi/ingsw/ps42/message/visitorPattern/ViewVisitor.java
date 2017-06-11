@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.message.visitorPattern;
 
 import it.polimi.ingsw.ps42.message.BanMessage;
+import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardUpdateMessage;
@@ -138,6 +139,13 @@ public class ViewVisitor implements Visitor {
 		/*	
 		 * Set the card to the enabledLeaderCard player's array
 		 */
+	}
+
+	@Override
+	public void visit(BanRequest message) {
+		/*
+		 * Ask to the player if he wants pay for the ban or not
+		 */		
 	}
 
 

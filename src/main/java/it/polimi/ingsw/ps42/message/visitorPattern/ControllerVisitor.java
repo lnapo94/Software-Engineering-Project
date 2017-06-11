@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps42.message.visitorPattern;
 
 import it.polimi.ingsw.ps42.controller.GameLogic;
 import it.polimi.ingsw.ps42.message.BanMessage;
+import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardUpdateMessage;
@@ -132,6 +133,14 @@ public class ControllerVisitor implements Visitor {
 		 * Someone requires to enable a specific card
 		 * Check if the card can be activated, if so move the card in the correct
 		 * arraylist in player and create a message
+		 */
+	}
+
+	@Override
+	public void visit(BanRequest message) {
+		/*
+		 * Enable the chosen ban if the variable is set to false,
+		 * else reduce the faith point and assign the victory point to player 
 		 */
 	}
 

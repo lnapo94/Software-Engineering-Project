@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.message.visitorPattern;
 
 import it.polimi.ingsw.ps42.message.BanMessage;
+import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardUpdateMessage;
@@ -32,4 +33,5 @@ public interface Visitor {
 	public void visit(CouncilRequest message);
 	public void visit(PlayerToken message);
 	public void visit(LeaderCardUpdateMessage message);
+	public void visit(BanRequest message);
 }
