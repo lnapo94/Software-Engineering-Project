@@ -301,6 +301,14 @@ public class Player extends Observable{
 		notifyObservers(message);
 	}
 	
+	public void askIfPayTheBan( int banPeriodNumber){
+		//Method to be called from the game logic when a player 
+		
+		BanRequest message = new BanRequest( this.getPlayerID(), banPeriodNumber);
+		setChanged();
+		notifyObservers(message);
+	}
+	
 	public StaticList<Card> getCardList(CardColor color) {
 		//Return the correct cardlist
 		if(color == CardColor.GREEN)
