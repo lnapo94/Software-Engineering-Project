@@ -29,6 +29,15 @@ import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/*TO-DO:
+ * 1: controllare la posizione bonus per player nei controlli, e aggiungere var di stato
+ * 2: agg var di stato per evitare moneyMalus più controlli in action
+ * 3: agg var di stato per il set dei familiari a 5 più controlli in player
+ * 4: gestire gli increase familiar effect come array list in player
+ * 5: agg var di stato per il raddoppio sui bonus ricevuti da eff imm delle carte
+ * 6: agg var di stato per requisito pti militari
+ *  
+ */
 public class Player extends Observable{
 	//This class represents the model of the Player
 	
