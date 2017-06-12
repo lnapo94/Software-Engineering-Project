@@ -105,7 +105,7 @@ public class PositionBuilder extends Builder {
 		response = scanner.nextLine();
 		if(response.toUpperCase().equals("SI"))
 			gains=askPacket();
-		return new Obtain(costs, gains);
+		return new Obtain(costs, gains, null);
 	}
 	
 	private void addPositionToFile( Position position ) throws IOException {

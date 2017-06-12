@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.google.gson.GsonBuilder;
 
+import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
@@ -16,6 +17,12 @@ public class BonusBarBuilder extends Builder{
 	public BonusBarBuilder(String fileName) throws IOException{
 		
 		super(fileName);
+	}
+	
+	public BonusBarBuilder(String fileName, String conversionFileName) throws IOException{
+		
+		super(fileName, conversionFileName);
+	
 	}
 	
 	@Override
@@ -40,9 +47,20 @@ public class BonusBarBuilder extends Builder{
 	}
 
 	private Obtain askObtain(){
-		System.out.println("GUADAGNI");
+		
+		String response;
+		CouncilObtain councilObtain = null;
+		System.out.println("GUADAGNI:");
 		Packet gains = askPacket();
-		return new Obtain(null, gains);
+		System.out.println("Aggiungere privilegio del consiglio?");
+		response = scanner.nextLine();
+		if(response.toUpperCase().equals("SI")){
+			System.out.println("Quantità di Privilegi del Consiglio?");
+			int quantity = scanner.nextInt();
+			councilObtain = new CouncilObtain(quantity, councilConversion);
+			
+		}
+		return new Obtain(null, gains, councilObtain);
 	}
 	
 

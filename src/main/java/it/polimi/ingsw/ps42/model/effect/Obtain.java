@@ -11,12 +11,14 @@ public class Obtain extends Effect{
 	
 	private Packet costs;
 	private Packet gains;
-
-	public Obtain(Packet costs, Packet gains) {
+	private CouncilObtain councilObtain;
+	
+	public Obtain(Packet costs, Packet gains, CouncilObtain councilObtain) {
 		
 		super(EffectType.OBTAIN);
 		this.costs=costs;
 		this.gains=gains;
+		this.councilObtain = councilObtain;
 	}
 	
 	public Packet getCosts() {
@@ -27,6 +29,10 @@ public class Obtain extends Effect{
 		return gains;
 	}
 
+	public CouncilObtain getCouncilObtain() {
+		return councilObtain;
+	}
+	
 	@Override
 	public void enableEffect(Player player) {
 		/*In this case the method decrease the cost and increase the gain 
@@ -41,7 +47,9 @@ public class Obtain extends Effect{
 			throw new ArithmeticException("Effect was enabled, but it can't be payed");
 		}
 		player.increaseResource(gains);
-
+		
+		if(councilObtain != null)
+			councilObtain.enableEffect(player);
 		
 	}
 
@@ -53,11 +61,16 @@ public class Obtain extends Effect{
 	
 	@Override
 	public Obtain clone() {
-		if(costs != null && gains == null)
-			return new Obtain(this.costs.clone(), null);
-		if(costs == null && gains != null)
-			return new Obtain(null, this.gains.clone());
-		return new Obtain(this.costs.clone(), this.gains.clone());
+		Packet gainCopy = null;
+		Packet costCopy = null;
+		CouncilObtain councilObtainCopy = null;
+		if(this.gains != null)
+			gainCopy = gains.clone();
+		if(this.costs != null)
+			costCopy = costs.clone();
+		if(this.councilObtain != null)
+			councilObtainCopy = councilObtain.clone();
+		return new Obtain(costCopy, gainCopy, councilObtainCopy);
 	}
 
 }

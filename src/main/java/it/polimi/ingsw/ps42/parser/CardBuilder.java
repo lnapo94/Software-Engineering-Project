@@ -303,6 +303,7 @@ public class CardBuilder extends Builder {
 	private Effect askObtain(){
 		Packet costs = new Packet();
 		Packet gains = new Packet();
+		CouncilObtain councilObtain = null;
 		String response;
 		System.out.println("Aggiungere costi? (si/no)");
 		response = scanner.nextLine();
@@ -312,7 +313,16 @@ public class CardBuilder extends Builder {
 		response = scanner.nextLine();
 		if(response.toUpperCase().equals("SI"))
 			gains=askPacket();
-		return new Obtain(costs, gains);
+
+		System.out.println("Aggiungere privilegio del consiglio?");
+		response = scanner.nextLine();
+		if(response.toUpperCase().equals("SI")){
+			System.out.println("Quantità di Privilegi del consiglio?");
+			int quantity = scanner.nextInt();
+			councilObtain = new CouncilObtain(quantity, councilConversion);
+		}
+		
+		return new Obtain(costs, gains, councilObtain);
 	}
 	
 	private void addCardToFile(Card card) throws IOException{

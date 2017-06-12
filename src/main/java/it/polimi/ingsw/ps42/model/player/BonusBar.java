@@ -35,7 +35,7 @@ public class BonusBar {
 		yieldBonus.put(Resource.STONE, 1);
 		Packet yieldBonusPacket=new Packet(yieldBonus);
 		Packet yieldCostPacket=new Packet();		//the cost have to be null
-		this.yieldBonus=new Obtain(yieldCostPacket, yieldBonusPacket);
+		this.yieldBonus=new Obtain(yieldCostPacket, yieldBonusPacket, null);
 
 		//Build the default product Bonus
 		HashMap<Resource,Integer> productBonus=new HashMap<>();
@@ -43,7 +43,7 @@ public class BonusBar {
 		productBonus.put(Resource.MILITARYPOINT, 1);
 		Packet productBonusPacket=new Packet(productBonus);
 		Packet productCostPacket=new Packet(); 	//The cost have to be null
-		this.productBonus=new Obtain(productCostPacket, productBonusPacket);
+		this.productBonus=new Obtain(productCostPacket, productBonusPacket, null);
 	}
 	
 	public void setPlayer(Player player) {		//Method to set the player, the set-up must be performed only once

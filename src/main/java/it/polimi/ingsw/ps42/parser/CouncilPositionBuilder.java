@@ -59,7 +59,7 @@ public class CouncilPositionBuilder {
 		
 		System.out.println("Aggiunta nuova conversione in corso...");
 		gains=askPacket();
-		return new Obtain(costs, gains);
+		return new Obtain(costs, gains, null);
 	}
 	
 	private Packet askPacket(){
