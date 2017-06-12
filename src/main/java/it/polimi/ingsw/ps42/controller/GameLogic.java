@@ -7,8 +7,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
-import org.hamcrest.core.IsInstanceOf;
-
 import it.polimi.ingsw.ps42.controller.cardCreator.CardsCreator;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.Message;
@@ -17,11 +15,16 @@ import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Table;
 import it.polimi.ingsw.ps42.model.action.Action;
+import it.polimi.ingsw.ps42.model.effect.Effect;
+import it.polimi.ingsw.ps42.model.enumeration.EffectType;
+import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
+import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.parser.BanLoader;
+import it.polimi.ingsw.ps42.parser.BonusBarLoader;
 import it.polimi.ingsw.ps42.view.View;
 
 public class GameLogic implements Observer{
@@ -37,6 +40,9 @@ public class GameLogic implements Observer{
 	private Message currentMessage;
 	private int currentPeriod;
 	private List<View> views;		//TODO
+	
+	//Variable used to check the bonusBar
+	private List<BonusBar> bonusBarList;
 	
 	//TO-DO: Gestione e Caricamento dei Timer
 	
@@ -106,6 +112,7 @@ public class GameLogic implements Observer{
 		//Initialize the view array
 		views = new ArrayList<>();
 		
+		
 		//TODO INITIALIZE THE TIMERS
 		
 	}
@@ -133,7 +140,7 @@ public class GameLogic implements Observer{
 		return null;
 	}
 	
-	public void initGame(){
+	public void initGame() throws GameLogicError{
 		/* Method called after the gameLogic is created that handles the entire game.
 		 * 1: Load the BonusBar and ask to all the players to choose one. 
 		 * 2: Load the LeaderCards and ask to all the players to choose one. 
@@ -144,12 +151,66 @@ public class GameLogic implements Observer{
 		 * 7: Notify the results and finish the game.
 		 */
 		
+		//Load the bonus bar from a file
+		try {
+			BonusBarLoader loader = new BonusBarLoader("src/bonusBarConfig");
+			bonusBarList = loader.getBonusBars();
+		} catch (IOException e) {
+			System.out.println("Unable to open the bonus bar file in gameLogic");
+			throw new GameLogicError("File open error");
+		}
+		
+		for(Player player : players) {
+			player.askChooseBonusBar(bonusBarList);
+		}
+		
+		//TODO Load the LeaderCards
+		
+		//Start the match
+		currentPeriod = 1;
+		while(currentPeriod <= 6) {
+			initRound();
+			
+			//Check the first ban
+			if(currentPeriod == 2) {
+				checkBan(table.getFirstBan(), 3);
+			}
+			
+			if(currentPeriod == 4) {
+				checkBan(table.getSecondBan(), 4);
+			}
+			
+			if(currentPeriod == 6) {
+				checkBan(table.getThirdBan(), 5);
+			}
+		}
+		
+		//At the end of the match
+		
+				
 	}
 	
-	public void setBonusBar(int index, String playerID){
-		// Set the BonusBar to the player
-		 
+	//Private Method to control the ban for all the players
+	private void checkBan(Effect ban, int faithPointToHave) {
 		
+		for(Player player : this.players) {
+			if(player.getResource(Resource.FAITHPOINT) < faithPointToHave) {
+				if(ban.getTypeOfEffect() == EffectType.OBTAIN_BAN || ban.getTypeOfEffect() == EffectType.INCREASE_FAMILIARS) {
+					player.setBan(ban);
+				}
+				else
+					ban.enableEffect(player);
+			}
+			else {
+				player.askIfPayTheBan(currentPeriod);
+			}
+		}
+	}
+	
+	public void setBonusBar(int index, String playerID) throws ElementNotFoundException{
+		// Set the BonusBar to the player
+		Player player = searchPlayer(playerID);
+		player.setBonusBar(bonusBarList.remove(index));
 	}
 	
 	public void setLeaderCard(){
@@ -166,22 +227,37 @@ public class GameLogic implements Observer{
 		 */
 	}
 	
-	private void checkBan(){
-		/* Method called to check and assign the period ban to the players:
-		 * 1: For each Player:
-		 *  - if can not pay the ban set the ban to the player(call also the notifyBan method)
-		 *  - otherwise ask if he want to pay
-		 *  (If is the last round do not ask to the player but do).
-		 */
-		
-	}
-	
-	public void handleBan( String playerID, int index, boolean payBan ){
+	public void handleBan( String playerID, int index, boolean wantToPayBan ) throws ElementNotFoundException{
 		/* Method called by the Visitor to set a Ban to a Player:
 		 * if choice = false set the ban to the player
 		 * else resource update
 		 */
 		
+		Player player = searchPlayer(playerID);
+		
+		if(wantToPayBan) {
+			//Player wants to pay faith point to haven't the ban
+			player.setToZero(Resource.FAITHPOINT);
+			//TODO Increase player faith point with the correct value
+		}
+		else {
+			//Player wants the ban
+			
+			if(index == 1) {
+				//For the first period ban we have two kind of ban
+				if(table.getFirstBan().getTypeOfEffect() == EffectType.OBTAIN_BAN || table.getFirstBan().getTypeOfEffect() == EffectType.INCREASE_FAMILIARS)
+					player.setBan(table.getFirstBan());
+				else
+					table.getFirstBan().enableEffect(player);
+			}
+			if(index == 2) {
+				table.getSecondBan().enableEffect(player);
+			}
+			if(index == 3) {
+				table.getThirdBan().enableEffect(player);
+			}
+			
+		}
 	}
 	
 	public void handleRequest( RequestInterface request){

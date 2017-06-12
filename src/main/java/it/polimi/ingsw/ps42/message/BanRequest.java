@@ -11,6 +11,14 @@ public class BanRequest extends Message {
 		super(playerID);
 		this.banNumber = banNumber;
 	}
+	
+	public int getBanNumber() {
+		return banNumber;
+	}
+	
+	public boolean wantPayForBan() {
+		return wantPayForBan;
+	}
 
 	@Override
 	public void accept(Visitor v) {
