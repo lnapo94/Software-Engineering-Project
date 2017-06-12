@@ -48,6 +48,11 @@ public class ViewVisitor implements Visitor {
 		/*Message forwarded by the Model at the start of the game, the visitor 
 		 * has to call a method of the View for setting the new Bans.
 		 */
+		if(message != null){	
+			this.view.setFirstBan(message.getFirstEffect());
+			this.view.setSecondBan(message.getSecondEffect());
+			this.view.setThirdBan(message.getThirdEffect());
+		}
 		
 	}
 
@@ -56,6 +61,12 @@ public class ViewVisitor implements Visitor {
 		/*Message forwarded by the Model every round, the visitor 
 		 * has to call a method of the View for setting the dice value to every familiars.
 		 */
+
+		if(message != null){	
+			this.view.setFirstBan(message.getFirstEffect());
+			this.view.setSecondBan(message.getSecondEffect());
+			this.view.setThirdBan(message.getThirdEffect());
+		}
 	}
 
 	@Override
