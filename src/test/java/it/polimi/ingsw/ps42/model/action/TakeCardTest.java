@@ -40,7 +40,7 @@ public class TakeCardTest {
 		//With the lasts 2 floor with an effect
 		Packet packet = new Packet();
 		packet.addUnit(new Unit(Resource.MONEY, 2));
-		Obtain bonus = new Obtain(null, packet);
+		Obtain bonus = new Obtain(null, packet, null);
 		
 		TowerPosition first = new TowerPosition(ActionType.TAKE_GREEN, 1, null, 0);
 		TowerPosition second = new TowerPosition(ActionType.TAKE_GREEN, 3, null, 0);
@@ -71,11 +71,11 @@ public class TakeCardTest {
 		//Create one immediate effect for the card
 		Packet effect1 = new Packet();
 		effect1.addUnit(new Unit(Resource.MONEY, 2));
-		Obtain immediateEffect1 = new Obtain(null, effect1);
+		Obtain immediateEffect1 = new Obtain(null, effect1, null);
 		
 		Packet effect2 = new Packet();
 		effect2.addUnit(new Unit(Resource.MILITARYPOINT, 2));
-		Obtain immediateEffect2 = new Obtain(effect2, effect2);
+		Obtain immediateEffect2 = new Obtain(effect2, effect2, null);
 		
 		List<Effect> immediateEffects = new ArrayList<>();
 		immediateEffects.add(immediateEffect1);

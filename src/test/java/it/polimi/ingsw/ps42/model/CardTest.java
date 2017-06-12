@@ -166,7 +166,7 @@ public class CardTest {
 		Packet gain2 = new Packet();
 		gain2.addUnit(new Unit(Resource.FAITHPOINT, 5));
 		
-		immediateEffect2 = new Obtain(cost2, gain2);
+		immediateEffect2 = new Obtain(cost2, gain2, null);
 		
 		immediateEffects = new ArrayList<>();
 		

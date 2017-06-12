@@ -137,11 +137,11 @@ public class YieldAndProductActionTest {
 		
 		//Create effect for the yellow card
 		List<Effect> permanentYellow = new ArrayList<>();
-		permanentYellow.add(new Obtain(null, gainYellow));
+		permanentYellow.add(new Obtain(null, gainYellow, null));
 		
 		//Create effect for the green card
 		List<Effect> permanentGreen = new ArrayList<>();
-		permanentGreen.add(new Obtain(null, gainGreen));
+		permanentGreen.add(new Obtain(null, gainGreen, null));
 		
 		Card yellow = new Card("YELLOw", "", CardColor.YELLOW, 2, 4, null, null, null, permanentYellow, null);
 		Card green = new Card("GREEN", "", CardColor.GREEN, 1, 4, null, null, null, permanentGreen, null);

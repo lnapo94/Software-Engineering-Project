@@ -34,7 +34,7 @@ public class ObtainTest {
 		Packet gain = new Packet();
 		cost.addUnit(new Unit(Resource.MONEY, 3));
 		gain.addUnit(new Unit(Resource.STONE, 3));
-		obtainToTest = new Obtain(cost, gain);
+		obtainToTest = new Obtain(cost, gain, null);
 		
 		//Create the card
 		ArrayList<Effect> immediateEffects = new ArrayList<>();

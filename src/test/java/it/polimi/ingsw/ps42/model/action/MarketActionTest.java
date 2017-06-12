@@ -64,8 +64,8 @@ public class MarketActionTest {
 		Packet gains2 = new Packet();
 		gains2.addUnit(new Unit(Resource.MONEY, 4));
 		
-		Obtain bonus1 = new Obtain(null, gains1);
-		Obtain bonus2 = new Obtain(null, gains2);
+		Obtain bonus1 = new Obtain(null, gains1, null);
+		Obtain bonus2 = new Obtain(null, gains2, null);
 		
 		//Create the CouncilObtain Bonus
 		List<Obtain> possibleConversion = new ArrayList<>();
@@ -76,8 +76,8 @@ public class MarketActionTest {
 		Packet councilGains2 = new Packet();
 		councilGains2.addUnit(new Unit(Resource.FAITHPOINT, 2));
 		
-		Obtain councilBonus1 = new Obtain(null, councilGains1);
-		Obtain councilBonus2 = new Obtain(null, councilGains2);
+		Obtain councilBonus1 = new Obtain(null, councilGains1, null);
+		Obtain councilBonus2 = new Obtain(null, councilGains2, null);
 		possibleConversion.add(councilBonus1);
 		possibleConversion.add(councilBonus2);
 		

@@ -71,9 +71,9 @@ public class CouncilObtainTest {
 		gains2.addUnit(new Unit(Resource.VICTORYPOINT, 2));
 		gains3.addUnit(new Unit(Resource.WOOD, 2));
 		
-		possibleConversion.add(new Obtain( null, gains1));
-		possibleConversion.add(new Obtain( null, gains2));
-		possibleConversion.add(new Obtain( null, gains3));
+		possibleConversion.add(new Obtain( null, gains1, null));
+		possibleConversion.add(new Obtain( null, gains2, null));
+		possibleConversion.add(new Obtain( null, gains3, null));
 		
 		return new CouncilObtain( 2, possibleConversion);
 	}

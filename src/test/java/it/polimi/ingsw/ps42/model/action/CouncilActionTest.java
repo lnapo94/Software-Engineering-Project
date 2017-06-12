@@ -54,16 +54,16 @@ public class CouncilActionTest {
 		List<Obtain> possibleConversion = new ArrayList<>();
 		Packet gains1 = new Packet();
 		gains1.addUnit(new Unit(Resource.MONEY, 2));
-		Obtain conversion1 = new Obtain(null, gains1);
+		Obtain conversion1 = new Obtain(null, gains1, null);
 		
 		Packet gains2 = new Packet();
 		gains2.addUnit(new Unit(Resource.WOOD, 2));
-		Obtain conversion2 = new Obtain(null, gains2);
+		Obtain conversion2 = new Obtain(null, gains2, null);
 		
 		Packet gains3 = new Packet();
 		gains3.addUnit(new Unit(Resource.STONE, 1));
 		gains3.addUnit(new Unit(Resource.SLAVE, 1));
-		Obtain conversion3 = new Obtain(null, gains3);
+		Obtain conversion3 = new Obtain(null, gains3, null);
 		
 		possibleConversion.add(conversion1);
 		possibleConversion.add(conversion2);
@@ -129,7 +129,7 @@ public class CouncilActionTest {
 		familiar.setIncrement(1);
 		Packet tempGains = new Packet();
 		tempGains.addUnit(new Unit(Resource.MILITARYPOINT, 2));
-		Obtain bouns = new Obtain(null, tempGains);
+		Obtain bouns = new Obtain(null, tempGains, null);
 		CouncilPosition tempPosition = new CouncilPosition(4, bouns, 0, councilObtain);
 		tablePosition.add(tempPosition);
 		action = new CouncilAction(ActionType.COUNCIL, familiar, tablePosition.get(2));
