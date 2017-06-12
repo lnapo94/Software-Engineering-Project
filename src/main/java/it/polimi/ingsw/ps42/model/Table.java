@@ -286,7 +286,7 @@ public class Table extends Observable{
 	}
 	
 	//GETTER AND SETTER FOR THE BANS
-	public Effect getFirsBan(){
+	public Effect getFirstBan(){
 		return firstBan;
 
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Observable;
 
 import it.polimi.ingsw.ps42.message.BanRequest;
+import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.Message;
@@ -450,5 +451,18 @@ public class Player extends Observable{
 			setChanged();
 			notifyObservers(message);
 		}
+	}
+	
+	public void askChooseBonusBar(List<BonusBar> bonusBars) {
+		//Called by gamelogic to ask to the player which bonusBar he wants
+		List<BonusBar> toThePlayer = new ArrayList<>();
+		for(BonusBar bonusBar : bonusBars)
+			toThePlayer.add(bonusBar.clone());
+		
+		//Create the message
+		Message message = new BonusBarMessage(getPlayerID(), toThePlayer);
+		
+		setChanged();
+		notifyObservers(message);
 	}
 }
