@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.polimi.ingsw.ps42.message.RequestInterface;
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
@@ -103,20 +103,20 @@ public class ForEachObtainTest {
 		
 		try {
 			cardImmediate.enableImmediateEffect();
-			RequestInterface requestImmediate = player.getRequests().get(0);
+			CardRequest requestImmediate = player.getRequests().get(0);
 			requestImmediate.setChoice(2);
 			requestImmediate.apply();
 			player.synchResource();
 			intermediateCheck();
 			
 			cardImmediate.enableFinalEffect();
-			RequestInterface requestFinal = player.getRequests().get(0);
+			CardRequest requestFinal = player.getRequests().get(0);
 			requestFinal.setChoice(0);
 			requestFinal.apply();
 			player.synchResource();
 			
 			cardImmediate.enablePermanentEffect();
-			RequestInterface requestPermanent= player.getRequests().get(0);
+			CardRequest requestPermanent= player.getRequests().get(0);
 			requestPermanent.setChoice(1);
 			requestPermanent.apply();
 			player.synchResource();

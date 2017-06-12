@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.polimi.ingsw.ps42.message.RequestInterface;
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
@@ -74,7 +74,7 @@ public class ObtainTest {
 			System.out.println("There isn't an effect that the player can use");
 		}
 		
-		List<RequestInterface> requestsInPlayer;
+		List<CardRequest> requestsInPlayer;
 		requestsInPlayer = p1.getRequests();
 		//Now player has a request, because the obtain effect has a cost
 		assertEquals(1, requestsInPlayer.size());
@@ -86,7 +86,7 @@ public class ObtainTest {
 		//Then i want to apply the request from gameLogic (exactly like in gameLogic)
 		requestsInPlayer = p1.getRequests();
 		if(!requestsInPlayer.isEmpty())
-			for(RequestInterface request : requestsInPlayer)
+			for(CardRequest request : requestsInPlayer)
 				request.apply();
 		p1.synchResource();
 		

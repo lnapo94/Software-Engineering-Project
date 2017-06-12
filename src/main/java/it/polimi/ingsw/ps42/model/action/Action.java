@@ -3,8 +3,8 @@ package it.polimi.ingsw.ps42.model.action;
 import java.util.List;
 import java.util.Observable;
 
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
-import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
@@ -81,7 +81,7 @@ public abstract class Action extends Observable{
 	public boolean playerHasRequests() {
 		//Control if player has some request, and in that case notify to the view
 		
-		List<RequestInterface> requests = player.getRequests();
+		List<CardRequest> requests = player.getRequests();
 		
 		if(requests.isEmpty())
 			return false;

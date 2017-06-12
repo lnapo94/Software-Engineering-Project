@@ -3,10 +3,10 @@ package it.polimi.ingsw.ps42.model.action;
 
 import java.util.List;
 
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CardUpdateMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.Message;
-import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
@@ -152,9 +152,9 @@ public class TakeCardAction extends Action{
 		 * 	Finally, synch all the player resources to apply all the changes 
 		 */
 		
-		List<RequestInterface> requests = player.getRequests();
+		List<CardRequest> requests = player.getRequests();
 		if(requests != null && !requests.isEmpty()) {
-			for(RequestInterface request : requests)
+			for(CardRequest request : requests)
 				request.apply();
 		}
 		

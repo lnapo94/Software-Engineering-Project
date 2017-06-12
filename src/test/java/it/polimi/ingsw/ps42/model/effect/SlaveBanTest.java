@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.polimi.ingsw.ps42.message.RequestInterface;
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
@@ -69,7 +69,7 @@ public class SlaveBanTest {
 		
 		try {
 			card.payCard(player, null);
-			RequestInterface request = player.getRequests().get(0);
+			CardRequest request = player.getRequests().get(0);
 			request.setChoice(0);
 			request.apply();
 			

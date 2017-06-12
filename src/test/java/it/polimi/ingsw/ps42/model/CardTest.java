@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.polimi.ingsw.ps42.message.RequestInterface;
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.ForEachObtain;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
@@ -201,9 +201,9 @@ public class CardTest {
 		assertEquals(3, cannotEnableObtainEffect.getResource(Resource.WOOD));
 		assertEquals(1, cannotEnableObtainEffect.getResource(Resource.FAITHPOINT));
 		
-		List<RequestInterface> requests = canTakeCard.getRequests();
+		List<CardRequest> requests = canTakeCard.getRequests();
 		
-		for(RequestInterface request : requests) {
+		for(CardRequest request : requests) {
 			request.setChoice(0);
 			request.apply();
 			canTakeCard.synchResource();
@@ -211,7 +211,7 @@ public class CardTest {
 		
 		requests = cannotEnableObtainEffect.getRequests();
 		
-		for(RequestInterface request : requests) {
+		for(CardRequest request : requests) {
 			request.setChoice(0);
 			request.apply();
 			cannotEnableObtainEffect.synchResource();
@@ -287,10 +287,10 @@ public class CardTest {
 			
 			//Select the second cost for example
 			
-			List<RequestInterface> requests = canTakeCard.getRequests();
+			List<CardRequest> requests = canTakeCard.getRequests();
 			assertEquals(1, requests.size());
 			
-			RequestInterface request = requests.get(0);
+			CardRequest request = requests.get(0);
 			request.setChoice(1);
 			request.apply();
 			canTakeCard.synchResource();

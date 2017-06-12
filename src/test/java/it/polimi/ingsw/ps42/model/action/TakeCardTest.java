@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.polimi.ingsw.ps42.message.RequestInterface;
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.effect.Effect;
@@ -102,14 +102,14 @@ public class TakeCardTest {
 		} catch (NotEnoughResourcesException e) {
 			System.out.println("Player hasn't enough resources");
 		}
-		List<RequestInterface> requests = p1.getRequests();
+		List<CardRequest> requests = p1.getRequests();
 		
 		//Control request
 		if(!requests.isEmpty()) {
 			//Now there is one request with only one cost
 			//Player can enable it
 			assertEquals(1, requests.size());
-			for(RequestInterface request : requests) {
+			for(CardRequest request : requests) {
 				//Control if there is only one possible cost
 				assertEquals(1, request.showChoice().size());
 				request.setChoice(0);

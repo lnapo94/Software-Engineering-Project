@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.polimi.ingsw.ps42.message.RequestInterface;
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
@@ -78,7 +78,7 @@ public class DoActionTest {
 		try {
 			//Pay the card cost that use the player discount
 			card.payCard(player, discount);
-			RequestInterface payRequest = player.getRequests().get(0);
+			CardRequest payRequest = player.getRequests().get(0);
 			payRequest.setChoice(1);
 			payRequest.apply();
 			card.setPlayer(player);
@@ -90,7 +90,7 @@ public class DoActionTest {
 			assertEquals( 6, player.getResource(Resource.MONEY));
 			
 			card.enableImmediateEffect();
-			RequestInterface effectRequest = player.getRequests().get(0);
+			CardRequest effectRequest = player.getRequests().get(0);
 			effectRequest.setChoice(1);
 			effectRequest.apply();
 			

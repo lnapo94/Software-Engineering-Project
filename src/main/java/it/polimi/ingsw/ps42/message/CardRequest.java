@@ -6,7 +6,7 @@ import java.util.List;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.Printable;
 
-public abstract class CardRequest extends Message implements RequestInterface {
+public abstract class CardRequest extends Message {
 
 	/*Class for asking a request to the player, 
 	 * e.g. choose between two effects or two costs or
@@ -37,17 +37,14 @@ public abstract class CardRequest extends Message implements RequestInterface {
 		return temp;
 	}
 
-	@Override
 	public List<Printable> showChoice() {
 		return copy(possibleChoice);
 	}
 
-	@Override
 	public void setChoice(int choice) {
 		this.userChoice = choice;
 	}
 	
-	@Override
 	public int getChoice() {
 		return this.userChoice;
 	}

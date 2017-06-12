@@ -4,6 +4,7 @@ import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CardUpdateMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
@@ -13,7 +14,6 @@ import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
-import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 
 public interface Visitor {
@@ -29,7 +29,7 @@ public interface Visitor {
 	public void visit(CardUpdateMessage message);
 	public void visit(BanUpdateMessage message);
 	public void visit(PlayerMove message);
-	public void visit(RequestInterface message);
+	public void visit(CardRequest message);
 	public void visit(CouncilRequest message);
 	public void visit(PlayerToken message);
 	public void visit(LeaderCardUpdateMessage message);

@@ -11,7 +11,6 @@ import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerToken;
-import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
@@ -82,7 +81,7 @@ public class Player extends Observable{
 	
 	//The arraylist used by the gamelogic to know more from the player
 	//e. g. which cost the player wants to pay
-	private List<RequestInterface> requests;
+	private List<CardRequest> requests;
 	private List<CouncilRequest> councilRequests;
 	
 	
@@ -338,11 +337,11 @@ public class Player extends Observable{
 		
 	}
 	
-	public List<RequestInterface> getRequests() {
+	public List<CardRequest> getRequests() {
 		//Get all the request in player, but this method remove all the requests arraylist
 		//from the player
 		
-		List<RequestInterface> temp = this.requests;
+		List<CardRequest> temp = this.requests;
 		this.requests = new ArrayList<>();
 		return temp;
 	}
@@ -357,7 +356,7 @@ public class Player extends Observable{
 		councilRequests.add(councilRequest);
 	}
 	
-	public void addRequest(RequestInterface request) {
+	public void addRequest(CardRequest request) {
 		//Add a single request in arraylist
 		requests.add(request);
 	}
