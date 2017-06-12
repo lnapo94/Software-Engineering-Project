@@ -41,4 +41,18 @@ public class CardLoader extends Loader {
 		return deck;
 	}
 
+	public static void main(String[] args) {
+		
+		CardLoader loader;
+		
+		try {
+			loader = new CardLoader("greenCardsFirstPeriod.json");
+			List<Card> deck = loader.getCards();
+			System.out.println(deck.size());
+			loader.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

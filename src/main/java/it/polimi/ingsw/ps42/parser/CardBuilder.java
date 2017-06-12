@@ -4,9 +4,12 @@ package it.polimi.ingsw.ps42.parser;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
 import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.ps42.model.Card;
+import it.polimi.ingsw.ps42.model.effect.CardForEachObtain;
 import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.ForEachObtain;
@@ -146,10 +149,10 @@ public class CardBuilder extends Builder {
 		
 		Effect effect = null;
 		System.out.println("Tipo dell'Effetto? ");
-		System.out.println(EffectType.OBTAIN.toString()+" "+EffectType.FOR_EACH_OBTAIN.toString()+" "
-				+EffectType.INCREASE_ACTION.toString()+" "+EffectType.DO_ACTION+" "+ EffectType.COUNCIL_OBTAIN.toString()+
-				" "+EffectType.INCREASE_FAMILIARS.toString()+" "+EffectType.INCREASE_SINGLE_FAMILIAR.toString()+" "+
-				EffectType.NO_TOWER_BONUS.toString());
+		System.out.println(EffectType.OBTAIN.toString()+"\n "+EffectType.FOR_EACH_OBTAIN.toString()+"\n "
+				+EffectType.INCREASE_ACTION.toString()+"\n "+EffectType.DO_ACTION+"\n "+ EffectType.COUNCIL_OBTAIN.toString()+
+				"\n "+EffectType.INCREASE_FAMILIARS.toString()+"\n "+EffectType.INCREASE_SINGLE_FAMILIAR.toString()+"\n "+
+				EffectType.NO_TOWER_BONUS.toString()+"\n "+EffectType.CARD_FOR_EACH_OBTAIN);
 		String effectType=scanner.nextLine();
 		switch (effectType.toUpperCase()) {
 		case "OBTAIN":
@@ -157,6 +160,9 @@ public class CardBuilder extends Builder {
 			break;
 		case "FOR_EACH_OBTAIN":
 			effect = askForEachObtain();
+			break;
+		case "CARD_FOR_EACH_OBTAIN":
+			effect = askCardForEachObtain();
 			break;
 		case "INCREASE_ACTION":
 			effect = askIncreaseAction();
@@ -192,6 +198,8 @@ public class CardBuilder extends Builder {
 		response = scanner.nextLine();
 		value = Integer.parseInt(response);
 		System.out.println("Colore del familiare?");
+		System.out.println(FamiliarColor.ALL+"\n "+FamiliarColor.BLACK+"\n "+FamiliarColor.NEUTRAL+"\n "+FamiliarColor.ORANGE+
+							"\n "+FamiliarColor.WHITE);
 		response = scanner.nextLine();
 		color = FamiliarColor.parseInput(response);
 		
@@ -226,6 +234,9 @@ public class CardBuilder extends Builder {
 		int actionLevel;
 		Packet discount = new Packet();
 		System.out.println("Tipo azione bonus?");
+		System.out.println(ActionType.COUNCIL+"\n "+ActionType.MARKET+"\n "+ActionType.PRODUCE+"\n "+ActionType.TAKE_ALL+"\n "
+							+ActionType.TAKE_BLUE+"\n "+ActionType.TAKE_GREEN+"\n "+ActionType.TAKE_VIOLET+"\n "+ActionType.TAKE_YELLOW+
+							"\n "+ActionType.YIELD);
 		response = scanner.nextLine();
 		type = ActionType.parseInput(response);
 		System.out.println("Valore azione bonus?");
@@ -245,6 +256,9 @@ public class CardBuilder extends Builder {
 		int value;
 		Packet discount = new Packet();
 		System.out.println("Tipo azione da incrementare?");
+		System.out.println(ActionType.COUNCIL+"\n "+ActionType.MARKET+"\n "+ActionType.PRODUCE+"\n "+ActionType.TAKE_ALL+"\n "
+							+ActionType.TAKE_BLUE+"\n "+ActionType.TAKE_GREEN+"\n "+ActionType.TAKE_VIOLET+"\n "+ActionType.TAKE_YELLOW+
+							"\n "+ActionType.YIELD);
 		response = scanner.nextLine();
 		type = ActionType.parseInput(response);
 		System.out.println("Valore incremento dell'azione?");
@@ -273,6 +287,19 @@ public class CardBuilder extends Builder {
 		return new ForEachObtain(requirements, gains);
 	}
 
+	private Effect askCardForEachObtain(){
+		
+		CardColor color;
+		Packet gains;
+		System.out.println("Colore della carta?");
+		System.out.println(CardColor.BLUE.toString()+"\n "+CardColor.GREEN.toString()+"\n "
+			+CardColor.VIOLET.toString()+"\n "+CardColor.YELLOW.toString()+ "\n "+CardColor.ALL);
+		color = CardColor.parseInput(scanner.nextLine());
+		System.out.println("Guadagni per la carta selezionata:");
+		gains = askPacket();
+		
+		return new CardForEachObtain(color, gains);
+	}
 	private Effect askObtain(){
 		Packet costs = new Packet();
 		Packet gains = new Packet();
@@ -295,16 +322,27 @@ public class CardBuilder extends Builder {
 	}
 
 	public static void main(String[] args) {
+		
+		CardBuilder builder;
+		Scanner scanner = new Scanner(System.in);
 		try {
-			CardBuilder builder = new CardBuilder("greenCardsFirstPeriod.json");
-			
-			for(int i=0; i<8; i++)
+			builder = new CardBuilder("greenCardsFirstPeriod.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
+			String response;
+			int i =0;
+			do{
 				builder.addCard();
+				i++;
+				System.out.println("Aggiungere un'altra carta?(si/no) ["+i+" carte aggiunte]");
+				response = scanner.nextLine();
+			}
+			while(response.toUpperCase().equals("SI"));
 			builder.close();
+			scanner.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 		
 	}
 }

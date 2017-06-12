@@ -11,7 +11,7 @@ public class CardForEachObtain extends Effect{
 	private CardColor color;
 	private Packet gains;
 
-	protected CardForEachObtain(CardColor color, Packet gains) {
+	public CardForEachObtain(CardColor color, Packet gains) {
 		super(EffectType.CARD_FOR_EACH_OBTAIN);
 		this.color = color;
 		this.gains = gains;

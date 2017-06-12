@@ -82,9 +82,9 @@ public abstract class Builder {
 		Packet packet=new Packet();
 		do{
 			System.out.println("Tipo Risorsa? ");
-			System.out.println(Resource.FAITHPOINT.toString()+" "+Resource.MILITARYPOINT.toString()+" "
-					+Resource.MONEY.toString()+" "+Resource.SLAVE.toString()+" "+Resource.STONE.toString()+" "
-					+Resource.VICTORYPOINT.toString()+" "+Resource.WOOD.toString());
+			System.out.println(Resource.FAITHPOINT.toString()+"\n "+Resource.MILITARYPOINT.toString()+"\n "
+					+Resource.MONEY.toString()+"\n "+Resource.SLAVE.toString()+"\n "+Resource.STONE.toString()+"\n "
+					+Resource.VICTORYPOINT.toString()+"\n "+Resource.WOOD.toString());
 			String resource=scanner.nextLine();
 			System.out.println("Quantità?" );
 			int quantity = Integer.parseInt(scanner.nextLine());

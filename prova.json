@@ -1,0 +1,22 @@
+{
+  "effect": {
+    "color": "BLUE",
+    "player": null,
+    "typeOfEffect": "CARD_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CardBan"
+  }
+}{
+  "effect": {
+    "divisory": 3,
+    "player": null,
+    "typeOfEffect": "SLAVE_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.SlaveBan"
+  }
+}{
+  "effect": {
+    "divisory": 3,
+    "player": null,
+    "typeOfEffect": "SLAVE_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.SlaveBan"
+  }
+}
