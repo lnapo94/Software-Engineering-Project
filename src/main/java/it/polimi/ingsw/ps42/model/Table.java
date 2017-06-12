@@ -334,22 +334,37 @@ public class Table extends Observable{
 
 	public void throwDice(Random random) {
 		//Set the three dice with a value between 1 and 6 
-		orangeDie = 1 + random.nextInt(6);
-		blackDie =  1 + random.nextInt(6);
-		whiteDie =  1 + random.nextInt(6);
-		
-		//Set also the familiars color
-		for(Player player : this.players) {
-			player.getFamiliar(FamiliarColor.ORANGE).setValue(orangeDie);
-			player.getFamiliar(FamiliarColor.BLACK).setValue(blackDie);
-			player.getFamiliar(FamiliarColor.WHITE).setValue(whiteDie);
-		}
+		setOrangeDie(1 + random.nextInt(6));
+		setBlackDie(1 + random.nextInt(6));
+		setWhiteDie(1 + random.nextInt(6));
 		
 		//Notify the View of the new values of the dice
 		Message diceMessage = new DiceMessage(orangeDie, blackDie, whiteDie);
 		setChanged();
 		notifyObservers(diceMessage);
 		
+	}
+	
+	//SETTER FOR THE DICE
+	public void setOrangeDie(int value){
+		this.orangeDie = value;
+		for (Player player : players) {
+			player.setFamiliarValue(FamiliarColor.ORANGE, value);
+		}
+	}
+	
+	public void setBlackDie(int value){
+		this.blackDie = value;
+		for (Player player : players) {
+			player.setFamiliarValue(FamiliarColor.BLACK, value);
+		}
+	}
+	
+	public void setWhiteDie(int value){
+		this.whiteDie = value;
+		for (Player player : players) {
+			player.setFamiliarValue(FamiliarColor.WHITE, value);
+		}
 	}
 	//GETTER FOR THE TOWERS
 	public StaticList<TowerPosition> getGreenTower() {
