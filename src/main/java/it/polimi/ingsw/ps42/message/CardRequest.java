@@ -47,6 +47,11 @@ public abstract class CardRequest extends Message implements RequestInterface {
 		this.userChoice = choice;
 	}
 	
+	@Override
+	public int getChoice() {
+		return this.userChoice;
+	}
+	
 	public List<Integer> getPossibleChoiceIndex() {
 		return possibleChoiceIndex;
 	}

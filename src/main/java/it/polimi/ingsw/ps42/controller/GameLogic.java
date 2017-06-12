@@ -16,6 +16,7 @@ import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Table;
 import it.polimi.ingsw.ps42.model.action.Action;
 import it.polimi.ingsw.ps42.model.effect.Effect;
+import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
@@ -23,8 +24,11 @@ import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Player;
+import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
+import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 import it.polimi.ingsw.ps42.parser.BanLoader;
 import it.polimi.ingsw.ps42.parser.BonusBarLoader;
+import it.polimi.ingsw.ps42.parser.FaithPathLoader;
 import it.polimi.ingsw.ps42.view.View;
 
 public class GameLogic implements Observer{
@@ -43,8 +47,6 @@ public class GameLogic implements Observer{
 	
 	//Variable used to check the bonusBar
 	private List<BonusBar> bonusBarList;
-	
-	//TO-DO: Gestione e Caricamento dei Timer
 	
 	
 	public void handleAction(Action action){
@@ -112,9 +114,6 @@ public class GameLogic implements Observer{
 		//Initialize the view array
 		views = new ArrayList<>();
 		
-		
-		//TODO INITIALIZE THE TIMERS
-		
 	}
 	
 	public void addView(View view) {
@@ -179,14 +178,12 @@ public class GameLogic implements Observer{
 			if(currentPeriod == 4) {
 				checkBan(table.getSecondBan(), 4);
 			}
-			
-			if(currentPeriod == 6) {
-				checkBan(table.getThirdBan(), 5);
-			}
 		}
 		
 		//At the end of the match
+		//Read the file
 		
+		//Notify the winner
 				
 	}
 	
@@ -237,8 +234,17 @@ public class GameLogic implements Observer{
 		
 		if(wantToPayBan) {
 			//Player wants to pay faith point to haven't the ban
-			player.setToZero(Resource.FAITHPOINT);
-			//TODO Increase player faith point with the correct value
+			
+			//Adding victory point to player
+			try {
+				FaithPathLoader loader = new FaithPathLoader("src/faithPath");
+				Packet victoryPoint = new Packet();
+				victoryPoint.addUnit(new Unit(Resource.VICTORYPOINT, loader.conversion(player.getResource(Resource.FAITHPOINT))));
+				player.setToZero(Resource.FAITHPOINT);
+			} catch (IOException e) {
+				System.out.println("Unable to open the faithPath conversion file");
+			}
+			
 		}
 		else {
 			//Player wants the ban
@@ -260,14 +266,16 @@ public class GameLogic implements Observer{
 		}
 	}
 	
-	public void handleRequest( RequestInterface request){
+	public void handleRequest(RequestInterface request){
 		/* Method called by the Visitor to set a request response to a Player:
 		 * if something wrong retransmit the message, else add the request to the player request
 		 */
-		
+		if(request.getChoice() < request.showChoice().size()) {
+			
+		}
 	}
 	
-	public void handleCouncilRequest( CouncilRequest councilRequest){
+	public void handleCouncilRequest(CouncilRequest councilRequest){
 		/* Method called by the Visitor to set a council request response to a Player:
 		 * if something wrong retransmit the message, else add the request to the player council request
 		 */

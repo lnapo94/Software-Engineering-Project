@@ -15,4 +15,7 @@ public interface RequestInterface {
 	
 	//Set user's choice
 	public void setChoice(int choice);
+	
+	//Get the user choice
+	public int getChoice();
 }

@@ -250,6 +250,10 @@ public class Player extends Observable{
 		return currentResources.get(resource);
 	}
 	
+	public void setCurrentResources(HashMap<Resource, Integer> resources) {
+		this.currentResources = resources;
+	}
+	
 	public void addIncreaseEffect(IncreaseAction effect) {
 		//Add an IncreaseAction effect to the player's arraylist
 		//necessary in gamelogic to increase an action correctly 

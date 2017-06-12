@@ -24,5 +24,10 @@ public class FaithPathLoader extends Loader {
 			
 	}
 	
+	public int conversion(int faithPoint) {
+		//This method must convert the given faith point in the correct victory point
+		return 0;
+	}
+	
 
 }
