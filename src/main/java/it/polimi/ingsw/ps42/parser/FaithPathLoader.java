@@ -5,6 +5,8 @@ import java.io.IOException;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonStreamParser;
 
+import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
+
 
 public class FaithPathLoader extends Loader {
 
@@ -24,9 +26,9 @@ public class FaithPathLoader extends Loader {
 			
 	}
 	
-	public int conversion(int faithPoint) {
+	public Unit conversion(int faithPoint) {
 		//This method must convert the given faith point in the correct victory point
-		return 0;
+		return null;
 	}
 	
 

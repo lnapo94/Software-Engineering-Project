@@ -9,6 +9,7 @@ import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
+import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
@@ -26,6 +27,7 @@ import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.IsNotEmptyException;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
+import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
@@ -58,6 +60,10 @@ public class Player extends Observable{
 	private StaticList<Card> yellowCards;
 	private StaticList<Card> blueCards;
 	private StaticList<Card> violetCards;
+	
+	//Leader card list
+	private List<LeaderCard> leaderCardsList;
+	private List<LeaderCard> activatedLeaderCard;
 	
 	//HashMap used for save the current resources
 	private HashMap<Resource, Integer> currentResources;
@@ -121,6 +127,10 @@ public class Player extends Observable{
 		canPlay = true;
 		enableBonusInTower = true;
 		divisory = 1;
+		
+		//Initialize the leader card list
+		leaderCardsList = new ArrayList<>();
+		activatedLeaderCard = new ArrayList<>();
 	}
 	
 	public String getPlayerID() {
@@ -468,4 +478,25 @@ public class Player extends Observable{
 		setChanged();
 		notifyObservers(message);
 	}
+	//TODO carte leader
+	public void setLeaderCard(LeaderCard card) {
+		this.leaderCardsList.add(card);
+	}
+	
+	public void enableLeaderCard(LeaderCard chosenCard) {
+		//Enable the leader card if the player has it in his list of leader card
+		
+		for (LeaderCard card : leaderCardsList) {
+			if(card.getName() == chosenCard.getName()) {
+				leaderCardsList.remove(leaderCardsList.indexOf(card));
+				activatedLeaderCard.add(card);
+				
+				//Create the message
+				LeaderCardUpdateMessage message = new LeaderCardUpdateMessage(this.getPlayerID(), chosenCard);
+				setChanged();
+				notifyObservers(message);
+			}
+		}
+	}
+	
 }
