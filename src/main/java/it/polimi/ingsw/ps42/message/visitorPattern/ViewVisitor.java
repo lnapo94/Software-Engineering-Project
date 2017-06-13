@@ -4,6 +4,7 @@ import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CardUpdateMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
@@ -13,9 +14,10 @@ import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
-import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 import it.polimi.ingsw.ps42.view.View;
+import it.polimi.ingsw.ps42.model.enumeration.CardColor;
+
 
 public class ViewVisitor implements Visitor {
 
@@ -63,9 +65,9 @@ public class ViewVisitor implements Visitor {
 		 */
 
 		if(message != null){	
-			this.view.setFirstBan(message.getFirstEffect());
-			this.view.setSecondBan(message.getSecondEffect());
-			this.view.setThirdBan(message.getThirdEffect());
+			this.view.setBlackDie(message.getBlackDie());
+			this.view.setWhiteDie(message.getWhiteDie());
+			this.view.setOrangeDie(message.getOrangeDie());
 		}
 	}
 
@@ -74,6 +76,24 @@ public class ViewVisitor implements Visitor {
 		/*Message forwarded by the Model every round, the visitor has to
 		 * call a method of the View for setting the Cards received on the proper Tower.
 		 */
+		if(message != null){
+			switch(message.getColor()){
+				case GREEN:
+					this.view.setGreenCards(message.getDeck());
+					break;
+				case BLUE:
+					this.view.setBlueCards(message.getDeck());
+					break;
+				case YELLOW:
+					this.view.setYellowCards(message.getDeck());
+					break;
+				case VIOLET:
+					this.view.setVioletCards(message.getDeck());
+					break;
+				
+			}
+			
+		}
 		
 	}
 
@@ -83,6 +103,11 @@ public class ViewVisitor implements Visitor {
 		 * player is made, the visitor has to call a method of the View that update the 
 		 * resources of that player.
 		 */
+		if(message != null){
+			
+			this.view.setResources(message.getResources(), message.getPlayerID());
+		}
+			
 		
 	}
 
@@ -92,6 +117,16 @@ public class ViewVisitor implements Visitor {
 		 * player, the visitor has to call a method of the View that update the 
 		 * familiar's position of that player.
 		 */
+		if( message != null){
+			switch(message.getAction()){
+			 	case TAKE_BLUE:
+			 		break;
+			 	case TAKE_GREEN:
+			 		
+			
+			}
+			
+		}
 		
 	}
 
@@ -117,14 +152,6 @@ public class ViewVisitor implements Visitor {
 	public void visit(PlayerMove message) {
 		/*Message forwarded by the Model every time a player has to perform a move, 
 		 * the visitor has to call a method of the View that ask a move to that player.
-		 */
-		
-	}
-
-	@Override
-	public void visit(RequestInterface message) {
-		/*Message forwarded by the Model every time a player has some Requests, 
-		 * the visitor has to call a method of the View that ask to that player a choice.
 		 */
 		
 	}
@@ -157,6 +184,12 @@ public class ViewVisitor implements Visitor {
 		/*
 		 * Ask to the player if he wants pay for the ban or not
 		 */		
+	}
+
+	@Override
+	public void visit(CardRequest message) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
