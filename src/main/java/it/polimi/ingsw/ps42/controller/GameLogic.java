@@ -8,20 +8,25 @@ import java.util.Observer;
 import java.util.Random;
 
 import it.polimi.ingsw.ps42.controller.cardCreator.CardsCreator;
+import it.polimi.ingsw.ps42.controller.cardCreator.CardsFirstPeriod;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.Table;
 import it.polimi.ingsw.ps42.model.action.Action;
+import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
+import it.polimi.ingsw.ps42.model.enumeration.Response;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
+import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
@@ -40,22 +45,27 @@ public class GameLogic implements Observer{
 
 	private Action currentAction;
 	private List<Player> players;
+	
+	//Variables used to know the correct round and action order
 	private List<Player> roundOrder;
+	private List<Player> actionOrder;
+	
 	private CardsCreator cardsCreator;
 	private Table table;
 	private Visitor messageVisitor;
 	private int currentPeriod;
 	private List<View> views;		//TODO
 	
+	
 	//Variable used to check the bonusBar
 	private List<BonusBar> bonusBarList;
 	
 	
-	public void handleAction(Action action){
-		/* 0: Stop the player timer.
+	public void handleAction(Action action, String playerID) throws ElementNotFoundException{
+		/*
 		 * 1: Check if is a Bonus Action, if so check it (if something wrong, retransmit and end).
 		 * 2: Check Action, if something goes wrong retransmit.
-		 * 3: Check if player has requests, if so resume Timer and askRequest .
+		 * 3: Check if player has requests, if so askRequest .
 		 * 4: Stop the Timer and Check if player has council requests, if so resume Timer and askCouncilRequest [and stop (later restart from 5)]. 
 		 * 5: Do the Action and delete it from gameLogic.
 		 * 6: Stop the Timer and Check if player has requests, if so resume Timer and askRequest.
@@ -63,12 +73,73 @@ public class GameLogic implements Observer{
 		 * 8: Check player BonusAction, if so create a new Timer and send a playerToken with an action Prototype.
 		 */
 		
+		//Find the player
+		Player player = searchPlayer(playerID);
 		
+		//Check bonusAction
+		ActionPrototype bonusAction = player.getBonusAction();
 		
-		
+		//If the player action isn't good, retrasmit to the player another message 
+		if(bonusAction != null && !bonusAction.checkAction(action)){
+			
+			PlayerToken message = new PlayerToken(player.getPlayerID(), bonusAction);
+			player.setBonusAction(bonusAction);
+			message.setRetrasmission();
+			player.retrasmitMessage(message);
+			
+		} 
+		else {
+			//
+			Response response = action.checkAction();
+			
+			if(response == Response.CANNOT_PLAY) {
+				//If player can't play, end his action, and move he to the end of actionOrder array
+				player.setCanPlay(true);
+				actionOrder.remove(actionOrder.indexOf(player));
+				actionOrder.add(player);
+			}
+			else if(response == Response.FAILURE) {
+				PlayerToken message = new PlayerToken(player.getPlayerID());
+				message.setRetrasmission();
+				player.retrasmitMessage(message);
+			}
+			else {
+				this.currentAction = action;
+				//Control player requests
+				applyRequest(player);
+				
+				//Control player council requests
+				applyCouncilRequest(player);
+				
+				//Apply the action
+				try {
+					action.doAction();
+				} catch (FamiliarInWrongPosition e) {
+					System.out.println("[DEBUG]: familiar in wrong position in gamelogic");
+				}
+				//Remove the action from the variable
+				this.currentAction = null;
+				
+				//Re-check the player requests
+				applyRequest(player);
+				applyCouncilRequest(player);
+			}
+		}
 	}
 	
-	public GameLogic(List<String> players) throws NotEnoughPlayersException, GameLogicError{
+	private void applyRequest(Player player) {
+		List<CardRequest> requests = player.getRequests();
+		if(requests != null && !requests.isEmpty())
+			player.askRequest(requests);
+	}
+	
+	private void applyCouncilRequest(Player player) {
+		List<CouncilRequest> councilRequests = player.getCouncilRequests();
+		if(councilRequests != null && !councilRequests.isEmpty())
+			player.askCouncilRequest(councilRequests);
+	}
+	
+	public GameLogic(List<String> players) throws NotEnoughPlayersException, GameLogicError, IOException{
 		/* 1: Build the players from the names passed.
 		 * 2: Build the Table
 		 * 3: Load the Bans and set them to the Table
@@ -77,6 +148,17 @@ public class GameLogic implements Observer{
 		 */
 		//Build the players
 		this.players = new ArrayList<>();
+		
+		//Initialize the round array for the first round
+		for(Player player : this.players) {
+			roundOrder.add(player);
+		}
+		
+		//Initialize the action array for the first round
+		for(int i = 0; i < 4; i++) {
+			for(Player player : roundOrder)
+				actionOrder.add(player);
+		}
 		
 		for(String playerID : players) {
 			Player temporary = new Player(playerID);
@@ -115,6 +197,9 @@ public class GameLogic implements Observer{
 		
 		//Initialize the view array
 		views = new ArrayList<>();
+		
+		//Initialize the card creator
+		cardsCreator = new CardsFirstPeriod();
 		
 	}
 	
@@ -282,6 +367,51 @@ public class GameLogic implements Observer{
 		 *  3: Check active Leader Cards effects and eventually enable them 
 		 *  4: For each player in roundOrder ask a Move 
 		 */
+		
+		//Load the card on the table
+		table.placeGreenTower(cardsCreator.getNextGreenCards());
+		table.placeYellowTower(cardsCreator.getNextYellowCards());
+		table.placeBlueTower(cardsCreator.getNextBlueCards());
+		table.placeVioletTower(cardsCreator.getNextVioletCards());
+		
+		//Go to the next state
+		try {
+			cardsCreator = cardsCreator.nextState();
+		} catch (IOException e) {
+			System.out.println("Unable to open the cards file");
+		}
+		
+		table.throwDice(new Random());
+		
+		//TODO Leader Card da fare...
+		
+		//Start the round
+		for(Player player : actionOrder) {
+			player.askMove();
+			actionOrder.remove(actionOrder.indexOf(player));
+		}
+		//End of the round
+		
+		//Control the new order and reset the table
+		List<Player> newOrder = table.resetTable();
+		if(!newOrder.isEmpty()) {
+			//Remove the newOrder player from the previous order
+			for(Player player : newOrder) {
+				roundOrder.remove(roundOrder.indexOf(player));
+			}
+			
+			List<Player> temporary = new ArrayList<>();
+			temporary.addAll(newOrder);
+			temporary.addAll(roundOrder);
+			roundOrder = temporary;
+		}
+		
+		//Set the action array for the next turn
+		
+		for(int i = 0; i < 4; i++) {
+			for(Player player : roundOrder)
+				actionOrder.add(player);
+		}
 	}
 	
 	public void handleBan( String playerID, int index, boolean wantToPayBan ) throws ElementNotFoundException, GameLogicError{
@@ -292,7 +422,7 @@ public class GameLogic implements Observer{
 		
 		Player player = searchPlayer(playerID);
 		
-		if(player != this.roundOrder.get(0))
+		if(player != this.actionOrder.get(0))
 			throw new GameLogicError("HandleBan error, player can't play");
 		
 		if(wantToPayBan) {
@@ -338,7 +468,7 @@ public class GameLogic implements Observer{
 		
 		Player player = searchPlayer(request.getPlayerID());
 
-		if(player != this.roundOrder.get(0))
+		if(player != this.actionOrder.get(0))
 			throw new GameLogicError("Error in handleRequest, player can't play");
 		
 		if(request.getChoice() < request.showChoice().size()) {
@@ -366,7 +496,7 @@ public class GameLogic implements Observer{
 		
 		Player player = searchPlayer(councilRequest.getPlayerID());
 		
-		if(player != this.roundOrder.get(0))
+		if(player != this.actionOrder.get(0))
 			throw new GameLogicError("Error in handleCouncilRequest, player can't play");
 		
 		councilRequest.apply(player);
