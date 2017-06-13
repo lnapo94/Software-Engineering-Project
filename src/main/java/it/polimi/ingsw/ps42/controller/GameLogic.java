@@ -8,11 +8,13 @@ import java.util.Observer;
 import java.util.Random;
 
 import it.polimi.ingsw.ps42.controller.cardCreator.CardsCreator;
+import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.Message;
-import it.polimi.ingsw.ps42.message.RequestInterface;
 import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
+import it.polimi.ingsw.ps42.model.Card;
+import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.Table;
 import it.polimi.ingsw.ps42.model.action.Action;
 import it.polimi.ingsw.ps42.model.effect.Effect;
@@ -22,12 +24,13 @@ import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
-import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 import it.polimi.ingsw.ps42.parser.BanLoader;
 import it.polimi.ingsw.ps42.parser.BonusBarLoader;
+import it.polimi.ingsw.ps42.parser.ConversionLoader;
 import it.polimi.ingsw.ps42.parser.FaithPathLoader;
 import it.polimi.ingsw.ps42.view.View;
 
@@ -41,7 +44,6 @@ public class GameLogic implements Observer{
 	private CardsCreator cardsCreator;
 	private Table table;
 	private Visitor messageVisitor;
-	private Message currentMessage;
 	private int currentPeriod;
 	private List<View> views;		//TODO
 	
@@ -181,10 +183,68 @@ public class GameLogic implements Observer{
 		}
 		
 		//At the end of the match
-		//Read the file
+		for(Player player : this.players) {
+			//Enable the third ban
+			if(player.getResource(Resource.FAITHPOINT) < 5) 
+				table.getThirdBan().enableEffect(player);
+			
+			//Control the request for final effects
+			List<CardRequest> requests = player.getRequests();
+			if(!requests.isEmpty()) 
+				player.askRequest(requests);
+			
+			List<CouncilRequest> councilRequests = player.getCouncilRequests();
+			if(!councilRequests.isEmpty()) 
+				player.askCouncilRequest(councilRequests);
+			
+			//Apply the victory point for the resources
+			Packet victoryPoint;
+			try {
+				ConversionLoader loader = new ConversionLoader("src/conversionFIle");
+				victoryPoint = new Packet();
+				victoryPoint.addUnit(loader.getGreenConversion(player.getCardList(CardColor.GREEN).size()));
+				victoryPoint.addUnit(loader.getBlueConversion(player.getCardList(CardColor.BLUE).size()));
+				
+				//Counting the other resources
+				int totalPlayerResources = player.getResource(Resource.WOOD) + player.getResource(Resource.MONEY) +
+											player.getResource(Resource.STONE) + player.getResource(Resource.SLAVE);
+				victoryPoint.addUnit(loader.getOtherResourcesConversion(totalPlayerResources));
+				
+				player.increaseResource(victoryPoint);
+				player.synchResource();
+				
+				loader.close();
+			} catch (IOException e) {
+				System.out.println("Unable to open the conversion file");
+			}
+			
+			//Enable the final effect of the cards
+			enableFinalEffect(player.getCardList(CardColor.GREEN));
+			enableFinalEffect(player.getCardList(CardColor.YELLOW));
+			enableFinalEffect(player.getCardList(CardColor.BLUE));
+			enableFinalEffect(player.getCardList(CardColor.VIOLET));
+			
+		}
 		
 		//Notify the winner
+		Player winner = players.get(0);
+		for(Player player : players) {
+			if(player.getResource(Resource.VICTORYPOINT) > winner.getResource(Resource.VICTORYPOINT))
+				winner = player;
+		}
 				
+	}
+	
+	//Private method to enable the final effect of the card
+	private void enableFinalEffect(StaticList<Card> cards) {
+		for(Card card : cards) {
+			try {
+				card.enableFinalEffect();
+			} catch (NotEnoughResourcesException e) {
+				System.out.println("Player cannot enable the final effect of the card "
+						+ "because he hasn't enough resources");
+			}
+		}
 	}
 	
 	//Private Method to control the ban for all the players
@@ -224,13 +284,16 @@ public class GameLogic implements Observer{
 		 */
 	}
 	
-	public void handleBan( String playerID, int index, boolean wantToPayBan ) throws ElementNotFoundException{
+	public void handleBan( String playerID, int index, boolean wantToPayBan ) throws ElementNotFoundException, GameLogicError{
 		/* Method called by the Visitor to set a Ban to a Player:
 		 * if choice = false set the ban to the player
 		 * else resource update
 		 */
 		
 		Player player = searchPlayer(playerID);
+		
+		if(player != this.roundOrder.get(0))
+			throw new GameLogicError("HandleBan error, player can't play");
 		
 		if(wantToPayBan) {
 			//Player wants to pay faith point to haven't the ban
@@ -239,8 +302,10 @@ public class GameLogic implements Observer{
 			try {
 				FaithPathLoader loader = new FaithPathLoader("src/faithPath");
 				Packet victoryPoint = new Packet();
-				victoryPoint.addUnit(new Unit(Resource.VICTORYPOINT, loader.conversion(player.getResource(Resource.FAITHPOINT))));
+				victoryPoint.addUnit(loader.conversion(player.getResource(Resource.FAITHPOINT)));
 				player.setToZero(Resource.FAITHPOINT);
+				player.increaseResource(victoryPoint);
+				player.synchResource();
 			} catch (IOException e) {
 				System.out.println("Unable to open the faithPath conversion file");
 			}
@@ -266,20 +331,45 @@ public class GameLogic implements Observer{
 		}
 	}
 	
-	public void handleRequest(RequestInterface request){
+	public void handleRequest(CardRequest request) throws ElementNotFoundException, GameLogicError{
 		/* Method called by the Visitor to set a request response to a Player:
 		 * if something wrong retransmit the message, else add the request to the player request
 		 */
+		
+		Player player = searchPlayer(request.getPlayerID());
+
+		if(player != this.roundOrder.get(0))
+			throw new GameLogicError("Error in handleRequest, player can't play");
+		
 		if(request.getChoice() < request.showChoice().size()) {
-			
+			//If there is an action, add the request to the player
+			//else apply directly the request
+			if(this.currentAction != null) {
+				player.addRequest(request);
+			}
+			else {
+				request.apply();
+				player.synchResource();
+			}
+		}
+		else {
+			//In case the player hasn't insert the correct information
+			request.setRetrasmission();
+			player.retrasmitMessage(request);
 		}
 	}
 	
-	public void handleCouncilRequest(CouncilRequest councilRequest){
+	public void handleCouncilRequest(CouncilRequest councilRequest) throws ElementNotFoundException, GameLogicError{
 		/* Method called by the Visitor to set a council request response to a Player:
 		 * if something wrong retransmit the message, else add the request to the player council request
 		 */
 		
+		Player player = searchPlayer(councilRequest.getPlayerID());
+		
+		if(player != this.roundOrder.get(0))
+			throw new GameLogicError("Error in handleCouncilRequest, player can't play");
+		
+		councilRequest.apply(player);
 	}
 	
 	
