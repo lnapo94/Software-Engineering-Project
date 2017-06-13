@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonStreamParser;
 import com.google.gson.reflect.TypeToken;
 
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
@@ -14,8 +15,8 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 public class ConversionLoader extends Loader{
 	
 	//Conversion for the green and blue cards
-	private HashMap<Integer, Integer> greenCardsConversion;
-	private HashMap<Integer, Integer> blueCardsConversion;
+	private HashMap<String, Integer> greenCardsConversion;
+	private HashMap<String, Integer> blueCardsConversion;
 	
 	//Conversione for the other resources in player
 	private int otherResources;
@@ -32,20 +33,15 @@ public class ConversionLoader extends Loader{
 		}
 		
 		//Load the conversion value for the other resources
-		if(parser.hasNext()) {
-			JsonElement element = parser.next();
-			
-			if(element.isJsonObject())
-				otherResources = gson.fromJson(element, int.class);
-		}
+		otherResources = loader().get("Resources");
 	}
 	
-	private HashMap<Integer, Integer> loader() {
+	private HashMap<String, Integer> loader() {
 		if(parser.hasNext()) {
 			JsonElement element = parser.next();
 			
 			if(element.isJsonObject()) {
-				Type type = new TypeToken<HashMap<Integer, Integer>>(){}.getType();
+				Type type = new TypeToken<HashMap<String, Integer>>(){}.getType();
 				return gson.fromJson(element, type);
 			}
 		}
@@ -55,10 +51,11 @@ public class ConversionLoader extends Loader{
 	@Override
 	protected void initGson() {
 		gson = new Gson();
+		parser = new JsonStreamParser(buffer);
 	}
 	
-	public Unit getGreenConversion(int conversionKey) {
-		Unit unit = new Unit(Resource.VICTORYPOINT, greenCardsConversion.get(conversionKey));
+	public Unit getGreenConversion(Integer conversionKey) {
+		Unit unit = new Unit(Resource.VICTORYPOINT, greenCardsConversion.get(conversionKey.toString()));
 		return unit;
 	}
 	
@@ -70,5 +67,10 @@ public class ConversionLoader extends Loader{
 	public Unit getOtherResourcesConversion(int totalResources) {
 		return new Unit(Resource.VICTORYPOINT, totalResources/this.otherResources);
 	}
-
+	
+	
+	public static void main(String[] args) throws IOException {
+		ConversionLoader loader = new ConversionLoader("Resource\\Configuration\\finalResourceConfiguration.json");
+		System.out.println(loader.getOtherResourcesConversion(30));
+	}
 }

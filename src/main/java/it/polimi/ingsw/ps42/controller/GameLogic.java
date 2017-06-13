@@ -42,6 +42,7 @@ import it.polimi.ingsw.ps42.view.View;
 public class GameLogic implements Observer{
 	
 	private static final int MAX_BANS_IN_FILE = 7;
+	private static final int FAMILIARS_NUMBER = 4;
 
 	private Action currentAction;
 	private List<Player> players;
@@ -54,6 +55,7 @@ public class GameLogic implements Observer{
 	private Table table;
 	private Visitor messageVisitor;
 	private int currentPeriod;
+	private ActionPrototype bonusAction;
 	private List<View> views;		//TODO
 	
 	
@@ -75,9 +77,6 @@ public class GameLogic implements Observer{
 		
 		//Find the player
 		Player player = searchPlayer(playerID);
-		
-		//Check bonusAction
-		ActionPrototype bonusAction = player.getBonusAction();
 		
 		//If the player action isn't good, retrasmit to the player another message 
 		if(bonusAction != null && !bonusAction.checkAction(action)){
@@ -104,6 +103,7 @@ public class GameLogic implements Observer{
 				player.retrasmitMessage(message);
 			}
 			else {
+				
 				this.currentAction = action;
 				//Control player requests
 				applyRequest(player);
@@ -123,6 +123,11 @@ public class GameLogic implements Observer{
 				//Re-check the player requests
 				applyRequest(player);
 				applyCouncilRequest(player);
+				
+				bonusAction = player.getBonusAction();
+				
+				if(bonusAction != null)
+					player.askMove();
 			}
 		}
 	}
@@ -139,7 +144,7 @@ public class GameLogic implements Observer{
 			player.askCouncilRequest(councilRequests);
 	}
 	
-	public GameLogic(List<String> players) throws NotEnoughPlayersException, GameLogicError, IOException{
+	public GameLogic(List<String> players) throws NotEnoughPlayersException, GameLogicError, IOException, ElementNotFoundException{
 		/* 1: Build the players from the names passed.
 		 * 2: Build the Table
 		 * 3: Load the Bans and set them to the Table
@@ -148,14 +153,21 @@ public class GameLogic implements Observer{
 		 */
 		//Build the players
 		this.players = new ArrayList<>();
+		for(String playerID : players)
+			this.players.add(new Player(playerID));
+		
 		
 		//Initialize the round array for the first round
+		roundOrder = new ArrayList<>();
+		
 		for(Player player : this.players) {
 			roundOrder.add(player);
 		}
 		
 		//Initialize the action array for the first round
-		for(int i = 0; i < 4; i++) {
+		actionOrder = new ArrayList<>();
+		
+		for(int i = 0; i < FAMILIARS_NUMBER; i++) {
 			for(Player player : roundOrder)
 				actionOrder.add(player);
 		}
@@ -182,7 +194,7 @@ public class GameLogic implements Observer{
 			table.addThirdBan(loader.getBan(new Random().nextInt(MAX_BANS_IN_FILE)));
 		} catch (IOException e) {
 			
-			System.out.println("Unable to open the file in GameLogic");
+			System.out.println("Unable to open the ban file in GameLogic");
 			throw new GameLogicError("File not found");
 			
 		} catch (ElementNotFoundException e) {
@@ -285,7 +297,7 @@ public class GameLogic implements Observer{
 			//Apply the victory point for the resources
 			Packet victoryPoint;
 			try {
-				ConversionLoader loader = new ConversionLoader("src/conversionFIle");
+				ConversionLoader loader = new ConversionLoader("Resource\\Configuration\\finalResourceConfiguration.json");
 				victoryPoint = new Packet();
 				victoryPoint.addUnit(loader.getGreenConversion(player.getCardList(CardColor.GREEN).size()));
 				victoryPoint.addUnit(loader.getBlueConversion(player.getCardList(CardColor.BLUE).size()));
@@ -408,7 +420,7 @@ public class GameLogic implements Observer{
 		
 		//Set the action array for the next turn
 		
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < FAMILIARS_NUMBER; i++) {
 			for(Player player : roundOrder)
 				actionOrder.add(player);
 		}
