@@ -280,7 +280,7 @@ public class GameLogic implements Observer{
 		 *  1: Load the proper period cards and set them on the Table, CardsCreator goes to the next state
 		 *  2: Throw the Dice 
 		 *  3: Check active Leader Cards effects and eventually enable them 
-		 *  4: For each player in roundOrder start a Timer and ask a Move 
+		 *  4: For each player in roundOrder ask a Move 
 		 */
 	}
 	
