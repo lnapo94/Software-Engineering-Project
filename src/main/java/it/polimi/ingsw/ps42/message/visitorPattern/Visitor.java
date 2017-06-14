@@ -12,6 +12,7 @@ import it.polimi.ingsw.ps42.message.DiceMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
+import it.polimi.ingsw.ps42.message.LeaderRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
@@ -34,4 +35,5 @@ public interface Visitor {
 	public void visit(PlayerToken message);
 	public void visit(LeaderCardUpdateMessage message);
 	public void visit(BanRequest message);
+	public void visit(LeaderRequest message);
 }

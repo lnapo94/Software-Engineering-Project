@@ -13,6 +13,7 @@ import it.polimi.ingsw.ps42.message.DiceMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
+import it.polimi.ingsw.ps42.message.LeaderRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
@@ -252,9 +253,18 @@ public class ViewVisitor implements Visitor {
 
 	@Override
 	public void visit(LeaderCardUpdateMessage message) {
-		/*	TODO
+		/*	
 		 * Set the card to the enabledLeaderCard player's array
 		 */
+		if(message != null){
+			try {
+				this.view.setEnabledLeaderCard(message.getPlayerID(), message.getCard());
+			} catch (ElementNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+			
+		
 	}
 
 	@Override
@@ -280,6 +290,15 @@ public class ViewVisitor implements Visitor {
 	@Override
 	public void visit(PlayerMove message) {
 		//Nothings to do since this Message is never received
+		
+	}
+
+	@Override
+	public void visit(LeaderRequest message) {
+		/*Ask to the player what card he wants to copy or 
+		 * which familiar he wants to set the value
+		 */
+		
 		
 	}
 

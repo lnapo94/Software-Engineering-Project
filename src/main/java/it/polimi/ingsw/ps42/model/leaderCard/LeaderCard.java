@@ -37,7 +37,7 @@ public class LeaderCard {
 	}
 	
 	public boolean canEnableCard() {
-		return false;
+		return requirements.satisfyRequirement(owner);
 	}
 	
 	public void enableOnceARoundEffect() {
