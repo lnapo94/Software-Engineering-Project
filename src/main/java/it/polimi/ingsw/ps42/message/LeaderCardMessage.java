@@ -3,20 +3,20 @@ package it.polimi.ingsw.ps42.message;
 import java.util.List;
 
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
-import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
+import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 
 public class LeaderCardMessage extends Message{
 	
-	private List<Card> leaderCardList;
+	private List<LeaderCard> leaderCardList;
 	private int choice;
 	
-	public LeaderCardMessage(String playerID, List<Card> leaderCardList) {
+	public LeaderCardMessage(String playerID, List<LeaderCard> leaderCardList) {
 		super(playerID);
 		this.leaderCardList = leaderCardList;
 	}
 	
-	public List<Card> getAvailableLeaderCards() {
+	public List<LeaderCard> getAvailableLeaderCards() {
 		return leaderCardList;
 	}
 	

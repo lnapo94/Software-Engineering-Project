@@ -82,7 +82,7 @@ public class TakeCardAction extends Action{
 		}
 		
 		//Control how much green cards the player has in his list
-		if(this.getType() == ActionType.TAKE_GREEN) {
+		if(this.getType() == ActionType.TAKE_GREEN && !player.hasNoMilitaryRequirements()) {
 			int militaryPointQuantity = player.getResource(Resource.MILITARYPOINT);
 			int greenCardsInPlayer = player.getCardList(CardColor.GREEN).size();
 			
@@ -118,18 +118,22 @@ public class TakeCardAction extends Action{
 		
 		//Fifth: verify if there aren't any other player in the tower, else
 		//decrease money in player
-		if(isAnotherFamiliar()) {
-			try {
-				player.decreaseResource(moneyMalus);
-				player.synchResource();
-			} catch (NotEnoughResourcesException e) {
-				if(position.getBonus() != null)
-					position.resetBonus(player);
-				player.synchResource();
-				position.removeFamiliar();
-				return Response.LOW_LEVEL;
+		if(!player.hasNoMoneyBonus()) {
+			if(isAnotherFamiliar()) {
+				try {
+					player.decreaseResource(moneyMalus);
+					player.synchResource();
+				} catch (NotEnoughResourcesException e) {
+					if(position.getBonus() != null)
+						position.resetBonus(player);
+					player.synchResource();
+					position.removeFamiliar();
+					return Response.LOW_LEVEL;
+				}
 			}
 		}
+		
+		
 		try {
 			position.getCard().payCard(player, discount);
 		} catch (NotEnoughResourcesException e) {

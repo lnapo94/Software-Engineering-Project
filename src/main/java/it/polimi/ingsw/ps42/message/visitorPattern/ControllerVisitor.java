@@ -16,6 +16,11 @@ import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
+import it.polimi.ingsw.ps42.model.action.Action;
+import it.polimi.ingsw.ps42.model.action.ActionCreator;
+import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
+import it.polimi.ingsw.ps42.model.exception.GameLogicError;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 
 public class ControllerVisitor implements Visitor {
 
@@ -26,16 +31,16 @@ public class ControllerVisitor implements Visitor {
 		this.gameLogic = gameLogic;
 	}
 	
-	//TO-DO: aggiungere un messaggio per la scelta sulle scomuniche(aggiungere ask in player)
-	
 	@Override
 	public void visit(BonusBarMessage message) {
 		/* Response message from the View about a BonusBar choice.
 		 * Give to the Game Logic the BonusBar chosen and the related player
 		 */
-		
-		
-		
+		try {
+			gameLogic.setBonusBar(message.getChoice(), message.getPlayerID());
+		} catch (ElementNotFoundException e) {
+			System.out.println("Error in visitor bonusBarMessage");
+		}
 	}
 
 	@Override
@@ -101,6 +106,14 @@ public class ControllerVisitor implements Visitor {
 		 * Build the correct Action and send it to the Game Logic with a method
 		 */
 		
+		try {
+			Action action = new ActionCreator(gameLogic.searchPlayer(message.getPlayerID()), gameLogic.getTable(), message, gameLogic.getBonusActionValue()).getCreatedAction();
+			gameLogic.handleAction(action, message.getPlayerID());
+		} catch (ElementNotFoundException e) {
+			System.out.println("Error in visitor playerMove");
+		} catch (NotEnoughResourcesException e) {
+			System.out.println("Error in visitor with the action creation");
+		}
 	}
 
 	@Override
@@ -108,8 +121,11 @@ public class ControllerVisitor implements Visitor {
 		/*Response Message by the View to a specific request. 
 		 * Send with a method to the GameLogic
 		 */
-		
-		
+		try {
+			gameLogic.handleRequest(message);
+		} catch (ElementNotFoundException | GameLogicError e) {
+			System.out.println("Error in visitor cardRequest");
+		}		
 	}
 
 	@Override
@@ -117,6 +133,11 @@ public class ControllerVisitor implements Visitor {
 		/*Response Message by the View to a Council request.
 		 * Send to the Game Logic with a method
 		 */
+		try {
+			gameLogic.handleCouncilRequest(message);
+		} catch (ElementNotFoundException | GameLogicError e) {
+			System.out.println("Error in visitor councilRequest");
+		}
 		
 	}
 
@@ -142,6 +163,11 @@ public class ControllerVisitor implements Visitor {
 		 * Enable the chosen ban if the variable is set to false,
 		 * else reduce the faith point and assign the victory point to player 
 		 */
+		try {
+			gameLogic.handleBan(message.getPlayerID(), message.getBanNumber(), message.wantPayForBan());
+		} catch (ElementNotFoundException | GameLogicError e) {
+			System.out.println("Error in visitor BanRequest");
+		}
 	}
 
 

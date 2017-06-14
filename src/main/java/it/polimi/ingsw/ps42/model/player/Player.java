@@ -10,6 +10,7 @@ import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
+import it.polimi.ingsw.ps42.message.LeaderRequest;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
@@ -97,6 +98,9 @@ public class Player extends Observable{
 	private List<CardRequest> requests;
 	private List<CouncilRequest> councilRequests;
 	
+	//ArrayList used to store leader request
+	private List<LeaderRequest> leaderRequests;
+	
 	
 	
 	public Player(String ID) {
@@ -121,10 +125,11 @@ public class Player extends Observable{
 		initializeResources(currentResources);
 		initializeResources(nextResources);
 		
-		//Initialize the Ban, the Increase Effect and the Request arraylists
+		//Initialize the Ban, the Increase Effect, the Leader Request and the Request arraylists
 		increaseEffect = new ArrayList<>();
 		requests = new ArrayList<>();
 		councilRequests = new ArrayList<>();
+		leaderRequests = new ArrayList<>();
 		
 		//Set the Player bonusAction to null (required by gamelogic)
 		bonusAction = null;
@@ -133,6 +138,12 @@ public class Player extends Observable{
 		canStayInMarket = true;
 		canPlay = true;
 		enableBonusInTower = true;
+		
+		canPositioningEverywhere = false;
+		noMoneyMalus = false;
+		noMilitaryRequirements = false;
+		fiveMoreVictoryPoints = false;
+		
 		divisory = 1;
 		
 		//Initialize the leader card list
@@ -500,6 +511,20 @@ public class Player extends Observable{
 		return this.leaderCardsList;
 	}
 	
+	public List<LeaderCard> getActivatedLeaderCard() {
+		return this.activatedLeaderCard;
+	}
+	
+	public void addLeaderRequest(LeaderRequest request) {
+		this.leaderRequests.add(request);
+	}
+	
+	public List<LeaderRequest> getLeaderRequests() {
+		List<LeaderRequest> temporary = leaderRequests;
+		leaderRequests = new ArrayList<>();
+		return temporary;
+	}
+	
 	public void enableLeaderCard(LeaderCard chosenCard) {
 		//Enable the leader card if the player has it in his list of leader card
 		
@@ -515,5 +540,48 @@ public class Player extends Observable{
 			}
 		}
 	}
+	
+	//Leader card state variables
+	public void setCanPositioningEverywhere() {
+		this.canPositioningEverywhere = true;
+	}
+	
+	public boolean canPositioningEverywhere() {
+		return this.canPositioningEverywhere;
+	}
+	
+	public void setMilitaryRequirements() {
+		this.noMilitaryRequirements = true;
+	}
+	
+	public boolean hasNoMilitaryRequirements() {
+		return this.noMilitaryRequirements;
+	}
+	
+	public void setNoMoneyMalus() {
+		this.noMoneyMalus = true;
+	}
+	
+	public boolean hasNoMoneyBonus() {
+		return this.noMoneyMalus;
+	}
+	
+	public void setFiveMoreVictoryPoint() {
+		this.fiveMoreVictoryPoints = true;
+	}
+	
+	public boolean hasMoreVictoryPoint() {
+		return this.fiveMoreVictoryPoints;
+	}
+	
+	public void askLeaderRequest( List<LeaderRequest> requests){
+		//Method called by the game logic to ask a response to a Leader Request
+				
+			for (LeaderRequest leaderRequest : requests) {
+				setChanged();
+				notifyObservers(leaderRequest);
+			}
+		}
+	
 	
 }

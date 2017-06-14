@@ -9,8 +9,10 @@ import java.util.Random;
 
 import it.polimi.ingsw.ps42.controller.cardCreator.CardsCreator;
 import it.polimi.ingsw.ps42.controller.cardCreator.CardsFirstPeriod;
+import it.polimi.ingsw.ps42.message.BanUpdateMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
+import it.polimi.ingsw.ps42.message.LeaderRequest;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
@@ -30,6 +32,7 @@ import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
+import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
@@ -282,8 +285,12 @@ public class GameLogic implements Observer{
 		//At the end of the match
 		for(Player player : this.players) {
 			//Enable the third ban
-			if(player.getResource(Resource.FAITHPOINT) < 5) 
+			if(player.getResource(Resource.FAITHPOINT) < 5) {
 				table.getThirdBan().enableEffect(player);
+				BanUpdateMessage message = new BanUpdateMessage(player.getPlayerID(), table.getThirdBan());
+				
+				player.notifyNewBan(message);
+			}
 			
 			//Control the request for final effects
 			List<CardRequest> requests = player.getRequests();
@@ -349,11 +356,17 @@ public class GameLogic implements Observer{
 		
 		for(Player player : this.players) {
 			if(player.getResource(Resource.FAITHPOINT) < faithPointToHave) {
+				//Create the message
+				BanUpdateMessage message = new BanUpdateMessage(player.getPlayerID(), ban);
 				if(ban.getTypeOfEffect() == EffectType.OBTAIN_BAN || ban.getTypeOfEffect() == EffectType.INCREASE_FAMILIARS) {
 					player.setBan(ban);
 				}
-				else
+				else {
 					ban.enableEffect(player);
+				}
+				//Send the message
+				player.notifyNewBan(message);
+				
 			}
 			else {
 				player.askIfPayTheBan(currentPeriod);
@@ -399,6 +412,18 @@ public class GameLogic implements Observer{
 		
 		//Start the round
 		for(Player player : actionOrder) {
+			
+			//Leader Card
+			for(LeaderCard card : player.getActivatedLeaderCard()) {
+				card.enableOnceARoundEffect();
+			}
+			
+			//Ask for leader card request, such as increase a single familiar
+			List<LeaderRequest> leaderRequests = player.getLeaderRequests();
+			
+			if(!leaderRequests.isEmpty())
+				player.askLeaderRequest(leaderRequests);
+			
 			player.askMove();
 			actionOrder.remove(actionOrder.indexOf(player));
 		}
@@ -455,19 +480,26 @@ public class GameLogic implements Observer{
 		}
 		else {
 			//Player wants the ban
-			
+			BanUpdateMessage message;
 			if(index == 1) {
 				//For the first period ban we have two kind of ban
 				if(table.getFirstBan().getTypeOfEffect() == EffectType.OBTAIN_BAN || table.getFirstBan().getTypeOfEffect() == EffectType.INCREASE_FAMILIARS)
 					player.setBan(table.getFirstBan());
 				else
 					table.getFirstBan().enableEffect(player);
+				
+				message = new BanUpdateMessage(player.getPlayerID(), table.getFirstBan());
+				player.notifyNewBan(message);
 			}
 			if(index == 2) {
 				table.getSecondBan().enableEffect(player);
+				message = new BanUpdateMessage(player.getPlayerID(), table.getSecondBan());
+				player.notifyNewBan(message);
 			}
 			if(index == 3) {
 				table.getThirdBan().enableEffect(player);
+				message = new BanUpdateMessage(player.getPlayerID(), table.getThirdBan());
+				player.notifyNewBan(message);
 			}
 			
 		}
@@ -512,8 +544,7 @@ public class GameLogic implements Observer{
 			throw new GameLogicError("Error in handleCouncilRequest, player can't play");
 		
 		councilRequest.apply(player);
-	}
-	
+	}	
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -525,7 +556,7 @@ public class GameLogic implements Observer{
 	}
 	
 	//Private method used to search the correct player from the playerID string
-	private Player searchPlayer(String playerID) throws ElementNotFoundException {
+	public Player searchPlayer(String playerID) throws ElementNotFoundException {
 		Player temporaryPlayer = null;
 		
 		for(Player player : players) {
@@ -536,6 +567,18 @@ public class GameLogic implements Observer{
 		if(temporaryPlayer == null)
 			throw new ElementNotFoundException("Player: " + playerID + "not found in GameLogic, STOP");
 		return temporaryPlayer;
+	}
+	
+	public Table getTable() {
+		//Required in action creator
+		return this.table;
+	}
+	
+	public int getBonusActionValue() {
+		//If there is a bonus action, take the correct value of the action
+		if(bonusAction == null)
+			return 0;
+		return bonusAction.getLevel();
 	}
 
 }
