@@ -13,6 +13,7 @@ import it.polimi.ingsw.ps42.message.DiceMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
+import it.polimi.ingsw.ps42.message.LeaderRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
@@ -48,7 +49,7 @@ public class ControllerVisitor implements Visitor {
 		/* Response Message from the View about the Leader Card choice.
 		 * Give to the Game Logic the Leader Card chosen and the related player
 		 */
-		
+		gameLogic.setLeaderCard(message.getChoice(), message.getPlayerID());
 	}
 
 	@Override
@@ -155,6 +156,11 @@ public class ControllerVisitor implements Visitor {
 		 * Check if the card can be activated, if so move the card in the correct
 		 * arraylist in player and create a message
 		 */
+		try {
+			gameLogic.HandleLeaderUpdate(gameLogic.searchPlayer(message.getPlayerID()), message.getCard());
+		} catch (ElementNotFoundException e) {
+			System.out.println("Error in visitor leaderCardUpdateMessage");
+		}
 	}
 
 	@Override
@@ -168,6 +174,11 @@ public class ControllerVisitor implements Visitor {
 		} catch (ElementNotFoundException | GameLogicError e) {
 			System.out.println("Error in visitor BanRequest");
 		}
+	}
+	
+	@Override
+	public void visit(LeaderRequest message) {
+		
 	}
 
 

@@ -485,7 +485,7 @@ public class GameLogic implements Observer{
 		else {
 			//Player wants the ban
 			BanUpdateMessage message;
-			if(index == 1) {
+			if(index == FIRST_PERIOD) {
 				//For the first period ban we have two kind of ban
 				if(table.getFirstBan().getTypeOfEffect() == EffectType.OBTAIN_BAN || table.getFirstBan().getTypeOfEffect() == EffectType.INCREASE_FAMILIARS)
 					player.setBan(table.getFirstBan());
@@ -495,12 +495,12 @@ public class GameLogic implements Observer{
 				message = new BanUpdateMessage(player.getPlayerID(), FIRST_PERIOD);
 				player.notifyNewBan(message);
 			}
-			if(index == 2) {
+			if(index == SECOND_PERIOD) {
 				table.getSecondBan().enableEffect(player);
 				message = new BanUpdateMessage(player.getPlayerID(), SECOND_PERIOD);
 				player.notifyNewBan(message);
 			}
-			if(index == 3) {
+			if(index == THIRD_PERIOD) {
 				table.getThirdBan().enableEffect(player);
 				message = new BanUpdateMessage(player.getPlayerID(), THIRD_PERIOD);
 				player.notifyNewBan(message);
@@ -583,6 +583,14 @@ public class GameLogic implements Observer{
 		if(bonusAction == null)
 			return 0;
 		return bonusAction.getLevel();
+	}
+	
+	public void HandleLeaderUpdate(Player player, LeaderCard card) {
+		player.enableLeaderCard(card);
+	}
+	
+	public void setLeaderCard(int chosenCard, String player) {
+		
 	}
 
 }
