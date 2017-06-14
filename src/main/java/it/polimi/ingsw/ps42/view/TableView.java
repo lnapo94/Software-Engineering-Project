@@ -61,6 +61,10 @@ public class TableView {
 	private Effect firstBan;
 	private Effect secondBan;
 	private Effect thirdBan;
+	//The players banned
+	private List<String> playersWithFirstBan;
+	private List<String> playersWithSecondBan;
+	private List<String> playersWithThirdBan;
 	
 	//The Council position. In this position we have the CouncilObtain and
 	//a player can book a better position in the next round
@@ -172,6 +176,11 @@ public class TableView {
 		} catch (IOException e) {
 			System.out.println("Unable to open the file");
 		}
+		
+		//Initialize the players banned lists
+		playersWithFirstBan = new ArrayList<>();
+		playersWithSecondBan = new ArrayList<>();
+		playersWithThirdBan = new ArrayList<>();
 	}
 	
 	public CouncilPosition getFreeCouncilPosition() {
@@ -251,217 +260,231 @@ public class TableView {
 	}
 	
 	//GETTER AND SETTER FOR THE BANS
-		public Effect getFirstBan(){
-			return firstBan;
+	public Effect getFirstBan(){
+		return firstBan;
 
-		}
+	}
 
-		public Effect getSecondBan(){
-			return secondBan;
+	public Effect getSecondBan(){
+		return secondBan;
 			
-		}
+	}
 
-		public Effect getThirdBan(){
-			return thirdBan;
+	public Effect getThirdBan(){
+		return thirdBan;
+	}
 
-		}
+	public void addFirstBan(Effect ban) {
+		firstBan = ban;
+	}
 
-		public void addFirstBan(Effect ban) {
-			firstBan = ban;
-		}
+	public void addSecondBan(Effect ban) {
+		secondBan = ban;
+	}
 
-		public void addSecondBan(Effect ban) {
-			secondBan = ban;
-		}
-
-		public void addThirdBan(Effect ban) {
-			thirdBan = ban;
-		}
+	public void addThirdBan(Effect ban) {
+		thirdBan = ban;
+	}
+	
+	public void setPlayerFirstBan(String playerID){
 		
-		//SETTER AND GETTERS FOR THE DICE
-		public void setOrangeDie(int value){
-			this.orangeDie = value;
-			for (Player player : players) {
-				player.setFamiliarValue(FamiliarColor.ORANGE, value);
-			}
-		}
+		playersWithFirstBan.add(playerID);
+	}
+	
+	public void setPlayerSecondBan(String playerID){
 		
-		public void setBlackDie(int value){
-			this.blackDie = value;
-			for (Player player : players) {
-				player.setFamiliarValue(FamiliarColor.BLACK, value);
-			}
-		}
+		playersWithSecondBan.add(playerID);
+	}
+	
+	public void setPlayerThirdBan(String playerID){
 		
-		public void setWhiteDie(int value){
-			this.whiteDie = value;
-			for (Player player : players) {
-				player.setFamiliarValue(FamiliarColor.WHITE, value);
-			}
+		playersWithThirdBan.add(playerID);
+	}
+	
+	//SETTER AND GETTERS FOR THE DICE
+	public void setOrangeDie(int value){
+		this.orangeDie = value;
+		for (Player player : players) {
+			player.setFamiliarValue(FamiliarColor.ORANGE, value);
 		}
+	}
 		
-		public int getBlackDie() {
-			return blackDie;
+	public void setBlackDie(int value){
+		this.blackDie = value;
+		for (Player player : players) {
+			player.setFamiliarValue(FamiliarColor.BLACK, value);
 		}
+	}
 		
-		public int getOrangeDie() {
-			return orangeDie;
+	public void setWhiteDie(int value){
+		this.whiteDie = value;
+		for (Player player : players) {
+			player.setFamiliarValue(FamiliarColor.WHITE, value);
 		}
+	}
 		
-		public int getWhiteDie() {
-			return whiteDie;
-		}
+	public int getBlackDie() {
+		return blackDie;
+	}
 		
-		//RESET THE TABLE
-		public List<Player> resetTable() {
-			//Reset all the tower position
-			for(int i = 0; i < FLOORS; i++) {
+	public int getOrangeDie() {
+		return orangeDie;
+	}
+		
+	public int getWhiteDie() {
+		return whiteDie;
+	}
+		
+	//RESET THE TABLE
+	public List<Player> resetTable() {
+		//Reset all the tower position
+		for(int i = 0; i < FLOORS; i++) {
 				
-				greenTower.get(i).removeCard();
-				greenTower.get(i).removeFamiliar();
+			greenTower.get(i).removeCard();
+			greenTower.get(i).removeFamiliar();
 				
-				yellowTower.get(i).removeCard();
-				yellowTower.get(i).removeFamiliar();
+			yellowTower.get(i).removeCard();
+			yellowTower.get(i).removeFamiliar();
 				
-				blueTower.get(i).removeCard();
-				blueTower.get(i).removeFamiliar();
+			blueTower.get(i).removeCard();
+			blueTower.get(i).removeFamiliar();
 				
-				violetTower.get(i).removeCard();
-				violetTower.get(i).removeFamiliar();
-			}
-			
-			//Reset Yield and Product first Position
-			firstYield.removeFamiliar();
-			firstYield.removeBonusFamiliars();
-			
-			firstProduct.removeFamiliar();
-			firstProduct.removeBonusFamiliars();
-			
-			//Reset the others Yield and Product Positions
-			for(YieldAndProductPosition position : yield) {
-				position.removeFamiliar();
-				position.removeBonusFamiliars();
-			}
-			
-			for(YieldAndProductPosition position : product) {
-				position.removeFamiliar();
-				position.removeBonusFamiliars();
-			}
-			
-			//Reset the market positions
-			for(MarketPosition position : market) {
-				position.removeFamiliar();
-				position.removeBonusFamiliars();
-			}
-			
-			return getNewOrder();
+			violetTower.get(i).removeCard();
+			violetTower.get(i).removeFamiliar();
 		}
-		
-		private List<Player> getNewOrder(){
-			//Return the new order of the player
-			List<Player> temp = new ArrayList<>();
-			for(CouncilPosition position : council) {
-				temp.add(position.getFamiliar().getPlayer());
-				council.remove(position);
-				//Remove also the familiar
-				position.removeFamiliar();
-			}
-			return temp;
-		}
-		
-		//PLACER FOR THE FAMILIARS
-		private void place(Familiar familiar, Position position){
 			
-			if(position.isEmpty()){
+		//Reset Yield and Product first Position
+		firstYield.removeFamiliar();
+		firstYield.removeBonusFamiliars();
+			
+		firstProduct.removeFamiliar();
+		firstProduct.removeBonusFamiliars();
+			
+		//Reset the others Yield and Product Positions
+		for(YieldAndProductPosition position : yield) {
+			position.removeFamiliar();
+			position.removeBonusFamiliars();
+		}
+			
+		for(YieldAndProductPosition position : product) {
+			position.removeFamiliar();
+			position.removeBonusFamiliars();
+		}
+			
+		//Reset the market positions
+		for(MarketPosition position : market) {
+			position.removeFamiliar();
+			position.removeBonusFamiliars();
+		}
+			
+		return getNewOrder();
+	}
+		
+	private List<Player> getNewOrder(){
+		//Return the new order of the player
+		List<Player> temp = new ArrayList<>();
+		for(CouncilPosition position : council) {
+			temp.add(position.getFamiliar().getPlayer());
+			council.remove(position);
+			//Remove also the familiar
+			position.removeFamiliar();
+		}
+		return temp;
+	}
+		
+	//PLACER FOR THE FAMILIARS
+	private void place(Familiar familiar, Position position){
+			
+		if(position.isEmpty()){
 				//TODO implementare metodo puro in position position.setFamiliar(familiar);
-			}
 		}
+	}
 		
-		public void placeInMarket(Familiar familiar, int position){
-			if(market.size() > position && position > 0)
-				place(familiar, market.get(position));
+	public void placeInMarket(Familiar familiar, int position){
+		if(market.size() > position && position > 0)
+			place(familiar, market.get(position));
 			
-		}
+	}
+	
+	public void placeInProduce(Familiar familiar, int position){
 		
-		public void placeInProduce(Familiar familiar, int position){
+		if(position == 0)
+			place(familiar, firstProduct);
+		else if(product.size() > position && position > 0)
+			place(familiar, product.get(position));
+	}
 		
-			if(position == 0)
-				place(familiar, firstProduct);
-			else if(product.size() > position && position > 0)
-				place(familiar, product.get(position));
-		}
+	public void placeInYield(Familiar familiar, int position){
+		if(position == 0)
+			place(familiar, firstYield);
+		else if(yield.size() > position && position >= 0)
+			place(familiar, yield.get(position));
+	}
 		
-		public void placeInYield(Familiar familiar, int position){
-			if(position == 0)
-				place(familiar, firstYield);
-			else if(yield.size() > position && position >= 0)
-				place(familiar, yield.get(position));
-		}
-		
-		public void placeInCouncil(Familiar familiar){
+	public void placeInCouncil(Familiar familiar){
 			
-			place(familiar, getFreeCouncilPosition());
+		place(familiar, getFreeCouncilPosition());
 			
-		}
+	}
 		
-		public void placeInGreenTower(Familiar familiar, int position){
+	public void placeInGreenTower(Familiar familiar, int position){
 			
-			if(greenTower.size() > position && position >= 0)
-				place(familiar, greenTower.get(position));
-		}
+		if(greenTower.size() > position && position >= 0)
+			place(familiar, greenTower.get(position));
+	}
 
-		public void placeInYellowTower(Familiar familiar, int position){
+	public void placeInYellowTower(Familiar familiar, int position){
 			
-			if(yellowTower.size() > position && position >= 0)
-				place(familiar, yellowTower.get(position));
-		}
+		if(yellowTower.size() > position && position >= 0)
+		place(familiar, yellowTower.get(position));
+	}
 
-		public void placeInVioletTower(Familiar familiar, int position){
+	public void placeInVioletTower(Familiar familiar, int position){
 
-			if(violetTower.size() > position && position >= 0)
-				place(familiar, violetTower.get(position));
-		}
+		if(violetTower.size() > position && position >= 0)
+			place(familiar, violetTower.get(position));
+	}
 		
-		public void placeInBlueTower(Familiar familiar, int position){
+	public void placeInBlueTower(Familiar familiar, int position){
 
-			if(blueTower.size() > position && position >= 0)
-				place(familiar, blueTower.get(position));
-		}
+		if(blueTower.size() > position && position >= 0)
+			place(familiar, blueTower.get(position));
+	}
 		
-		//GETTERS FOR THE CARDS
-		public Card getGreenCard(int position) throws ElementNotFoundException{
+	//GETTERS FOR THE CARDS
+	public Card getGreenCard(int position) throws ElementNotFoundException{
 			
-			if( position > 0 && greenTower.size() > position)
-				if( greenTower.get(position).hasCard())
-					return greenTower.get(position).getCard();
-				else return null;
-			else throw new ElementNotFoundException("Green Card not Found");
-		}
+		if( position > 0 && greenTower.size() > position)
+			if( greenTower.get(position).hasCard())
+				return greenTower.get(position).getCard();
+			else return null;
+		else throw new ElementNotFoundException("Green Card not Found");
+	}
 		
-		public Card getYellowCard(int position) throws ElementNotFoundException{
+	public Card getYellowCard(int position) throws ElementNotFoundException{
 
-			if( position > 0 && yellowTower.size() > position)
-				if( yellowTower.get(position).hasCard())
-					return yellowTower.get(position).getCard();
-				else return null;
-			else throw new ElementNotFoundException("Yellow Card not Found");
-		}
+		if( position > 0 && yellowTower.size() > position)
+			if( yellowTower.get(position).hasCard())
+				return yellowTower.get(position).getCard();
+			else return null;
+		else throw new ElementNotFoundException("Yellow Card not Found");
+	}
 		
-		public Card getVioletCard(int position) throws ElementNotFoundException{
+	public Card getVioletCard(int position) throws ElementNotFoundException{
 
-			if( position > 0 && violetTower.size() > position)
-				if( violetTower.get(position).hasCard())
-					return violetTower.get(position).getCard();
-				else return null;
-			else throw new ElementNotFoundException("Violet Card not Found");
-		}
+		if( position > 0 && violetTower.size() > position)
+			if( violetTower.get(position).hasCard())
+				return violetTower.get(position).getCard();
+			else return null;
+		else throw new ElementNotFoundException("Violet Card not Found");
+	}
 		
-		public Card getBlueCard(int position) throws ElementNotFoundException{
+	public Card getBlueCard(int position) throws ElementNotFoundException{
 
-			if( position > 0 && blueTower.size() > position)
-				if( blueTower.get(position).hasCard())
-					return blueTower.get(position).getCard();
-				else return null;
-			else throw new ElementNotFoundException("Blue Card not Found");
-		}
+		if( position > 0 && blueTower.size() > position)
+			if( blueTower.get(position).hasCard())
+				return blueTower.get(position).getCard();
+			else return null;
+		else throw new ElementNotFoundException("Blue Card not Found");
+	}
 }

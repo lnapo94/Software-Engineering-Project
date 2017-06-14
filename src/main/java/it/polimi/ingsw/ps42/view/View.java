@@ -86,6 +86,17 @@ public class View extends Observable implements Observer {
 			this.table.addThirdBan(thirdBan);
 	}
 	
+	public void setBanToPlayer(String playerID, int banPeriod){
+		
+		if( banPeriod == 0)
+			this.table.setPlayerFirstBan(playerID);
+		else if( banPeriod == 1)
+			this.table.setPlayerSecondBan(playerID);
+		else if( banPeriod == 2)
+			this.table.setPlayerThirdBan(playerID);
+		
+	}
+	
 	//SETTER FOR DICE VALUES
 	public void setOrangeDie(int value){
 		this.table.setOrangeDie(value);
@@ -150,11 +161,93 @@ public class View extends Observable implements Observer {
 	}
 	
 	//SETTERS FOR THE FAMILIAR
-	public void setFamiliarInGreenTower(String playerID, FamiliarColor familiar, int position){
+	public void setFamiliarInGreenTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException{
 		
+		Player player = searchPlayer(playerID);
+		Familiar familiar = player.getFamiliar(color);
+		this.table.placeInGreenTower(familiar, position);
+	}
+	
+	public void setFamiliarInBlueTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		Familiar familiar = player.getFamiliar(color);
+		this.table.placeInBlueTower(familiar, position);
+	}	
+	
+	public void setFamiliarInYellowTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		Familiar familiar = player.getFamiliar(color);
+		this.table.placeInYellowTower(familiar, position);
+	}
+	
+	public void setFamiliarInVioletTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		Familiar familiar = player.getFamiliar(color);
+		this.table.placeInVioletTower(familiar, position);
+	}
+	
+	public void setFamiliarInYield(String playerID, FamiliarColor color, int position) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		Familiar familiar = player.getFamiliar(color);
+		this.table.placeInYield(familiar, position);
+	}
+	
+	public void setFamiliarInProduce(String playerID, FamiliarColor color, int position) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		Familiar familiar = player.getFamiliar(color);
+		this.table.placeInProduce(familiar, position);
+	}
+	
+	public void setFamiliarInCouncil(String playerID, FamiliarColor color) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		Familiar familiar = player.getFamiliar(color);
+		this.table.placeInCouncil(familiar);
+	}
+	
+	public void setFamiliarInMarket(String playerID, FamiliarColor color, int position) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		Familiar familiar = player.getFamiliar(color);
+		this.table.placeInMarket(familiar, position);
+	}
+	
+	public void setGreenCard(String playerID, int position) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		Card card = this.table.getGreenCard(position);
+		player.addCard(card);
 		
 	}
 	
+	public void setBlueCard(String playerID, int position) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		Card card = this.table.getBlueCard(position);
+		player.addCard(card);
+		
+	}	
+	
+	public void setVioletCard(String playerID, int position) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		Card card = this.table.getVioletCard(position);
+		player.addCard(card);
+		
+	}
+	
+	public void setYellowCard(String playerID, int position) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		Card card = this.table.getYellowCard(position);
+		player.addCard(card);
+		
+	}
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
