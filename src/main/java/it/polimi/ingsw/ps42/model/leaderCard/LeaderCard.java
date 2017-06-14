@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.model.leaderCard;
 
 import it.polimi.ingsw.ps42.model.effect.Effect;
+import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.player.Player;
 
 public class LeaderCard {
@@ -8,6 +9,7 @@ public class LeaderCard {
 	final private String name;
 	final private String description;
 	final private LeaderRequirements requirements;
+	final private Obtain effect;
 	
 	//The owner
 	private Player owner;
@@ -16,13 +18,14 @@ public class LeaderCard {
 	final private Effect onceARoundEffect;
 	final private Effect permanentEffect;
 	
-	public LeaderCard(String name, String description, LeaderRequirements requirements, Effect onceARoundEffect, Effect permanentEffect) {
+	public LeaderCard(String name, String description, LeaderRequirements requirements, Effect onceARoundEffect, Effect permanentEffect, Obtain effect) {
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;
 		this.onceARoundEffect = onceARoundEffect;
 		this.permanentEffect = permanentEffect;
 		this.owner = null;
+		this.effect = effect;
 	}
 	
 	public String getName() {
@@ -50,6 +53,10 @@ public class LeaderCard {
 	public void discard() {
 		//Delete the card from the owner and add a council request to the owner
 		//This method can be used only if the card isn't yet activated
+		if(owner.getLeaderCardList().contains(this)) {
+			owner.getLeaderCardList().remove(this);
+			this.effect.enableEffect(owner);
+		}
 	}
 	
 	public boolean equals(LeaderCard card) {
@@ -58,7 +65,7 @@ public class LeaderCard {
 	
 	@Override
 	public LeaderCard clone() {
-		return new LeaderCard(getName(), getDescription(), requirements.clone(), onceARoundEffect.clone(), permanentEffect.clone());
+		return new LeaderCard(getName(), getDescription(), requirements.clone(), onceARoundEffect.clone(), permanentEffect.clone(), effect.clone());
 	}
 
 }

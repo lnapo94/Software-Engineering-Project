@@ -72,7 +72,7 @@ public class Player extends Observable{
 	private HashMap<Resource, Integer> nextResources;
 	
 	//Only for the firsts four bans in manual and for familiar decrease
-	private Effect ban;
+	private List<Effect> bans;
 	private List<IncreaseAction> increaseEffect;
 	
 	
@@ -83,6 +83,13 @@ public class Player extends Observable{
 	private boolean canStayInMarket;
 	private boolean canPlay;
 	private boolean enableBonusInTower;
+	
+	//Leader cards variables
+	private boolean canPositioningEverywhere;
+	private boolean noMoneyMalus;
+	private boolean noMilitaryRequirements;
+	private boolean fiveMoreVictoryPoints;
+	
 	private int divisory;
 	
 	//The arraylist used by the gamelogic to know more from the player
@@ -131,6 +138,9 @@ public class Player extends Observable{
 		//Initialize the leader card list
 		leaderCardsList = new ArrayList<>();
 		activatedLeaderCard = new ArrayList<>();
+		
+		//Initialize the bans arraylist
+		this.bans = new ArrayList<>();
 	}
 	
 	public String getPlayerID() {
@@ -201,10 +211,12 @@ public class Player extends Observable{
 				nextResources.put(tempResource, tempQuantity);
 				
 				//Check if player has a ban, in that case enable it
-				if(ban != null && ban.getTypeOfEffect() == EffectType.OBTAIN_BAN) {
-					ObtainBan obtainBan = (ObtainBan) ban;
-					obtainBan.setResource(tempResource);
-					obtainBan.enableEffect(this);
+				for(Effect ban : bans) {
+					if(ban != null && ban.getTypeOfEffect() == EffectType.OBTAIN_BAN) {
+						ObtainBan obtainBan = (ObtainBan) ban;
+						obtainBan.setResource(tempResource);
+						obtainBan.enableEffect(this);
+					}
 				}
 			}
 		}
@@ -239,13 +251,14 @@ public class Player extends Observable{
 	}
 	
 	public void setBan(Effect ban) {
-		if(this.ban == null)
-			this.ban = ban;
+		this.bans.add(ban);
 	}
 	
 	public void familiarBan() {
-		if(ban != null && ban.getTypeOfEffect() == EffectType.INCREASE_FAMILIARS)
-			ban.enableEffect(this);
+		for(Effect ban : bans) {
+			if(ban != null && ban.getTypeOfEffect() == EffectType.INCREASE_FAMILIARS)
+				ban.enableEffect(this);
+		}
 	}
 	
 	public void setToZero(Resource resource) {
@@ -483,11 +496,15 @@ public class Player extends Observable{
 		this.leaderCardsList.add(card);
 	}
 	
+	public List<LeaderCard> getLeaderCardList() {
+		return this.leaderCardsList;
+	}
+	
 	public void enableLeaderCard(LeaderCard chosenCard) {
 		//Enable the leader card if the player has it in his list of leader card
 		
 		for (LeaderCard card : leaderCardsList) {
-			if(card.getName() == chosenCard.getName()) {
+			if(card.getName() == chosenCard.getName() && card.canEnableCard()) {
 				leaderCardsList.remove(leaderCardsList.indexOf(card));
 				activatedLeaderCard.add(card);
 				

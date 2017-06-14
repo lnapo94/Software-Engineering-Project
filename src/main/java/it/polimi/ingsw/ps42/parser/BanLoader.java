@@ -31,7 +31,7 @@ public class BanLoader extends Loader{
 		
 		ArrayList<Effect> effects = new ArrayList<>();
 		
-		if(parser.hasNext()){
+		while(parser.hasNext()){
 			
 			JsonElement element = parser.next();
 			if(element.isJsonObject()){
@@ -40,7 +40,7 @@ public class BanLoader extends Loader{
 			
 			}
 		}
-		if(effects.size() < index)
+		if(effects.size() > index)
 			return effects.get(index);
 		else throw new ElementNotFoundException("The index passed is too big for the file dimension");
 	}
