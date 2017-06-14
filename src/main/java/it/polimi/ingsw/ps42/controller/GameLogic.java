@@ -46,6 +46,10 @@ public class GameLogic implements Observer{
 	
 	private static final int MAX_BANS_IN_FILE = 7;
 	private static final int FAMILIARS_NUMBER = 4;
+	
+	private static final int FIRST_PERIOD = 0;
+	private static final int SECOND_PERIOD = 1;
+	private static final int THIRD_PERIOD = 2;
 
 	private Action currentAction;
 	private List<Player> players;
@@ -274,11 +278,11 @@ public class GameLogic implements Observer{
 			
 			//Check the first ban
 			if(currentPeriod == 2) {
-				checkBan(table.getFirstBan(), 3);
+				checkBan(table.getFirstBan(), 3, FIRST_PERIOD);
 			}
 			
 			if(currentPeriod == 4) {
-				checkBan(table.getSecondBan(), 4);
+				checkBan(table.getSecondBan(), 4, SECOND_PERIOD);
 			}
 		}
 		
@@ -287,7 +291,7 @@ public class GameLogic implements Observer{
 			//Enable the third ban
 			if(player.getResource(Resource.FAITHPOINT) < 5) {
 				table.getThirdBan().enableEffect(player);
-				BanUpdateMessage message = new BanUpdateMessage(player.getPlayerID(), table.getThirdBan());
+				BanUpdateMessage message = new BanUpdateMessage(player.getPlayerID(), THIRD_PERIOD);
 				
 				player.notifyNewBan(message);
 			}
@@ -352,12 +356,12 @@ public class GameLogic implements Observer{
 	}
 	
 	//Private Method to control the ban for all the players
-	private void checkBan(Effect ban, int faithPointToHave) {
+	private void checkBan(Effect ban, int faithPointToHave, int period) {
 		
 		for(Player player : this.players) {
 			if(player.getResource(Resource.FAITHPOINT) < faithPointToHave) {
 				//Create the message
-				BanUpdateMessage message = new BanUpdateMessage(player.getPlayerID(), ban);
+				BanUpdateMessage message = new BanUpdateMessage(player.getPlayerID(), period);
 				if(ban.getTypeOfEffect() == EffectType.OBTAIN_BAN || ban.getTypeOfEffect() == EffectType.INCREASE_FAMILIARS) {
 					player.setBan(ban);
 				}
@@ -488,17 +492,17 @@ public class GameLogic implements Observer{
 				else
 					table.getFirstBan().enableEffect(player);
 				
-				message = new BanUpdateMessage(player.getPlayerID(), table.getFirstBan());
+				message = new BanUpdateMessage(player.getPlayerID(), FIRST_PERIOD);
 				player.notifyNewBan(message);
 			}
 			if(index == 2) {
 				table.getSecondBan().enableEffect(player);
-				message = new BanUpdateMessage(player.getPlayerID(), table.getSecondBan());
+				message = new BanUpdateMessage(player.getPlayerID(), SECOND_PERIOD);
 				player.notifyNewBan(message);
 			}
 			if(index == 3) {
 				table.getThirdBan().enableEffect(player);
-				message = new BanUpdateMessage(player.getPlayerID(), table.getThirdBan());
+				message = new BanUpdateMessage(player.getPlayerID(), THIRD_PERIOD);
 				player.notifyNewBan(message);
 			}
 			
