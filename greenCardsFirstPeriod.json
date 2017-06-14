@@ -1,0 +1,438 @@
+{
+  "name": "Commercial Hub",
+  "description": "",
+  "color": "GREEN",
+  "period": 1,
+  "level": 1,
+  "owner": null,
+  "costs": [],
+  "requirements": [],
+  "immediateEffects": [],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MONEY",
+            "quantity": 1
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": []
+}{
+  "name": "Woods",
+  "description": "",
+  "color": "GREEN",
+  "period": 1,
+  "level": 2,
+  "owner": null,
+  "costs": [],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "WOOD",
+            "quantity": 1
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "WOOD",
+            "quantity": 1
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": []
+}{
+  "name": "Village",
+  "description": "",
+  "color": "GREEN",
+  "period": 1,
+  "level": 3,
+  "owner": null,
+  "costs": [],
+  "requirements": [],
+  "immediateEffects": [],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MONEY",
+            "quantity": 1
+          },
+          {
+            "resource": "SLAVE",
+            "quantity": 1
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": []
+}{
+  "name": "Gravel Pit",
+  "description": "",
+  "color": "GREEN",
+  "period": 1,
+  "level": 4,
+  "owner": null,
+  "costs": [],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "STONE",
+            "quantity": 2
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "STONE",
+            "quantity": 2
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": []
+}{
+  "name": "Forest",
+  "description": "",
+  "color": "GREEN",
+  "period": 1,
+  "level": 5,
+  "owner": null,
+  "costs": [],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "WOOD",
+            "quantity": 1
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "WOOD",
+            "quantity": 3
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": []
+}{
+  "name": "Monastery",
+  "description": "",
+  "color": "GREEN",
+  "period": 1,
+  "level": 6,
+  "owner": null,
+  "costs": [],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MILITARYPOINT",
+            "quantity": 2
+          },
+          {
+            "resource": "SLAVE",
+            "quantity": 1
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "FAITHPOINT",
+            "quantity": 1
+          },
+          {
+            "resource": "STONE",
+            "quantity": 1
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": []
+}{
+  "name": "Citadel",
+  "description": "",
+  "color": "GREEN",
+  "period": 1,
+  "level": 5,
+  "owner": null,
+  "costs": [],
+  "requirements": [],
+  "immediateEffects": [],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MILITARYPOINT",
+            "quantity": 2
+          },
+          {
+            "resource": "STONE",
+            "quantity": 1
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": []
+}{
+  "name": "City",
+  "description": "",
+  "color": "GREEN",
+  "period": 1,
+  "level": 6,
+  "owner": null,
+  "costs": [],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MONEY",
+            "quantity": 3
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "quantity": 1,
+      "possibleConversion": [
+        {
+          "costs": {
+            "list": []
+          },
+          "gains": {
+            "list": [
+              {
+                "resource": "STONE",
+                "quantity": 1
+              },
+              {
+                "resource": "WOOD",
+                "quantity": 1
+              }
+            ]
+          },
+          "councilObtain": null,
+          "player": null,
+          "typeOfEffect": "OBTAIN"
+        },
+        {
+          "costs": {
+            "list": []
+          },
+          "gains": {
+            "list": [
+              {
+                "resource": "SLAVE",
+                "quantity": 2
+              }
+            ]
+          },
+          "councilObtain": null,
+          "player": null,
+          "typeOfEffect": "OBTAIN"
+        },
+        {
+          "costs": {
+            "list": []
+          },
+          "gains": {
+            "list": [
+              {
+                "resource": "MONEY",
+                "quantity": 2
+              }
+            ]
+          },
+          "councilObtain": null,
+          "player": null,
+          "typeOfEffect": "OBTAIN"
+        },
+        {
+          "costs": {
+            "list": []
+          },
+          "gains": {
+            "list": [
+              {
+                "resource": "MILITARYPOINT",
+                "quantity": 2
+              }
+            ]
+          },
+          "councilObtain": null,
+          "player": null,
+          "typeOfEffect": "OBTAIN"
+        },
+        {
+          "costs": {
+            "list": []
+          },
+          "gains": {
+            "list": [
+              {
+                "resource": "FAITHPOINT",
+                "quantity": 1
+              }
+            ]
+          },
+          "councilObtain": null,
+          "player": null,
+          "typeOfEffect": "OBTAIN"
+        }
+      ],
+      "player": null,
+      "typeOfEffect": "COUNCIL_OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CouncilObtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": []
+}
