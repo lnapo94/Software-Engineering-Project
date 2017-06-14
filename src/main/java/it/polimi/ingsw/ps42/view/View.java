@@ -6,23 +6,31 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
+import it.polimi.ingsw.ps42.message.CardRequest;
+import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.message.PlayerMove;
+import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.visitorPattern.ViewVisitor;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
+import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Effect;
+import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
+import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 
-public class View extends Observable implements Observer {
+public abstract class View extends Observable implements Observer {
 
 	
 	private TableView table; 
@@ -62,13 +70,96 @@ public class View extends Observable implements Observer {
 		}
 	}
 	
-	public void askBonusBar(List<BonusBar> bonusBar, BonusBarMessage message ){
+	//Methods to Ask Player Input
+	private boolean hasToAnswer(String playerID){
+		
+		return player.getPlayerID().equals(playerID);
+	}
+	
+	public void askBonusBar(BonusBarMessage message) throws WrongChoiceException{
+		
+		if( hasToAnswer(message.getPlayerID())){
+			//Ask to choose a BonusBar
+			message.setChoice(chooseBonusBar(message.getAvailableBonusBar()));
+			
+			//Notify the choice to the Game Logic
+			setChanged();
+			notifyObservers(message);
+		}
+
+	}
+	
+	public void askLeaderCard(LeaderCardMessage message ) throws WrongChoiceException{
+		
+		if( hasToAnswer(message.getPlayerID())){
+			//Ask to choose a Leader Card
+			message.setChoice(chooseLeaderCard(message.getAvailableLeaderCards()));
+			
+			//Notify the choice to the Game Logic
+			setChanged();
+			notifyObservers(message);
+		}
+	}
+		
+	public void askCouncilRequest( CouncilRequest message) throws WrongChoiceException{
+		
+		if( hasToAnswer(message.getPlayerID())){
+			//Ask to choose a Conversion for the Council Privilege
+			message.addChoice(chooseCouncilConversion(message.getPossibleChoice()));
+			
+			//Notify the choice to the Game Logic
+			setChanged();
+			notifyObservers(message);
+		}
 		
 	}
 	
-	public void askLeaderCard(List<LeaderCard> bonusBar, LeaderCardMessage message ){
+	public void askPlayerMove( PlayerToken message){
 		
+		if(hasToAnswer(message.getPlayerID())){
+			//Ask to choose a Move to the Player
+			PlayerMove move = choosePlayerMove(message.getActionPrototype());
+			//Notify the Move to Game Logic
+			setChanged();
+			notifyObservers(move);
+		}
 	}
+	
+	public void askPayBan(BanRequest message){
+	
+		if(hasToAnswer(message.getPlayerID())){
+			//Ask to the player if he wants to pay the faithPoint instead of getting the ban
+			if( chooseIfPayBan( message.getBanNumber()))
+				message.wantPayForBan();
+			
+			//Notify the choice to the Game Logic
+			setChanged();
+			notifyObservers(message);
+		}
+	}
+	
+	public void askCardRequest( CardRequest message){
+		
+		if(hasToAnswer(message.getPlayerID())){
+			//Ask to the player to answer
+			message.setChoice(answerCardRequest(message));
+			
+		}
+	}
+	
+	//Methods For Input/Output Implemented by Concrete Classes
+	protected abstract int chooseBonusBar(List<BonusBar> bonusBarList);
+
+	protected abstract int chooseLeaderCard(List<LeaderCard> leaderCardList);
+	
+	protected abstract int chooseCouncilConversion(List<Obtain> possibleConversions);
+	
+	protected abstract PlayerMove choosePlayerMove(ActionPrototype prototype);
+	
+	protected abstract boolean chooseIfPayBan(int banPeriod);
+	
+	protected abstract int answerCardRequest( CardRequest message);
+	
 	
 	//SETTER FOR TABLE BANS
 	public void setFirstBan(Effect firstBan){
@@ -86,15 +177,16 @@ public class View extends Observable implements Observer {
 			this.table.addThirdBan(thirdBan);
 	}
 	
-	public void setBanToPlayer(String playerID, int banPeriod){
-		
-		if( banPeriod == 0)
-			this.table.setPlayerFirstBan(playerID);
-		else if( banPeriod == 1)
-			this.table.setPlayerSecondBan(playerID);
-		else if( banPeriod == 2)
-			this.table.setPlayerThirdBan(playerID);
-		
+	public void setBanToPlayer(String playerID, int banPeriod) throws ElementNotFoundException{
+			
+		if(searchPlayer(playerID) != null){
+			if( banPeriod == 0)
+				this.table.setPlayerFirstBan(playerID);
+			else if( banPeriod == 1)
+				this.table.setPlayerSecondBan(playerID);
+			else if( banPeriod == 2)
+				this.table.setPlayerThirdBan(playerID);
+		}
 	}
 	
 	//SETTER FOR DICE VALUES

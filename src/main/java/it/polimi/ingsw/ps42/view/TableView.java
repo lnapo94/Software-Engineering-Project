@@ -301,6 +301,18 @@ public class TableView {
 		playersWithThirdBan.add(playerID);
 	}
 	
+	public List<String> getPlayersWithFirstBan() {
+		return playersWithFirstBan;
+	}
+	
+	public List<String> getPlayersWithSecondBan() {
+		return playersWithSecondBan;
+	}
+	
+	public List<String> getPlayersWithThirdBan() {
+		return playersWithThirdBan;
+	}
+	
 	//SETTER AND GETTERS FOR THE DICE
 	public void setOrangeDie(int value){
 		this.orangeDie = value;

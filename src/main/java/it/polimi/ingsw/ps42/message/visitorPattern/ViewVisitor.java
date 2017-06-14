@@ -17,10 +17,9 @@ import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 import it.polimi.ingsw.ps42.view.View;
-import it.polimi.ingsw.ps42.model.enumeration.ActionType;
-import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
+import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 
 
 public class ViewVisitor implements Visitor {
@@ -38,6 +37,14 @@ public class ViewVisitor implements Visitor {
 		 * the possible choice (then re-forwarded to the game logic).
 		 */
 		
+		if(message != null ){
+			
+			try {
+				this.view.askBonusBar( message);
+			} catch (WrongChoiceException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -46,7 +53,13 @@ public class ViewVisitor implements Visitor {
 		 * call a method of the view for asking a LeaderCard from
 		 * the possible choice (then re-forwarded to the game logic).
 		 */
-		
+		if(message != null)
+			try{
+				this.view.askLeaderCard(message);
+			}
+		catch(WrongChoiceException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -205,16 +218,12 @@ public class ViewVisitor implements Visitor {
 		 * bans of that player.
 		 */
 		if(message != null){
-			this.view.setBanToPlayer( message.getPlayerID(), message.getBan());
+			try {
+				this.view.setBanToPlayer( message.getPlayerID(), message.getBan());
+			} catch (ElementNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
-		
-	}
-
-	@Override
-	public void visit(PlayerMove message) {
-		/*Message forwarded by the Model every time a player has to perform a move, 
-		 * the visitor has to call a method of the View that ask a move to that player.
-		 */
 		
 	}
 
@@ -223,6 +232,12 @@ public class ViewVisitor implements Visitor {
 		/*Message forwarded by the Model every time a player has some Council Requests, 
 		 * the visitor has to call a method of the View that ask to that player a choice.
 		 */		
+		if( message != null)
+			try {
+				this.view.askCouncilRequest(message);
+			} catch (WrongChoiceException e) {
+				e.printStackTrace();
+			}
 		
 	}
 
@@ -231,12 +246,13 @@ public class ViewVisitor implements Visitor {
 		/*Message forwarded by the Model every time a player has to perform a move, 
 		 * the visitor has to call a method of the View that ask a move to that player.
 		 */		
-		
+		if(message != null)
+			this.view.askPlayerMove(message);
 	}
 
 	@Override
 	public void visit(LeaderCardUpdateMessage message) {
-		/*	
+		/*	TODO
 		 * Set the card to the enabledLeaderCard player's array
 		 */
 	}
@@ -246,11 +262,24 @@ public class ViewVisitor implements Visitor {
 		/*
 		 * Ask to the player if he wants pay for the ban or not
 		 */		
+		if( message != null)
+			this.view.askPayBan(message);
 	}
 
 	@Override
 	public void visit(CardRequest message) {
-		// TODO Auto-generated method stub
+		/*
+		 * Ask to the Player to answer the Request		
+		 */
+		
+		if( message != null){
+			this.view.askCardRequest( message);
+		}
+	}
+
+	@Override
+	public void visit(PlayerMove message) {
+		//Nothings to do since this Message is never received
 		
 	}
 
