@@ -3,7 +3,6 @@ package it.polimi.ingsw.ps42.view;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,7 +13,6 @@ import it.polimi.ingsw.ps42.message.visitorPattern.ViewVisitor;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
-import it.polimi.ingsw.ps42.model.Table;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
@@ -27,7 +25,7 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class View extends Observable implements Observer {
 
 	
-	private Table table; 
+	private TableView table; 
 	private Player player;
 	private List<Player> otherPlayers; 
 	private Visitor viewVisitor;
@@ -55,11 +53,11 @@ public class View extends Observable implements Observer {
 			}
 			//Add the players to the Table
 			if(playersID.size() == 1)
-				this.table = new Table( player, otherPlayers.get(0));
+				this.table = new TableView( player, otherPlayers.get(0));
 			else if(playersID.size() == 2)
-				this.table = new Table( player, otherPlayers.get(0), otherPlayers.get(1));
+				this.table = new TableView( player, otherPlayers.get(0), otherPlayers.get(1));
 			else if(playersID.size() == 3)
-				this.table = new Table( player,  otherPlayers.get(0), otherPlayers.get(1), otherPlayers.get(2));
+				this.table = new TableView( player,  otherPlayers.get(0), otherPlayers.get(1), otherPlayers.get(2));
 			
 		}
 	}
@@ -114,7 +112,7 @@ public class View extends Observable implements Observer {
 		throw new ElementNotFoundException("Player not Found");
 		
 	}
-	public void setResources( Map<Resource, Integer> resources, String playerID){
+	public void setResources( HashMap<Resource, Integer> resources, String playerID){
 		
 		try {
 			
@@ -126,6 +124,7 @@ public class View extends Observable implements Observer {
 		}
 	}
 	
+	//SETTER FOR THE CARDS
 	public void setGreenCards(StaticList<Card> cards){
 		
 		if( cards != null)
@@ -150,7 +149,8 @@ public class View extends Observable implements Observer {
 			this.table.placeVioletTower(cards);
 	}
 	
-	public void setFamiliar(String playerID, FamiliarColor color){
+	//SETTERS FOR THE FAMILIAR
+	public void setFamiliarInGreenTower(String playerID, FamiliarColor familiar, int position){
 		
 		
 	}
