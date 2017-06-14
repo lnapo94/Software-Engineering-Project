@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.message.visitorPattern;
 
+
 import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
@@ -16,7 +17,10 @@ import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 import it.polimi.ingsw.ps42.view.View;
+import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
+import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 
 
 public class ViewVisitor implements Visitor {
@@ -90,7 +94,8 @@ public class ViewVisitor implements Visitor {
 				case VIOLET:
 					this.view.setVioletCards(message.getDeck());
 					break;
-				
+				default:
+					System.out.println("[DEBUG] wrong message from GameLogic");
 			}
 			
 		}
@@ -118,26 +123,41 @@ public class ViewVisitor implements Visitor {
 		 * familiar's position of that player.
 		 */
 		if( message != null){
-			switch(message.getAction()){
-			 	case TAKE_BLUE:
-			 		
-			 		break;
-			 	case TAKE_GREEN:
-			 		break;
-			 	case TAKE_VIOLET:
-			 		break;
-			 	case TAKE_YELLOW:
-			 		break;
-			 	case COUNCIL:
-			 		break;
-			 	case MARKET:
-			 		break;
-			 	case YIELD:
-			 		break;
-			 	case PRODUCE:
-			 		break;
-			 		
-			
+			String playerID = message.getPlayerID();
+			int position = message.getPosition();
+			FamiliarColor color = message.getColor();
+			try{
+				switch(message.getAction()){
+				 	case TAKE_BLUE:
+				 		this.view.setFamiliarInBlueTower(playerID, color, position);
+				 		break;
+				 	case TAKE_GREEN:
+				 		this.view.setFamiliarInGreenTower(playerID, color, position);
+				 		break;
+				 	case TAKE_VIOLET:
+				 		this.view.setFamiliarInVioletTower(playerID, color, position);
+				 		break;
+				 	case TAKE_YELLOW:
+				 		this.view.setFamiliarInYellowTower(playerID, color, position);
+				 		break;
+				 	case COUNCIL:
+				 		this.view.setFamiliarInCouncil(playerID, color);
+				 		break;
+				 	case MARKET:
+				 		this.view.setFamiliarInMarket(playerID, color, position);
+				 		break;
+				 	case YIELD:
+				 		this.view.setFamiliarInYield(playerID, color, position);
+				 		break;
+				 	case PRODUCE:
+				 		this.view.setFamiliarInProduce(playerID, color, position);
+				 		break;
+				 	default:
+						System.out.println("[DEBUG] wrong message from GameLogic");
+				}	
+			}
+			catch( ElementNotFoundException e){
+				e.printStackTrace();
 			}
 			
 		}
@@ -150,6 +170,31 @@ public class ViewVisitor implements Visitor {
 		 * player, the visitor has to call a method of the View that update the 
 		 * cards of that Player and the state of the Table.
 		 */
+		if(message != null){
+			String playerID = message.getPlayerID();
+			int position = message.getPosition();
+			try{
+				switch(message.getType()){
+				case TAKE_BLUE:
+					this.view.setBlueCard(playerID, position);
+					break;
+				case TAKE_GREEN:
+					this.view.setGreenCard(playerID, position);
+					break;
+				case TAKE_VIOLET:
+					this.view.setVioletCard(playerID, position);
+					break;
+				case TAKE_YELLOW:
+					this.view.setYellowCard(playerID, position);
+					break;
+				default:
+					System.out.println("[DEBUG] wrong message from GameLogic");
+				}	
+			}
+			catch(ElementNotFoundException e){
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
@@ -159,6 +204,9 @@ public class ViewVisitor implements Visitor {
 		 * do not has the required faithPoint, the visitor has to call a method of the View that update the 
 		 * bans of that player.
 		 */
+		if(message != null){
+			this.view.setBanToPlayer( message.getPlayerID(), message.getBan());
+		}
 		
 	}
 

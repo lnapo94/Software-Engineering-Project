@@ -9,14 +9,15 @@ public class BanUpdateMessage extends Message{
 	 */
 	
 	private Effect ban;
+	private int banPeriod;
 	
 	public BanUpdateMessage(String playerID, Effect ban) {
 		super(playerID);
 		this.ban = ban;
 	}
 	
-	public Effect getBan() {
-		return ban;
+	public int getBan() {
+		return banPeriod;
 	}
 	
 	@Override
