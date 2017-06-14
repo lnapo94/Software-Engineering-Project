@@ -93,7 +93,13 @@ public abstract class View extends Observable implements Observer {
 		
 		if( hasToAnswer(message.getPlayerID())){
 			//Ask to choose a Leader Card
-			message.setChoice(chooseLeaderCard(message.getAvailableLeaderCards()));
+			List<LeaderCard> possibleChoice = message.getAvailableLeaderCards();
+			int choice = chooseLeaderCard(possibleChoice);
+			message.setChoice(choice);
+			
+			//Set the LeaderCard to the Player
+			if(choice < possibleChoice.size())
+				player.setLeaderCard(possibleChoice.get(choice));
 			
 			//Notify the choice to the Game Logic
 			setChanged();
@@ -341,6 +347,12 @@ public abstract class View extends Observable implements Observer {
 		
 	}
 	
+	public void setEnabledLeaderCard( String playerID, LeaderCard card) throws ElementNotFoundException{
+		
+		Player player = searchPlayer(playerID);
+		player.enableLeaderCard(card);
+	}
+
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		
