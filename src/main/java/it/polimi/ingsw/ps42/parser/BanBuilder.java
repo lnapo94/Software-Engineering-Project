@@ -23,20 +23,8 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
 public class BanBuilder extends Builder{
 
-	private class Set{
-		private Effect effect;
-		public Set(){
-
-		}
-		public void addEffect(Effect effect) {
-			this.effect = effect;
-		}
-		public Effect getEffect() {
-			return effect;
-		}
-	}
 	
-	private Set banSet;
+	private BanSerializerSet banSet;
 	
 	public BanBuilder(String fileName) throws IOException{
 		super(fileName);
@@ -55,8 +43,8 @@ public class BanBuilder extends Builder{
 		System.out.println("Inizio Procedura aggiunta di una nuova scomunica");
 		
 		Effect ban = askBan();
-		banSet = new Set();
-		banSet.addEffect(ban);
+		banSet = new BanSerializerSet();
+		banSet.setBan(ban);
 		
 		String parse = gson.toJson(banSet);
 		buffer.append(parse);
