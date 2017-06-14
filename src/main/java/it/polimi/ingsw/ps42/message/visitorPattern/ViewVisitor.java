@@ -120,8 +120,22 @@ public class ViewVisitor implements Visitor {
 		if( message != null){
 			switch(message.getAction()){
 			 	case TAKE_BLUE:
+			 		this.view.s
 			 		break;
 			 	case TAKE_GREEN:
+			 		break;
+			 	case TAKE_VIOLET:
+			 		break;
+			 	case TAKE_YELLOW:
+			 		break;
+			 	case COUNCIL:
+			 		break;
+			 	case MARKET:
+			 		break;
+			 	case YIELD:
+			 		break;
+			 	case PRODUCE:
+			 		break;
 			 		
 			
 			}
