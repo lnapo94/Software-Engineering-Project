@@ -185,10 +185,10 @@ public class BanBuilder extends Builder{
 	public static void main(String[] args){
 		
 		try {
-			BanBuilder builder = new BanBuilder("prova.json");
+			BanBuilder builder = new BanBuilder("thirdPeriodBans.json");
 			
-			builder.addBan();
-			builder.addBan();
+			for(int i = 0; i < 7; i++)
+				builder.addBan();
 			
 			builder.close();
 		} catch (IOException e) {

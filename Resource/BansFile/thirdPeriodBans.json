@@ -1,0 +1,102 @@
+{
+  "ban": {
+    "color": "BLUE",
+    "player": null,
+    "typeOfEffect": "CARD_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CardBan"
+  }
+}{
+  "ban": {
+    "color": "VIOLET",
+    "player": null,
+    "typeOfEffect": "CARD_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CardBan"
+  }
+}{
+  "ban": {
+    "color": "GREEN",
+    "player": null,
+    "typeOfEffect": "CARD_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CardBan"
+  }
+}{
+  "ban": {
+    "requirements": {
+      "list": [
+        {
+          "resource": "VICTORYPOINT",
+          "quantity": 5
+        }
+      ]
+    },
+    "gains": {
+      "list": [
+        {
+          "resource": "VICTORYPOINT",
+          "quantity": -1
+        }
+      ]
+    },
+    "player": null,
+    "typeOfEffect": "FOR_EACH_OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.ForEachObtain"
+  }
+}{
+  "ban": {
+    "requirements": {
+      "list": [
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 1
+        }
+      ]
+    },
+    "gains": {
+      "list": [
+        {
+          "resource": "VICTORYPOINT",
+          "quantity": -1
+        }
+      ]
+    },
+    "player": null,
+    "typeOfEffect": "FOR_EACH_OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.ForEachObtain"
+  }
+}{
+  "ban": null
+}{
+  "ban": {
+    "requirements": {
+      "list": [
+        {
+          "resource": "SLAVE",
+          "quantity": 1
+        },
+        {
+          "resource": "MONEY",
+          "quantity": 1
+        },
+        {
+          "resource": "STONE",
+          "quantity": 1
+        },
+        {
+          "resource": "WOOD",
+          "quantity": 1
+        }
+      ]
+    },
+    "gains": {
+      "list": [
+        {
+          "resource": "VICTORYPOINT",
+          "quantity": -1
+        }
+      ]
+    },
+    "player": null,
+    "typeOfEffect": "FOR_EACH_OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.ForEachObtain"
+  }
+}

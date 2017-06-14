@@ -1,0 +1,62 @@
+{
+  "ban": {
+    "type": "TAKE_GREEN",
+    "value": 4,
+    "discount": null,
+    "yetActivated": false,
+    "player": null,
+    "typeOfEffect": "INCREASE_ACTION",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
+  }
+}{
+  "ban": {
+    "type": "TAKE_YELLOW",
+    "value": 4,
+    "discount": null,
+    "yetActivated": false,
+    "player": null,
+    "typeOfEffect": "INCREASE_ACTION",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
+  }
+}{
+  "ban": {
+    "type": "TAKE_BLUE",
+    "value": 4,
+    "discount": null,
+    "yetActivated": false,
+    "player": null,
+    "typeOfEffect": "INCREASE_ACTION",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
+  }
+}{
+  "ban": {
+    "type": "TAKE_VIOLET",
+    "value": 4,
+    "discount": null,
+    "yetActivated": false,
+    "player": null,
+    "typeOfEffect": "INCREASE_ACTION",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
+  }
+}{
+  "ban": {
+    "player": null,
+    "typeOfEffect": "NO_MARKET_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.NoMarketBan"
+  }
+}{
+  "ban": {
+    "divisory": 2,
+    "player": null,
+    "typeOfEffect": "SLAVE_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.SlaveBan"
+  }
+}{
+  "ban": null
+}{
+  "ban": {
+    "player": null,
+    "typeOfEffect": "NO_FIRST_ACTION_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.NoFirstActionBan"
+  }
+}

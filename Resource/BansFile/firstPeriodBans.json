@@ -1,0 +1,123 @@
+{
+  "ban": {
+    "packet": {
+      "list": [
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 1
+        }
+      ]
+    },
+    "unit": {
+      "resource": "MILITARYPOINT",
+      "quantity": 1
+    },
+    "resource": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.ObtainBan"
+  }
+}{
+  "ban": {
+    "packet": {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 1
+        }
+      ]
+    },
+    "unit": {
+      "resource": "MONEY",
+      "quantity": 1
+    },
+    "resource": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.ObtainBan"
+  }
+}{
+  "ban": {
+    "packet": {
+      "list": [
+        {
+          "resource": "SLAVE",
+          "quantity": 1
+        }
+      ]
+    },
+    "unit": {
+      "resource": "SLAVE",
+      "quantity": 1
+    },
+    "resource": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.ObtainBan"
+  }
+}{
+  "ban": {
+    "packet": {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 1
+        }
+      ]
+    },
+    "unit": {
+      "resource": "WOOD",
+      "quantity": 1
+    },
+    "resource": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.ObtainBan"
+  }
+}{
+  "ban": {
+    "packet": {
+      "list": [
+        {
+          "resource": "STONE",
+          "quantity": 1
+        }
+      ]
+    },
+    "unit": {
+      "resource": "STONE",
+      "quantity": 1
+    },
+    "resource": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.ObtainBan"
+  }
+}{
+  "ban": {
+    "type": "YIELD",
+    "value": 3,
+    "discount": null,
+    "yetActivated": false,
+    "player": null,
+    "typeOfEffect": "INCREASE_ACTION",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
+  }
+}{
+  "ban": {
+    "type": "PRODUCE",
+    "value": 3,
+    "discount": null,
+    "yetActivated": false,
+    "player": null,
+    "typeOfEffect": "INCREASE_ACTION",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
+  }
+}{
+  "ban": {
+    "value": 1,
+    "player": null,
+    "typeOfEffect": "INCREASE_FAMILIARS",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseFamiliarsPoint"
+  }
+}
