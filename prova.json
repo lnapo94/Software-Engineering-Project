@@ -1,0 +1,15 @@
+{
+  "ban": {
+    "color": "BLUE",
+    "player": null,
+    "typeOfEffect": "CARD_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CardBan"
+  }
+}{
+  "ban": {
+    "color": "GREEN",
+    "player": null,
+    "typeOfEffect": "CARD_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CardBan"
+  }
+}

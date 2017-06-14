@@ -34,8 +34,11 @@ public class BanLoader extends Loader{
 		if(parser.hasNext()){
 			
 			JsonElement element = parser.next();
-			if(element.isJsonObject())
-				effects.add(gson.fromJson(element , Effect.class));
+			if(element.isJsonObject()){
+				BanSerializerSet ban = gson.fromJson(element , BanSerializerSet.class);
+				effects.add(ban.getBan());
+			
+			}
 		}
 		if(effects.size() < index)
 			return effects.get(index);

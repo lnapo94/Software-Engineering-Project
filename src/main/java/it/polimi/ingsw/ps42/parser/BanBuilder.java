@@ -52,20 +52,16 @@ public class BanBuilder extends Builder{
 	
 	@Override
 	public void close() throws IOException {
-
-		String parse = gson.toJson(banSet);
-		buffer.append(parse);
-		
 		super.close();
 	}
 	private Effect askBan(){
 		
 		Effect effect = null;
 		System.out.println("Tipo ? ");
-		System.out.println(EffectType.OBTAIN.toString()+" "+EffectType.FOR_EACH_OBTAIN.toString()+" "
-				+EffectType.INCREASE_ACTION.toString()+" "+EffectType.DO_ACTION+" "+ EffectType.COUNCIL_OBTAIN.toString()+
-				" "+EffectType.INCREASE_FAMILIARS.toString()+" "+EffectType.INCREASE_SINGLE_FAMILIAR.toString()+" "+
-				EffectType.NO_TOWER_BONUS.toString());
+		System.out.println(EffectType.OBTAIN_BAN.toString()+" "+EffectType.FOR_EACH_OBTAIN.toString()+" "
+				+EffectType.INCREASE_ACTION.toString()+" "+EffectType.INCREASE_FAMILIARS.toString()+" "+
+				EffectType.NO_TOWER_BONUS.toString()+" "+EffectType.NO_MARKET_BAN.toString()+" "+EffectType.SLAVE_BAN.toString()+
+				" "+EffectType.NO_FIRST_ACTION_BAN.toString()+" "+EffectType.CARD_BAN.toString());
 		String effectType=scanner.nextLine();
 		
 		switch (effectType.toUpperCase()) {
