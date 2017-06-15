@@ -32,8 +32,13 @@ public class CouncilAction extends Action {
 	}
 	@Override
 	public Response checkAction() {
+		
 		if( player.canPlay() ){
 			if(familiar != null) {		//If is a normal action check increase effect and position malus
+				
+				if(familiar.isPositioned())
+					return Response.FAILURE;
+				
 				checkIncreaseEffect();
 				addIncrement(-tablePosition.getMalus());
 				if( !checkActionValue())

@@ -161,6 +161,9 @@ public abstract class View extends Observable implements Observer {
 			//Ask to the player to answer
 			message.setChoice(answerCardRequest(message));
 			
+			//Notify the choice to the Game Logic
+			setChanged();
+			notifyObservers(message);
 		}
 	}
 	

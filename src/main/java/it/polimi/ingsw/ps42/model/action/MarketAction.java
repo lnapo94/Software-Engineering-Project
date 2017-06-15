@@ -44,7 +44,7 @@ public class MarketAction extends Action {
 			checkIncreaseEffect();
 			if( familiar != null ){			//Checks if is a bonus action 
 
-				if( isFree() && player.canStayInMarket()){
+				if( isFree() && player.canStayInMarket() && !familiar.isPositioned()){
 					this.addIncrement(-(tablePosition.get(positionInTableList).getMalus()));
 					if(checkActionValue() )
 						//Checks if the action has a sufficient level for the position

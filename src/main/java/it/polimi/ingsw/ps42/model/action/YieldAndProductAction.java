@@ -47,7 +47,8 @@ public class YieldAndProductAction extends Action {
 		if(this.player.canPlay()){
 			checkIncreaseEffect();
 			if(familiar != null){		//If is a normal action get the first free position otherwise you can get the firstPosition
-				if(canStay()){
+				
+				if(canStay() && !familiar.isPositioned()){
 					this.firstFreePosition = getFirstFreePosition();
 					this.addIncrement( -firstFreePosition.getMalus() );
 					if( checkLevel() == Response.SUCCESS )	

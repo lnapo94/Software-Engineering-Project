@@ -102,6 +102,13 @@ public class TakeCardAction extends Action{
 		
 		//Fourth: if the position has a bonus, apply it to the player
 		if(familiar != null) {
+			
+			if(familiar.isPositioned()) {
+				//If familiar is positioned yet
+				player.restoreResource();
+				return Response.FAILURE;
+			}
+			
 			try {
 				position.setFamiliar(familiar);
 				player.synchResource();

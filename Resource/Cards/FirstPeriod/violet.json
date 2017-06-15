@@ -56,7 +56,8 @@
     }
   ],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Repairing the Church",
   "description": "",
@@ -123,7 +124,8 @@
     }
   ],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Building the Walls",
   "description": "",
@@ -272,7 +274,8 @@
     }
   ],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Raising a Statue",
   "description": "",
@@ -410,7 +413,8 @@
     }
   ],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Military Campaign",
   "description": "",
@@ -478,7 +482,8 @@
     }
   ],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Hosting Panhandlers",
   "description": "",
@@ -537,7 +542,8 @@
     }
   ],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Fighting Heresies",
   "description": "",
@@ -605,7 +611,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Support to the Bishop",
   "description": "",
@@ -689,5 +696,6 @@
     }
   ],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }

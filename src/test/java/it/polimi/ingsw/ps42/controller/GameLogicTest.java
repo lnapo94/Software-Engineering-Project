@@ -1,19 +1,13 @@
 package it.polimi.ingsw.ps42.controller;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Test;
 
-import it.polimi.ingsw.ps42.model.Card;
-import it.polimi.ingsw.ps42.model.Table;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
-import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.view.TerminalView;
 
 public class GameLogicTest {

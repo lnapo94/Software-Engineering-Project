@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.model.player;
 
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
+import it.polimi.ingsw.ps42.model.position.Position;
 
 public class Familiar {
 	//This class represent the familiar in the game. It is linked to player
@@ -8,6 +9,7 @@ public class Familiar {
 	private Player player;
 	private FamiliarColor color;
 	private int value;
+	private Position position;
 	
 	//This variable represent the temporary value of familiar for checking in gamelogic
 	private int increment;
@@ -47,6 +49,18 @@ public class Familiar {
 	
 	public boolean isNeutral() {
 		return this.color == FamiliarColor.NEUTRAL;
+	}
+	
+	public boolean isPositioned() {
+		return position != null;
+	}
+	
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+	
+	public void resetPosition() {
+		this.position = null;
 	}
 	
 

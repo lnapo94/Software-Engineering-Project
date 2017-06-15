@@ -310,6 +310,7 @@ public class Card {
 		//Check if a generic player can pay a packet of costs
 		for (Unit unit : costs) {
 			if(unit.getQuantity() > player.getResource(unit.getResource())) {
+				//Restore the player resources
 					if(discount != null)
 						try {
 							player.decreaseResource(discount);

@@ -50,6 +50,7 @@ public abstract class Position {
 		if( familiar != null ){		//TO-DO:decidere come gestire caso familiar==null
 			applyPositionEffect(familiar);
 			this.familiar=familiar;
+			familiar.setPosition(this);
 		}
 		else throw new FamiliarInWrongPosition("The familiar does not satisfy the position pre-requisites");
 	}

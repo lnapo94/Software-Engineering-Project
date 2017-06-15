@@ -406,6 +406,13 @@ public class Table extends Observable{
 	}
 
 	public List<Player> resetTable() {
+		//Reset all the familiars
+		for(Player player : players) {
+			player.getFamiliar(FamiliarColor.ORANGE).resetPosition();
+			player.getFamiliar(FamiliarColor.WHITE).resetPosition();
+			player.getFamiliar(FamiliarColor.BLACK).resetPosition();
+			player.getFamiliar(FamiliarColor.NEUTRAL).resetPosition();
+		}
 		//Reset all the tower position
 		for(int i = 0; i < FLOORS; i++) {
 			

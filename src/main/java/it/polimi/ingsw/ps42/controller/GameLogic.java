@@ -36,6 +36,7 @@ import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
+import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 import it.polimi.ingsw.ps42.parser.BanLoader;
 import it.polimi.ingsw.ps42.parser.BonusBarLoader;
 import it.polimi.ingsw.ps42.parser.ConversionLoader;
@@ -104,7 +105,7 @@ public class GameLogic implements Observer{
 				actionOrder.remove(actionOrder.indexOf(player));
 				actionOrder.add(player);
 			}
-			else if(response == Response.FAILURE) {
+			else if(response == Response.FAILURE || response == Response.LOW_LEVEL) {
 				PlayerToken message = new PlayerToken(player.getPlayerID());
 				message.setRetrasmission();
 				player.retrasmitMessage(message);
@@ -130,6 +131,9 @@ public class GameLogic implements Observer{
 				//Re-check the player requests
 				applyRequest(player);
 				applyCouncilRequest(player);
+				
+				//SYNCH resources
+				player.synchResource();
 				
 				bonusAction = player.getBonusAction();
 				
@@ -472,9 +476,15 @@ public class GameLogic implements Observer{
 				FaithPathLoader loader = new FaithPathLoader("Resource//Configuration//faithPointPathConfiguration.json");
 				Packet victoryPoint = new Packet();
 				victoryPoint.addUnit(loader.conversion(player.getResource(Resource.FAITHPOINT)));
+				
+				//If player has the leader card
+				if(player.hasMoreVictoryPoint())
+					victoryPoint.addUnit(new Unit(Resource.VICTORYPOINT, 5));
+				
 				player.setToZero(Resource.FAITHPOINT);
 				player.increaseResource(victoryPoint);
 				player.synchResource();
+				
 				loader.close();
 			} catch (IOException e) {
 				System.out.println("Unable to open the faithPath conversion file");
@@ -547,6 +557,7 @@ public class GameLogic implements Observer{
 			throw new GameLogicError("Error in handleCouncilRequest, player can't play");
 		
 		councilRequest.apply(player);
+		player.synchResource();
 	}	
 	
 	@Override
