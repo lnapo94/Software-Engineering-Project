@@ -405,20 +405,20 @@ public class TableView {
 	}
 		
 	//PLACER FOR THE FAMILIARS
-	private void place(Familiar familiar, Position position){
+	private void place(Familiar familiar, Position position) throws ElementNotFoundException{
 			
 		if(position.isEmpty()){
-				//TODO implementare metodo puro in position position.setFamiliar(familiar);
+			position.setFamiliarView(familiar);
 		}
 	}
 		
-	public void placeInMarket(Familiar familiar, int position){
+	public void placeInMarket(Familiar familiar, int position) throws ElementNotFoundException{
 		if(market.size() > position && position >= 0)
 			place(familiar, market.get(position));
 			
 	}
 	
-	public void placeInProduce(Familiar familiar, int position){
+	public void placeInProduce(Familiar familiar, int position) throws ElementNotFoundException{
 		
 		if(position == 0)
 			place(familiar, firstProduct);
@@ -426,38 +426,38 @@ public class TableView {
 			place(familiar, product.get(position));
 	}
 		
-	public void placeInYield(Familiar familiar, int position){
+	public void placeInYield(Familiar familiar, int position) throws ElementNotFoundException{
 		if(position == 0)
 			place(familiar, firstYield);
 		else if(yield.size() > position && position > 0)
 			place(familiar, yield.get(position));
 	}
 		
-	public void placeInCouncil(Familiar familiar){
+	public void placeInCouncil(Familiar familiar) throws ElementNotFoundException{
 			
 		place(familiar, getFreeCouncilPosition());
 			
 	}
 		
-	public void placeInGreenTower(Familiar familiar, int position){
+	public void placeInGreenTower(Familiar familiar, int position) throws ElementNotFoundException{
 			
 		if(greenTower.size() > position && position >= 0)
 			place(familiar, greenTower.get(position));
 	}
 
-	public void placeInYellowTower(Familiar familiar, int position){
+	public void placeInYellowTower(Familiar familiar, int position) throws ElementNotFoundException{
 			
 		if(yellowTower.size() > position && position >= 0)
 		place(familiar, yellowTower.get(position));
 	}
 
-	public void placeInVioletTower(Familiar familiar, int position){
+	public void placeInVioletTower(Familiar familiar, int position) throws ElementNotFoundException{
 
 		if(violetTower.size() > position && position >= 0)
 			place(familiar, violetTower.get(position));
 	}
 		
-	public void placeInBlueTower(Familiar familiar, int position){
+	public void placeInBlueTower(Familiar familiar, int position) throws ElementNotFoundException{
 
 		if(blueTower.size() > position && position >= 0)
 			place(familiar, blueTower.get(position));

@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps42.model.position;
 
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
@@ -52,6 +53,14 @@ public abstract class Position {
 		}
 		else throw new FamiliarInWrongPosition("The familiar does not satisfy the position pre-requisites");
 	}
+	
+	public void setFamiliarView(Familiar familiar) throws ElementNotFoundException{
+		
+		if(familiar != null)
+			this.familiar = familiar;
+		else throw new ElementNotFoundException("Null Familiar");
+	}
+	
 	public void  removeFamiliar(){			//Have to be invoked to remove the familiar when the round ends
 		this.familiar=null;
 	}
