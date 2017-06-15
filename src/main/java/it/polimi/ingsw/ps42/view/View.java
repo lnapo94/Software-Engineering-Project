@@ -49,6 +49,10 @@ public abstract class View extends Observable implements Observer {
 		this.player = new Player(playerID);
 	}
 	
+	public String getViewPlayerID() {
+		return player.getPlayerID();
+	}
+	
 	public void createTable(List<String> playersID){
 		
 		//Method to be called from the ViewVisitor when receive the players of the game
@@ -115,8 +119,11 @@ public abstract class View extends Observable implements Observer {
 		
 		if( hasToAnswer(message.getPlayerID())){
 			//Ask to choose a Conversion for the Council Privilege
-			message.addChoice(chooseCouncilConversion(message.getPossibleChoice()));
-			
+			int quantity = message.getQuantity();
+			while(quantity > 0){
+				message.addChoice(chooseCouncilConversion(message.getPossibleChoice()));
+				quantity--;
+			}
 			//Notify the choice to the Game Logic
 			setChanged();
 			notifyObservers(message);

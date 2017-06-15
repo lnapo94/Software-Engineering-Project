@@ -88,6 +88,7 @@ public class TableViewTest {
 		try {
 			table.placeInBlueTower(players.get(0).getFamiliar(FamiliarColor.BLACK), 2);
 			
+			
 		} catch (ElementNotFoundException e) {
 			e.printStackTrace();
 		}
