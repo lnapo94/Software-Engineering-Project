@@ -80,7 +80,11 @@ public abstract class View extends Observable implements Observer {
 		
 		if( hasToAnswer(message.getPlayerID())){
 			//Ask to choose a BonusBar
-			message.setChoice(chooseBonusBar(message.getAvailableBonusBar()));
+			int choice = chooseBonusBar(message.getAvailableBonusBar());
+			message.setChoice(choice);
+			
+			//Add the BonusBar to the Player
+			player.setBonusBar(message.getAvailableBonusBar().get(choice));
 			
 			//Notify the choice to the Game Logic
 			setChanged();

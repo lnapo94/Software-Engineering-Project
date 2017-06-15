@@ -85,6 +85,13 @@ public class TableViewTest {
 	
 	public void testFamiliarSetter(){
 		
+		try {
+			table.placeInBlueTower(players.get(0).getFamiliar(FamiliarColor.BLACK), 2);
+			
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 	
