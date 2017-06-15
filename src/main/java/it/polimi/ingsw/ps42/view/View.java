@@ -226,7 +226,10 @@ public abstract class View extends Observable implements Observer {
 	
 	protected Player searchPlayer(String playerID) throws ElementNotFoundException{
 		
-		if( playerID != null  && playerID.equals(player.getPlayerID()))
+		if(playerID == null)
+			throw new NullPointerException();
+		
+		if(playerID.equals(player.getPlayerID()))
 			return player;
 		else{
 			for (Player tempPlayer : otherPlayers) {
@@ -244,8 +247,7 @@ public abstract class View extends Observable implements Observer {
 			Player player = searchPlayer(playerID);
 			player.setCurrentResources(resources);
 		} catch (ElementNotFoundException e) {
-			// TODO Discuss on how to handle this
-			e.printStackTrace();
+			System.out.println("Error in Viewvisitor setResources");
 		}
 	}
 	

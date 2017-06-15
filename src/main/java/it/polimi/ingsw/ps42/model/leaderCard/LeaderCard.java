@@ -60,6 +60,8 @@ public class LeaderCard {
 	}
 	
 	public boolean equals(LeaderCard card) {
+		if(card == null)
+			throw new NullPointerException();
 		return this.getName() == card.getName();
 	}
 	

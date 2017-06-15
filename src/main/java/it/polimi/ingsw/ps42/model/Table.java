@@ -14,12 +14,15 @@ import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
+import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.CouncilPosition;
 import it.polimi.ingsw.ps42.model.position.MarketPosition;
 import it.polimi.ingsw.ps42.model.position.TowerPosition;
 import it.polimi.ingsw.ps42.model.position.YieldAndProductPosition;
+import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
+import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 import it.polimi.ingsw.ps42.parser.PositionLoader;
 
 public class Table extends Observable{
@@ -28,6 +31,11 @@ public class Table extends Observable{
 	
 	//Constants for the default match
 	private final static int FLOORS = 4;
+	
+	private final static int FIRST_MONEY = 5;
+	private final static int SECOND_MONEY = 6;
+	private final static int THIRD_MONEY = 7;
+	private final static int FOURTH_MONEY = 8;
 	
 	//Variable to set the player who is playing this match
 	private List<Player> players;
@@ -72,6 +80,9 @@ public class Table extends Observable{
 	//The Game BonusBar List loaded by file 
 	private List<BonusBar> gameBonusBar;
 	
+	//Initilial resources for all the players
+	private Packet initialResources;
+	
 	//The four Constructors. We have a constructor for each kind of match
 	//For example: with 2 players the table hasn't all the position
 
@@ -82,6 +93,9 @@ public class Table extends Observable{
 		//Add the player
 		this(player1, player2, player3);
 		players.add(player4);
+		
+		player4.increaseResource(addInitialResources(FOURTH_MONEY));
+		player4.synchResource();
 		
 		//Add all the required position for a 4-player game (7 max, so 2 more than a 3-player game)
 		try {
@@ -99,6 +113,9 @@ public class Table extends Observable{
 		//3 players constructor
 		this(player1, player2);
 		players.add(player3);
+		
+		player3.increaseResource(addInitialResources(THIRD_MONEY));
+		player3.synchResource();
 		
 		//Initialize the other yield and product positions
 		yield = new ArrayList<>();
@@ -118,6 +135,19 @@ public class Table extends Observable{
 		players = new ArrayList<>();
 		players.add(player1);
 		players.add(player2);
+		
+		player1.increaseResource(addInitialResources(FIRST_MONEY));
+		player2.increaseResource(addInitialResources(SECOND_MONEY));
+		
+		player1.synchResource();
+		player2.synchResource();
+	}
+	
+	//Add the correct resources to the players
+	private Packet addInitialResources(int quantityOfMoney) {
+		Packet packet = initialResources.clone();
+		packet.addUnit(new Unit(Resource.MONEY, quantityOfMoney));
+		return packet;
 	}
 	
 	//Private method for the construction of the yield and product position
@@ -175,6 +205,12 @@ public class Table extends Observable{
 		} catch (IOException e) {
 			System.out.println("Unable to open the file");
 		}
+		
+		//Adding initial resources to the packet
+		initialResources = new Packet();
+		initialResources.addUnit(new Unit(Resource.WOOD, 2));
+		initialResources.addUnit(new Unit(Resource.STONE, 2));
+		initialResources.addUnit(new Unit(Resource.SLAVE, 3));
 	}
 	
 	//PRIVATE METHOD TO CONSTRUCT THE 4 TOWER

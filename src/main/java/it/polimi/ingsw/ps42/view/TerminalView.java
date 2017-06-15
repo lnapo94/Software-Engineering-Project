@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.print.attribute.ResolutionSyntax;
-
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
@@ -131,7 +129,7 @@ public class TerminalView extends View {
 		try {
 			printPlayerResources( searchPlayer(playerID));
 		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("Player not found in terminalView");
 		}
 	}
 	private void printPlayerResources( Player p){
