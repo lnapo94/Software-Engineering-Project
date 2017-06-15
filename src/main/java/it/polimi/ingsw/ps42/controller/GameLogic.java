@@ -179,11 +179,6 @@ public class GameLogic implements Observer{
 				actionOrder.add(player);
 		}
 		
-		for(String playerID : players) {
-			Player temporary = new Player(playerID);
-			this.players.add(temporary);
-		}
-		
 		//Build the table
 		this.table = constructTable(this.players);
 		if(table == null)
@@ -199,6 +194,7 @@ public class GameLogic implements Observer{
 			
 			loader.setFileName("Resource//BansFile//thirdPeriodBans.json");
 			table.addThirdBan(loader.getBan(new Random().nextInt(MAX_BANS_IN_FILE)));
+			loader.close();
 		} catch (IOException e) {
 			
 			System.out.println("Unable to open the ban file in GameLogic");
@@ -258,8 +254,9 @@ public class GameLogic implements Observer{
 		
 		//Load the bonus bar from a file
 		try {
-			BonusBarLoader loader = new BonusBarLoader("src/bonusBarConfig");
+			BonusBarLoader loader = new BonusBarLoader("Resource//BonusBars//bonusBars.json");
 			bonusBarList = loader.getBonusBars();
+			loader.close();
 		} catch (IOException e) {
 			System.out.println("Unable to open the bonus bar file in gameLogic");
 			throw new GameLogicError("File open error");
@@ -284,6 +281,7 @@ public class GameLogic implements Observer{
 			if(currentPeriod == 4) {
 				checkBan(table.getSecondBan(), 4, SECOND_PERIOD);
 			}
+			currentPeriod++;
 		}
 		
 		//At the end of the match
@@ -308,7 +306,7 @@ public class GameLogic implements Observer{
 			//Apply the victory point for the resources
 			Packet victoryPoint;
 			try {
-				ConversionLoader loader = new ConversionLoader("Resource\\Configuration\\finalResourceConfiguration.json");
+				ConversionLoader loader = new ConversionLoader("Resource//Configuration//finalResourceConfiguration.json");
 				victoryPoint = new Packet();
 				victoryPoint.addUnit(loader.getGreenConversion(player.getCardList(CardColor.GREEN).size()));
 				victoryPoint.addUnit(loader.getBlueConversion(player.getCardList(CardColor.BLUE).size()));
@@ -415,8 +413,8 @@ public class GameLogic implements Observer{
 		//TODO Leader Card da fare...
 		
 		//Start the round
-		for(Player player : actionOrder) {
-			
+		while(!actionOrder.isEmpty()) {
+			Player player = actionOrder.get(0);
 			//Leader Card
 			for(LeaderCard card : player.getActivatedLeaderCard()) {
 				card.enableOnceARoundEffect();
@@ -477,6 +475,7 @@ public class GameLogic implements Observer{
 				player.setToZero(Resource.FAITHPOINT);
 				player.increaseResource(victoryPoint);
 				player.synchResource();
+				loader.close();
 			} catch (IOException e) {
 				System.out.println("Unable to open the faithPath conversion file");
 			}

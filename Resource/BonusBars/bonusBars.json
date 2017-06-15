@@ -1,0 +1,181 @@
+{
+  "player": null,
+  "productBonus": {
+    "costs": null,
+    "gains": {
+      "list": [
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 1
+        },
+        {
+          "resource": "MONEY",
+          "quantity": 2
+        }
+      ]
+    },
+    "councilObtain": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+  },
+  "yieldBonus": {
+    "costs": null,
+    "gains": {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 1
+        },
+        {
+          "resource": "STONE",
+          "quantity": 1
+        },
+        {
+          "resource": "SLAVE",
+          "quantity": 1
+        }
+      ]
+    },
+    "councilObtain": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+  },
+  "hasBeenInitialized": false
+}{
+  "player": null,
+  "productBonus": {
+    "costs": null,
+    "gains": {
+      "list": [
+        {
+          "resource": "SLAVE",
+          "quantity": 2
+        },
+        {
+          "resource": "MONEY",
+          "quantity": 1
+        }
+      ]
+    },
+    "councilObtain": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+  },
+  "yieldBonus": {
+    "costs": null,
+    "gains": {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 1
+        },
+        {
+          "resource": "STONE",
+          "quantity": 1
+        },
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 1
+        }
+      ]
+    },
+    "councilObtain": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+  },
+  "hasBeenInitialized": false
+}{
+  "player": null,
+  "productBonus": {
+    "costs": null,
+    "gains": {
+      "list": [
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 2
+        },
+        {
+          "resource": "MONEY",
+          "quantity": 1
+        }
+      ]
+    },
+    "councilObtain": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+  },
+  "yieldBonus": {
+    "costs": null,
+    "gains": {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 1
+        },
+        {
+          "resource": "STONE",
+          "quantity": 1
+        },
+        {
+          "resource": "SLAVE",
+          "quantity": 1
+        }
+      ]
+    },
+    "councilObtain": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+  },
+  "hasBeenInitialized": false
+}{
+  "player": null,
+  "productBonus": {
+    "costs": null,
+    "gains": {
+      "list": [
+        {
+          "resource": "SLAVE",
+          "quantity": 1
+        },
+        {
+          "resource": "MONEY",
+          "quantity": 2
+        }
+      ]
+    },
+    "councilObtain": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+  },
+  "yieldBonus": {
+    "costs": null,
+    "gains": {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 1
+        },
+        {
+          "resource": "STONE",
+          "quantity": 1
+        },
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 1
+        }
+      ]
+    },
+    "councilObtain": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+  },
+  "hasBeenInitialized": false
+}

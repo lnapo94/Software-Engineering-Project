@@ -14,29 +14,36 @@ import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
 import it.polimi.ingsw.ps42.model.player.Player;
+import it.polimi.ingsw.ps42.view.TerminalView;
 
 public class GameLogicTest {
 
 	@Test
 	public void test() throws NotEnoughPlayersException, GameLogicError, IOException, ElementNotFoundException {
 		GameLogic logic;
-		Player p1 = new Player("Player 1");
-		Player p2 = new Player("Player 2");
+		TerminalView view1 = new TerminalView();
+		TerminalView view2 = new TerminalView();
 		
-		List<String> players = new ArrayList<>();
-		players.add(p1.getPlayerID());
-		players.add(p2.getPlayerID());
+		view1.addPlayer("Player 1");
+		view2.addPlayer("Player 2");
+		
+		ArrayList<String> players = new ArrayList<>();
+		ArrayList<String> playersView = new ArrayList<>();
+		
+		players.add(view1.getViewPlayerID());
+		players.add(view2.getViewPlayerID());
+		
+		playersView.add(view1.getViewPlayerID());
+		playersView.add(view2.getViewPlayerID());
+		
+		view1.createTable(playersView);
+		view2.createTable(playersView);
 		
 		logic = new GameLogic(players);
-		
-		Table table = logic.getTable();
-		
-		assertEquals(4, table.getBlueTower().size());
+		logic.addView(view1);
+		logic.addView(view2);
 		
 		logic.initGame();
-		
-		Card card = table.getBlueTower().get(3).getCard();
-		System.out.println(card.toString());
 	}
 
 }

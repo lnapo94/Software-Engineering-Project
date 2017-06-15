@@ -64,8 +64,6 @@
     "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.ForEachObtain"
   }
 }{
-  "ban": null
-}{
   "ban": {
     "requirements": {
       "list": [
@@ -98,5 +96,12 @@
     "player": null,
     "typeOfEffect": "FOR_EACH_OBTAIN",
     "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.ForEachObtain"
+  }
+}{
+  "ban": {
+    "color": "YELLOW",
+    "player": null,
+    "typeOfEffect": "YELLOW_COST_BAN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CardCostBan"
   }
 }

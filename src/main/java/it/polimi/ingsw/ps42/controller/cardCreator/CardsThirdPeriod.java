@@ -15,6 +15,11 @@ public class CardsThirdPeriod extends CardsCreator{
 			highIndex = 8;
 			return this;
 		}
+		try {
+			loader.close();
+		} catch (IOException e) {
+			System.out.println("Unable to close the cards file");
+		}
 		return null;
 	}
 

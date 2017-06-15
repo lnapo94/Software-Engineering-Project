@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.ps42.model.effect.CardBan;
+import it.polimi.ingsw.ps42.model.effect.CardCostBan;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.ForEachObtain;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
@@ -65,6 +66,9 @@ public class BanBuilder extends Builder{
 		String effectType=scanner.nextLine();
 		
 		switch (effectType.toUpperCase()) {
+		case "CARD_COST_BAN":
+			effect = askCardCostBan();
+			break;
 		case "OBTAIN_BAN":
 			effect = askObtainBan();
 			break;
@@ -100,6 +104,15 @@ public class BanBuilder extends Builder{
 		
 	}
 	
+	private Effect askCardCostBan() {
+		String response;
+		System.out.println("Quale colore? ");
+		response = scanner.nextLine();
+		CardColor color = CardColor.parseInput(response);
+		CardCostBan effect = new CardCostBan(color);
+		return effect;
+	}
+
 	private Effect askObtainBan(){
 		
 		String response;
@@ -185,9 +198,9 @@ public class BanBuilder extends Builder{
 	public static void main(String[] args){
 		
 		try {
-			BanBuilder builder = new BanBuilder("thirdPeriodBans.json");
+			BanBuilder builder = new BanBuilder("Resource//BansFile//thirdPeriodBans.json");
 			
-			for(int i = 0; i < 7; i++)
+			for(int i = 0; i < 1; i++)
 				builder.addBan();
 			
 			builder.close();

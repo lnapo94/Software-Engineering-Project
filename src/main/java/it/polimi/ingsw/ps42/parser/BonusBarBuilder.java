@@ -62,6 +62,5 @@ public class BonusBarBuilder extends Builder{
 		}
 		return new Obtain(null, gains, councilObtain);
 	}
-	
 
 }

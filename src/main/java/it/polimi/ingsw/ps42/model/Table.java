@@ -430,14 +430,18 @@ public class Table extends Observable{
 		firstProduct.removeBonusFamiliars();
 		
 		//Reset the others Yield and Product Positions
-		for(YieldAndProductPosition position : yield) {
-			position.removeFamiliar();
-			position.removeBonusFamiliars();
+		if(yield != null) {
+			for(YieldAndProductPosition position : yield) {
+				position.removeFamiliar();
+				position.removeBonusFamiliars();
+			}
 		}
 		
-		for(YieldAndProductPosition position : product) {
-			position.removeFamiliar();
-			position.removeBonusFamiliars();
+		if(product != null) {
+			for(YieldAndProductPosition position : product) {
+				position.removeFamiliar();
+				position.removeBonusFamiliars();
+			}
 		}
 		
 		//Reset the market positions

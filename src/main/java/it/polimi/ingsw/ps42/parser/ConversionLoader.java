@@ -59,8 +59,8 @@ public class ConversionLoader extends Loader{
 		return unit;
 	}
 	
-	public Unit getBlueConversion(int conversionKey) {
-		Unit unit = new Unit(Resource.VICTORYPOINT, blueCardsConversion.get(conversionKey));
+	public Unit getBlueConversion(Integer conversionKey) {
+		Unit unit = new Unit(Resource.VICTORYPOINT, blueCardsConversion.get(conversionKey.toString()));
 		return unit;
 	}
 	
