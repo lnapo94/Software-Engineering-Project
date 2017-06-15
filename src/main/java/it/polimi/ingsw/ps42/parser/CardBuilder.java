@@ -336,7 +336,7 @@ public class CardBuilder extends Builder {
 		CardBuilder builder;
 		Scanner scanner = new Scanner(System.in);
 		try {
-			builder = new CardBuilder("greenCardsThirdPeriod.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
+			builder = new CardBuilder("VioletCardsFirstPeriod.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
 			String response;
 			int i =0;
 			do{
