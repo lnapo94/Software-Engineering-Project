@@ -1,7 +1,10 @@
 package it.polimi.ingsw.ps42.view;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.print.attribute.ResolutionSyntax;
 
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
@@ -9,8 +12,11 @@ import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
+import it.polimi.ingsw.ps42.model.enumeration.Resource;
+import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
+import it.polimi.ingsw.ps42.model.player.Player;
 
 public class TerminalView extends View {
 
@@ -44,6 +50,9 @@ public class TerminalView extends View {
 	@Override
 	protected PlayerMove choosePlayerMove(ActionPrototype prototype) {
 		System.out.println("Nuova mossa per il giocatore corrente");
+		
+		printPlayerResources( player);
+		
 		if(prototype != null)
 			System.out.println("é una mossa bonus del tipo"+ prototype.getType().toString()+ 
 								" livello: "+ prototype.getLevel());
@@ -54,6 +63,7 @@ public class TerminalView extends View {
 				+ActionType.TAKE_BLUE+"\n "+ActionType.TAKE_GREEN+"\n "+ActionType.TAKE_VIOLET+"\n "+ActionType.TAKE_YELLOW+
 				"\n "+ActionType.YIELD);
 		
+		scanner.nextLine();
 		ActionType moveType = ActionType.parseInput(scanner.nextLine());
 		System.out.println("colore familiare?");
 
@@ -94,6 +104,42 @@ public class TerminalView extends View {
 	protected void notifyLeaderCardDiscard() {
 		System.out.println("il player corrente vuole scartare una cata leader");
 		
+	}
+	
+	@Override
+	public void setBlackDie(int value) {
+			super.setBlackDie(value);
+			System.out.println("Black familiar value: "+value);
+	}
+	
+	@Override
+	public void setOrangeDie(int value) {
+			super.setOrangeDie(value);
+			System.out.println("Orange familiar value: "+value);
+
+	}
+	
+	@Override
+	public void setWhiteDie(int value) {
+			super.setWhiteDie(value);
+			System.out.println("White familiar value: "+value);
+	}
+	
+	@Override
+	public void setResources(HashMap<Resource, Integer> resources, String playerID) {
+		super.setResources(resources, playerID);
+		try {
+			printPlayerResources( searchPlayer(playerID));
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	private void printPlayerResources( Player p){
+		System.out.println("Current resources:");
+		for (Resource resource: Resource.values()) {
+			
+			System.out.println(resource.toString()+": "+p.getResource(resource));
+		}
 	}
 
 }

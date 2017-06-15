@@ -28,16 +28,20 @@ public class GameLogicTest {
 		view2.addPlayer("Player 2");
 		
 		ArrayList<String> players = new ArrayList<>();
-		ArrayList<String> playersView = new ArrayList<>();
+		ArrayList<String> players1View = new ArrayList<>();
+		ArrayList<String> players2View = new ArrayList<>();
 		
 		players.add(view1.getViewPlayerID());
 		players.add(view2.getViewPlayerID());
 		
-		playersView.add(view1.getViewPlayerID());
-		playersView.add(view2.getViewPlayerID());
+		players1View.add(view1.getViewPlayerID());
+		players1View.add(view2.getViewPlayerID());
 		
-		view1.createTable(playersView);
-		view2.createTable(playersView);
+		players2View.add(view1.getViewPlayerID());
+		players2View.add(view2.getViewPlayerID());
+		
+		view1.createTable(players1View);
+		view2.createTable(players2View);
 		
 		logic = new GameLogic(players);
 		logic.addView(view1);

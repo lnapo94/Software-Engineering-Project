@@ -33,10 +33,10 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public abstract class View extends Observable implements Observer {
 
 	
-	private TableView table; 
-	private Player player;
-	private List<Player> otherPlayers; 
-	private Visitor viewVisitor;
+	protected TableView table; 
+	protected Player player;
+	protected List<Player> otherPlayers; 
+	protected Visitor viewVisitor;
 	
 	public View() {
 		
@@ -221,7 +221,7 @@ public abstract class View extends Observable implements Observer {
 		this.table.setWhiteDie(value);
 	}
 	
-	private Player searchPlayer(String playerID) throws ElementNotFoundException{
+	protected Player searchPlayer(String playerID) throws ElementNotFoundException{
 		
 		if( playerID != null  && playerID.equals(player.getPlayerID()))
 			return player;
