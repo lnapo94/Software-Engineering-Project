@@ -5,7 +5,7 @@ import java.io.IOException;
 public class CardsFirstPeriod extends CardsCreator{
 
 	public CardsFirstPeriod() throws IOException {
-		super("src/firstPeriod/");
+		super("Resource//Cards//FirstPeriod//");
 	}
 
 	@Override

@@ -40,6 +40,9 @@ public class Card {
 	private List<Printable> possibleChoice;
 	private List<Integer> possibleChoiceIndex;
 	
+	//ArrayList of cost used for the cost player can pay effectively
+	private List<Packet> effectivelyCosts;
+	
 	public Card(String name, String description, CardColor color, int period, 
 			int level, List<Packet> costs, List<Effect> immediateEffects, List<Packet> requirements,
 			List<Effect> permanentEffect, List<Effect> finalEffects){
@@ -59,6 +62,7 @@ public class Card {
 		//Construct the arraylist
 		this.possibleChoice = new ArrayList<>();
 		this.possibleChoiceIndex = new ArrayList<>();
+		this.effectivelyCosts = new ArrayList<>();
 	}
 	
 	public String getName() {
@@ -107,8 +111,10 @@ public class Card {
 		if(costs != null && !costs.isEmpty()) {
 			
 			//Then check the requirements, maybe player can pay the card but he hasn't the requirements, such as enough military point
-			if(requirements != null && !checkRequirements(player))
-				throw new NotEnoughResourcesException("Player hasn't the requirements");
+			checkRequirements(player);
+			
+			if(effectivelyCosts.size() == 0)
+				throw new NotEnoughResourcesException("Player has not enough resources");
 			
 			//Then check if there is a discount to apply
 			if(discount != null) {
@@ -119,18 +125,18 @@ public class Card {
 			//At this point, card can have only one cost or higher
 			//If there is only one cost, control if player can pay it
 			//In this case, the player can pay immediately, without a request
-			if(costs.size() == 1) {
-				if(checkPlayerCanPay(costs.get(0), player, discount))
+			if(effectivelyCosts.size() == 1) {
+				if(checkPlayerCanPay(effectivelyCosts.get(0), player, discount))
 					payCard(player, 0);
 				else
 					throw new NotEnoughResourcesException("Player hasn't enough resource");
 			}
 			
 			//This branch will enable only if there is more costs in card
-			if(costs.size() > 1) {
+			if(effectivelyCosts.size() > 1) {
 				
 				//Then control the cost player can pay
-				for(Packet cost : costs) {
+				for(Packet cost : effectivelyCosts) {
 					if(checkPlayerCanPay(cost, player, discount)) {
 						possibleChoice.add(cost.clone());
 						possibleChoiceIndex.add(costs.indexOf(cost));
@@ -317,17 +323,27 @@ public class Card {
 		return true;
 	}
 	
-	private boolean checkRequirements(Player player) {
-		for(Packet requirement : requirements) {
-			boolean checker = true;
-			for(Unit unit : requirement) {
-				if(unit.getQuantity() > player.getResource(unit.getResource()))
-					checker = false;
+	private void checkRequirements(Player player) {
+		//Used to fill the effectivelyCosts array to pay the card
+		//Costs with requirement before than normal costs
+		int i = 0;
+		if(requirements != null) {
+			for(Packet requirement : requirements) {
+				boolean checker = true;
+				for(Unit unit : requirement) {
+					if(unit.getQuantity() > player.getResource(unit.getResource()))
+						checker = false;
+				}
+				if(checker == true)
+					effectivelyCosts.add(costs.get(requirements.indexOf(requirement)));
+				i++;
 			}
-			if(checker == true)
-				return checker;
 		}
-		return false;
+		
+		//Add the other costs to the effectivelyCosts
+		for(int j = i; j < costs.size(); j++){
+			effectivelyCosts.add(costs.get(j));
+		}
 	}
 	
 	private List<Packet> copyPacketList(List<Packet> start) {

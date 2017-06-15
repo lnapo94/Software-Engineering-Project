@@ -26,7 +26,6 @@ public abstract class CardsCreator {
 	
 	public CardsCreator(String folderPath) throws IOException {
 		this.folderPath = folderPath;
-		loader = new CardLoader(folderPath);
 		
 		//Initialize cards vectors
 		green = loadCard("green.json");
@@ -93,10 +92,11 @@ public abstract class CardsCreator {
 		//Construct the correct path to file
 		String temporaryPath = folderPath + fileName;
 		
+		loader = new CardLoader(temporaryPath);
+		
 		StaticList<Card> temporary = new StaticList<>(8);
 		
 		//Set the correct name to the loader
-		loader.setFileName(temporaryPath);
 		List<Card> readCards = loader.getCards();
 		
 		if(readCards.size() < CARDS_NUMBER)

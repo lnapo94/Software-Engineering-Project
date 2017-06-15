@@ -53,6 +53,7 @@ public class CardTest {
 	//The cards created for testing
 	private Card firstCard;
 	private Card secondCard;
+	private Card thirdCard;
 
 	@Before
 	public void setUp() throws Exception {
@@ -179,7 +180,7 @@ public class CardTest {
 	public void constructCard() {
 		firstCard = new Card("First", "Something", CardColor.YELLOW, 2, 4, costs, immediateEffects, requirements, null, null);
 		secondCard = new Card("First", "Something", CardColor.YELLOW, 2, 4, costs, immediateEffects, requirements, null, null);
-
+		thirdCard = new Card("First", "Something", CardColor.YELLOW, 2, 4, costs, immediateEffects, null, null, null);
 	}
 
 	@Test
@@ -189,7 +190,7 @@ public class CardTest {
 		//while cannotEnableObtainEffect can only enable the For Each Obtain
 		
 		firstCard.payCard(canTakeCard, null);
-		secondCard.payCard(cannotEnableObtainEffect, null);
+		thirdCard.payCard(cannotEnableObtainEffect, null);
 		
 		assertEquals(5, canTakeCard.getResource(Resource.MONEY));
 		assertEquals(3, canTakeCard.getResource(Resource.STONE));
@@ -206,8 +207,8 @@ public class CardTest {
 		for(CardRequest request : requests) {
 			request.setChoice(0);
 			request.apply();
-			canTakeCard.synchResource();
 		}
+		canTakeCard.synchResource();
 		
 		requests = cannotEnableObtainEffect.getRequests();
 		
