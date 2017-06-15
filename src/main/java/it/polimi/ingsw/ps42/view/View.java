@@ -166,6 +166,8 @@ public abstract class View extends Observable implements Observer {
 	
 	protected abstract int answerCardRequest( CardRequest message);
 	
+	protected abstract void notifyLeaderCardActiovation();
+	protected abstract void notifyLeaderCardDiscard();
 	
 	//SETTER FOR TABLE BANS
 	public void setFirstBan(Effect firstBan){
@@ -315,6 +317,7 @@ public abstract class View extends Observable implements Observer {
 		this.table.placeInMarket(familiar, position);
 	}
 	
+	//SETTER FOR THE CARDS TO A PLAYER
 	public void setGreenCard(String playerID, int position) throws ElementNotFoundException{
 		
 		Player player = searchPlayer(playerID);
