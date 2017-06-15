@@ -229,7 +229,7 @@ public class TableView {
 		}
 	}
 	
-	//PRIVATE METHOD TO POSITIONING THE CARDS IN TOWER
+	//METHODS TO POSITIONING THE CARDS IN TOWERS
 	private void placeCards(StaticList<Card> cards, StaticList<TowerPosition> tower) {
 		for (int i = 0; i < FLOORS; i++) {
 			tower.get(i).setCard(cards.get(i));
@@ -413,7 +413,7 @@ public class TableView {
 	}
 		
 	public void placeInMarket(Familiar familiar, int position){
-		if(market.size() > position && position > 0)
+		if(market.size() > position && position >= 0)
 			place(familiar, market.get(position));
 			
 	}
@@ -429,7 +429,7 @@ public class TableView {
 	public void placeInYield(Familiar familiar, int position){
 		if(position == 0)
 			place(familiar, firstYield);
-		else if(yield.size() > position && position >= 0)
+		else if(yield.size() > position && position > 0)
 			place(familiar, yield.get(position));
 	}
 		
@@ -464,39 +464,38 @@ public class TableView {
 	}
 		
 	//GETTERS FOR THE CARDS
+	private Card removeCard(StaticList<TowerPosition> tower, int position) throws ElementNotFoundException{
+		
+		if( position >= 0 && tower.size() > position)
+			if( tower.get(position).hasCard()){
+				Card card = tower.get(position).getCard();
+				tower.get(position).removeCard();
+				return card;
+			}
+		
+		throw new ElementNotFoundException("Card in Tower not Found");
+	}
+	
 	public Card getGreenCard(int position) throws ElementNotFoundException{
 			
-		if( position > 0 && greenTower.size() > position)
-			if( greenTower.get(position).hasCard())
-				return greenTower.get(position).getCard();
-			else return null;
-		else throw new ElementNotFoundException("Green Card not Found");
+		return removeCard(greenTower, position);
 	}
 		
 	public Card getYellowCard(int position) throws ElementNotFoundException{
 
-		if( position > 0 && yellowTower.size() > position)
-			if( yellowTower.get(position).hasCard())
-				return yellowTower.get(position).getCard();
-			else return null;
-		else throw new ElementNotFoundException("Yellow Card not Found");
+		return removeCard(greenTower, position);
+
 	}
 		
 	public Card getVioletCard(int position) throws ElementNotFoundException{
 
-		if( position > 0 && violetTower.size() > position)
-			if( violetTower.get(position).hasCard())
-				return violetTower.get(position).getCard();
-			else return null;
-		else throw new ElementNotFoundException("Violet Card not Found");
+		return removeCard(greenTower, position);
+
 	}
 		
 	public Card getBlueCard(int position) throws ElementNotFoundException{
 
-		if( position > 0 && blueTower.size() > position)
-			if( blueTower.get(position).hasCard())
-				return blueTower.get(position).getCard();
-			else return null;
-		else throw new ElementNotFoundException("Blue Card not Found");
+		return removeCard(greenTower, position);
+
 	}
 }

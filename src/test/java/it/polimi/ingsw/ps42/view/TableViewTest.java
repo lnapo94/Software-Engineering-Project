@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.view;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +9,15 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.ps42.model.Card;
+import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.effect.CardBan;
 import it.polimi.ingsw.ps42.model.effect.CardCostBan;
 import it.polimi.ingsw.ps42.model.effect.ObtainBan;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
+import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
@@ -62,11 +66,57 @@ public class TableViewTest {
 		table.addSecondBan(new ObtainBan(new Unit(Resource.MONEY, 1)));
 		table.addThirdBan(new CardCostBan(CardColor.YELLOW));
 		
+		table.setPlayerFirstBan("testPlayer0");
 		table.setPlayerFirstBan("testPlayer1");
-		table.setPlayerFirstBan("testPlayer2");
-		table.setPlayerFirstBan("testPlayer3");
+		table.setPlayerSecondBan("testPlayer1");
+		table.setPlayerThirdBan("testPlayer2");
 		
-		//assertTrue(players.get(0).getPlayerID().equals(table.getPlayersWithFirstBan().get(0)));
+		List<String> bannedPlayers = table.getPlayersWithFirstBan();
+		assertTrue(bannedPlayers.get(0).equals(players.get(0).getPlayerID()));
+		assertTrue(bannedPlayers.get(1).equals(players.get(1).getPlayerID()));
+
+		bannedPlayers = table.getPlayersWithSecondBan();
+		assertTrue(bannedPlayers.get(0).equals(players.get(1).getPlayerID()));
+
+		bannedPlayers = table.getPlayersWithThirdBan();
+		assertTrue(bannedPlayers.get(0).equals(players.get(2).getPlayerID()));
+
+	}
+	
+	public void testFamiliarSetter(){
+		
+		
+	}
+	
+	public void testCardGetters() throws ElementNotFoundException{
+		
+		//Create 4 Cards 
+		StaticList<Card> deck = new StaticList<>(4);
+		
+		for(int i=0; i<4; i++){
+			
+			Card temp = new Card("testCard"+i, "", CardColor.GREEN, 1, 3, null, null, null, null, null);
+			deck.add(temp);
+		}
+		
+		//Place the Cards in Table
+		table.placeGreenTower(deck);
+		
+		//Get them back
+		for (int i=0; i<4; i++){
+			Card temp = table.getGreenCard(i);
+			//Verify they have the same name
+			assertTrue(temp.getName().equals(deck.get(i).getName()));
+		}
+		
+		//Verify the Cards have been really removed from the Table
+		try{
+			table.getGreenCard(0);
+		}
+		catch(ElementNotFoundException e){
+			assertTrue(true);
+		}
+		
 	}
 	
 	@Test
@@ -78,6 +128,14 @@ public class TableViewTest {
 		
 		testBanMethods();
 	
+		testFamiliarSetter();
+		
+		try {
+			testCardGetters();
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
