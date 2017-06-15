@@ -15,7 +15,7 @@ public class CardsSecondPeriod extends CardsCreator{
 			highIndex = 8;
 			return this;
 		}
-		return new CardsSecondPeriod();
+		return new CardsThirdPeriod();
 	}
 
 }
