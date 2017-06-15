@@ -47,10 +47,26 @@ public class ConversionBuilder extends Builder{
 
 		buffer.close();
 	}
+
+	public void addSomething2() throws IOException {
+		String response;
+		String parse;
+		HashMap<String, Integer> map = new HashMap<>();
+
+		for(Integer i = 0; i < 16; i++) {
+			System.out.println("Quanti punti vittoria per posizione punti fede " + i + "?");
+			response = scanner.nextLine();
+			map.put(i.toString(), Integer.parseInt(response));
+		}
+
+		parse = gson.toJson(map);
+		buffer.append(parse);
+		buffer.close();
+	}
 	
 	public static void main(String[] args) throws IOException {
-		ConversionBuilder builder = new ConversionBuilder("Resource\\Configuration\\finalResourceConfiguration.json");
-		builder.addSomething();
+		ConversionBuilder builder = new ConversionBuilder("Resource\\Configuration\\faithPointPathConfiguration.json");
+		builder.addSomething2();
 	}
 
 }

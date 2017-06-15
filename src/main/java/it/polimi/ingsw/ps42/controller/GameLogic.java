@@ -471,7 +471,7 @@ public class GameLogic implements Observer{
 			
 			//Adding victory point to player
 			try {
-				FaithPathLoader loader = new FaithPathLoader("src/faithPath");
+				FaithPathLoader loader = new FaithPathLoader("Resource//Configuration//faithPointPathConfiguration.json");
 				Packet victoryPoint = new Packet();
 				victoryPoint.addUnit(loader.conversion(player.getResource(Resource.FAITHPOINT)));
 				player.setToZero(Resource.FAITHPOINT);
