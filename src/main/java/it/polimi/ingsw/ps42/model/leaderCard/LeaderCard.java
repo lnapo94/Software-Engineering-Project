@@ -1,7 +1,12 @@
 package it.polimi.ingsw.ps42.model.leaderCard;
 
+import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
+import it.polimi.ingsw.ps42.message.leaderRequest.LeaderRequest;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
+import it.polimi.ingsw.ps42.model.effect.SetSingleFamiliarLeader;
+import it.polimi.ingsw.ps42.model.enumeration.EffectType;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 
 public class LeaderCard {
@@ -43,13 +48,40 @@ public class LeaderCard {
 	}
 	
 	public void enableOnceARoundEffect() {
-		if(onceARoundEffect != null)
-			onceARoundEffect.enableEffect(this.owner);
+		if(onceARoundEffect != null) {
+			if(isEffectWithRequirements(onceARoundEffect)) {
+				LeaderRequest request = new LeaderFamiliarRequest(owner.getPlayerID(), this);
+				owner.addLeaderRequest(request);
+			}				
+			else
+				onceARoundEffect.enableEffect(this.owner);
+		}
+	}
+	
+	//Methods used to enable a familiar color request
+	public void enableOnceARoundEffect(FamiliarColor color) {
+		SetSingleFamiliarLeader effect = (SetSingleFamiliarLeader)onceARoundEffect;
+		effect.setFamiliarColor(color);
+		effect.enableEffect(owner);
+	}
+	
+	public void enablePermanentEffect(FamiliarColor color) {
+		SetSingleFamiliarLeader effect = (SetSingleFamiliarLeader)permanentEffect;
+		effect.setFamiliarColor(color);
+		effect.enableEffect(owner);
 	}
 	
 	public void enablePermanentEffect() {
 		if(permanentEffect != null)
 			permanentEffect.enableEffect(this.owner);
+	}
+	
+	private boolean isEffectWithRequirements(Effect effect) {
+		//Control if the leader card has a request
+		
+		if(effect.getTypeOfEffect() == EffectType.SET_SINGLE_FAMILIAR_LEADER)
+			return true;
+		return false;
 	}
 	
 	public void discard() {

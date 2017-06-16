@@ -12,9 +12,10 @@ import it.polimi.ingsw.ps42.controller.cardCreator.CardsFirstPeriod;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
-import it.polimi.ingsw.ps42.message.LeaderRequest;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerToken;
+import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
+import it.polimi.ingsw.ps42.message.leaderRequest.LeaderRequest;
 import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Card;
@@ -265,8 +266,9 @@ public class GameLogic implements Observer{
 			System.out.println("Unable to open the bonus bar file in gameLogic");
 			throw new GameLogicError("File open error");
 		}
-		
-		for(Player player : players) {
+
+		for(int i = players.size() - 1; i >= 0; i--) {
+			Player player = players.get(i);
 			player.askChooseBonusBar(bonusBarList);
 		}
 		
@@ -384,11 +386,6 @@ public class GameLogic implements Observer{
 		// Set the BonusBar to the player
 		Player player = searchPlayer(playerID);
 		player.setBonusBar(bonusBarList.remove(index));
-	}
-	
-	public void setLeaderCard(){
-		// Set the Leader Card to the player
-		
 	}
 	
 	private void initRound(){
@@ -596,11 +593,22 @@ public class GameLogic implements Observer{
 	}
 	
 	public void HandleLeaderUpdate(Player player, LeaderCard card) {
+		//Enable the leader card when the player wants
 		player.enableLeaderCard(card);
 	}
 	
 	public void setLeaderCard(int chosenCard, String player) {
+		//Set the chosen leader card to the player
+	}
+	
+	public void handleLeaderFamiliarRequest(LeaderFamiliarRequest request) throws ElementNotFoundException, GameLogicError {
+		//Apply the leader card request for a familiar color
+		Player player = searchPlayer(request.getPlayerID());
 		
+		if(player != this.actionOrder.get(0))
+			throw new GameLogicError("Error in handleRequest, player can't play");
+		
+		request.apply();
 	}
 
 }

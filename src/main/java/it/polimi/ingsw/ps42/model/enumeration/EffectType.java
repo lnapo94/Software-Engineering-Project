@@ -8,7 +8,7 @@ public enum EffectType {
 	INCREASE_FAMILIARS("Increase_Familiars"), INCREASE_SINGLE_FAMILIAR("Increase_Single_Familiar"), 
 	CARD_BAN("Card_Ban"), NO_MARKET_BAN("No_Market_Ban"), NO_FIRST_ACTION_BAN("No_First_Action_Ban"), 
 	YELLOW_COST_BAN("Yellow_Cost_Ban"), SLAVE_BAN("Slave_Ban"), NO_TOWER_BONUS("No_Tower_Bonus"),
-	INCREASE_SINGLE_FAMILIAR_LEADER("Increase_Single_Familiar_Leader"), NO_MONEY_MALUS("No_Money_Malus"),
+	SET_SINGLE_FAMILIAR_LEADER("Increase_Single_Familiar_Leader"), NO_MONEY_MALUS("No_Money_Malus"),
 	NO_MILITARY_REQUIREMENTS("No_Military_Requirements"), FIVE_MORE_VICTORY_POINT("Five_More_Victory_Point"),
 	CAN_POSITIONING_EVERYWHERE("Can_Positioning_Everywhere");
 	

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import it.polimi.ingsw.ps42.message.LeaderRequest;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -13,18 +12,14 @@ public class SetSingleFamiliarLeader extends Effect{
 	final private int value;
 
 	public SetSingleFamiliarLeader(int value) {
-		super(EffectType.INCREASE_SINGLE_FAMILIAR_LEADER);
+		super(EffectType.SET_SINGLE_FAMILIAR_LEADER);
 		this.value = value;
 	}
 
 	@Override
 	public void enableEffect(Player player) {
-		LeaderRequest request = new LeaderRequest(player.getPlayerID(), false);
-		player.addLeaderRequest(request);
-	}
-	
-	public void apply() {
-		player.getFamiliar(color).setValue(value);
+		if(this.color != null)
+			player.getFamiliar(color).setValue(value);
 	}
 	
 	public void setFamiliarColor(FamiliarColor color) {

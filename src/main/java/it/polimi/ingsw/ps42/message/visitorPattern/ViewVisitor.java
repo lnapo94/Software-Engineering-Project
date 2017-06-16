@@ -13,10 +13,10 @@ import it.polimi.ingsw.ps42.message.DiceMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
-import it.polimi.ingsw.ps42.message.LeaderRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
+import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.view.View;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
@@ -294,11 +294,8 @@ public class ViewVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(LeaderRequest message) {
-		/*Ask to the player what card he wants to copy or 
-		 * which familiar he wants to set the value
-		 */
-		
+	public void visit(LeaderFamiliarRequest message) {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -38,7 +38,7 @@ public abstract class CardsCreator {
 		highIndex = 4;
 	}
 	
-	protected StaticList<Card> shuffle(StaticList<Card> cards) {
+	private StaticList<Card> shuffle(StaticList<Card> cards) {
 		//TODO testing
 		//Shuffle the cards list
 		StaticList<Card> temporary = new StaticList<>(CARDS_NUMBER);
@@ -104,6 +104,9 @@ public abstract class CardsCreator {
 		
 		for(int i = 0; i < CARDS_NUMBER; i++)
 			temporary.add(readCards.get(i));
+		
+		//Shuffle the cards
+		temporary = shuffle(temporary);
 		
 		return temporary;
 	}

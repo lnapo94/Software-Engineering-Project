@@ -13,10 +13,10 @@ import it.polimi.ingsw.ps42.message.DiceMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
-import it.polimi.ingsw.ps42.message.LeaderRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
+import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.model.action.Action;
 import it.polimi.ingsw.ps42.model.action.ActionCreator;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
@@ -175,10 +175,15 @@ public class ControllerVisitor implements Visitor {
 			System.out.println("Error in visitor BanRequest");
 		}
 	}
-	
+
 	@Override
-	public void visit(LeaderRequest message) {
-		
+	public void visit(LeaderFamiliarRequest message) {
+		//Message received by the view, do the apply for the leader card
+		try {
+			gameLogic.handleLeaderFamiliarRequest(message);
+		} catch (ElementNotFoundException | GameLogicError e) {
+			System.out.println("Error in visitor leaderFamiliarRequest");
+		}
 	}
 
 
