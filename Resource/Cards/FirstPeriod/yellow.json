@@ -57,7 +57,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Tax Office",
   "description": "",
@@ -117,7 +118,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Triumphal Arch",
   "description": "",
@@ -177,7 +179,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Theater",
   "description": "",
@@ -237,7 +240,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Carpenter\u0027s Shop",
   "description": "",
@@ -327,7 +331,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Stonemason\u0027s Shop",
   "description": "",
@@ -417,7 +422,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Chapel",
   "description": "",
@@ -481,7 +487,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Residence",
   "description": "",
@@ -630,5 +637,6 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }

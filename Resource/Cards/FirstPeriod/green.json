@@ -29,7 +29,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Woods",
   "description": "",
@@ -79,7 +80,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Village",
   "description": "",
@@ -115,7 +117,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Gravel Pit",
   "description": "",
@@ -165,7 +168,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Forest",
   "description": "",
@@ -215,7 +219,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Monastery",
   "description": "",
@@ -273,7 +278,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Citadel",
   "description": "",
@@ -309,7 +315,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "City",
   "description": "",
@@ -434,5 +441,6 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }

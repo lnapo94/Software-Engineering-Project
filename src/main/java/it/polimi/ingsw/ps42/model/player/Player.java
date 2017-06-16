@@ -9,6 +9,7 @@ import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
+import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerToken;
@@ -583,6 +584,18 @@ public class Player extends Observable{
 				notifyObservers(leaderRequest);
 			}
 		}
+	
+	public void askChooseLeaderCard(List<LeaderCard> cards) {
+		List<LeaderCard> temporary = new ArrayList<>();
+		
+		for(LeaderCard card: cards) {
+			temporary.add(card.clone());
+		}
+		
+		LeaderCardMessage message = new LeaderCardMessage(getPlayerID(), temporary);
+		setChanged();
+		notifyObservers(message);
+	}
 	
 	
 }

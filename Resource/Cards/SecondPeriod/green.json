@@ -47,7 +47,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Mountain Town",
   "description": "",
@@ -101,7 +102,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Mining Town",
   "description": "",
@@ -159,7 +161,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Rock Pit",
   "description": "",
@@ -209,7 +212,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Estate",
   "description": "",
@@ -267,7 +271,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Hermitage",
   "description": "",
@@ -317,7 +322,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Manor House",
   "description": "",
@@ -353,7 +359,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Dukedom",
   "description": "",
@@ -411,5 +418,6 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }

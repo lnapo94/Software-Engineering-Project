@@ -50,7 +50,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Stonemason",
   "description": "",
@@ -94,7 +95,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Dame",
   "description": "",
@@ -134,7 +136,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Knight",
   "description": "",
@@ -262,7 +265,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Farmer",
   "description": "",
@@ -332,7 +336,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Preacher",
   "description": "",
@@ -379,7 +384,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Abbes",
   "description": "",
@@ -431,5 +437,6 @@
   "permanentEffects": [],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }

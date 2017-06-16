@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps42.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -12,6 +13,7 @@ import it.polimi.ingsw.ps42.controller.cardCreator.CardsFirstPeriod;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
+import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
@@ -42,6 +44,7 @@ import it.polimi.ingsw.ps42.parser.BanLoader;
 import it.polimi.ingsw.ps42.parser.BonusBarLoader;
 import it.polimi.ingsw.ps42.parser.ConversionLoader;
 import it.polimi.ingsw.ps42.parser.FaithPathLoader;
+import it.polimi.ingsw.ps42.parser.LeaderCardLoader;
 import it.polimi.ingsw.ps42.view.View;
 
 public class GameLogic implements Observer{
@@ -70,6 +73,9 @@ public class GameLogic implements Observer{
 	
 	//Variable used to check the bonusBar
 	private List<BonusBar> bonusBarList;
+	
+	//Variable used to check the leaderCards for each players
+	private HashMap<Player, List<LeaderCard> > leaderCardTable;
 	
 	
 	public void handleAction(Action action, String playerID) throws ElementNotFoundException{
@@ -272,7 +278,10 @@ public class GameLogic implements Observer{
 			player.askChooseBonusBar(bonusBarList);
 		}
 		
-		//TODO Load the LeaderCards
+		loadHashMap();
+		
+		for(int i = 0; i < players.size(); i++)
+			sendLeaderCards();
 		
 		//Start the match
 		currentPeriod = 1;
@@ -347,6 +356,40 @@ public class GameLogic implements Observer{
 				
 	}
 	
+	private void sendLeaderCards() {
+		//Send the cards to the players
+		for (Player player : players) {
+			player.askChooseLeaderCard(leaderCardTable.get(player));
+		}
+		
+		//Shift the map
+		//Save the first deck of cards
+		List<LeaderCard> deck = leaderCardTable.get(players.get(0));
+		
+		//For all the players, copy the second cards in the first cards
+		for(int i = 0; i < players.size() - 1; i++) {
+			Player first = players.get(i);
+			Player second = players.get(i + 1);
+			
+			List<LeaderCard> temporary = leaderCardTable.get(second);
+			leaderCardTable.put(first, temporary);
+		}
+		//Finally copy the saved deck in the last position
+		leaderCardTable.put(players.get(players.size() - 1), deck);
+	}
+	
+	private void loadHashMap() {
+		try {
+			LeaderCardLoader loader = new LeaderCardLoader("src/LEADER");
+			
+			for(Player player : players)
+				leaderCardTable.put(player, loader.getLeaderCards());
+			
+		} catch (IOException e) {
+			System.out.println("Unable to open the leaderCard file");
+		}
+	}
+
 	//Private method to enable the final effect of the card
 	private void enableFinalEffect(StaticList<Card> cards) {
 		for(Card card : cards) {
@@ -597,8 +640,16 @@ public class GameLogic implements Observer{
 		player.enableLeaderCard(card);
 	}
 	
-	public void setLeaderCard(int chosenCard, String player) {
+	public void setLeaderCard(int chosenCard, String playerID) throws ElementNotFoundException {
 		//Set the chosen leader card to the player
+		Player player = searchPlayer(playerID);
+		
+		if(chosenCard > leaderCardTable.get(player).size()) {
+			Message message = new LeaderCardMessage(player.getPlayerID(), leaderCardTable.get(player));
+			message.setRetrasmission();
+			player.retrasmitMessage(message);
+		}
+		player.setLeaderCard(leaderCardTable.get(player).remove(chosenCard));
 	}
 	
 	public void handleLeaderFamiliarRequest(LeaderFamiliarRequest request) throws ElementNotFoundException, GameLogicError {

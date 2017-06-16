@@ -51,7 +51,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Farm",
   "description": "",
@@ -109,7 +110,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Colony",
   "description": "",
@@ -163,7 +165,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Marble Point",
   "description": "",
@@ -217,7 +220,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Province",
   "description": "",
@@ -361,7 +365,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Sanctuary",
   "description": "",
@@ -415,7 +420,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Castle",
   "description": "",
@@ -473,7 +479,8 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }{
   "name": "Fortified Town",
   "description": "",
@@ -531,5 +538,6 @@
   ],
   "finalEffects": [],
   "possibleChoice": [],
-  "possibleChoiceIndex": []
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
 }

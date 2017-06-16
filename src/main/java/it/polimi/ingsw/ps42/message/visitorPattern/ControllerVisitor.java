@@ -49,7 +49,11 @@ public class ControllerVisitor implements Visitor {
 		/* Response Message from the View about the Leader Card choice.
 		 * Give to the Game Logic the Leader Card chosen and the related player
 		 */
-		gameLogic.setLeaderCard(message.getChoice(), message.getPlayerID());
+		try {
+			gameLogic.setLeaderCard(message.getChoice(), message.getPlayerID());
+		} catch (ElementNotFoundException e) {
+			System.out.println("Error in visitor leaderCardMessage");
+		}
 	}
 
 	@Override
