@@ -69,13 +69,13 @@ public class CardBuilder extends Builder {
 		
 	}
 	
-	private String askName(){
+	protected String askName(){
 		
 		System.out.println("inserisci il nome della carta");
 		return scanner.nextLine();
 	}
 	
-	private String askDescription(){
+	protected String askDescription(){
 
 		System.out.println("inserisci descrizione della carta");
 		return scanner.nextLine();
@@ -145,7 +145,7 @@ public class CardBuilder extends Builder {
 		return effects;
 	}
 	
-	private Effect askEffect(){
+	protected Effect askEffect(){
 		
 		Effect effect = null;
 		System.out.println("Tipo dell'Effetto? ");
@@ -190,7 +190,7 @@ public class CardBuilder extends Builder {
 		
 	}
 	
-	private Effect askIncreaseSingleFamiliar() {
+	protected Effect askIncreaseSingleFamiliar() {
 		String response;
 		int value;
 		FamiliarColor color;
@@ -206,7 +206,7 @@ public class CardBuilder extends Builder {
 		return new IncreaseSingleFamiliar(value, color);
 	}
 
-	private Effect askIncreaseFamiliars() {
+	protected Effect askIncreaseFamiliars() {
 
 		String response;
 		int value;
@@ -227,7 +227,7 @@ public class CardBuilder extends Builder {
 	}
 
 
-	private Effect askDoAction() {
+	protected Effect askDoAction() {
 		
 		String response;
 		ActionType type;

@@ -32,7 +32,13 @@ public class MarketPosition extends Position {
 	
 	@Override
 	public void setFamiliar(Familiar familiar) throws FamiliarInWrongPosition {
-		super.setFamiliar(familiar);
+		if(this.isEmpty())
+			//If the position is empty proceed as usual
+			super.setFamiliar(familiar);
+		else{
+			//If the Position is occupied, set the Familiar to the bonus positions
+			this.addBonusFamiliar(familiar);
+		}
 		applyCouncilBonus(familiar.getPlayer());
 	}
 	
@@ -41,11 +47,10 @@ public class MarketPosition extends Position {
 			councilBonus.enableEffect(player);
 	}
 	
-	public void addBonusFamiliar(Familiar familiar) throws FamiliarInWrongPosition {
+	private void addBonusFamiliar(Familiar familiar) throws FamiliarInWrongPosition {
 		if(super.canStay(familiar)){
 			this.bonusFamiliars.add(familiar);
 			applyPositionEffect(familiar);
-			this.bonusFamiliars.add(familiar);
 			applyCouncilBonus(familiar.getPlayer());
 		}
 		else throw new FamiliarInWrongPosition("The bonus Familiar does not satisfy the position pre-requirements");

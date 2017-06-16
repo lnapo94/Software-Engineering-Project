@@ -63,7 +63,7 @@ public class MarketAction extends Action {
 	}	
 
 	private boolean isFree(){
-		return this.tablePosition.get(positionInTableList).isEmpty(); //TO-DO: controllare se il giocatore ha il bonus per le posizioni già occupate
+		return this.tablePosition.get(positionInTableList).isEmpty() || player.canPositioningEverywhere(); 
 	}
 	
 	@Override
