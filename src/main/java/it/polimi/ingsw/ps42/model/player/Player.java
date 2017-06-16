@@ -528,7 +528,8 @@ public class Player extends Observable{
 	public void enableLeaderCard(LeaderCard chosenCard) {
 		//Enable the leader card if the player has it in his list of leader card
 		
-		for (LeaderCard card : leaderCardsList) {
+		while(!leaderCardsList.isEmpty()) {
+			LeaderCard card = leaderCardsList.get(0);
 			if(card.getName() == chosenCard.getName() && card.canEnableCard()) {
 				leaderCardsList.remove(leaderCardsList.indexOf(card));
 				activatedLeaderCard.add(card);

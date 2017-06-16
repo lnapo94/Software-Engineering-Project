@@ -5,14 +5,14 @@ import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 
-public class IncreaseSingleFamiliarLeader extends Effect{
+public class SetSingleFamiliarLeader extends Effect{
 	
 	//Effect used in leader cards to set one familiar value
 	
 	private FamiliarColor color;
 	final private int value;
 
-	protected IncreaseSingleFamiliarLeader(int value) {
+	public SetSingleFamiliarLeader(int value) {
 		super(EffectType.INCREASE_SINGLE_FAMILIAR_LEADER);
 		this.value = value;
 	}
@@ -38,7 +38,7 @@ public class IncreaseSingleFamiliarLeader extends Effect{
 
 	@Override
 	public Effect clone() {
-		return new IncreaseSingleFamiliarLeader(value);
+		return new SetSingleFamiliarLeader(value);
 	}
 
 	@Override

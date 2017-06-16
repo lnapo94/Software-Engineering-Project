@@ -5,7 +5,7 @@ import it.polimi.ingsw.ps42.model.player.Player;
 
 public class FiveMoreVictoryPointLeader extends Effect{
 
-	protected FiveMoreVictoryPointLeader() {
+	public FiveMoreVictoryPointLeader() {
 		super(EffectType.FIVE_MORE_VICTORY_POINT);
 	}
 

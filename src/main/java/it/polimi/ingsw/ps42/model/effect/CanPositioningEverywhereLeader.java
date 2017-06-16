@@ -5,7 +5,7 @@ import it.polimi.ingsw.ps42.model.player.Player;
 
 public class CanPositioningEverywhereLeader extends Effect{
 
-	protected CanPositioningEverywhereLeader(EffectType typeOfEffect) {
+	public CanPositioningEverywhereLeader() {
 		super(EffectType.CAN_POSITIONING_EVERYWHERE);
 	}
 	

@@ -353,7 +353,6 @@ public class Table extends Observable{
 		Message banMessage = new BanMessage( this.firstBan.clone(), this.secondBan.clone(), this.thirdBan.clone());
 		setChanged();
 		notifyObservers(banMessage);
-		
 	}
 
 	private List<Player> getNewOrder(){

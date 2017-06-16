@@ -52,8 +52,6 @@
     "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.SlaveBan"
   }
 }{
-  "ban": null
-}{
   "ban": {
     "player": null,
     "typeOfEffect": "NO_FIRST_ACTION_BAN",

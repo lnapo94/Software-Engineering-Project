@@ -5,7 +5,7 @@ import it.polimi.ingsw.ps42.model.player.Player;
 
 public class NoMilitaryRequirementsLeader extends Effect{
 	
-	protected NoMilitaryRequirementsLeader() {
+	public NoMilitaryRequirementsLeader() {
 		super(EffectType.NO_MILITARY_REQUIREMENTS);
 	}
 

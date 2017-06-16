@@ -19,6 +19,7 @@ import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.player.Player;
+import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
 public class TableViewTest {
@@ -63,7 +64,11 @@ public class TableViewTest {
 	public void testBanMethods(){
 		
 		table.addFirstBan(new CardBan(CardColor.BLUE));
-		table.addSecondBan(new ObtainBan(new Unit(Resource.MONEY, 1)));
+		
+		Packet packet = new Packet();
+		packet.addUnit(new Unit(Resource.MONEY, 1));
+		table.addSecondBan(new ObtainBan(packet));
+		
 		table.addThirdBan(new CardCostBan(CardColor.YELLOW));
 		
 		table.setPlayerFirstBan("testPlayer0");

@@ -9,31 +9,32 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
 public class ObtainBan extends Effect{
 	
-	private Packet packet;
-	private Unit unit;
+	private Packet costs;
 	private Resource resource;
 	
-	public ObtainBan(Unit cost) {
+	public ObtainBan(Packet costs) {
 		super(EffectType.OBTAIN_BAN);
-		this.unit = cost;
-		this.packet = new Packet();
-		packet.addUnit(cost);
+		this.costs = costs;
 	}
 
 	@Override
 	public void enableEffect(Player player) {
 		//Enable the ObtainBan effect, hence decrease player's resource if
 		//he gains an exactly resource
-		if(resource == unit.getResource())
+		for(Unit cost : costs)
+		if(resource == cost.getResource()) {
+			Packet packetForDecrement = new Packet();
+			packetForDecrement.addUnit(cost);
 			try {
-				player.decreaseResource(packet);
+				player.decreaseResource(packetForDecrement);
 			} catch (NotEnoughResourcesException e) {
-				player.setToZero(unit.getResource());
+				player.setToZero(cost.getResource());
 			} finally {
 				//Finally case is done because every time this method is called
 				//is needed a control with player resource
 				this.resource = null;
 			}
+		}
 	}
 	
 	public void setResource(Resource resource) {
@@ -43,7 +44,7 @@ public class ObtainBan extends Effect{
 	
 	@Override
 	public ObtainBan clone() {
-		return new ObtainBan(new Unit(this.unit.getResource(), this.unit.getQuantity()));
+		return new ObtainBan(costs.clone());
 	}
 	
 	@Override

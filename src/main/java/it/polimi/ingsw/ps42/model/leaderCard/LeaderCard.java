@@ -9,6 +9,8 @@ public class LeaderCard {
 	final private String name;
 	final private String description;
 	final private LeaderRequirements requirements;
+	
+	//Effects to give a council privilege to the player when the card is discarded
 	final private Obtain effect;
 	
 	//The owner
@@ -57,6 +59,10 @@ public class LeaderCard {
 			owner.getLeaderCardList().remove(this);
 			this.effect.enableEffect(owner);
 		}
+	}
+	
+	public void setOwner(Player owner) {
+		this.owner = owner;
 	}
 	
 	public boolean equals(LeaderCard card) {

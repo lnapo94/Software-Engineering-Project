@@ -22,7 +22,10 @@ public class ObtainBanTest {
 		p1 = new Player("Player 1");
 		
 		//Create a ban
-		ban = new ObtainBan(new Unit(Resource.MILITARYPOINT, 1));
+		Packet packet = new Packet();
+		packet.addUnit(new Unit(Resource.MILITARYPOINT, 1));
+		packet.addUnit(new Unit(Resource.FAITHPOINT, 2));
+		ban = new ObtainBan(packet);
 		
 		//Add ban to a player
 		p1.setBan(ban);
@@ -42,7 +45,7 @@ public class ObtainBanTest {
 		p1.increaseResource(packetForThePlayer);
 		p1.synchResource();
 		assertEquals(2, p1.getResource(Resource.MILITARYPOINT));
-		assertEquals(2, p1.getResource(Resource.FAITHPOINT));
+		assertEquals(0, p1.getResource(Resource.FAITHPOINT));
 	}
 
 }

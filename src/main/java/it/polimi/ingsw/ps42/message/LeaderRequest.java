@@ -1,9 +1,11 @@
 package it.polimi.ingsw.ps42.message;
 
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 
 public class LeaderRequest extends Message{
-
+	
+	private FamiliarColor color;
 	private boolean isForCopy;
 	private String leaderCard;
 	
@@ -12,6 +14,14 @@ public class LeaderRequest extends Message{
 		this.isForCopy = isForCopy;
 	}
 	
+	public void setColor(FamiliarColor color) {
+		this.color = color;
+	}
+	
+	public FamiliarColor getColor() {
+		return this.color;
+	}
+ 	
 	public boolean isForCopy() {
 		return this.isForCopy;
 	}

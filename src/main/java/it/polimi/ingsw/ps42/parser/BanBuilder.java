@@ -115,18 +115,26 @@ public class BanBuilder extends Builder{
 
 	private Effect askObtainBan(){
 		
-		String response;
+		String response = "";
 		int quantity;
 		Resource resource;
-		System.out.println("Risorsa su cui applicare la scomunica?");
-		response = scanner.nextLine();
-		resource = Resource.parseInput(response);
-		System.out.println("Quantità penalizzazione?");
-		response = scanner.nextLine();
-		quantity = Integer.parseInt(response);
-		Unit unit = new Unit(resource, quantity);
 		
-		return new ObtainBan(unit);
+		Packet obtainBan = new Packet();
+		
+		while(!response.equalsIgnoreCase("no")) {
+			System.out.println("Che tipo di risorsa vuoi aggiungere al ban?");
+			
+			response = scanner.nextLine();
+			resource = Resource.parseInput(response);
+			
+			System.out.println("Quanto è il valore del decremento?");
+			quantity = Integer.parseInt(scanner.nextLine());
+			
+			obtainBan.addUnit(new Unit(resource, quantity));
+			System.out.println("Vuoi aggiungere altro?");
+			response = scanner.nextLine();
+		}
+		return new ObtainBan(obtainBan);
 	}
 	
 	private Effect askForEachObtain(){
@@ -198,9 +206,9 @@ public class BanBuilder extends Builder{
 	public static void main(String[] args){
 		
 		try {
-			BanBuilder builder = new BanBuilder("Resource//BansFile//thirdPeriodBans.json");
+			BanBuilder builder = new BanBuilder("Resource//BansFile//thirdPeriodBans2.json");
 			
-			for(int i = 0; i < 1; i++)
+			for(int i = 0; i < 7; i++)
 				builder.addBan();
 			
 			builder.close();
