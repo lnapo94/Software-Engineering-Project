@@ -42,6 +42,10 @@ public class LeaderRequirements {
 	
 	@Override
 	public LeaderRequirements clone() {
-		return new LeaderRequirements(resourceRequirements.clone(), color, cardRequirements);
+		Packet tempResourceRequirements = null;
+		
+		if(resourceRequirements != null)
+			tempResourceRequirements = resourceRequirements.clone();
+		return new LeaderRequirements(tempResourceRequirements, color, cardRequirements);
 	}
 }

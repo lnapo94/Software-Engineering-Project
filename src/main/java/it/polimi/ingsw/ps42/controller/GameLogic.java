@@ -285,7 +285,7 @@ public class GameLogic implements Observer{
 		//Loading and distribute the leader cards
 		loadHashMap();
 		
-		for(int i = 0; i < players.size(); i++)
+		for(int i = 0; i < 4; i++)
 			sendLeaderCards();
 		//End of leader card distribution
 		
