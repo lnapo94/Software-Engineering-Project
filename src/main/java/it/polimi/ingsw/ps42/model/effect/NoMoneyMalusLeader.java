@@ -5,7 +5,7 @@ import it.polimi.ingsw.ps42.model.player.Player;
 
 public class NoMoneyMalusLeader extends Effect{
 
-	protected NoMoneyMalusLeader() {
+	public NoMoneyMalusLeader() {
 		super(EffectType.NO_MONEY_MALUS);
 	}
 

@@ -300,7 +300,7 @@ public class CardBuilder extends Builder {
 		
 		return new CardForEachObtain(color, gains);
 	}
-	private Effect askObtain(){
+	protected Obtain askObtain(){
 		Packet costs = new Packet();
 		Packet gains = new Packet();
 		CouncilObtain councilObtain = null;

@@ -1,16 +1,17 @@
 package it.polimi.ingsw.ps42.parser;
 
 import java.io.IOException;
-
-import javax.jws.soap.SOAPBinding.ParameterStyle;
+import java.util.Scanner;
 
 import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.ps42.model.effect.CanPositioningEverywhereLeader;
-import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
 import it.polimi.ingsw.ps42.model.effect.Effect;
+import it.polimi.ingsw.ps42.model.effect.FiveMoreVictoryPointLeader;
+import it.polimi.ingsw.ps42.model.effect.NoMilitaryRequirementsLeader;
 import it.polimi.ingsw.ps42.model.effect.NoMoneyMalusLeader;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
+import it.polimi.ingsw.ps42.model.effect.SetSingleFamiliarLeader;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
@@ -33,7 +34,8 @@ public class LeaderCardBuilder extends CardBuilder{
 		
 	}
 	
-	public void addLeaderCard() throws IOException{
+	@Override
+	public void addCard() throws IOException{
 		
 		String name = askName();
 		String description = askDescription();
@@ -110,41 +112,65 @@ public class LeaderCardBuilder extends CardBuilder{
 			break;
 		case "CAN_POSITIONING_EVERYWHERE":
 			effect = new CanPositioningEverywhereLeader();
-			break();
+			break;
 		case "NO_MONEY_MALUS":
 			effect = new NoMoneyMalusLeader();
 			break;
 		case "INCREASE_SINGLE_FAMILIAR":
 			effect = askIncreaseSingleFamiliar();
-		
+			break;
+		case "OBTAIN":
+			effect = askObtain();
+			break;
+		case "SET_FAMILIAR":
+			effect = askSetFamiliar();
+			break;
+		case "NO_MILITARY_REQUIREMENTS":
+			effect = new NoMilitaryRequirementsLeader();
+			break;
+		case "FIVE_MORE_VICTORY_POINT":
+			effect = new FiveMoreVictoryPointLeader();
+			break;
+		case "COPY_EFFECT":
+			effect = null;
+			break;
+		case "FOR_EACH":
+			effect = null;
+			break;
 		}
 		
 		return effect;
 	}
 	
-	private Obtain askObtain(){
-		Packet costs = new Packet();
-		Packet gains = new Packet();
-		CouncilObtain councilObtain = null;
-		String response;
-		System.out.println("Aggiungere costi? (si/no)");
-		response = scanner.nextLine();
-		if(response.toUpperCase().equals("SI"))
-			costs=askPacket();
-		System.out.println("Aggiungere guadagni? (si/no)");
-		response = scanner.nextLine();
-		if(response.toUpperCase().equals("SI"))
-			gains=askPacket();
-
-		System.out.println("Aggiungere privilegio del consiglio?");
-		response = scanner.nextLine();
-		if(response.toUpperCase().equals("SI")){
-			System.out.println("Quantità di Privilegi del consiglio?");
-			int quantity = scanner.nextInt();
-			councilObtain = new CouncilObtain(quantity, councilConversion);
-		}
+	private Effect askSetFamiliar(){
 		
-		return new Obtain(costs, gains, councilObtain);
+		System.out.println("Incremento del familiare");
+		int value = Integer.parseInt(scanner.nextLine());
+		return new SetSingleFamiliarLeader(value);
 	}
 	
+	public static void main(String[] args) {
+		
+		LeaderCardBuilder builder;
+		Scanner scanner = new Scanner(System.in);
+		try {
+			builder = new LeaderCardBuilder("LEaderCards.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
+			String response;
+			int i =0;
+			do{
+				builder.addCard();
+				i++;
+				System.out.println("Aggiungere un'altra carta?(si/no) ["+i+" carte aggiunte]");
+				response = scanner.nextLine();
+			}
+			while(response.toUpperCase().equals("SI"));
+			builder.close();
+			scanner.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
 }
