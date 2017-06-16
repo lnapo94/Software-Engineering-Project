@@ -39,6 +39,19 @@ public class YieldAndProductPosition extends Position {
 			}
 		}
 	}
+	
+	@Override
+	public void setFamiliar(Familiar familiar) throws FamiliarInWrongPosition {
+	
+		if(this.isEmpty())
+			//If the position is empty proceed as usual
+			super.setFamiliar(familiar);
+		else{
+			//If the Position is occupied, set the Familiar to the bonus positions
+			this.addBonusFamiliar(familiar);
+		}
+	}
+	
 	public void addBonusFamiliar(Familiar familiar) throws FamiliarInWrongPosition {		//Adds a bonus Familiar in the position, requires a Leader Card activation
 		if(canStay(familiar)){
 			this.bonusFamiliars.add(familiar);

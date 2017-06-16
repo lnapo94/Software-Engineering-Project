@@ -80,14 +80,20 @@ public class YieldAndProductAction extends Action {
 		
 		if( firstPosition.isEmpty())
 			if(actionValue < firstPosition.getLevel()) 	
-				//The first position requires at least an action of level 1 (no neutral familiar without increment)
+				//The first Position requires at least an Action of level 1 (no neutral familiar without increment)
 				return false;
-			else
+			else 
 				return true;
+			//If there are Familiars in others Positions different from Neutral, then the Action is illegal
+		return checkOtherPositions();
 		
-		else if( tablePosition != null ) {
+	}
+	
+	private boolean checkOtherPositions(){
+		//Checks the Color rules of the YieldAndProductPosition
+		if( tablePosition != null ) {
 			
-			//Check if the player has already a familiar in this zone and if the level of the action is sufficient
+			//Check if the Player has already a Familiar in this zone and if the level of the Action is sufficient
 			for (YieldAndProductPosition position : tablePosition) {
 				
 				if(!position.isEmpty() && position.getFamiliar().getPlayer() == familiar.getPlayer()){
@@ -101,6 +107,7 @@ public class YieldAndProductAction extends Action {
 			return true;
 		}
 		return false; 	//The extra-product position are disabled (2-player game)
+		
 	}
 	
 	private Response checkLevel(){
@@ -111,7 +118,7 @@ public class YieldAndProductAction extends Action {
 	}
 	private YieldAndProductPosition getFirstFreePosition(){
 		
-		if(firstPosition.isEmpty())
+		if(firstPosition.isEmpty() || player.canPositioningEverywhere())
 			return firstPosition;
 		else {
 			for (YieldAndProductPosition position : tablePosition) {
