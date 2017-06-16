@@ -42,12 +42,11 @@ public abstract class CardsCreator {
 		//TODO testing
 		//Shuffle the cards list
 		StaticList<Card> temporary = new StaticList<>(CARDS_NUMBER);
-		Random random = new Random();
 		
 		while(!cards.isEmpty()) {
 			//Select a random card
-			int randomNumber = random.nextInt(cards.size());
-			Card temporaryCard = cards.get(random.nextInt(randomNumber));
+			int randomNumber = new Random().nextInt(cards.size());
+			Card temporaryCard = cards.get(randomNumber);
 			
 			//Add the chosen card in the temporary arrayList and
 			//remove it from the cards array

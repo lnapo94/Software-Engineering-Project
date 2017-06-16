@@ -67,7 +67,7 @@ public class LeaderCardBuilder extends CardBuilder{
 		int cardRequirements = 0;
 		System.out.println("aggiungere requisito di Carte?(si/no)");
 		response = scanner.nextLine();
-		if(response.toUpperCase().equals("SI"));{
+		if(response.toUpperCase().equals("SI")){
 			
 			System.out.println("Colore della carta?");
 			System.out.println(CardColor.BLUE.toString()+" "+CardColor.GREEN.toString()+" "

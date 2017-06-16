@@ -105,7 +105,28 @@ public class LeaderCard {
 	
 	@Override
 	public LeaderCard clone() {
-		return new LeaderCard(getName(), getDescription(), requirements.clone(), onceARoundEffect.clone(), permanentEffect.clone(), effect.clone());
+		LeaderRequirements tempRequirements = null;
+		Effect tempOnceARoundEffect = null;
+		Effect tempPermanentEffect = null;
+		CouncilObtain tempEffect = null;
+		
+		if(requirements != null) {
+			tempRequirements = requirements.clone();
+		}
+		
+		if(onceARoundEffect != null) {
+			tempOnceARoundEffect = onceARoundEffect.clone();
+		}
+		
+		if(permanentEffect != null) {
+			tempPermanentEffect = permanentEffect.clone();
+		}
+		
+		if(effect != null) {
+			tempEffect = effect.clone();
+		}
+		
+		return new LeaderCard(getName(), getDescription(), tempRequirements, tempOnceARoundEffect, tempPermanentEffect, tempEffect);
 	}
 
 }

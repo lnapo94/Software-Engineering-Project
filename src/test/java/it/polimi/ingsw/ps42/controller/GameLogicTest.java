@@ -41,7 +41,7 @@ public class GameLogicTest {
 		logic.addView(view1);
 		logic.addView(view2);
 		
-		//logic.initGame();
+		logic.initGame();
 	}
 
 }

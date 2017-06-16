@@ -227,6 +227,9 @@ public class GameLogic implements Observer{
 		//Initialize the card creator
 		cardsCreator = new CardsFirstPeriod();
 		
+		//Initialize the map
+		leaderCardTable = new HashMap<>();
+		
 	}
 	
 	public void addView(View view) {
@@ -278,10 +281,14 @@ public class GameLogic implements Observer{
 			player.askChooseBonusBar(bonusBarList);
 		}
 		
+		
+		//Loading and distribute the leader cards
 		loadHashMap();
 		
 		for(int i = 0; i < players.size(); i++)
 			sendLeaderCards();
+		//End of leader card distribution
+		
 		
 		//Start the match
 		currentPeriod = 1;
@@ -380,11 +387,12 @@ public class GameLogic implements Observer{
 	
 	private void loadHashMap() {
 		try {
-			LeaderCardLoader loader = new LeaderCardLoader("src/LEADER");
+			LeaderCardLoader loader = new LeaderCardLoader("Resource//LeaderCards//leaderCards.json");
 			
 			for(Player player : players)
 				leaderCardTable.put(player, loader.getLeaderCards());
 			
+			loader.close();
 		} catch (IOException e) {
 			System.out.println("Unable to open the leaderCard file");
 		}
