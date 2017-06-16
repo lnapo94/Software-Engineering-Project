@@ -295,7 +295,12 @@ public class ViewVisitor implements Visitor {
 
 	@Override
 	public void visit(LeaderFamiliarRequest message) {
-		// TODO Auto-generated method stub
+		/*
+		 * Ask to the player to choose 
+		 */
+		if(message != null){
+			this.view.handleLeaderFamiliarRequest(message);
+		}
 		
 	}
 

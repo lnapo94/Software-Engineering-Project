@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps42.parser;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -13,10 +14,21 @@ import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 
 public class LeaderCardLoader extends Loader{
 
+	private List<LeaderCard> deck;
 	
 	public LeaderCardLoader( String fileName) throws IOException{
 	
 		super(fileName);
+		
+		//Load all the cards from file
+		deck = new ArrayList<>();
+			
+			while(parser.hasNext()){
+				
+				JsonElement element = parser.next();
+				if(element.isJsonObject())
+					deck.add(gson.fromJson(element , LeaderCard.class));
+			}
 	}
 	
 	@Override
@@ -30,16 +42,16 @@ public class LeaderCardLoader extends Loader{
 	
 	public List<LeaderCard> getLeaderCards(){
 		
-		ArrayList<LeaderCard> deck = new ArrayList<>();
-			
-			while(parser.hasNext()){
-				
-				JsonElement element = parser.next();
-				if(element.isJsonObject())
-					deck.add(gson.fromJson(element , LeaderCard.class));
-			}
-			
-			return deck;
+		int index;
+		ArrayList<LeaderCard> result = new ArrayList<>();
+		for(int i=0; i<4; i++){
+			//Get a random index and add the relative card to the result Array
+			index = new Random().nextInt(deck.size());
+			result.add(deck.remove(index));
+		
+		}
+		
+		return result;
 			
 	}
 	

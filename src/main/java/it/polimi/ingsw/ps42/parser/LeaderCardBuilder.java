@@ -6,11 +6,11 @@ import java.util.Scanner;
 import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.ps42.model.effect.CanPositioningEverywhereLeader;
+import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.FiveMoreVictoryPointLeader;
 import it.polimi.ingsw.ps42.model.effect.NoMilitaryRequirementsLeader;
 import it.polimi.ingsw.ps42.model.effect.NoMoneyMalusLeader;
-import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.effect.SetSingleFamiliarLeader;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
@@ -42,8 +42,11 @@ public class LeaderCardBuilder extends CardBuilder{
 		LeaderRequirements requirements = askRequirements();
 		Effect onceARoundEffect = askOnceARoundEffect();
 		Effect permanentEffect = askPermanentEffect();
-		Obtain obtain = askObtain();
-		
+		CouncilObtain obtain = null;
+		System.out.println("Aggiungere privilegi del consiglio?(si/no)");
+		String response = scanner.nextLine();
+		if(response.toUpperCase().equals("SI"))
+			obtain = askCouncilObtain();
 		LeaderCard card = new LeaderCard(name, description, requirements, onceARoundEffect, permanentEffect, obtain);
 		
 		//Serialize the LeaderCard and write it down on the file
@@ -55,12 +58,15 @@ public class LeaderCardBuilder extends CardBuilder{
 	private LeaderRequirements askRequirements(){
 		
 		System.out.println("Aggiunta Requisiti attivazione della carta");
-		System.out.println("Requisiti di risorse:");
-		Packet resourceRequirements = askPacket();
+		System.out.println("Requisiti di risorse?(si/no)");
+		String response = scanner.nextLine();
+		Packet resourceRequirements= null;
+		if(response.toUpperCase().equals("SI"))
+			resourceRequirements = askPacket();
 		CardColor color = null;
 		int cardRequirements = 0;
 		System.out.println("aggiungere requisito di Carte?(si/no)");
-		String response = scanner.nextLine();
+		response = scanner.nextLine();
 		if(response.toUpperCase().equals("SI"));{
 			
 			System.out.println("Colore della carta?");
@@ -100,10 +106,10 @@ public class LeaderCardBuilder extends CardBuilder{
 	
 		Effect effect = null;
 		System.out.println("Tipo dell'Effetto? ");
-		System.out.println(EffectType.OBTAIN.toString()+"\n "+EffectType.FOR_EACH_OBTAIN.toString()+"\n "
-				+EffectType.INCREASE_ACTION.toString()+"\n "+EffectType.DO_ACTION+"\n "+ EffectType.COUNCIL_OBTAIN.toString()+
-				"\n "+EffectType.INCREASE_FAMILIARS.toString()+"\n "+EffectType.INCREASE_SINGLE_FAMILIAR.toString()+"\n "+
-				EffectType.NO_TOWER_BONUS.toString()+"\n "+EffectType.CARD_FOR_EACH_OBTAIN);
+		System.out.println(EffectType.OBTAIN.toString()+"\n "+EffectType.CAN_POSITIONING_EVERYWHERE.toString()+"\n "
+				+EffectType.INCREASE_ACTION.toString()+"\n "+EffectType.DO_ACTION+"\n "+ EffectType.NO_MONEY_MALUS.toString()+
+				"\n "+EffectType.SET_SINGLE_FAMILIAR_LEADER.toString()+"\n "+EffectType.INCREASE_SINGLE_FAMILIAR.toString()+"\n "+
+				EffectType.FIVE_MORE_VICTORY_POINT.toString()+"\n "+EffectType.NO_MILITARY_REQUIREMENTS);
 		String effectType=scanner.nextLine();
 		switch (effectType.toUpperCase()){
 		
@@ -154,7 +160,7 @@ public class LeaderCardBuilder extends CardBuilder{
 		LeaderCardBuilder builder;
 		Scanner scanner = new Scanner(System.in);
 		try {
-			builder = new LeaderCardBuilder("LEaderCards.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
+			builder = new LeaderCardBuilder("LeaderCards.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
 			String response;
 			int i =0;
 			do{

@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
+import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
@@ -138,6 +139,12 @@ public class TerminalView extends View {
 			
 			System.out.println(resource.toString()+": "+p.getResource(resource));
 		}
+	}
+
+	@Override
+	protected FamiliarColor chooseFamiliarColor(LeaderFamiliarRequest message) {
+		System.out.println("Choose a color for the familar increment");
+		return FamiliarColor.parseInput(scanner.nextLine());
 	}
 
 }

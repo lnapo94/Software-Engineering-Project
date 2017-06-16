@@ -2,8 +2,8 @@ package it.polimi.ingsw.ps42.model.leaderCard;
 
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderRequest;
+import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
 import it.polimi.ingsw.ps42.model.effect.Effect;
-import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.effect.SetSingleFamiliarLeader;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
@@ -16,7 +16,7 @@ public class LeaderCard {
 	final private LeaderRequirements requirements;
 	
 	//Effects to give a council privilege to the player when the card is discarded
-	final private Obtain effect;
+	final private CouncilObtain effect;
 	
 	//The owner
 	private Player owner;
@@ -25,7 +25,7 @@ public class LeaderCard {
 	final private Effect onceARoundEffect;
 	final private Effect permanentEffect;
 	
-	public LeaderCard(String name, String description, LeaderRequirements requirements, Effect onceARoundEffect, Effect permanentEffect, Obtain effect) {
+	public LeaderCard(String name, String description, LeaderRequirements requirements, Effect onceARoundEffect, Effect permanentEffect, CouncilObtain effect) {
 		this.name = name;
 		this.description = description;
 		this.requirements = requirements;
