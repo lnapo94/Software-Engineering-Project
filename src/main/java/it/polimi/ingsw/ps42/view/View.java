@@ -14,6 +14,7 @@ import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
+import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.message.visitorPattern.ViewVisitor;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Card;
@@ -167,6 +168,19 @@ public abstract class View extends Observable implements Observer {
 		}
 	}
 	
+	public void handleLeaderFamiliarRequest(LeaderFamiliarRequest message){
+		
+		if(hasToAnswer(message.getPlayerID())){
+			//Ask to the Player to choose a FamiliarColor
+			FamiliarColor color = chooseFamiliarColor(message);
+			message.setFamiliarColor(color);
+			
+			//Notify the Game Logic of the choice
+			setChanged();
+			notifyObservers(message);
+		}
+	}
+	
 	//Methods For Input/Output Implemented by Concrete Classes
 	protected abstract int chooseBonusBar(List<BonusBar> bonusBarList);
 
@@ -179,6 +193,8 @@ public abstract class View extends Observable implements Observer {
 	protected abstract boolean chooseIfPayBan(int banPeriod);
 	
 	protected abstract int answerCardRequest( CardRequest message);
+	
+	protected abstract FamiliarColor chooseFamiliarColor(LeaderFamiliarRequest message);
 	
 	protected abstract void notifyLeaderCardActiovation();
 	protected abstract void notifyLeaderCardDiscard();

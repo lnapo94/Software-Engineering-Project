@@ -217,7 +217,7 @@ public class CardBuilder extends Builder {
 		return new IncreaseFamiliarsPoint(value);
 	}
 
-	private Effect askCouncilObtain() {
+	protected CouncilObtain askCouncilObtain() {
 		String response;
 		int quantity;
 		System.out.println("Quantità di benefici del consiglio?");
