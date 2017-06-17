@@ -10,7 +10,7 @@ public enum EffectType {
 	YELLOW_COST_BAN("Yellow_Cost_Ban"), SLAVE_BAN("Slave_Ban"), NO_TOWER_BONUS("No_Tower_Bonus"),
 	SET_SINGLE_FAMILIAR_LEADER("Increase_Single_Familiar_Leader"), NO_MONEY_MALUS("No_Money_Malus"),
 	NO_MILITARY_REQUIREMENTS("No_Military_Requirements"), FIVE_MORE_VICTORY_POINT("Five_More_Victory_Point"),
-	CAN_POSITIONING_EVERYWHERE("Can_Positioning_Everywhere");
+	CAN_POSITIONING_EVERYWHERE("Can_Positioning_Everywhere"), SET_ALL_FAMILIARS_LEADER("Set_All_Familiars_Leader");
 	
 	private final String message;
 	

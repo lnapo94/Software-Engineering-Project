@@ -12,6 +12,7 @@ import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.FiveMoreVictoryPointLeader;
 import it.polimi.ingsw.ps42.model.effect.NoMilitaryRequirementsLeader;
 import it.polimi.ingsw.ps42.model.effect.NoMoneyMalusLeader;
+import it.polimi.ingsw.ps42.model.effect.SetAllFamiliarsLeader;
 import it.polimi.ingsw.ps42.model.effect.SetSingleFamiliarLeader;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
@@ -73,7 +74,7 @@ public class LeaderCardBuilder extends CardBuilder{
 		
 		System.out.println("aggiungere requisito di Carte?(si/no)");
 		response = scanner.nextLine();
-		while(response.toUpperCase().equals("SI")){
+		while(!response.toUpperCase().equals("NO")){
 			
 			System.out.println("Colore della carta?");
 			System.out.println(CardColor.BLUE.toString()+" "+CardColor.GREEN.toString()+" "
@@ -120,7 +121,7 @@ public class LeaderCardBuilder extends CardBuilder{
 		System.out.println(EffectType.OBTAIN.toString()+"\n "+EffectType.CAN_POSITIONING_EVERYWHERE.toString()+"\n "
 				+EffectType.INCREASE_ACTION.toString()+"\n "+EffectType.DO_ACTION+"\n "+ EffectType.NO_MONEY_MALUS.toString()+
 				"\n "+EffectType.SET_SINGLE_FAMILIAR_LEADER.toString()+"\n "+EffectType.INCREASE_SINGLE_FAMILIAR.toString()+"\n "+
-				EffectType.FIVE_MORE_VICTORY_POINT.toString()+"\n "+EffectType.NO_MILITARY_REQUIREMENTS);
+				EffectType.FIVE_MORE_VICTORY_POINT.toString()+"\n "+EffectType.NO_MILITARY_REQUIREMENTS+"\n"+EffectType.SET_ALL_FAMILIARS_LEADER);
 		String effectType=scanner.nextLine();
 		switch (effectType.toUpperCase()){
 		
@@ -154,6 +155,9 @@ public class LeaderCardBuilder extends CardBuilder{
 		case "FOR_EACH":
 			effect = null;
 			break;
+		case "SET_ALL_FAMILIARS_LEADER":
+			effect = askSetAllFamiliarsLeader();
+			break;
 		}
 		
 		return effect;
@@ -164,6 +168,14 @@ public class LeaderCardBuilder extends CardBuilder{
 		System.out.println("Incremento del familiare");
 		int value = Integer.parseInt(scanner.nextLine());
 		return new SetSingleFamiliarLeader(value);
+	}
+	
+	
+	private Effect askSetAllFamiliarsLeader() {
+		int value;
+		System.out.println("Valore?");
+		value = Integer.parseInt(scanner.nextLine());
+		return new SetAllFamiliarsLeader(value);
 	}
 	
 	public static void main(String[] args) {

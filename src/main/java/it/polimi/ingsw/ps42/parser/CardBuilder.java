@@ -18,6 +18,7 @@ import it.polimi.ingsw.ps42.model.effect.IncreaseFamiliarsPoint;
 import it.polimi.ingsw.ps42.model.effect.IncreaseSingleFamiliar;
 import it.polimi.ingsw.ps42.model.effect.NoBonusInTower;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
+import it.polimi.ingsw.ps42.model.effect.SetAllFamiliarsLeader;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
@@ -152,7 +153,7 @@ public class CardBuilder extends Builder {
 		System.out.println(EffectType.OBTAIN.toString()+"\n "+EffectType.FOR_EACH_OBTAIN.toString()+"\n "
 				+EffectType.INCREASE_ACTION.toString()+"\n "+EffectType.DO_ACTION+"\n "+ EffectType.COUNCIL_OBTAIN.toString()+
 				"\n "+EffectType.INCREASE_FAMILIARS.toString()+"\n "+EffectType.INCREASE_SINGLE_FAMILIAR.toString()+"\n "+
-				EffectType.NO_TOWER_BONUS.toString()+"\n "+EffectType.CARD_FOR_EACH_OBTAIN);
+				EffectType.NO_TOWER_BONUS.toString()+"\n "+EffectType.CARD_FOR_EACH_OBTAIN+"\n"+EffectType.SET_ALL_FAMILIARS_LEADER);
 		String effectType=scanner.nextLine();
 		switch (effectType.toUpperCase()) {
 		case "OBTAIN":
@@ -181,7 +182,7 @@ public class CardBuilder extends Builder {
 			break;
 		case "NO_TOWER_BONUS":
 			effect = new NoBonusInTower();
-			break;
+			break;			
 		default:
 			System.out.println("tipo non valido");
 			break;
@@ -318,7 +319,7 @@ public class CardBuilder extends Builder {
 		response = scanner.nextLine();
 		if(response.toUpperCase().equals("SI")){
 			System.out.println("Quantità di Privilegi del consiglio?");
-			int quantity = scanner.nextInt();
+			int quantity = Integer.parseInt(scanner.nextLine());
 			councilObtain = new CouncilObtain(quantity, councilConversion);
 		}
 		

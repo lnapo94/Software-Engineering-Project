@@ -103,7 +103,10 @@ public class GameLogic implements Observer{
 			
 		} 
 		else {
-			//
+			//Control if there is a discount
+			if(bonusAction != null)
+				action.addDiscount(bonusAction.getDiscount());
+			
 			Response response = action.checkAction();
 			
 			if(response == Response.CANNOT_PLAY) {
