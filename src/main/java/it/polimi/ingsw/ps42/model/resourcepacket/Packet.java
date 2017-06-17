@@ -83,6 +83,23 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable {
 		this.list.remove(index);
 	}
 	
+	public void subtractUnit(Unit unitToSubtract) {
+		//Subtract a unit from the packet, if the result quantity goes under 0
+		//the quantity is set to zero automatically
+		try {
+			int index = search(unitToSubtract.getResource());
+			Unit unit = list.get(index);
+			unit.setQuantity(unit.getQuantity() - unitToSubtract.getQuantity());
+			
+			if(unit.getQuantity() < 0) {
+				unit.setQuantity(0);
+			}
+			
+		} catch (ElementNotFoundException e) {
+			System.out.println("Nothing to subtract");
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return this.list.toString();

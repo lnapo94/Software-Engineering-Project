@@ -101,8 +101,17 @@ public class Card {
 	
 	
 	/*	PAY A CARD METHODS	*/
-	public void payCard(Player player, int choice) throws NotEnoughResourcesException {
-		player.decreaseResource(costs.get(choice));
+	public void payCard(Player player, int choice, Packet discount) throws NotEnoughResourcesException {
+		Packet chosenCost = costs.get(choice);
+		
+		//Discount the cost
+		if(discount != null) {
+			for(Unit unit : discount) {
+				chosenCost.subtractUnit(unit);
+			}
+		}
+		
+		player.decreaseResource(chosenCost);
 	}
 	
 	public void payCard(Player player, Packet discount) throws NotEnoughResourcesException {
@@ -117,19 +126,20 @@ public class Card {
 				throw new NotEnoughResourcesException("Player has not enough resources");
 			
 			//Then check if there is a discount to apply
-			if(discount != null) {
-				player.increaseResource(discount);
-				player.synchResource();
-			}
+			increaseDiscount(player, discount);
 			
 			//At this point, card can have only one cost or higher
 			//If there is only one cost, control if player can pay it
 			//In this case, the player can pay immediately, without a request
 			if(effectivelyCosts.size() == 1) {
-				if(checkPlayerCanPay(effectivelyCosts.get(0), player, discount))
-					payCard(player, 0);
-				else
+				if(checkPlayerCanPay(effectivelyCosts.get(0), player, discount)) {
+					decreaseDiscount(player, discount);
+					payCard(player, 0, discount);
+				}
+				else {
+					decreaseDiscount(player, discount);
 					throw new NotEnoughResourcesException("Player hasn't enough resource");
+				}
 			}
 			
 			//This branch will enable only if there is more costs in card
@@ -145,13 +155,30 @@ public class Card {
 				
 				//The costs player can afford will be send to the client. In this way player can choose which cost
 				//he want to pay
-				if(possibleChoice.isEmpty() || possibleChoiceIndex.isEmpty()) 
+				if(possibleChoice.isEmpty() || possibleChoiceIndex.isEmpty())  {
+					decreaseDiscount(player, discount);
 					throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this");
+				}
 				
-				CardRequest request = new PayRequest(player, this, possibleChoiceIndex, possibleChoice);
+				CardRequest request = new PayRequest(player, this, possibleChoiceIndex, possibleChoice, discount);
 				player.addRequest(request);
 				resetPossibleChoice();
 			}
+		}
+	}
+	
+	//Methods for the discount
+	private void increaseDiscount(Player player, Packet discount) {
+		if(discount != null) {
+			player.increaseResource(discount);
+			player.synchResource();
+		}
+	}
+	
+	private void decreaseDiscount(Player player, Packet discount) throws NotEnoughResourcesException {
+		if(discount != null) {
+			player.decreaseResource(discount);
+			player.synchResource();
 		}
 	}
 	
