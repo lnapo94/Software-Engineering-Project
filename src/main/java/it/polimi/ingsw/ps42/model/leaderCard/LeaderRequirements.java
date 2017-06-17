@@ -1,7 +1,7 @@
 package it.polimi.ingsw.ps42.model.leaderCard;
 
-import it.polimi.ingsw.ps42.model.Card;
-import it.polimi.ingsw.ps42.model.StaticList;
+import java.util.HashMap;
+
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
@@ -9,43 +9,54 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
 public class LeaderRequirements {
 	
+	//Variable used to control the requirements
+	private boolean checker;
+	
 	//Used in leader card for normal requirements
 	private Packet resourceRequirements;
 	
 	//Used in case the leader card has some cards requirements
-	private CardColor color;
-	private int cardRequirements;
+	private HashMap<CardColor, Integer> cardRequirements;
 	
-	public LeaderRequirements(Packet resourceRequirements, CardColor color, int cardRequirements) {
+	public LeaderRequirements(Packet resourceRequirements, HashMap<CardColor, Integer> cardRequirements) {
 		this.resourceRequirements = resourceRequirements;
-		this.color = color;
 		this.cardRequirements = cardRequirements;
 	}
 	
 	public boolean satisfyRequirement(Player owner) {
 		//Check if it is possible to enable the leader card by the control
 		//of this requirements
+		checker = true;
 		
-		if(color != null) {
-			StaticList<Card> ownerCard = owner.getCardList(color);
-			if(ownerCard.size() > cardRequirements)
-				return false;
-		}
+		//Lambda expression used to control all the cards requirements
+		cardRequirements.forEach((color, cardRequirement) -> {
+			if(owner.getCardList(color).size() < cardRequirement) {
+				checker = false;
+			}
+		});
+		
 		if(resourceRequirements != null)
 			for(Unit unit : resourceRequirements) {
 				if(unit.getQuantity() > owner.getResource(unit.getResource()))
-					return false;
+					checker = false;
 			}
 		
-		return true;
+		return checker;
 	}
 	
 	@Override
 	public LeaderRequirements clone() {
 		Packet tempResourceRequirements = null;
+		HashMap<CardColor, Integer> tempCardRequirements = new HashMap<>();
 		
 		if(resourceRequirements != null)
 			tempResourceRequirements = resourceRequirements.clone();
-		return new LeaderRequirements(tempResourceRequirements, color, cardRequirements);
+		
+		if(cardRequirements != null) {
+			cardRequirements.forEach((color, cardRequirement) -> {
+				tempCardRequirements.put(color, cardRequirement);
+			});
+		}
+		return new LeaderRequirements(tempResourceRequirements, tempCardRequirements);
 	}
 }

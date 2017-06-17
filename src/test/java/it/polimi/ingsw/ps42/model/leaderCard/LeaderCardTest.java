@@ -2,7 +2,7 @@ package it.polimi.ingsw.ps42.model.leaderCard;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,11 @@ public class LeaderCardTest {
 	@Before
 	public void setUpSatisfyRequirementsTest() throws Exception {
 		//Create a requirement for leader card
-		LeaderRequirements requirements = new LeaderRequirements(null, CardColor.GREEN, 5);
+		HashMap<CardColor, Integer> cardRequirements = new HashMap<>();
+		
+		cardRequirements.put(CardColor.GREEN, 5);
+		
+		LeaderRequirements requirements = new LeaderRequirements(null, cardRequirements);
 		
 		//Create an effect for leadercard
 		Effect permanentEffect = new CanPositioningEverywhereLeader();

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.parser;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import com.google.gson.GsonBuilder;
@@ -61,13 +62,18 @@ public class LeaderCardBuilder extends CardBuilder{
 		System.out.println("Requisiti di risorse?(si/no)");
 		String response = scanner.nextLine();
 		Packet resourceRequirements= null;
+		
 		if(response.toUpperCase().equals("SI"))
 			resourceRequirements = askPacket();
-		CardColor color = null;
-		int cardRequirements = 0;
+		
+		CardColor color;
+		int cardRequirement;
+		
+		HashMap<CardColor, Integer> cardRequirements = new HashMap<>();
+		
 		System.out.println("aggiungere requisito di Carte?(si/no)");
 		response = scanner.nextLine();
-		if(response.toUpperCase().equals("SI")){
+		while(response.toUpperCase().equals("SI")){
 			
 			System.out.println("Colore della carta?");
 			System.out.println(CardColor.BLUE.toString()+" "+CardColor.GREEN.toString()+" "
@@ -75,9 +81,14 @@ public class LeaderCardBuilder extends CardBuilder{
 			color = CardColor.parseInput(scanner.nextLine());
 			
 			System.out.println("Quantità?");
-			cardRequirements = Integer.parseInt(scanner.nextLine());
+			cardRequirement = Integer.parseInt(scanner.nextLine());
+			
+			cardRequirements.put(color, cardRequirement);
+			
+			System.out.println("aggiungere un altro requisito di Carte?(si/no)");
+			response = scanner.nextLine();
 		}
-		return new LeaderRequirements(resourceRequirements, color, cardRequirements);
+		return new LeaderRequirements(resourceRequirements, cardRequirements);
 	}
 	
 	private Effect askOnceARoundEffect(){
