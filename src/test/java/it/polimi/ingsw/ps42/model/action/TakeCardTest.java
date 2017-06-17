@@ -11,6 +11,7 @@ import org.junit.Test;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
+import it.polimi.ingsw.ps42.model.effect.DoAction;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
@@ -35,7 +36,10 @@ public class TakeCardTest {
 	public void setUp() throws Exception {
 		//Create the player
 		p1 = new Player("Player 1");
-		
+		Packet resource = new Packet();
+		resource.addUnit(new Unit(Resource.MONEY, 3));
+		p1.increaseResource(resource);
+		p1.synchResource();
 		//Create one tower
 		//With the lasts 2 floor with an effect
 		Packet packet = new Packet();
@@ -81,27 +85,52 @@ public class TakeCardTest {
 		immediateEffects.add(immediateEffect1);
 		immediateEffects.add(immediateEffect2);
 		
-		//Create the card
+		//Create a immediate effect for the third card (bonus action with a discount)
+		List<Effect> secondImmediateEffects = new ArrayList<>();
+		Packet discount = new Packet();
+		discount.addUnit(new Unit(Resource.WOOD, 5));
+		secondImmediateEffects.add(new DoAction(ActionType.TAKE_GREEN, 5, discount));
+		
+		//Create the cards
 		Card c = new Card("Card", "", CardColor.GREEN, 1, 3, costs, immediateEffects, null, null, null);
 		Card useless = new Card("", "", CardColor.GREEN, 1, 3, null, null, null, null, null);
+		Card discountedCard = new Card("card3", "Card with discount", CardColor.GREEN, 1, 2, null, secondImmediateEffects, null, null, null);
 		
 		//Add cards to tower
-		third.setCard(c);
-		first.setCard(useless);
+		first.setCard(discountedCard);
 		second.setCard(useless);
+		third.setCard(c);
 		fourth.setCard(useless);	
 
 	}
 
 	@Test
 	public void test() {
+		
 		try {
-			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 2);
+			//Take the first card, you will receive a bonus action take green of level 5
+			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 0);
 			Response checker = takeCardAction.checkAction();
 			assertTrue(checker == Response.SUCCESS);
 		} catch (NotEnoughResourcesException e) {
 			System.out.println("Player hasn't enough resources");
 		}
+		assertEquals(0, p1.getRequests().size());
+		
+		try {
+			takeCardAction.doAction();
+			p1.synchResource();
+			//Now player has a BonusAction to perform
+			ActionPrototype bonusAction = p1.getBonusAction();
+			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1, tower, 2, 5, 0);
+			takeCardAction.addDiscount(bonusAction.getDiscount());
+			assertTrue(bonusAction.checkAction(takeCardAction));
+		} catch (FamiliarInWrongPosition | NotEnoughResourcesException e) {
+		System.out.println("ERROR");
+		}
+		
+		Response checker = takeCardAction.checkAction();
+		assertTrue(checker == Response.SUCCESS);
 		List<CardRequest> requests = p1.getRequests();
 		
 		//Control request
@@ -116,11 +145,11 @@ public class TakeCardTest {
 			}
 		}
 		//Here player has two money from the bonus position 
-		assertEquals(2, p1.getResource(Resource.MONEY));
+		assertEquals(3, p1.getResource(Resource.MONEY));
 		try {
 			takeCardAction.doAction();
 			//Now player has 2 money, he payed two money for the card but he has earned two money from the position
-			assertEquals(2, p1.getResource(Resource.MONEY));
+			assertEquals(3, p1.getResource(Resource.MONEY));
 		} catch (FamiliarInWrongPosition e) {
 			System.out.println("ERROR");
 		}

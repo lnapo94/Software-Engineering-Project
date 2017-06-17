@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.StaticList;
+import it.polimi.ingsw.ps42.model.effect.CanPositioningEverywhereLeader;
 import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
@@ -212,6 +213,19 @@ public class MarketActionTest {
 		MarketPosition position3 = new MarketPosition(0, null, 0, councilBonus);		
 		tablePosition.add(position3);
 		action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 2);
+		
+	}
+	
+	@Before
+	public void setupDoubleFamiliarAction() throws NotEnoughResourcesException{
+		
+		setup();
+		//Enable the Player to place his familiar in occupied position
+		Effect canPositioningEverywhere = new CanPositioningEverywhereLeader();
+		canPositioningEverywhere.enableEffect(player);
+		
+		setupSimpleAction();
+		
 		
 	}
 	
