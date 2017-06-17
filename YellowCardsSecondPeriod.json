@@ -1,0 +1,626 @@
+{
+  "name": "Marketplace",
+  "description": "",
+  "color": "YELLOW",
+  "period": 2,
+  "level": 3,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 2
+        },
+        {
+          "resource": "STONE",
+          "quantity": 1
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 3
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": [
+          {
+            "resource": "MONEY",
+            "quantity": 3
+          }
+        ]
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "STONE",
+            "quantity": 2
+          },
+          {
+            "resource": "WOOD",
+            "quantity": 2
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Treasury",
+  "description": "",
+  "color": "YELLOW",
+  "period": 2,
+  "level": 3,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 3
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 4
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": [
+          {
+            "resource": "MONEY",
+            "quantity": 1
+          }
+        ]
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 3
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    },
+    {
+      "costs": {
+        "list": [
+          {
+            "resource": "MONEY",
+            "quantity": 2
+          }
+        ]
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 5
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Painters\u0027 Guild",
+  "description": "",
+  "color": "YELLOW",
+  "period": 2,
+  "level": 4,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 4
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 5
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": [
+          {
+            "resource": "WOOD",
+            "quantity": 1
+          }
+        ]
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 3
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    },
+    {
+      "costs": {
+        "list": [
+          {
+            "resource": "WOOD",
+            "quantity": 3
+          }
+        ]
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 7
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Sculptors\u0027 Guild",
+  "description": "",
+  "color": "YELLOW",
+  "period": 2,
+  "level": 5,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "STONE",
+          "quantity": 4
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 6
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": [
+          {
+            "resource": "STONE",
+            "quantity": 1
+          }
+        ]
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 3
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    },
+    {
+      "costs": {
+        "list": [
+          {
+            "resource": "STONE",
+            "quantity": 3
+          }
+        ]
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 7
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Stonemasons\u0027 Guild",
+  "description": "",
+  "color": "YELLOW",
+  "period": 2,
+  "level": 4,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 1
+        },
+        {
+          "resource": "STONE",
+          "quantity": 2
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 4
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": [
+          {
+            "resource": "SLAVE",
+            "quantity": 1
+          },
+          {
+            "resource": "WOOD",
+            "quantity": 1
+          },
+          {
+            "resource": "STONE",
+            "quantity": 1
+          }
+        ]
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 6
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Baptistery",
+  "description": "",
+  "color": "YELLOW",
+  "period": 2,
+  "level": 2,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "STONE",
+          "quantity": 3
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 2
+          },
+          {
+            "resource": "FAITHPOINT",
+            "quantity": 1
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": [
+          {
+            "resource": "FAITHPOINT",
+            "quantity": 1
+          }
+        ]
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MONEY",
+            "quantity": 2
+          },
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 2
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Barracks",
+  "description": "",
+  "color": "YELLOW",
+  "period": 2,
+  "level": 1,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 1
+        },
+        {
+          "resource": "STONE",
+          "quantity": 1
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 3
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": [
+          {
+            "resource": "SLAVE",
+            "quantity": 1
+          }
+        ]
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MILITARYPOINT",
+            "quantity": 3
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Stronghold",
+  "description": "",
+  "color": "YELLOW",
+  "period": 2,
+  "level": 6,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 2
+        },
+        {
+          "resource": "WOOD",
+          "quantity": 2
+        },
+        {
+          "resource": "STONE",
+          "quantity": 2
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 8
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MILITARYPOINT",
+            "quantity": 2
+          },
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 2
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}
