@@ -93,62 +93,64 @@ public class GameLogic implements Observer{
 		//Find the player
 		Player player = searchPlayer(playerID);
 		
-		//If the player action isn't good, retrasmit to the player another message 
-		if(bonusAction != null && !bonusAction.checkAction(action)){
-			
-			PlayerToken message = new PlayerToken(player.getPlayerID(), bonusAction);
-			player.setBonusAction(bonusAction);
-			message.setRetrasmission();
-			player.retrasmitMessage(message);
-			
-		} 
-		else {
-			//Control if there is a discount
-			if(bonusAction != null)
-				action.addDiscount(bonusAction.getDiscount());
-			
-			Response response = action.checkAction();
-			
-			if(response == Response.CANNOT_PLAY) {
-				//If player can't play, end his action, and move he to the end of actionOrder array
-				player.setCanPlay(true);
-				actionOrder.remove(actionOrder.indexOf(player));
-				actionOrder.add(player);
-			}
-			else if(response == Response.FAILURE || response == Response.LOW_LEVEL) {
-				PlayerToken message = new PlayerToken(player.getPlayerID());
+		if(player == this.actionOrder.get(0)) {
+			//If the player action isn't good, retrasmit to the player another message 
+			if(bonusAction != null && !bonusAction.checkAction(action)){
+				
+				PlayerToken message = new PlayerToken(player.getPlayerID(), bonusAction);
+				player.setBonusAction(bonusAction);
 				message.setRetrasmission();
 				player.retrasmitMessage(message);
-			}
+				
+			} 
 			else {
-				
-				this.currentAction = action;
-				//Control player requests
-				applyRequest(player);
-				
-				//Control player council requests
-				applyCouncilRequest(player);
-				
-				//Apply the action
-				try {
-					action.doAction();
-				} catch (FamiliarInWrongPosition e) {
-					System.out.println("[DEBUG]: familiar in wrong position in gamelogic");
-				}
-				//Remove the action from the variable
-				this.currentAction = null;
-				
-				//Re-check the player requests
-				applyRequest(player);
-				applyCouncilRequest(player);
-				
-				//SYNCH resources
-				player.synchResource();
-				
-				bonusAction = player.getBonusAction();
-				
+				//Control if there is a discount
 				if(bonusAction != null)
-					player.askMove();
+					action.addDiscount(bonusAction.getDiscount());
+				
+				Response response = action.checkAction();
+				
+				if(response == Response.CANNOT_PLAY) {
+					//If player can't play, end his action, and move he to the end of actionOrder array
+					player.setCanPlay(true);
+					actionOrder.remove(actionOrder.indexOf(player));
+					actionOrder.add(player);
+				}
+				else if(response == Response.FAILURE || response == Response.LOW_LEVEL) {
+					PlayerToken message = new PlayerToken(player.getPlayerID());
+					message.setRetrasmission();
+					player.retrasmitMessage(message);
+				}
+				else {
+					
+					this.currentAction = action;
+					//Control player requests
+					applyRequest(player);
+					
+					//Control player council requests
+					applyCouncilRequest(player);
+					
+					//Apply the action
+					try {
+						action.doAction();
+					} catch (FamiliarInWrongPosition e) {
+						System.out.println("[DEBUG]: familiar in wrong position in gamelogic");
+					}
+					//Remove the action from the variable
+					this.currentAction = null;
+					
+					//Re-check the player requests
+					applyRequest(player);
+					applyCouncilRequest(player);
+					
+					//SYNCH resources
+					player.synchResource();
+					
+					bonusAction = player.getBonusAction();
+					
+					if(bonusAction != null)
+						player.askMove();
+				}
 			}
 		}
 	}
@@ -508,7 +510,7 @@ public class GameLogic implements Observer{
 		}
 	}
 	
-	public void handleBan( String playerID, int index, boolean wantToPayBan ) throws ElementNotFoundException, GameLogicError{
+	public void handleBan( String playerID, int index, boolean wantToPayBan ) throws ElementNotFoundException {
 		/* Method called by the Visitor to set a Ban to a Player:
 		 * if choice = false set the ban to the player
 		 * else resource update
@@ -516,99 +518,99 @@ public class GameLogic implements Observer{
 		
 		Player player = searchPlayer(playerID);
 		
-		if(player != this.actionOrder.get(0))
-			throw new GameLogicError("HandleBan error, player can't play");
+		if(player == this.actionOrder.get(0)) {			
 		
-		if(wantToPayBan) {
-			//Player wants to pay faith point to haven't the ban
-			
-			//Adding victory point to player
-			try {
-				FaithPathLoader loader = new FaithPathLoader("Resource//Configuration//faithPointPathConfiguration.json");
-				Packet victoryPoint = new Packet();
-				victoryPoint.addUnit(loader.conversion(player.getResource(Resource.FAITHPOINT)));
+			if(wantToPayBan) {
+				//Player wants to pay faith point to haven't the ban
 				
-				//If player has the leader card
-				if(player.hasMoreVictoryPoint())
-					victoryPoint.addUnit(new Unit(Resource.VICTORYPOINT, 5));
+				//Adding victory point to player
+				try {
+					FaithPathLoader loader = new FaithPathLoader("Resource//Configuration//faithPointPathConfiguration.json");
+					Packet victoryPoint = new Packet();
+					victoryPoint.addUnit(loader.conversion(player.getResource(Resource.FAITHPOINT)));
+					
+					//If player has the leader card
+					if(player.hasMoreVictoryPoint())
+						victoryPoint.addUnit(new Unit(Resource.VICTORYPOINT, 5));
+					
+					player.setToZero(Resource.FAITHPOINT);
+					player.increaseResource(victoryPoint);
+					player.synchResource();
+					
+					loader.close();
+				} catch (IOException e) {
+					System.out.println("Unable to open the faithPath conversion file");
+				}
 				
-				player.setToZero(Resource.FAITHPOINT);
-				player.increaseResource(victoryPoint);
-				player.synchResource();
+			}
+			else {
+				//Player wants the ban
+				BanUpdateMessage message;
+				if(index == FIRST_PERIOD) {
+					//For the first period ban we have two kind of ban
+					if(table.getFirstBan().getTypeOfEffect() == EffectType.OBTAIN_BAN || table.getFirstBan().getTypeOfEffect() == EffectType.INCREASE_FAMILIARS)
+						player.setBan(table.getFirstBan());
+					else
+						table.getFirstBan().enableEffect(player);
+					
+					message = new BanUpdateMessage(player.getPlayerID(), FIRST_PERIOD);
+					player.notifyNewBan(message);
+				}
+				if(index == SECOND_PERIOD) {
+					table.getSecondBan().enableEffect(player);
+					message = new BanUpdateMessage(player.getPlayerID(), SECOND_PERIOD);
+					player.notifyNewBan(message);
+				}
+				if(index == THIRD_PERIOD) {
+					table.getThirdBan().enableEffect(player);
+					message = new BanUpdateMessage(player.getPlayerID(), THIRD_PERIOD);
+					player.notifyNewBan(message);
+				}
 				
-				loader.close();
-			} catch (IOException e) {
-				System.out.println("Unable to open the faithPath conversion file");
 			}
-			
-		}
-		else {
-			//Player wants the ban
-			BanUpdateMessage message;
-			if(index == FIRST_PERIOD) {
-				//For the first period ban we have two kind of ban
-				if(table.getFirstBan().getTypeOfEffect() == EffectType.OBTAIN_BAN || table.getFirstBan().getTypeOfEffect() == EffectType.INCREASE_FAMILIARS)
-					player.setBan(table.getFirstBan());
-				else
-					table.getFirstBan().enableEffect(player);
-				
-				message = new BanUpdateMessage(player.getPlayerID(), FIRST_PERIOD);
-				player.notifyNewBan(message);
-			}
-			if(index == SECOND_PERIOD) {
-				table.getSecondBan().enableEffect(player);
-				message = new BanUpdateMessage(player.getPlayerID(), SECOND_PERIOD);
-				player.notifyNewBan(message);
-			}
-			if(index == THIRD_PERIOD) {
-				table.getThirdBan().enableEffect(player);
-				message = new BanUpdateMessage(player.getPlayerID(), THIRD_PERIOD);
-				player.notifyNewBan(message);
-			}
-			
 		}
 	}
 	
-	public void handleRequest(CardRequest request) throws ElementNotFoundException, GameLogicError{
+	public void handleRequest(CardRequest request) throws ElementNotFoundException {
 		/* Method called by the Visitor to set a request response to a Player:
 		 * if something wrong retransmit the message, else add the request to the player request
 		 */
 		
 		Player player = searchPlayer(request.getPlayerID());
 
-		if(player != this.actionOrder.get(0))
-			throw new GameLogicError("Error in handleRequest, player can't play");
+		if(player == this.actionOrder.get(0)) {			
 		
-		if(request.getChoice() < request.showChoice().size()) {
-			//If there is an action, add the request to the player
-			//else apply directly the request
-			if(this.currentAction != null) {
-				player.addRequest(request);
+			if(request.getChoice() < request.showChoice().size()) {
+				//If there is an action, add the request to the player
+				//else apply directly the request
+				if(this.currentAction != null) {
+					player.addRequest(request);
+				}
+				else {
+					request.apply();
+					player.synchResource();
+				}
 			}
 			else {
-				request.apply();
-				player.synchResource();
+				//In case the player hasn't insert the correct information
+				request.setRetrasmission();
+				player.retrasmitMessage(request);
 			}
-		}
-		else {
-			//In case the player hasn't insert the correct information
-			request.setRetrasmission();
-			player.retrasmitMessage(request);
 		}
 	}
 	
-	public void handleCouncilRequest(CouncilRequest councilRequest) throws ElementNotFoundException, GameLogicError{
+	public void handleCouncilRequest(CouncilRequest councilRequest) throws ElementNotFoundException {
 		/* Method called by the Visitor to set a council request response to a Player:
 		 * if something wrong retransmit the message, else add the request to the player council request
 		 */
 		
 		Player player = searchPlayer(councilRequest.getPlayerID());
 		
-		if(player != this.actionOrder.get(0))
-			throw new GameLogicError("Error in handleCouncilRequest, player can't play");
+		if(player == this.actionOrder.get(0)) {		
 		
-		councilRequest.apply(player);
-		player.synchResource();
+			councilRequest.apply(player);
+			player.synchResource();
+		}
 	}	
 	
 	@Override
@@ -663,14 +665,12 @@ public class GameLogic implements Observer{
 		player.setLeaderCard(leaderCardTable.get(player).remove(chosenCard));
 	}
 	
-	public void handleLeaderFamiliarRequest(LeaderFamiliarRequest request) throws ElementNotFoundException, GameLogicError {
+	public void handleLeaderFamiliarRequest(LeaderFamiliarRequest request) throws ElementNotFoundException {
 		//Apply the leader card request for a familiar color
 		Player player = searchPlayer(request.getPlayerID());
 		
-		if(player != this.actionOrder.get(0))
-			throw new GameLogicError("Error in handleRequest, player can't play");
-		
-		request.apply();
+		if(player == this.actionOrder.get(0))		
+			request.apply();
 	}
 
 }
