@@ -56,7 +56,6 @@ public class YieldAndProductPosition extends Position {
 		if(canStay(familiar)){
 			this.bonusFamiliars.add(familiar);
 			this.applyPositionEffect(familiar);
-			this.bonusFamiliars.add(familiar);
 		}
 		else throw new FamiliarInWrongPosition("The bonus Familiar does not satisfy the position pre-requirements");
 	}
