@@ -89,7 +89,7 @@ public class TakeCardTest {
 		List<Effect> secondImmediateEffects = new ArrayList<>();
 		Packet discount = new Packet();
 		discount.addUnit(new Unit(Resource.WOOD, 5));
-		secondImmediateEffects.add(new DoAction(ActionType.TAKE_GREEN, 5, discount));
+		secondImmediateEffects.add(new DoAction(ActionType.TAKE_GREEN, 5, discount, null));
 		
 		//Create the cards
 		Card c = new Card("Card", "", CardColor.GREEN, 1, 3, costs, immediateEffects, null, null, null);

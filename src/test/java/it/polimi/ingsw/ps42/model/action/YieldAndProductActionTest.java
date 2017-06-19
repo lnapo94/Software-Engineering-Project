@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.Card;
+import it.polimi.ingsw.ps42.model.effect.CanPositioningEverywhereLeader;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
@@ -112,6 +113,44 @@ public class YieldAndProductActionTest {
 			fail();
 		}
 
+	}
+	
+	@Test
+	public void test4(){
+		
+		//Add the can positioning everywhere bonus to the player and check if it works
+		Effect effect = new CanPositioningEverywhereLeader();
+		effect.enableEffect(player);
+
+		//Increase familiars in players
+		player.setFamiliarValue(FamiliarColor.ORANGE, 4);
+		player.setFamiliarValue(FamiliarColor.NEUTRAL, 3);
+		try {
+			Action action = new YieldAndProductAction(ActionType.PRODUCE, player.getFamiliar(FamiliarColor.ORANGE), otherPositions, firstProductPosition);
+			Response response = action.checkAction();
+			if(response == Response.SUCCESS){
+				action.doAction();
+				//Verify the familiar is in the first position
+				assertTrue(!firstProductPosition.isEmpty());
+				Action secondAction  = new YieldAndProductAction(ActionType.PRODUCE, player.getFamiliar(FamiliarColor.NEUTRAL), otherPositions, firstProductPosition);
+				Response secondResponse = secondAction.checkAction();
+				if(secondResponse == Response.SUCCESS){
+					//Verify the familiar is in the first position
+					secondAction.doAction();
+					//assertEquals(1 ,firstProductPosition.getBonusFamiliar().size());
+				}
+				else{
+					fail();
+				}
+			}
+			else{
+				fail();
+			}
+		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	private void createPositions() {

@@ -65,7 +65,7 @@ public class DoActionTest {
 		
 		Packet discount = new Packet();
 		discount.addUnit(new Unit(Resource.MONEY, 2));
-		return new DoAction( ActionType.MARKET, 2, discount);
+		return new DoAction( ActionType.MARKET, 2, discount, null);
 	}
 	@Test
 	public void test() {
