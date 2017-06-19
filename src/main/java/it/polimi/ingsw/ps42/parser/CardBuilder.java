@@ -18,7 +18,6 @@ import it.polimi.ingsw.ps42.model.effect.IncreaseFamiliarsPoint;
 import it.polimi.ingsw.ps42.model.effect.IncreaseSingleFamiliar;
 import it.polimi.ingsw.ps42.model.effect.NoBonusInTower;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
-import it.polimi.ingsw.ps42.model.effect.SetAllFamiliarsLeader;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
