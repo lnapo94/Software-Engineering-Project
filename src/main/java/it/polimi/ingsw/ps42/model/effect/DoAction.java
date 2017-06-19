@@ -13,13 +13,14 @@ public class DoAction extends Effect{
 	private ActionType type;
 	private int actionLevel;
 	private Packet discount;
-
-	public DoAction(ActionType type, int actionLevel, Packet discount) {
+	private Obtain obtainEffect;
+	
+	public DoAction(ActionType type, int actionLevel, Packet discount, Obtain obtainEffect) {
 		super(EffectType.DO_ACTION);
 		this.type=type;
 		this.actionLevel=actionLevel;
 		this.discount=discount;
-		
+		this.obtainEffect = obtainEffect;
 	}
 
 	@Override
@@ -27,7 +28,8 @@ public class DoAction extends Effect{
 		this.player=player;
 		
 		player.setBonusAction(new ActionPrototype(type, actionLevel, discount));
-		
+		if(obtainEffect != null)
+			obtainEffect.enableEffect(player);
 	}
 
 	@Override
@@ -39,10 +41,13 @@ public class DoAction extends Effect{
 	@Override
 	public DoAction clone() {
 		Packet cloneDiscount = null;
+		Obtain obtainCopy = null;
+		if(obtainEffect != null)
+			obtainCopy = obtainEffect.clone();
 		if(discount != null)
 			cloneDiscount = discount.clone(); 
 		ActionType cloneType = this.type;
-		return new DoAction(cloneType, this.actionLevel, cloneDiscount);
+		return new DoAction(cloneType, this.actionLevel, cloneDiscount, obtainCopy);
 	}
 
 }
