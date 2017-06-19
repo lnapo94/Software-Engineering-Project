@@ -137,7 +137,7 @@ public class YieldAndProductActionTest {
 				if(secondResponse == Response.SUCCESS){
 					//Verify the familiar is in the first position
 					secondAction.doAction();
-					//assertEquals(1 ,firstProductPosition.getBonusFamiliar().size());
+					assertEquals(1 ,firstProductPosition.getBonusFamiliar().size());
 				}
 				else{
 					fail();

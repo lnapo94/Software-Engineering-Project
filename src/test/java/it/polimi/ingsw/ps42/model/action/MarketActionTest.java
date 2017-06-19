@@ -217,17 +217,28 @@ public class MarketActionTest {
 	}
 	
 	@Before
-	public void setupDoubleFamiliarAction() throws NotEnoughResourcesException{
+	public void setupDoubleFamiliarAction() throws NotEnoughResourcesException, FamiliarInWrongPosition{
 		
-		setup();
+		//Do a simple action action (Familiar in pos 0 of Market)
+		setupSimpleAction();
+		
 		//Enable the Player to place his familiar in occupied position
 		Effect canPositioningEverywhere = new CanPositioningEverywhereLeader();
 		canPositioningEverywhere.enableEffect(player);
 		
-		setupSimpleAction();
-		
+		marketAction.checkAction();
+		player.synchResource();
+		marketAction.doAction();
+		player.synchResource();
+
+		//Verify Player Resources
+		assertEquals(2, player.getResource(Resource.MONEY));
+		//Do another action in the same position		
+		player.setFamiliarValue(FamiliarColor.WHITE, 3);
+		marketAction = new MarketAction(ActionType.MARKET, player.getFamiliar(FamiliarColor.WHITE) , tablePosition, 0);
 		
 	}
+	
 	
 	@Test
 	public void test() {
@@ -375,7 +386,16 @@ public class MarketActionTest {
 			assertEquals( 0, player.getResource(Resource.MONEY));
 			assertEquals( 2, player.getResource(Resource.MILITARYPOINT));
 			assertEquals( 2, player.getResource(Resource.FAITHPOINT));
-		} catch (NotEnoughResourcesException | FamiliarInWrongPosition | WrongChoiceException e) {
+		} 
+		catch (NotEnoughResourcesException | FamiliarInWrongPosition | WrongChoiceException e) {
+			e.printStackTrace();
+		}
+		
+		//Double Action in the same position
+		try {
+			setupDoubleFamiliarAction();
+			assertEquals(Response.SUCCESS, marketAction.checkAction());
+		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {
 			e.printStackTrace();
 		}
 		
