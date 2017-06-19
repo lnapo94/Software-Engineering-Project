@@ -34,7 +34,7 @@ public class LeaderCardLoader extends Loader{
 	@Override
 	protected void initGson() {
 		
-		GsonBuilder builder = new GsonBuilder().registerTypeAdapter(Effect.class, new Serializer());
+		GsonBuilder builder = new GsonBuilder().enableComplexMapKeySerialization().registerTypeAdapter(Effect.class, new Serializer());
 		gson = builder.create();
 		parser = new JsonStreamParser(buffer);
 		
@@ -60,8 +60,9 @@ public class LeaderCardLoader extends Loader{
 		LeaderCardLoader loader;
 		
 		try {
-			loader = new LeaderCardLoader("LeaderCards.json");
+			loader = new LeaderCardLoader("Resource//LeaderCards//leaderCards.json");
 			List<LeaderCard> deck = loader.getLeaderCards();
+			System.out.println(deck.get(0).getName());
 			System.out.println(deck.size());
 			loader.close();
 		} catch (IOException e) {

@@ -32,7 +32,7 @@ public class LeaderCardBuilder extends CardBuilder{
 	protected void initGson() {
 
 		GsonBuilder builder=new GsonBuilder().serializeNulls().setPrettyPrinting();
-		this.gson = builder.registerTypeAdapter(Effect.class, new Serializer()).create();
+		this.gson = builder.enableComplexMapKeySerialization().registerTypeAdapter(Effect.class, new Serializer()).create();
 		
 	}
 	
@@ -183,7 +183,7 @@ public class LeaderCardBuilder extends CardBuilder{
 		LeaderCardBuilder builder;
 		Scanner scanner = new Scanner(System.in);
 		try {
-			builder = new LeaderCardBuilder("LeaderCards.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
+			builder = new LeaderCardBuilder("Resource//LeaderCards//leaderCards.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
 			String response;
 			int i =0;
 			do{
