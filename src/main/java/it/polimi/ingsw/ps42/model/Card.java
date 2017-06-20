@@ -159,7 +159,7 @@ public class Card {
 					decreaseDiscount(player, discount);
 					throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this");
 				}
-				
+				decreaseDiscount(player, discount);
 				CardRequest request = new PayRequest(player, this, possibleChoiceIndex, possibleChoice, discount);
 				player.addRequest(request);
 				resetPossibleChoice();
