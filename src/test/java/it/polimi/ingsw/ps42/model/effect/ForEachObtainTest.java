@@ -105,20 +105,20 @@ public class ForEachObtainTest {
 			cardImmediate.enableImmediateEffect();
 			CardRequest requestImmediate = player.getRequests().get(0);
 			requestImmediate.setChoice(2);
-			requestImmediate.apply();
+			requestImmediate.apply(player);
 			player.synchResource();
 			intermediateCheck();
 			
 			cardImmediate.enableFinalEffect();
 			CardRequest requestFinal = player.getRequests().get(0);
 			requestFinal.setChoice(0);
-			requestFinal.apply();
+			requestFinal.apply(player);
 			player.synchResource();
 			
 			cardImmediate.enablePermanentEffect();
 			CardRequest requestPermanent= player.getRequests().get(0);
 			requestPermanent.setChoice(1);
-			requestPermanent.apply();
+			requestPermanent.apply(player);
 			player.synchResource();
 			finalCheck();
 			

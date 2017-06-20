@@ -71,7 +71,7 @@ public class SlaveBanTest {
 			card.payCard(player, null);
 			CardRequest request = player.getRequests().get(0);
 			request.setChoice(0);
-			request.apply();
+			request.apply(player);
 			
 			assertEquals(2, player.getDivisory());
 			

@@ -587,7 +587,7 @@ public class GameLogic implements Observer{
 					player.addRequest(request);
 				}
 				else {
-					request.apply();
+					request.apply(player);
 					player.synchResource();
 				}
 			}

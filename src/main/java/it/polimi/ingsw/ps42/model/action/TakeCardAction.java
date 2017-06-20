@@ -166,7 +166,7 @@ public class TakeCardAction extends Action{
 		List<CardRequest> requests = player.getRequests();
 		if(requests != null && !requests.isEmpty()) {
 			for(CardRequest request : requests)
-				request.apply();
+				request.apply(player);
 		}
 		
 		TowerPosition position = tablePosition.get(positionInTableList);

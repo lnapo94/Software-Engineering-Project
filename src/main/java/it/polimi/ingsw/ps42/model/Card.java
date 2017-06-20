@@ -160,7 +160,7 @@ public class Card {
 					throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this");
 				}
 				decreaseDiscount(player, discount);
-				CardRequest request = new PayRequest(player, this, possibleChoiceIndex, possibleChoice, discount);
+				CardRequest request = new PayRequest(player.getPlayerID(), this, possibleChoiceIndex, possibleChoice, discount);
 				player.addRequest(request);
 				resetPossibleChoice();
 			}
@@ -187,7 +187,7 @@ public class Card {
 		if(immediateEffects != null && !( immediateEffects.isEmpty() ) ) {
 			//If the effectList exist
 			if(canEnableNowEffect(immediateEffects))
-				enableEffect(0, immediateEffects);
+				enableEffect(0, immediateEffects, owner);
 			else{
 				if(controlPossibleChoice(immediateEffects))
 					resetPossibleChoice();
@@ -200,8 +200,8 @@ public class Card {
 		}
 	}
 	
-	public void enableImmediateEffect(int choice) {
-		enableEffect(choice, immediateEffects);
+	public void enableImmediateEffect(int choice, Player player) {
+		enableEffect(choice, immediateEffects, player);
 	}
 	/* END IMMEDIATE EFFECT */
 	
@@ -210,7 +210,7 @@ public class Card {
 		if(permanentEffects != null && !( permanentEffects.isEmpty() ) ) {
 			//If the effectList exist
 			if(canEnableNowEffect(permanentEffects))
-				enableEffect(0, permanentEffects);
+				enableEffect(0, permanentEffects, owner);
 			else {
 				if(controlPossibleChoice(permanentEffects))
 					resetPossibleChoice();
@@ -223,8 +223,8 @@ public class Card {
 		}
 	}
 	
-	public void enablePermanentEffect(int choice) {
-		enableEffect(choice, permanentEffects);
+	public void enablePermanentEffect(int choice, Player player) {
+		enableEffect(choice, permanentEffects, player);
 	}
 	/*	END PERMANENT EFFECT */
 	
@@ -233,7 +233,7 @@ public class Card {
 		if(finalEffects != null && !( finalEffects.isEmpty() ) ) {
 			//If the effectList exist
 			if(canEnableNowEffect(finalEffects))
-				enableEffect(0, finalEffects);
+				enableEffect(0, finalEffects, owner);
 			else {
 				if(controlPossibleChoice(finalEffects))
 					resetPossibleChoice();
@@ -246,8 +246,8 @@ public class Card {
 		}
 	}
 	
-	public void enableFinalEffect(int choice) {
-		enableEffect(choice, finalEffects);
+	public void enableFinalEffect(int choice, Player player) {
+		enableEffect(choice, finalEffects, player);
 	}
 	/* END FINAL EFFECT */
 	
@@ -281,8 +281,8 @@ public class Card {
 		return false;
 	}
 	
-	private void enableEffect(int choice, List<Effect> effectList) {
-			effectList.get(choice).enableEffect(owner);
+	private void enableEffect(int choice, List<Effect> effectList, Player player) {
+			effectList.get(choice).enableEffect(player);
 	}
 	
 	private boolean canEnableNowEffect(List<Effect> effectList) {

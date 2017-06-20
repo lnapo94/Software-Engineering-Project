@@ -5,6 +5,7 @@ import java.util.List;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.Printable;
+import it.polimi.ingsw.ps42.model.player.Player;
 
 public class PermanentRequest extends CardRequest{
 	//Used to know which permanent card effect player wants to enable
@@ -14,8 +15,8 @@ public class PermanentRequest extends CardRequest{
 	}
 
 	@Override
-	public void apply() {
-		card.enablePermanentEffect(possibleChoiceIndex.get(userChoice));
+	public void apply(Player player) {
+		card.enablePermanentEffect(possibleChoiceIndex.get(userChoice), player);
 	}
 
 	@Override

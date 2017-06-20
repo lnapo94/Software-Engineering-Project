@@ -5,6 +5,7 @@ import java.util.List;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.Printable;
+import it.polimi.ingsw.ps42.model.player.Player;
 
 public class ImmediateRequest extends CardRequest{
 	//Used to know which immediate card effect player wants to enable
@@ -14,8 +15,8 @@ public class ImmediateRequest extends CardRequest{
 	}
 
 	@Override
-	public void apply() {
-		card.enableImmediateEffect(possibleChoiceIndex.get(userChoice));
+	public void apply(Player player) {
+		card.enableImmediateEffect(possibleChoiceIndex.get(userChoice), player);
 	}
 
 	@Override

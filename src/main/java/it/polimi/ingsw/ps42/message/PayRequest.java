@@ -12,17 +12,15 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 public class PayRequest extends CardRequest{
 	//This request is created to know which cost player wants to pay
 	
-	private Player player;
 	private final Packet discount;
 	
-	public PayRequest(Player player, Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice, Packet discount) {
-		super(player.getPlayerID(), card, possibleChoiceIndex, possibleChoice);
-		this.player = player;
+	public PayRequest(String playerID, Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice, Packet discount) {
+		super(playerID, card, possibleChoiceIndex, possibleChoice);
 		this.discount = discount;
 	}
 	
 	@Override
-	public void apply() {
+	public void apply(Player player) {
 		try {
 			card.payCard(player, userChoice, discount);
 		} catch (NotEnoughResourcesException e) {

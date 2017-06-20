@@ -87,7 +87,7 @@ public class ObtainTest {
 		requestsInPlayer = p1.getRequests();
 		if(!requestsInPlayer.isEmpty())
 			for(CardRequest request : requestsInPlayer)
-				request.apply();
+				request.apply(p1);
 		p1.synchResource();
 		
 		//Now the player has changed is money in stone, thanks to the obtainEffect

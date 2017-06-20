@@ -206,7 +206,7 @@ public class CardTest {
 		
 		for(CardRequest request : requests) {
 			request.setChoice(0);
-			request.apply();
+			request.apply(canTakeCard);
 		}
 		canTakeCard.synchResource();
 		
@@ -214,7 +214,7 @@ public class CardTest {
 		
 		for(CardRequest request : requests) {
 			request.setChoice(0);
-			request.apply();
+			request.apply(cannotEnableObtainEffect);
 			cannotEnableObtainEffect.synchResource();
 		}
 		
@@ -250,7 +250,7 @@ public class CardTest {
 		
 		//Apply the Obtain Effect
 		requests.get(0).setChoice(1);
-		requests.get(0).apply();
+		requests.get(0).apply(canTakeCard);
 		
 		canTakeCard.synchResource();		
 		
@@ -293,7 +293,7 @@ public class CardTest {
 			
 			CardRequest request = requests.get(0);
 			request.setChoice(1);
-			request.apply();
+			request.apply(canTakeCard);
 			canTakeCard.synchResource();
 			
 			//Verify if player requests list is empty

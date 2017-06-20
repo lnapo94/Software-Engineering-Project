@@ -80,7 +80,7 @@ public class DoActionTest {
 			card.payCard(player, discount);
 			CardRequest payRequest = player.getRequests().get(0);
 			payRequest.setChoice(1);
-			payRequest.apply();
+			payRequest.apply(player);
 			card.setPlayer(player);
 			player.addCard(card);
 			player.synchResource();
@@ -92,7 +92,7 @@ public class DoActionTest {
 			card.enableImmediateEffect();
 			CardRequest effectRequest = player.getRequests().get(0);
 			effectRequest.setChoice(1);
-			effectRequest.apply();
+			effectRequest.apply(player);
 			
 			ActionPrototype bonusAction = player.getBonusAction();
 			

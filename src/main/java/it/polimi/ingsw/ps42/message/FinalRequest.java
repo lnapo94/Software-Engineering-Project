@@ -5,6 +5,7 @@ import java.util.List;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.Printable;
+import it.polimi.ingsw.ps42.model.player.Player;
 
 public class FinalRequest extends CardRequest{
 	//Used to know which final card effect player wants to enable
@@ -14,8 +15,9 @@ public class FinalRequest extends CardRequest{
 	}
 
 	@Override
-	public void apply() {
-		card.enableFinalEffect(possibleChoiceIndex.get(userChoice));
+	public void apply(Player player) {
+		
+		card.enableFinalEffect(possibleChoiceIndex.get(userChoice), player);
 	}
 
 	@Override

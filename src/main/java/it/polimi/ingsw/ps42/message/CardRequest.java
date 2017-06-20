@@ -5,6 +5,7 @@ import java.util.List;
 
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.Printable;
+import it.polimi.ingsw.ps42.model.player.Player;
 
 public abstract class CardRequest extends Message {
 
@@ -53,5 +54,5 @@ public abstract class CardRequest extends Message {
 		return possibleChoiceIndex;
 	}
 
-	public abstract void apply();
+	public abstract void apply(Player player);
 }
