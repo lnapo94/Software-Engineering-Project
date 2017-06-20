@@ -20,7 +20,6 @@ import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.model.action.Action;
 import it.polimi.ingsw.ps42.model.action.ActionCreator;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
-import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 
 public class ControllerVisitor implements Visitor {
@@ -128,7 +127,7 @@ public class ControllerVisitor implements Visitor {
 		 */
 		try {
 			gameLogic.handleRequest(message);
-		} catch (ElementNotFoundException | GameLogicError e) {
+		} catch (ElementNotFoundException e) {
 			System.out.println("Error in visitor cardRequest");
 		}		
 	}
@@ -140,7 +139,7 @@ public class ControllerVisitor implements Visitor {
 		 */
 		try {
 			gameLogic.handleCouncilRequest(message);
-		} catch (ElementNotFoundException | GameLogicError e) {
+		} catch (ElementNotFoundException e) {
 			System.out.println("Error in visitor councilRequest");
 		}
 		
@@ -175,7 +174,7 @@ public class ControllerVisitor implements Visitor {
 		 */
 		try {
 			gameLogic.handleBan(message.getPlayerID(), message.getBanNumber(), message.wantPayForBan());
-		} catch (ElementNotFoundException | GameLogicError e) {
+		} catch (ElementNotFoundException e) {
 			System.out.println("Error in visitor BanRequest");
 		}
 	}
@@ -185,7 +184,7 @@ public class ControllerVisitor implements Visitor {
 		//Message received by the view, do the apply for the leader card
 		try {
 			gameLogic.handleLeaderFamiliarRequest(message);
-		} catch (ElementNotFoundException | GameLogicError e) {
+		} catch (ElementNotFoundException e) {
 			System.out.println("Error in visitor leaderFamiliarRequest");
 		}
 	}
