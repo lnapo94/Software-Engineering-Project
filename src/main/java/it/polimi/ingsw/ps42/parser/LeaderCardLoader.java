@@ -55,19 +55,4 @@ public class LeaderCardLoader extends Loader{
 			
 	}
 	
-	public static void main(String[] args) {
-		
-		LeaderCardLoader loader;
-		
-		try {
-			loader = new LeaderCardLoader("Resource//LeaderCards//leaderCards.json");
-			List<LeaderCard> deck = loader.getLeaderCards();
-			System.out.println(deck.get(0).getName());
-			System.out.println(deck.size());
-			loader.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

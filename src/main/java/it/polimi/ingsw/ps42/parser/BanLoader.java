@@ -44,22 +44,5 @@ public class BanLoader extends Loader{
 			return effects.get(index);
 		else throw new ElementNotFoundException("The index passed is too big for the file dimension");
 	}
-	
-	
-	public static void main(String[] args) {
-		
-		try {
-			BanLoader loader = new BanLoader("provaBan.json");
-			ArrayList<Effect> effects = new ArrayList<>();
-			for(int i=1; i<5; i++){
-				effects.add(loader.getBan(i));
-				System.out.println("new effect added");
-			}
-			loader.close();
-		} catch (IOException | ElementNotFoundException e) {
 
-			e.printStackTrace();
-		}
-		
-	}
 }

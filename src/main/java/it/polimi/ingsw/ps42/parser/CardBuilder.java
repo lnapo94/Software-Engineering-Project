@@ -349,7 +349,6 @@ public class CardBuilder extends Builder {
 			builder.close();
 			scanner.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		
 		
