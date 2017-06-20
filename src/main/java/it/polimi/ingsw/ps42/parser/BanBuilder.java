@@ -201,20 +201,5 @@ public class BanBuilder extends Builder{
 		
 		return new CardBan(color);
 	}
-	
-	
-	public static void main(String[] args){
-		
-		try {
-			BanBuilder builder = new BanBuilder("Resource//BansFile//thirdPeriodBans2.json");
-			
-			for(int i = 0; i < 7; i++)
-				builder.addBan();
-			
-			builder.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 }

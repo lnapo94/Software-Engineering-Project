@@ -67,10 +67,5 @@ public class ConversionLoader extends Loader{
 	public Unit getOtherResourcesConversion(int totalResources) {
 		return new Unit(Resource.VICTORYPOINT, totalResources/this.otherResources);
 	}
-	
-	
-	public static void main(String[] args) throws IOException {
-		ConversionLoader loader = new ConversionLoader("Resource\\Configuration\\finalResourceConfiguration.json");
-		System.out.println(loader.getOtherResourcesConversion(30));
-	}
+
 }

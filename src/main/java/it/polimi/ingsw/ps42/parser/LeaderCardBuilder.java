@@ -196,7 +196,6 @@ public class LeaderCardBuilder extends CardBuilder{
 			builder.close();
 			scanner.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		
 		
