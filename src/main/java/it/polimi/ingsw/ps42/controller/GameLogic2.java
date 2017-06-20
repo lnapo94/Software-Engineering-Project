@@ -305,7 +305,7 @@ public class GameLogic2 extends Observable {
     }
 
     private void initAction() {
-        
+
     }
 
 
