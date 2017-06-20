@@ -394,24 +394,29 @@ public class Card {
 		ArrayList<Effect> tempFinalEffects = new ArrayList<>();
 		
 		//Copy the requirements
-		for(Packet requirement : requirements)
-			tempRequirements.add(requirement.clone());
+		if(requirements != null)
+			for(Packet requirement : requirements)
+				tempRequirements.add(requirement.clone());
 		
 		//Copy the costs
-		for(Packet cost : costs)
-			tempCosts.add(cost.clone());
+		if(costs != null)
+			for(Packet cost : costs)
+				tempCosts.add(cost.clone());
 		
 		//Copy the immediate effects
-		for(Effect immediateEffect : immediateEffects)
-			tempImmediateEffects.add(immediateEffect.clone());
+		if(immediateEffects != null)
+			for(Effect immediateEffect : immediateEffects)
+				tempImmediateEffects.add(immediateEffect.clone());
 		
-		//Copy the immediate effects
-		for(Effect permanentEffect : immediateEffects)
-			tempPermanentEffects.add(permanentEffect.clone());
+		//Copy the permanent effects
+		if(permanentEffects != null)
+			for(Effect permanentEffect : permanentEffects)
+				tempPermanentEffects.add(permanentEffect.clone());
 		
-		//Copy the immediate effects
-		for(Effect finalEffect : immediateEffects)
-			tempFinalEffects.add(finalEffect.clone());
+		//Copy the final effects
+		if(finalEffects != null)
+			for(Effect finalEffect : finalEffects)
+				tempFinalEffects.add(finalEffect.clone());
 		
 		return new Card(getName(), getDescription(), getColor(), getPeriod(), getLevel(), tempCosts, tempImmediateEffects, tempRequirements, tempPermanentEffects, tempFinalEffects);
 	}

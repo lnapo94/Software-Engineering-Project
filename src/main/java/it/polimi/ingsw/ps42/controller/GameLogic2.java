@@ -5,6 +5,7 @@ import it.polimi.ingsw.ps42.controller.cardCreator.CardsCreator;
 import it.polimi.ingsw.ps42.controller.cardCreator.CardsFirstPeriod;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderRequest;
 import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
@@ -220,7 +221,7 @@ public class GameLogic2 extends Observable {
 
     private void askLeaderCard() {
         //If the player 1's arraylist of leader cards is empty, also the other must be empty, so end this procedure
-        if(leaderCardTable.isEmpty()) {
+        if(!leaderCardTable.isEmpty()) {
             reOrderHashMap();
             for(Player player : roundOrder) {
                 player.askChooseLeaderCard(leaderCardTable.get(player));
@@ -302,6 +303,26 @@ public class GameLogic2 extends Observable {
             roundOrder.addAll(playersList);
             initAction();
         }
+    }
+    
+    public void handleLeaderFamiliarRequest(LeaderFamiliarRequest request) {
+    	//Method used to manage the leader familiar request
+    	try {
+			Player player = searchPlayer(request.getPlayerID());
+			//Control if the player has a request
+			if(roundOrder.contains(player)) {
+				request.apply();
+				roundOrder.remove(player);
+			}
+			
+			//If roundOrder is empty, then refull the array and start the round
+			if(roundOrder.isEmpty()) {
+				roundOrder.addAll(playersList);
+				initAction();
+			}
+		} catch (ElementNotFoundException e) {
+			System.out.println("Unable to find the player in GameLogic");
+		}
     }
 
     private void initAction() {
