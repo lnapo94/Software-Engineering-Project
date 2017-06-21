@@ -72,9 +72,7 @@ public class Connection extends Observable implements Runnable{
 			writer.flush();
 		} catch (IOException e) {
 			System.out.println("Error in sending the new message to: "+message.getPlayerID() );
-		}
-		
-		
+		}	
 	}
 	
 }

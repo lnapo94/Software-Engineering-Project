@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.model.exception.GameLogicError;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
 import it.polimi.ingsw.ps42.controller.GameLogic;
 
 public class ServerView extends Observable implements Observer{
@@ -27,7 +30,7 @@ public class ServerView extends Observable implements Observer{
 		
 	}
 	
-	public void run(){
+	public void run() throws NotEnoughPlayersException, GameLogicError, IOException{
 		
 		List<String> playerIDList = new ArrayList<>();
 		connections.forEach((playerID, connection)->{
