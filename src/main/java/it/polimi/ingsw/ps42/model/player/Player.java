@@ -474,6 +474,23 @@ public class Player extends Observable{
 		}
 	}
 	
+	public void askRequest(CardRequest request) {
+		setChanged();
+		notifyObservers(request);
+	}
+	
+	public CardRequest removeRequest() {
+		return this.requests.remove(0);
+	}
+	
+	public boolean isRequestsEmpty() {
+		return this.requests.isEmpty();
+	}
+	
+	public void removeAllRequests() {
+		this.requests = new ArrayList<>();
+	}
+	
 	public void askCouncilRequest( List<CouncilRequest> requests){
 	//Method called by the game logic to ask a response to a Council Request
 			
@@ -481,6 +498,23 @@ public class Player extends Observable{
 			setChanged();
 			notifyObservers(councilRequest);
 		}
+	}
+	
+	public boolean isCouncilRequestsEmpty() {
+		return this.councilRequests.isEmpty();
+	}
+	
+	public void askCouncilRequest(CouncilRequest request) {
+		setChanged();
+		notifyObservers(request);
+	}
+	
+	public CouncilRequest removeCouncilRequest() {
+		return this.councilRequests.remove(0);
+	}
+	
+	public void removeAllCouncilRequests() {
+		this.councilRequests = new ArrayList<>();
 	}
 	
 	public void retrasmitMessage(Message message) {
@@ -521,9 +555,24 @@ public class Player extends Observable{
 	}
 	
 	public List<LeaderRequest> getLeaderRequests() {
-		List<LeaderRequest> temporary = leaderRequests;
-		leaderRequests = new ArrayList<>();
-		return temporary;
+		return this.leaderRequests;
+	}
+	
+	public LeaderRequest removeLeaderRequest() {
+		return leaderRequests.remove(0);
+	}
+	
+	public boolean isLeaderRequestEmpty() {
+		return leaderRequests.isEmpty();
+	}
+	
+	public void removeAllLeaderRequests() {
+		this.leaderRequests = new ArrayList<>();
+	}
+	
+	public void askLeaderRequest(LeaderRequest request) {
+		setChanged();
+		notifyObservers(request);
 	}
 	
 	public void enableLeaderCard(LeaderCard chosenCard) {

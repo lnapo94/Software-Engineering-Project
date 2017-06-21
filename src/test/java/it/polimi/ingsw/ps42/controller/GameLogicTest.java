@@ -36,12 +36,9 @@ public class GameLogicTest {
 		
 		view1.createTable(players1View);
 		view2.createTable(players2View);
-		
-		logic = new GameLogic(players);
-		logic.addView(view1);
-		logic.addView(view2);
-		
-		//logic.initGame();
+		ServerView serverView = new ServerView();
+		logic = new GameLogic(players, serverView);
+		logic.loadGame();
 	}
 
 }

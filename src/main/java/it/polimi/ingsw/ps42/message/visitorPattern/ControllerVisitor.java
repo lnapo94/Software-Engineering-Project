@@ -36,11 +36,8 @@ public class ControllerVisitor implements Visitor {
 		/* Response message from the View about a BonusBar choice.
 		 * Give to the Game Logic the BonusBar chosen and the related player
 		 */
-		try {
-			gameLogic.setBonusBar(message.getChoice(), message.getPlayerID());
-		} catch (ElementNotFoundException e) {
-			System.out.println("Error in visitor bonusBarMessage");
-		}
+		gameLogic.setBonusBar(message.getChoice(), message.getPlayerID());
+
 	}
 
 	@Override
@@ -48,11 +45,8 @@ public class ControllerVisitor implements Visitor {
 		/* Response Message from the View about the Leader Card choice.
 		 * Give to the Game Logic the Leader Card chosen and the related player
 		 */
-		try {
-			gameLogic.setLeaderCard(message.getChoice(), message.getPlayerID());
-		} catch (ElementNotFoundException e) {
-			System.out.println("Error in visitor leaderCardMessage");
-		}
+		gameLogic.setLeaderCard(message.getChoice(), message.getPlayerID());
+
 	}
 
 	@Override
@@ -113,10 +107,10 @@ public class ControllerVisitor implements Visitor {
 		try {
 			Action action = new ActionCreator(gameLogic.searchPlayer(message.getPlayerID()), gameLogic.getTable(), message, gameLogic.getBonusActionValue()).getCreatedAction();
 			gameLogic.handleAction(action, message.getPlayerID());
-		} catch (ElementNotFoundException e) {
-			System.out.println("Error in visitor playerMove");
 		} catch (NotEnoughResourcesException e) {
 			System.out.println("Error in visitor with the action creation");
+		} catch (ElementNotFoundException e) {
+			System.out.println("Player not found in gameLogic");
 		}
 	}
 
@@ -125,11 +119,7 @@ public class ControllerVisitor implements Visitor {
 		/*Response Message by the View to a specific request. 
 		 * Send with a method to the GameLogic
 		 */
-		try {
-			gameLogic.handleRequest(message);
-		} catch (ElementNotFoundException e) {
-			System.out.println("Error in visitor cardRequest");
-		}		
+		gameLogic.handleRequest(message);
 	}
 
 	@Override
@@ -137,11 +127,7 @@ public class ControllerVisitor implements Visitor {
 		/*Response Message by the View to a Council request.
 		 * Send to the Game Logic with a method
 		 */
-		try {
-			gameLogic.handleCouncilRequest(message);
-		} catch (ElementNotFoundException e) {
-			System.out.println("Error in visitor councilRequest");
-		}
+		gameLogic.handleCouncilRequest(message);
 		
 	}
 
@@ -162,7 +148,7 @@ public class ControllerVisitor implements Visitor {
 		try {
 			gameLogic.HandleLeaderUpdate(gameLogic.searchPlayer(message.getPlayerID()), message.getCard());
 		} catch (ElementNotFoundException e) {
-			System.out.println("Error in visitor leaderCardUpdateMessage");
+			System.out.println("Unable to find the player. Method: leaderCardUpdateMessage");
 		}
 	}
 
@@ -172,21 +158,16 @@ public class ControllerVisitor implements Visitor {
 		 * Enable the chosen ban if the variable is set to false,
 		 * else reduce the faith point and assign the victory point to player 
 		 */
-		try {
-			gameLogic.handleBan(message.getPlayerID(), message.getBanNumber(), message.wantPayForBan());
-		} catch (ElementNotFoundException e) {
-			System.out.println("Error in visitor BanRequest");
-		}
+		gameLogic.handleBan(message.getPlayerID(), message.getBanNumber(), message.wantPayForBan());
+
 	}
 
 	@Override
 	public void visit(LeaderFamiliarRequest message) {
 		//Message received by the view, do the apply for the leader card
-		try {
-			gameLogic.handleLeaderFamiliarRequest(message);
-		} catch (ElementNotFoundException e) {
-			System.out.println("Error in visitor leaderFamiliarRequest");
-		}
+
+		gameLogic.handleLeaderFamiliarRequest(message);
+
 	}
 
 
