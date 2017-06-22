@@ -109,15 +109,20 @@ public abstract class View extends Observable implements Observer {
 			//Ask to choose a Leader Card
 			List<LeaderCard> possibleChoice = message.getAvailableLeaderCards();
 			int choice = chooseLeaderCard(possibleChoice);
-			message.setChoice(choice);
 			
 			//Set the LeaderCard to the Player
 			if(choice < possibleChoice.size())
 				player.setLeaderCard(possibleChoice.get(choice));
 			
-			//Notify the choice to the Game Logic
+			//Send a new Message to the Game Logic to notify the choice
+			List<LeaderCard> leaderCardList = new ArrayList<>();
+			for (LeaderCard leaderCard : possibleChoice) {
+				leaderCardList.add(leaderCard.clone());
+			}
+			LeaderCardMessage leaderCardMessage = new LeaderCardMessage(player.getPlayerID(), leaderCardList);
+			leaderCardMessage.setChoice(choice);
 			setChanged();
-			notifyObservers(message);
+			notifyObservers(leaderCardMessage);
 		}
 	}
 		

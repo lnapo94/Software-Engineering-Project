@@ -307,7 +307,7 @@ public class GameLogic extends Observable implements Observer {
                 card.enableOnceARoundEffect();
 
             //Control for some request
-            playersWithRequest.addAll(roundOrder);
+            playersWithRequest.add(player);
             checkOtherPlayerLeaderRequest(player);
         }
 
@@ -378,7 +378,6 @@ public class GameLogic extends Observable implements Observer {
 			}
 		}
 		
-		checkCouncilRequest();
 		checkRequest();
 	}
 	
@@ -567,7 +566,6 @@ public class GameLogic extends Observable implements Observer {
 					}
 					else if(currentAction == null){
 						currentAction = action;
-						checkCouncilRequest();
 						checkRequest();
 					}
 				}
@@ -577,23 +575,19 @@ public class GameLogic extends Observable implements Observer {
 		}
     }
     
-    private void checkCouncilRequest() {
-    	if(!currentPlayer.isCouncilRequestsEmpty()) {
-    		playersWithRequest.add(currentPlayer);
-    		currentPlayer.askCouncilRequest(currentPlayer.removeCouncilRequest());
-    	}
-    	else if(currentAction != null)
-    		doAction();
-    	else if(currentRound != 6)
-    		finishAction();
-    	else
-    		calculateWinner();
-    }
-    
     private void checkRequest() {
-    	if(!currentPlayer.isRequestsEmpty()) {
-    		playersWithRequest.add(currentPlayer);
-    		currentPlayer.askRequest(currentPlayer.removeRequest());
+    	if(currentPlayer.hasRequestToAnswer()) {
+    		
+    		if(!currentPlayer.isRequestsEmpty()) {
+        		playersWithRequest.add(currentPlayer);
+        		currentPlayer.askRequest(currentPlayer.removeRequest());
+        	}
+    		
+
+        	if(!currentPlayer.isCouncilRequestsEmpty()) {
+        		playersWithRequest.add(currentPlayer);
+        		currentPlayer.askCouncilRequest(currentPlayer.removeCouncilRequest());
+        	}
     	}
     	else if(currentAction != null)
     		doAction();
@@ -608,7 +602,6 @@ public class GameLogic extends Observable implements Observer {
 			currentAction.doAction();
 			this.currentAction = null;
 			
-			checkCouncilRequest();
 			checkRequest();
 		} catch (FamiliarInWrongPosition e) {
 			System.out.println("[DEBUG]: familiar in wrong position in gamelogic");
@@ -667,7 +660,6 @@ public class GameLogic extends Observable implements Observer {
 				player.synchResource();
 				
 				playersWithRequest.remove(player);
-				checkCouncilRequest();
 			}
 		} catch(ElementNotFoundException e) {
 			System.out.println("Unable to find the player to satisfy the council requests");

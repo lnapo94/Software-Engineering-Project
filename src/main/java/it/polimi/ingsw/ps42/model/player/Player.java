@@ -465,6 +465,10 @@ public class Player extends Observable{
 		
 	}
 	
+	public boolean hasRequestToAnswer() {
+		return (!requests.isEmpty() || !councilRequests.isEmpty()); 
+	}
+	
 	public void askRequest( List<CardRequest> requests){
 	//Method called by the game logic to ask a response to a generic Request
 		

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.leaderCard;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderRequest;
 import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
@@ -9,8 +11,12 @@ import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 
-public class LeaderCard {
+public class LeaderCard implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5133337512738200024L;
 	final private String name;
 	final private String description;
 	final private LeaderRequirements requirements;

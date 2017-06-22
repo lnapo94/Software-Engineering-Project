@@ -1,11 +1,17 @@
 package it.polimi.ingsw.ps42.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 
-public class StaticList<E> implements Iterable<E>{
+public class StaticList<E> implements Iterable<E>, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -409294164517194264L;
+
 	//Data structure for List with a fixed max dimension
 	
 	private final int MAX_SIZE;

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,11 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
 
-public class Card {
+public class Card implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3184629522167274982L;
 	/*Class for Card, when created is placed in a position and do not has a owner, 
 	 * the owner is setted only when a player takes the card. In every ArrayList 
 	 * (Packet or Effect) the elements have to be considered in OR while IN the single 

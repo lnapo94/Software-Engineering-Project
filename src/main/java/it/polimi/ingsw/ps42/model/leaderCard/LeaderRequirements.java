@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.model.leaderCard;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
@@ -7,8 +8,13 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
-public class LeaderRequirements {
+public class LeaderRequirements implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8459959317570182779L;
+
 	//Variable used to control the requirements
 	private boolean checker;
 	
