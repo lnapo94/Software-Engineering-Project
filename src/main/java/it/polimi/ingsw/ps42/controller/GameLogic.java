@@ -75,7 +75,7 @@ public class GameLogic extends Observable implements Observer {
      */
     public Player searchPlayer(String playerID) throws ElementNotFoundException {
         for(Player player : playersList)
-            if(player.getPlayerID() == playerID)
+            if(player.getPlayerID().equals(playerID))
                 return player;
         throw new ElementNotFoundException("The player isn't in GameLogic");
     }
@@ -329,7 +329,7 @@ public class GameLogic extends Observable implements Observer {
 			Player player = searchPlayer(request.getPlayerID());
 			//Control if the player has a request
 			if(playersWithRequest.contains(player)) {
-				request.apply();
+				request.apply(player);
 				checkOtherPlayerLeaderRequest(player);
 			}
 			

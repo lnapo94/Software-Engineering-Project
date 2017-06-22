@@ -59,16 +59,16 @@ public class LeaderCard {
 	}
 	
 	//Methods used to enable a familiar color request
-	public void enableOnceARoundEffect(FamiliarColor color) {
+	public void enableOnceARoundEffect(Player player, FamiliarColor color) {
 		SetSingleFamiliarLeader effect = (SetSingleFamiliarLeader)onceARoundEffect;
 		effect.setFamiliarColor(color);
-		effect.enableEffect(owner);
+		effect.enableEffect(player);
 	}
 	
-	public void enablePermanentEffect(FamiliarColor color) {
+	public void enablePermanentEffect(Player player, FamiliarColor color) {
 		SetSingleFamiliarLeader effect = (SetSingleFamiliarLeader)permanentEffect;
 		effect.setFamiliarColor(color);
-		effect.enableEffect(owner);
+		effect.enableEffect(player);
 	}
 	
 	public void enablePermanentEffect() {
