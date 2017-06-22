@@ -9,6 +9,10 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class IncreaseSingleFamiliar extends Effect{
 	//This effect increase only one familiar's value
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -752243268908442L;
 	private int value;
 	private FamiliarColor color;
 

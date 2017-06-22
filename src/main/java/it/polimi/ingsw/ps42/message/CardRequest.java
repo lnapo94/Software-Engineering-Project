@@ -9,6 +9,11 @@ import it.polimi.ingsw.ps42.model.player.Player;
 
 public abstract class CardRequest extends Message {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4089318481414975208L;
+
 	/*Class for asking a request to the player, 
 	 * e.g. choose between two effects or two costs or
 	 * if wants to pay for a effect

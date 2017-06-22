@@ -5,6 +5,10 @@ import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 
 public class LeaderCardUpdateMessage extends Message {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2533166029286132972L;
 	LeaderCard card;
 
 	public LeaderCardUpdateMessage(String playerID, LeaderCard card) {

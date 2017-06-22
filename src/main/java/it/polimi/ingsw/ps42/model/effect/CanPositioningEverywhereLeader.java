@@ -3,7 +3,12 @@ package it.polimi.ingsw.ps42.model.effect;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 
-public class CanPositioningEverywhereLeader extends Effect{
+public class CanPositioningEverywhereLeader extends Effect {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5946490102125140634L;
 
 	public CanPositioningEverywhereLeader() {
 		super(EffectType.CAN_POSITIONING_EVERYWHERE);

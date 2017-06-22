@@ -8,6 +8,10 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
 public class CardForEachObtain extends Effect{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7012927820219406173L;
 	private CardColor color;
 	private Packet gains;
 

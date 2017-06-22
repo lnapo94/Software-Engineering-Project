@@ -8,6 +8,10 @@ public class CardUpdateMessage extends Message{
 	/* Message to notify the View of the movement of a Card (only if a player performs a takeCard Action)
 	 */
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1778540813432689685L;
 	private ActionType type;
 	private int position;
 	

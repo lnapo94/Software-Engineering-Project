@@ -8,6 +8,10 @@ public class BanMessage extends Message{
 	/* Message to set the Bans in the View when the game starts
 	 */
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 715916254380472322L;
 	private Effect firstEffect;
 	private Effect secondEffect;
 	private Effect thirdEffect;

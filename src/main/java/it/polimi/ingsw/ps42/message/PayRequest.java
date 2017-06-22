@@ -12,6 +12,10 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 public class PayRequest extends CardRequest{
 	//This request is created to know which cost player wants to pay
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3625839207062064800L;
 	private final Packet discount;
 	
 	public PayRequest(String playerID, Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice, Packet discount) {

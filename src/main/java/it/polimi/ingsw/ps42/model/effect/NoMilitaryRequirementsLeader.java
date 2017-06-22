@@ -5,6 +5,11 @@ import it.polimi.ingsw.ps42.model.player.Player;
 
 public class NoMilitaryRequirementsLeader extends Effect{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2889343737369528024L;
+
 	public NoMilitaryRequirementsLeader() {
 		super(EffectType.NO_MILITARY_REQUIREMENTS);
 	}

@@ -9,6 +9,10 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 public class Obtain extends Effect{
 	//Obtain the indicated resources by paying the following costs
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2273882055244433413L;
 	private Packet costs;
 	private Packet gains;
 	private CouncilObtain councilObtain;

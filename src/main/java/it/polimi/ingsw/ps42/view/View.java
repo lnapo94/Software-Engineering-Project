@@ -91,9 +91,14 @@ public abstract class View extends Observable implements Observer {
 			//Add the BonusBar to the Player
 			player.setBonusBar(message.getAvailableBonusBar().get(choice));
 			
-			//Notify the choice to the Game Logic
+			//Send a new Message to the Game Logic to notify the choice
+			List<BonusBar> availableBonusBar = new ArrayList<>();
+			for (BonusBar bonusBar : message.getAvailableBonusBar()) {
+				availableBonusBar.add(bonusBar.clone());
+			}
+			Message bonusBarMessage = new BonusBarMessage(player.getPlayerID(), availableBonusBar);
 			setChanged();
-			notifyObservers(message);
+			notifyObservers(bonusBarMessage);
 		}
 
 	}

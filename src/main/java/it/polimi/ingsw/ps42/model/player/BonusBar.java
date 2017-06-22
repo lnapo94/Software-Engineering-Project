@@ -2,12 +2,18 @@ package it.polimi.ingsw.ps42.model.player;
 
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
+
+import java.io.Serializable;
 import java.util.HashMap;
 
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 
-public class BonusBar {
+public class BonusBar implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7853505964214729073L;
 	//This is the player's little bonus bar. Every player can have the same bonusbar (simple)
 	//or can have an advanced one (advanced mode)
 	

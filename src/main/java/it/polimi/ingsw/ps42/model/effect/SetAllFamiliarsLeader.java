@@ -6,6 +6,10 @@ import it.polimi.ingsw.ps42.model.player.Player;
 
 public class SetAllFamiliarsLeader extends Effect {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3681714471119908383L;
 	private int value;
 
 	public SetAllFamiliarsLeader(int value) {

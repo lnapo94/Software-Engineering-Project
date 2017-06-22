@@ -11,6 +11,10 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class CouncilRequest extends Message {
 	//Request used to know what kind of council player wants
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8759529288193414560L;
 	private List<Obtain> choice;
 	private final int quantity;
 	private final List<Obtain> possibleChoice;

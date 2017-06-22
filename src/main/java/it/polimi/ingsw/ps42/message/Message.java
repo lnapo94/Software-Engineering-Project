@@ -1,9 +1,15 @@
 package it.polimi.ingsw.ps42.message;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitable;
 
-public abstract class Message implements Visitable {
+public abstract class Message implements Visitable, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 784700456898364021L;
 	protected String playerID;
 	private boolean isRetrasmission;
 	

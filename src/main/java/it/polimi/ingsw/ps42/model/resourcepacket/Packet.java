@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.model.resourcepacket;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,8 +10,12 @@ import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 
-public class Packet implements Iterable<Unit>, Printable, Cloneable {
+public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4208699031549844006L;
 	private List<Unit> list;
 	
 	public	Packet()

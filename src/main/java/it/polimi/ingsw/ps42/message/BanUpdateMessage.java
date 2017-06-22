@@ -7,6 +7,10 @@ public class BanUpdateMessage extends Message{
 	/* Message to notify the View the assignment of a Ban to a Player
 	 */
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6705160229187409149L;
 	private int banPeriod;
 	
 	public BanUpdateMessage(String playerID,int banPeriod) {

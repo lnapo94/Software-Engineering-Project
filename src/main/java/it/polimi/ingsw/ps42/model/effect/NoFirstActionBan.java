@@ -6,6 +6,11 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class NoFirstActionBan extends Effect {
 	//Set a player variable, then the GameLogic knows the player cannot play the first action
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4347788955119043485L;
+
 	public NoFirstActionBan() {
 		super(EffectType.NO_FIRST_ACTION_BAN);
 	}

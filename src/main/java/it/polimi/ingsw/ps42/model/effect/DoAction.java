@@ -10,6 +10,10 @@ public class DoAction extends Effect{
 	//Allow player to do another action
 	//This creates an ActionPrototype, that will be consumed by the GameLogic
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4081441943590977198L;
 	private ActionType type;
 	private int actionLevel;
 	private Packet discount;

@@ -10,6 +10,10 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 public class ForEachObtain extends Effect{
 	//Obtain some resources for each requirements the player has
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1063976216381694601L;
 	private Packet requirements;
 	private Packet gains;
 

@@ -6,6 +6,10 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class SlaveBan extends Effect {
 	//A player need more slaves to increase his familiars. This ban depends on the divisory.
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5371903224725167322L;
 	private int divisory;
 
 	public SlaveBan(int divisory) {

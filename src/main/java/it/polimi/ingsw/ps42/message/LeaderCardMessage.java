@@ -8,6 +8,10 @@ import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 
 public class LeaderCardMessage extends Message{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1791114275385425547L;
 	private List<LeaderCard> leaderCardList;
 	private int choice;
 	

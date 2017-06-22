@@ -5,6 +5,11 @@ import it.polimi.ingsw.ps42.model.player.Player;
 
 public class NoMoneyMalusLeader extends Effect{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6454523967505855024L;
+
 	public NoMoneyMalusLeader() {
 		super(EffectType.NO_MONEY_MALUS);
 	}

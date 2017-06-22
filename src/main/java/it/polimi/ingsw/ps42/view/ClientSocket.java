@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -59,6 +61,7 @@ public class ClientSocket extends Observable implements Observer{
 			}
 			catch(IOException | ClassNotFoundException e){
 				System.out.println("errore nella lettura dei messaggi ricevuti");
+				e.printStackTrace();
 				isConnected=false;
 			}
 		}
@@ -93,6 +96,25 @@ public class ClientSocket extends Observable implements Observer{
 		}
 		else{
 			System.out.println("Wrong message type");
+		}
+	}
+	
+	
+	public static void main(String[] args) {
+		
+		String host = "localhost"; 
+		try {
+			ClientSocket client = new ClientSocket(host);
+			View view = new TerminalView();
+			view.addPlayer("primoGiocatore2");
+			client.addView(view);
+			List<String> playersID = new ArrayList<String>();
+			playersID.add("primoGiocatore1");
+			playersID.add("primoGiocatore2");
+			view.createTable(playersID);
+			client.startReading();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

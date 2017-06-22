@@ -8,6 +8,10 @@ public class SetSingleFamiliarLeader extends Effect{
 	
 	//Effect used in leader cards to set one familiar value
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3007031091349849711L;
 	private FamiliarColor color;
 	final private int value;
 

@@ -11,6 +11,10 @@ public class IncreaseAction extends Effect {
 	 * Be careful to distinguish the immediate from the permanent effect
 	*/
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4630650466329490163L;
 	private ActionType type;
 	private int value;
 	private Packet discount;

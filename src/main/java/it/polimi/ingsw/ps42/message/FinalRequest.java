@@ -10,6 +10,11 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class FinalRequest extends CardRequest{
 	//Used to know which final card effect player wants to enable
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2486050455783188238L;
+
 	public FinalRequest(String playerID, Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice) {
 		super(playerID, card, possibleChoiceIndex, possibleChoice);
 	}

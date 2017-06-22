@@ -9,6 +9,10 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class IncreaseFamiliarsPoint extends Effect{
 	//In this effect all the familiars' points are increased
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4636122239357858799L;
 	private int value;
 
 	public IncreaseFamiliarsPoint(int value) {

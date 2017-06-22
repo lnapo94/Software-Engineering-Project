@@ -68,6 +68,7 @@ public class Connection extends Observable implements Runnable{
 	public void send(Message message){
 		
 		try {
+			System.out.println("new msg to send");
 			writer.writeObject(message);
 			writer.flush();
 		} catch (IOException e) {

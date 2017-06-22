@@ -17,6 +17,10 @@ public class CardCostBan extends Effect{
 	//At the end of the match, the gamelogic calculate the cost of woods and stones of the indicated cards
 	//and remove victory points from the player resources
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7122058016852083837L;
 	private CardColor color;
 
 	public CardCostBan(CardColor color) {

@@ -4,6 +4,10 @@ import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 
 public class BanRequest extends Message {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 214665373242179569L;
 	private int banNumber;
 	private boolean wantPayForBan;
 

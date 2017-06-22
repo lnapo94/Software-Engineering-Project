@@ -194,7 +194,7 @@ public class GameLogic extends Observable implements Observer {
      * Method used to ask to the next player what bonus bar he wants
      */
     private void askBonusBar() {
-        if(!bonusBarList.isEmpty()) {
+        if(!roundOrder.isEmpty()) {
             currentPlayer = roundOrder.remove(0);
             currentPlayer.askChooseBonusBar(bonusBarList);
         }

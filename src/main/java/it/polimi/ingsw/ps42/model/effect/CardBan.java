@@ -10,6 +10,10 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class CardBan extends Effect{
 	//At the end of the match, delete the corresponding cards in the player list
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3508591321623009266L;
 	private CardColor color;
 	
 	

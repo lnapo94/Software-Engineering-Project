@@ -9,6 +9,10 @@ public class ResourceUpdateMessage extends Message {
 	
 	//Message used to update playerView's resources
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5150795908758679446L;
 	private HashMap<Resource, Integer> resources;
 
 	public ResourceUpdateMessage(String playerID, HashMap<Resource,Integer> resources) {

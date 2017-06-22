@@ -9,6 +9,10 @@ public class PlayerToken extends Message{
 	 * wraps a Player Move and an Action Prototype for the bonus Actions 
 	 */
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2557321712632368922L;
 	private PlayerMove playerMove;
 	private ActionPrototype actionPrototype;
 	

@@ -11,6 +11,10 @@ public class BonusBarMessage extends Message{
 	/* Message to ask the View to choice between the available BonusBar
 	 */
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 120657403510463998L;
 	private List<BonusBar> availableBonusBar;
 	private int choice;
 	

@@ -9,6 +9,10 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
 public class ObtainBan extends Effect{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1609999679326262487L;
 	private Packet costs;
 	private Resource resource;
 	

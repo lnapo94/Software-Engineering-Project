@@ -11,6 +11,10 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class CouncilObtain extends Effect {
 	//Create a request for the gamelogic to obtain the resources from the council privileges
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -314367395260372419L;
 	private final int quantity;
 	private final List<Obtain> possibleConversion;
 

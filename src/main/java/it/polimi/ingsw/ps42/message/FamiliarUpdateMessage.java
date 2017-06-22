@@ -7,6 +7,10 @@ import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 public class FamiliarUpdateMessage extends Message {
 	//Used to update the position of one familiar in the view
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2882450080963747924L;
 	private ActionType action;
 	private FamiliarColor color;
 	private int position;

@@ -10,6 +10,10 @@ public class CardsMessage extends Message {
 	/* Message to notify the View of the new cards on a tower for the next round
 	 */
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5326429757767619958L;
 	private CardColor color;
 	private StaticList<Card> deck;
 	

@@ -6,6 +6,11 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class NoBonusInTower extends Effect{
 	//This method set a player variable to disable the Tower Bonus
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3468865507577574258L;
+
 	public NoBonusInTower() {
 		super(EffectType.NO_TOWER_BONUS);
 		

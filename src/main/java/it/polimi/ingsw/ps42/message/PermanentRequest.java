@@ -10,6 +10,11 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class PermanentRequest extends CardRequest{
 	//Used to know which permanent card effect player wants to enable
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8250539263820109345L;
+
 	public PermanentRequest(String playerID, Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice) {
 		super(playerID, card, possibleChoiceIndex, possibleChoice);
 	}

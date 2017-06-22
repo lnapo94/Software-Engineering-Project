@@ -1,10 +1,16 @@
 package it.polimi.ingsw.ps42.model.resourcepacket;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 
-public class Unit {
+public class Unit implements Serializable {
 	//This is the unit of resource for the game
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8206718312351766487L;
 	private Resource resource;
 	private int quantity;
 	

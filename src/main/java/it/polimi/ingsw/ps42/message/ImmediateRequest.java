@@ -10,6 +10,11 @@ import it.polimi.ingsw.ps42.model.player.Player;
 public class ImmediateRequest extends CardRequest{
 	//Used to know which immediate card effect player wants to enable
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9074379648212729652L;
+
 	public ImmediateRequest(String playerID, Card card, List<Integer> possibleChoiceIndex, List<Printable> possibleChoice) {
 		super(playerID, card, possibleChoiceIndex, possibleChoice);
 	}

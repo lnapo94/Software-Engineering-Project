@@ -8,6 +8,10 @@ public class PlayerMove extends Message{
 	//Class that contains the informations given from the player
 	//The game logic parse these information to create a complete Action
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4496592260286365702L;
 	private ActionType type;
 	private FamiliarColor familiarColor;
 	
