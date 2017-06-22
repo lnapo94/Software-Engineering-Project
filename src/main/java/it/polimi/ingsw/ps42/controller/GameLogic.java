@@ -209,7 +209,7 @@ public class GameLogic extends Observable implements Observer {
      * @param choice    Used to select the correct bonus bar
      */
     public void setBonusBar(int choice, String playerID) {
-        if(playerID == currentPlayer.getPlayerID()) {
+        if(playerID.equals(currentPlayer.getPlayerID())) {
             currentPlayer.setBonusBar(bonusBarList.remove(choice));
             currentPlayer = null;
             askBonusBar();
