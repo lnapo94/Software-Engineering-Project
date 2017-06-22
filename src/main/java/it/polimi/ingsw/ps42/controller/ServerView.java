@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
+import it.polimi.ingsw.ps42.client.ClientInterface;
 import it.polimi.ingsw.ps42.controller.GameLogic;
 
 public class ServerView extends Observable implements Observer{
@@ -29,8 +30,14 @@ public class ServerView extends Observable implements Observer{
 	
 	public void addConnection(Connection connection, String playerID){
 		
+		//Add a Socket Client to the game
 		connection.addObserver(this);
 		connections.put(playerID, connection);
+		
+	}
+	
+	public void addRMIClient(ClientInterface client){
+		//TODO Add a RMI Client to the game
 		
 	}
 	
@@ -63,9 +70,14 @@ public class ServerView extends Observable implements Observer{
 	}
 	
 	private void sendAll(Message message){
+		
+		//Send to Socket Client
 		connections.forEach((playerID, connection)->{
 			connection.send(message);
 		});
+		
+		//TODO: Send to RMI Client
+		
 	}
 	
 	public static void main(String[] args) {
