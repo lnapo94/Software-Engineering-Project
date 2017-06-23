@@ -37,7 +37,7 @@ public class Connection extends Observable implements Runnable{
 		
 		}
 		catch (IOException | ClassNotFoundException e) {
-			System.out.println("Error occurred in trasmission");
+			System.out.println("Error occurred in trasmission, closing Connection");
 		}
 		finally {
 			close();
@@ -65,7 +65,7 @@ public class Connection extends Observable implements Runnable{
 		
 	}
 	
-	public void send(Message message){
+	public void send(Message message) throws IOException{
 		
 		try {
 			System.out.println("new msg to send");
@@ -73,7 +73,11 @@ public class Connection extends Observable implements Runnable{
 			writer.flush();
 		} catch (IOException e) {
 			System.out.println("Error in sending the new message to: "+message.getPlayerID() );
+			throw new IOException();
 		}	
+		finally {
+			active = false;
+		}
 	}
 	
 }

@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
 import it.polimi.ingsw.ps42.client.ClientInterface;
@@ -22,23 +23,64 @@ public class ServerView extends Observable implements Observer{
 	
 	//TODO Gestire i timer
 	private Map<String, Connection> connections;
+	private List<String> disconnectedPlayers;
 	
 	public ServerView() {
 	
 		connections = new HashMap<>();
+		disconnectedPlayers = new ArrayList<>();
 	}
 	
-	public void addConnection(Connection connection, String playerID){
+	public void addConnection(Connection connection, String playerID) throws ElementNotFoundException{
 		
 		//Add a Socket Client to the game
+		if(wasConnected(playerID)){
+			//If was connected then delete the old connection and add the new one
+			disconnectedPlayers.remove(search(playerID));
+			connect(connection, playerID);
+		}
+		else if(nameNotUsed(playerID))
+			//If is a new Player add him to the game
+			connect(connection, playerID);
+	}
+	
+	private void connect(Connection connection, String playerID){
+		
 		connection.addObserver(this);
 		connections.put(playerID, connection);
+	}
+	
+	private int search(String playerID) throws ElementNotFoundException{
 		
+		for (String player: disconnectedPlayers) {
+			if(player.equals(playerID))
+				return disconnectedPlayers.indexOf(player);
+		}
+		throw new ElementNotFoundException("Player not present");
 	}
 	
 	public void addRMIClient(ClientInterface client){
 		//TODO Add a RMI Client to the game
 		
+	}
+	
+	public boolean wasConnected(String playerID){
+		//Return if the playerID passed is in use by an active Player
+		for (String player: disconnectedPlayers) {
+			if(player.equals(playerID))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean nameNotUsed(String playerID){
+		
+		return connections.containsKey(playerID);
+	}
+	
+	public int getNumberOfPlayers(){
+		return connections.size();
 	}
 	
 	public void run() throws NotEnoughPlayersException, GameLogicError, IOException{
@@ -73,7 +115,15 @@ public class ServerView extends Observable implements Observer{
 		
 		//Send to Socket Client
 		connections.forEach((playerID, connection)->{
-			connection.send(message);
+			try {
+				connection.send(message);
+			} catch (IOException e) {
+				//The player is disconnected so remove his connection
+				disconnectedPlayers.add(playerID);
+				connection.deleteObserver(this);
+				connections.remove(playerID, connection);
+			}
+			
 		});
 		
 		//TODO: Send to RMI Client
@@ -104,7 +154,7 @@ public class ServerView extends Observable implements Observer{
 				}
 			}
 		}
-		catch (IOException | NotEnoughPlayersException | GameLogicError e) {
+		catch (IOException | NotEnoughPlayersException | GameLogicError | ElementNotFoundException e) {
 						// TODO: handle exception
 			System.out.println("errore nella connessione");
 			e.printStackTrace();
