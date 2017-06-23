@@ -14,6 +14,7 @@ import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 import it.polimi.ingsw.ps42.model.Table;
 import it.polimi.ingsw.ps42.model.action.Action;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
+import it.polimi.ingsw.ps42.model.action.TakeCardAction;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
@@ -37,7 +38,7 @@ import it.polimi.ingsw.ps42.parser.LeaderCardLoader;
 import java.io.IOException;
 import java.util.*;
 
-public class GameLogic extends Observable implements Observer {
+public class GameLogic implements Observer {
     private static final int MAX_BANS_IN_FILE = 7;
     private static final int FAMILIARS_NUMBER = 4;
 
@@ -610,6 +611,8 @@ public class GameLogic extends Observable implements Observer {
     
     private void finishAction() {
     	bonusAction = currentPlayer.getBonusAction();
+    	currentPlayer.synchResource();
+    	
     	if(bonusAction != null)
     		currentPlayer.askMove();
     	else {
@@ -678,6 +681,30 @@ public class GameLogic extends Observable implements Observer {
 
 	public void HandleLeaderUpdate(Player searchPlayer, LeaderCard card) {
 		searchPlayer.enableLeaderCard(card);
+	}
+	
+	public Player getCurrentPlayer() {
+		return this.currentPlayer;
+	}
+	
+	public boolean isThereAnAction() {
+		return this.currentAction != null;
+	}
+	
+	public void rollBackTakeCardAction() {
+		if(currentAction instanceof TakeCardAction) {
+			TakeCardAction action = (TakeCardAction) currentAction;
+			action.rollBackAction();
+		}
+	}
+	
+	public int getCurrentRound() {
+		return this.currentRound;
+	}
+	
+	public void removePlayerFromPendingRequest(Player player) {
+		while(playersWithRequest.contains(player))
+			playersWithRequest.remove(player);
 	}
 
 	@Override

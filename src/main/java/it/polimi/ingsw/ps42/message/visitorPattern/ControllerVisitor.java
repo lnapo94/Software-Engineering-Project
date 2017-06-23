@@ -1,3 +1,4 @@
+
 package it.polimi.ingsw.ps42.message.visitorPattern;
 
 import it.polimi.ingsw.ps42.controller.GameLogic;

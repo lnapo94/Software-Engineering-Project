@@ -144,15 +144,24 @@ public class TakeCardAction extends Action{
 		try {
 			position.getCard().payCard(player, discount);
 		} catch (NotEnoughResourcesException e) {
-			if(position.getBonus() != null)
-				position.resetBonus(player);
-			if(isAnotherFamiliar())
-				player.increaseResource(moneyMalus);
-			player.synchResource();
-			position.removeFamiliar();
+			rollBackAction();
 			return Response.LOW_LEVEL;
 		}
 		return Response.SUCCESS;
+	}
+	
+	public void rollBackAction() {
+		//Called when player doesn't answer to gameLogic
+		TowerPosition position = tablePosition.get(positionInTableList);
+		Packet moneyMalus = new Packet();
+		moneyMalus.addUnit(new Unit(Resource.MONEY, 3));
+		
+		if(position.getBonus() != null)
+			position.resetBonus(player);
+		if(isAnotherFamiliar())
+			player.increaseResource(moneyMalus);
+		player.synchResource();
+		position.removeFamiliar();
 	}
 
 	@Override
