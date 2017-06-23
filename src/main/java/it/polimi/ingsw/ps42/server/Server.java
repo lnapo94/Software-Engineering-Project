@@ -2,11 +2,20 @@ package it.polimi.ingsw.ps42.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import it.polimi.ingsw.ps42.client.ClientInterface;
+import it.polimi.ingsw.ps42.controller.Connection;
+import it.polimi.ingsw.ps42.controller.ServerView;
 import it.polimi.ingsw.ps42.message.LoginMessage;
+import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
+import it.polimi.ingsw.ps42.model.exception.GameLogicError;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
 
 public class Server extends UnicastRemoteObject implements ServerInterface{
 
@@ -15,17 +24,90 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	 */
 	private static final long serialVersionUID = 778583111570504358L;
 	private static final int SERVER_PORT = 5555;
+	private static final int MATCH_NUMBER = 128;
 	
+	private boolean isActive = true;
+	
+	//Socket for the server
 	private ServerSocket serverSocket;
 	
+	//Executor to run more matches at the same time
+	private ExecutorService executor;
 	
-	protected Server() throws RemoteException {
+	//Table to know where the player is playing
+	private HashMap<String, ServerView> playerTable;
+	
+	private ServerView waitingView;
+	
+	public Server() throws RemoteException {
 		super();
 		try {
 			serverSocket = new ServerSocket(SERVER_PORT);
-			
+			executor = Executors.newFixedThreadPool(MATCH_NUMBER);
+			playerTable = new HashMap<>();
 		} catch (IOException e) {
 			System.out.println("Error in creation of serverSocket");
+		}
+	}
+	
+	public synchronized void addPlayer(String playerID, Socket socket) throws ElementNotFoundException {
+		//Add a player to a match
+		Connection connection = new Connection(socket);
+		
+		//If the player yet exists, add it to the correct view
+		if(existAnotherPlayer(playerID)) {
+			playerTable.get(playerID).addConnection(connection, playerID);
+			executor.submit(connection);
+		}
+		else {
+			//If there isn't a waiting match, create it
+			if(waitingView == null) 
+				waitingView = new ServerView();
+			
+			playerTable.put(playerID, waitingView);
+			
+			//Add a connection to the waiting view
+			waitingView.addConnection(connection, playerID);
+			executor.submit(connection);
+			
+			//If the waitingView is full, start the match
+			if(waitingView.getNumberOfPlayers() == 4) {
+				try {
+					waitingView.run();
+					waitingView = null;
+				} catch (NotEnoughPlayersException e) {
+					System.out.println("There isn't enough player to start a game");
+				} catch (GameLogicError e) {
+					System.out.println("Cannot start the gamelogic");
+					e.printStackTrace();
+				} catch (IOException e) {
+					System.out.println("Network Problem");
+				}
+			}
+		}
+	}
+	
+	public synchronized boolean existAnotherPlayer(String playerID) {
+		return playerTable.containsKey(playerID);
+	}
+	
+	public synchronized boolean playerWasPlaying(String playerID) {
+		return playerTable.get(playerID).wasConnected(playerID);
+	}
+	
+	public void run() {
+		try {
+			System.out.println("Server is now running");
+			while(isActive) {
+				Socket socket = serverSocket.accept();
+				System.out.println("Connection accept, create thread");
+				LoginThread thread = new LoginThread(this, socket);
+				executor.submit(thread);
+			}
+		} 
+		catch(IOException e) {
+			System.out.println("Error while server was running...");
+			isActive = false;
 		}
 	}
 
@@ -45,6 +127,11 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	public void addToGame() throws RemoteException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static void main(String[] args) throws RemoteException {
+		Server server = new Server();
+		server.run();
 	}
 
 	
