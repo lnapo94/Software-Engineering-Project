@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
+import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -26,6 +27,8 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	private static final int SERVER_PORT = 5555;
 	private static final int MATCH_NUMBER = 128;
 	
+	private static final long TIMER_MINUTES = 2;
+	
 	private boolean isActive = true;
 	
 	//Socket for the server
@@ -37,7 +40,10 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	//Table to know where the player is playing
 	private HashMap<String, ServerView> playerTable;
 	
+	//View is waiting the start
 	private ServerView waitingView;
+	
+	private Timer timer;
 	
 	public Server() throws RemoteException {
 		super();
@@ -45,6 +51,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			serverSocket = new ServerSocket(SERVER_PORT);
 			executor = Executors.newFixedThreadPool(MATCH_NUMBER);
 			playerTable = new HashMap<>();
+			timer = new Timer();
 		} catch (IOException e) {
 			System.out.println("Error in creation of serverSocket");
 		}
@@ -64,6 +71,10 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			if(waitingView == null) 
 				waitingView = new ServerView();
 			
+			if(waitingView.getNumberOfPlayers() == 2) {
+				timer.schedule(new ServerTimer(this), TIMER_MINUTES * 60 * 1000);
+			}
+			
 			playerTable.put(playerID, waitingView);
 			
 			//Add a connection to the waiting view
@@ -72,17 +83,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			
 			//If the waitingView is full, start the match
 			if(waitingView.getNumberOfPlayers() == 4) {
-				try {
-					waitingView.run();
-					waitingView = null;
-				} catch (NotEnoughPlayersException e) {
-					System.out.println("There isn't enough player to start a game");
-				} catch (GameLogicError e) {
-					System.out.println("Cannot start the gamelogic");
-					e.printStackTrace();
-				} catch (IOException e) {
-					System.out.println("Network Problem");
-				}
+				startMatch();
 			}
 		}
 	}
@@ -109,6 +110,20 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			System.out.println("Error while server was running...");
 			isActive = false;
 		}
+	}
+	
+	//Method used in timer
+	public void startMatch() {
+		try {
+			if(waitingView != null) {
+				waitingView.run();
+				waitingView = null;
+				timer.cancel();
+			}
+		} catch (NotEnoughPlayersException | GameLogicError | IOException e) {
+			System.out.println("Unable to start the match");
+		}
+
 	}
 
 	@Override
