@@ -35,13 +35,15 @@ public class ClientSocket extends Observable implements Observer{
 		this.addObserver(view);
 	}
 	
-	public void send(Message message){
+	public void send(Message message) throws IOException{
 		
 		try {
 			writer.writeObject(message);
 			writer.flush();
 		} catch (IOException e) {
 			System.out.println("Error in sending the new message to: "+message.getPlayerID() );
+			isConnected = false;
+			throw new IOException();
 		}	
 	}
 	
@@ -92,7 +94,11 @@ public class ClientSocket extends Observable implements Observer{
 
 		if(message instanceof Message){
 			Message msg = (Message) message;
-			this.send(msg);
+			try {
+				this.send(msg);
+			} catch (IOException e) {
+				
+			}
 		}
 		else{
 			System.out.println("Wrong message type");

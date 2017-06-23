@@ -43,6 +43,7 @@ public abstract class View extends Observable implements Observer {
 		
 		this.viewVisitor = new ViewVisitor(this);
 		this.otherPlayers = new ArrayList<>();
+		
 	}
 	
 	public void addPlayer(String playerID){
@@ -207,7 +208,10 @@ public abstract class View extends Observable implements Observer {
 	protected abstract FamiliarColor chooseFamiliarColor(LeaderFamiliarRequest message);
 	
 	protected abstract void notifyLeaderCardActiovation();
+	
 	protected abstract void notifyLeaderCardDiscard();
+	
+	public abstract String askPlayerID();
 	
 	//SETTER FOR TABLE BANS
 	public void setFirstBan(Effect firstBan){
