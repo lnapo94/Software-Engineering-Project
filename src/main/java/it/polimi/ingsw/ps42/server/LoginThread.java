@@ -58,6 +58,7 @@ public class LoginThread implements Runnable{
 			output.writeObject(message);
 			return false;
 		}
+		output.writeObject(message);
 		return true;
 	}
 	
