@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.Observable;
 
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.message.PlayersListMessage;
 
 public class Connection extends Observable implements Runnable{
 
@@ -73,6 +74,21 @@ public class Connection extends Observable implements Runnable{
 			writer.flush();
 		} catch (IOException e) {
 			System.out.println("Error in sending the new message to: "+message.getPlayerID() );
+			throw new IOException();
+		}	
+		finally {
+			active = false;
+		}
+	}
+	
+	public void send(PlayersListMessage message) throws IOException{
+		
+		try {
+			System.out.println("new msg to send");
+			writer.writeObject(message);
+			writer.flush();
+		} catch (IOException e) {
+			System.out.println("Error in sending the new message to: " );
 			throw new IOException();
 		}	
 		finally {

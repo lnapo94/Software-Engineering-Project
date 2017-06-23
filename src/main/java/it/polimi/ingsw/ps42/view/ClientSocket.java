@@ -5,8 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -112,12 +110,8 @@ public class ClientSocket extends Observable implements Observer{
 		try {
 			ClientSocket client = new ClientSocket(host);
 			View view = new TerminalView();
-			view.addPlayer("primoGiocatore1");
 			client.addView(view);
-			List<String> playersID = new ArrayList<String>();
-			playersID.add("primoGiocatore1");
-			playersID.add("primoGiocatore2");
-			view.createTable(playersID);
+			view.askNewPlayerID();
 			client.startReading();
 		} catch (IOException e) {
 			e.printStackTrace();

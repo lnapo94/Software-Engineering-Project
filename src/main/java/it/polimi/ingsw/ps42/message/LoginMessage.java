@@ -1,8 +1,14 @@
 package it.polimi.ingsw.ps42.message;
 
-public class LoginMessage {
+import java.io.Serializable;
+
+public class LoginMessage implements Serializable{
 	//Message used to connect the client with the server
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4050092214596749927L;
 	private String username;
 	private boolean yetUsed;
 	

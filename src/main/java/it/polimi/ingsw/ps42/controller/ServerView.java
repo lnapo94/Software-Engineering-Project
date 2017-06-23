@@ -1,18 +1,15 @@
 package it.polimi.ingsw.ps42.controller;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.message.PlayersListMessage;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
@@ -89,6 +86,8 @@ public class ServerView extends Observable implements Observer{
 		connections.forEach((playerID, connection)->{
 			playerIDList.add(playerID);
 		});
+		PlayersListMessage message = new PlayersListMessage(playerIDList);
+		sendAll(message);
 		GameLogic gameLogic = new GameLogic(playerIDList, this);
 		gameLogic.loadGame();
 	}
@@ -130,36 +129,23 @@ public class ServerView extends Observable implements Observer{
 		
 	}
 	
-	public static void main(String[] args) {
+	private void sendAll(PlayersListMessage message){
 		
-		ServerSocket serverSocket;
-		try {
-			ExecutorService executor= Executors.newFixedThreadPool(128);
-			serverSocket = new ServerSocket(12345);
-			int i=1;
-			ServerView gameConnection = new ServerView() ;
-			while(true){
-				System.out.println("aspetto nuova connessione..");
-				Socket newSocket=serverSocket.accept();
-				System.out.println("creo nuova connessione..");
-				Connection connection= new Connection(newSocket);
-				System.out.println("aggiungo la nuova connessione..");
-				gameConnection.addConnection(connection, ("primoGiocatore"+i));
-				i++;
-				executor.submit(connection);
-				if( i == 3){
-					
-					System.out.println("Game Starts");
-					gameConnection.run();
-				}
+		//Send to Socket Client
+		connections.forEach((playerID, connection)->{
+			try {
+				connection.send(message);
+			} catch (IOException e) {
+				//The player is disconnected so remove his connection
+				disconnectedPlayers.add(playerID);
+				connection.deleteObserver(this);
+				connections.remove(playerID, connection);
 			}
-		}
-		catch (IOException | NotEnoughPlayersException | GameLogicError | ElementNotFoundException e) {
-						// TODO: handle exception
-			System.out.println("errore nella connessione");
-			e.printStackTrace();
-		}
-						
+			
+		});
+		
 	}
+	
+
 
 }
