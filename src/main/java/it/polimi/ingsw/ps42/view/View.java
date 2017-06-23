@@ -11,9 +11,11 @@ import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
+import it.polimi.ingsw.ps42.message.LoginMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
+import it.polimi.ingsw.ps42.message.PlayersListMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.message.visitorPattern.ViewVisitor;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
@@ -49,6 +51,13 @@ public abstract class View extends Observable implements Observer {
 	public void addPlayer(String playerID){
 		
 		this.player = new Player(playerID);
+	}
+	
+	public void askNewPlayerID(){
+		String name = askPlayerID();
+		LoginMessage message = new LoginMessage(name);
+		setChanged();
+		notifyObservers(message);
 	}
 	
 	public String getViewPlayerID() {
@@ -211,7 +220,7 @@ public abstract class View extends Observable implements Observer {
 	
 	protected abstract void notifyLeaderCardDiscard();
 	
-	public abstract String askPlayerID();
+	protected abstract String askPlayerID();
 	
 	//SETTER FOR TABLE BANS
 	public void setFirstBan(Effect firstBan){
@@ -402,12 +411,28 @@ public abstract class View extends Observable implements Observer {
 		player.enableLeaderCard(card);
 	}
 
+	private void handleLoginMessage(LoginMessage message){
+		if(message.existAnotherPlayer()){
+			this.askNewPlayerID();
+		}
+		else 
+			addPlayer(message.getUserName());
+	}
+	
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public void update(Observable sender, Object newMessage) {
 		
-		if (arg1 instanceof Message) {
-			Message message = (Message) arg1;
+		if (newMessage instanceof Message) {
+			Message message = (Message) newMessage;
 			message.accept(viewVisitor);
+		}
+		else if(newMessage instanceof LoginMessage){
+			LoginMessage message = (LoginMessage) newMessage;
+			handleLoginMessage( message );
+		}
+		else if(newMessage instanceof PlayersListMessage){
+			PlayersListMessage message = (PlayersListMessage) newMessage;
+			this.createTable(message.getPlayerList());
 		}
 	}
 

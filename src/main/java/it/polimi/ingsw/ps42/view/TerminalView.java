@@ -147,4 +147,11 @@ public class TerminalView extends View {
 		return FamiliarColor.parseInput(scanner.nextLine());
 	}
 
+	@Override
+	public String askPlayerID() {
+		System.out.println("Insert player username");
+		
+		return scanner.nextLine();
+	}
+
 }
