@@ -17,7 +17,7 @@ public class ClientSocket extends Observable implements Observer{
 	private Socket socket;
 	private ObjectInputStream reader;
 	private ObjectOutputStream writer;
-	private final static int PORT = 12345;
+	private final static int PORT = 5555;
 	private boolean isConnected = false;
 	
 	public ClientSocket(String host) throws UnknownHostException, IOException {
