@@ -78,7 +78,12 @@ public class BonusBar implements Serializable{
 
 	@Override
 	public BonusBar clone() {
-
 		return new BonusBar(productBonus.clone(), yieldBonus.clone());
+	}
+	
+	@Override
+	public String toString() {
+		return "Produce Bonus: " + this.productBonus.print() + "\n" +
+				"Yield Bonus" + this.yieldBonus.print();
 	}
 }

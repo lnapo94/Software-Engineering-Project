@@ -115,7 +115,7 @@ public class TerminalView extends View {
 		for (Printable possibleChoice : message.showChoice()) {
 			System.out.println(possibleChoice.toString());
 		}
-		return scanner.nextInt();
+		return Integer.parseInt(scanner.nextLine());
 	}
 
 	@Override

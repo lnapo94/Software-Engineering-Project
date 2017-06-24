@@ -26,8 +26,7 @@ public class NoMilitaryRequirementsLeader extends Effect{
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player can not satisfy the military requirements to take green cards";
 	}
 
 }

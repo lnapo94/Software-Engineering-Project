@@ -39,8 +39,7 @@ public class IncreaseSingleFamiliar extends Effect{
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player has +" + this.value + " for his " + this.color.toString() + " familiar";
 	}
 
 	@Override

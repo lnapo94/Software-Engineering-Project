@@ -60,8 +60,9 @@ public class IncreaseAction extends Effect {
 	}
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player can improve his " + this.type.toString() + " actions \n" +
+				"Increment: " + this.value + "\n" + 
+				"Discount: " + this.discount.print() + "\n";
 	}
 	
 	@Override

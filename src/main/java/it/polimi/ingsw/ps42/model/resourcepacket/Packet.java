@@ -106,11 +106,6 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 	}
 	
 	@Override
-	public String toString() {
-		return this.list.toString();
-	}
-	
-	@Override
 	public Iterator<Unit> iterator() {
 		return new UnitIterator();
 	}
@@ -133,8 +128,7 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 	}
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.list.toString();
 	}
 	
 	@Override
@@ -148,6 +142,4 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 		
 		return packet;
 	}
-	
-	
 }

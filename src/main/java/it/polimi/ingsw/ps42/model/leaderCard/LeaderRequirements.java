@@ -3,12 +3,13 @@ package it.polimi.ingsw.ps42.model.leaderCard;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
-public class LeaderRequirements implements Serializable{
+public class LeaderRequirements implements Serializable, Printable{
 	
 	/**
 	 * 
@@ -83,5 +84,11 @@ public class LeaderRequirements implements Serializable{
 			});
 		}
 		return new LeaderRequirements(tempResourceRequirements, tempCardRequirements);
+	}
+	
+	@Override
+	public String print() {
+		return "Card Requirements: " + this.cardRequirements.toString() + "\n" +
+				"Resource Requirements: " + this.resourceRequirements.print();
 	}
 }

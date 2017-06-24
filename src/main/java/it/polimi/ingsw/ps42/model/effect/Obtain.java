@@ -59,8 +59,12 @@ public class Obtain extends Effect{
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		String stringToShow = new String();
+		if(costs != null)
+			stringToShow = stringToShow + "Pay:" + this.costs.print() + " ";
+		if(gains != null)
+			stringToShow = stringToShow + "Gain:" +  this.gains.print();
+		return stringToShow;
 	}
 	
 	@Override

@@ -39,8 +39,7 @@ public class IncreaseFamiliarsPoint extends Effect{
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player has +" + this.value + " for all his color familiars";
 	}
 
 	@Override

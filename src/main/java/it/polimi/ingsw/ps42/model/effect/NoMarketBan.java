@@ -26,8 +26,7 @@ public class NoMarketBan extends Effect {
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player can't position his familiars in market";
 	}
 
 	@Override

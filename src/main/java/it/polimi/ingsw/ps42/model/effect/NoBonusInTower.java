@@ -24,8 +24,7 @@ public class NoBonusInTower extends Effect{
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Now player can't take the tower bonuses";
 	}
 
 	@Override

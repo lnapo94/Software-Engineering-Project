@@ -38,8 +38,10 @@ public class DoAction extends Effect{
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player can do a bonus Action: \n" + "ActionType: " + this.type.toString() + "\n" +
+				"Level: " + this.actionLevel + "\n" + 
+				"Discount: " + this.discount.print() + "\n" +
+				"and player also has: " + this.obtainEffect.print();
 	}
 	
 	@Override

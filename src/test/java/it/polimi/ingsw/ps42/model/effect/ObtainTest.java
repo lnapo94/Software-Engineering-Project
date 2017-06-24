@@ -93,7 +93,7 @@ public class ObtainTest {
 		//Now the player has changed is money in stone, thanks to the obtainEffect
 		assertEquals(0, p1.getResource(Resource.MONEY));
 		assertEquals(3, p1.getResource(Resource.STONE));
-		
+		System.out.println(obtainToTest.print());
 	}
 
 }

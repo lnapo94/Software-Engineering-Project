@@ -109,7 +109,17 @@ public class ControllerVisitor implements Visitor {
 			Action action = new ActionCreator(gameLogic.searchPlayer(message.getPlayerID()), gameLogic.getTable(), message, gameLogic.getBonusActionValue()).getCreatedAction();
 			gameLogic.handleAction(action, message.getPlayerID());
 		} catch (NotEnoughResourcesException e) {
-			System.out.println("Error in visitor with the action creation");
+			
+			try {
+				//Retrasmit the message because player has not enough resources
+				PlayerToken newMessage = new PlayerToken(message.getPlayerID());
+				newMessage.setRetrasmission();
+				gameLogic.searchPlayer(message.getPlayerID()).retrasmitMessage(newMessage);				
+				
+			} catch (ElementNotFoundException e1) {
+				System.out.println("Player not found in gameLogic");
+			}
+			
 		} catch (ElementNotFoundException e) {
 			System.out.println("Player not found in gameLogic");
 		}

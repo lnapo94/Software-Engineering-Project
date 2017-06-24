@@ -44,8 +44,7 @@ public class ForEachObtain extends Effect{
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player obtains : " + this.gains.print() + " for each " + this.requirements.print() + " he has";
 	}
 
 	@Override

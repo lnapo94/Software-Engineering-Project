@@ -26,8 +26,7 @@ public class FiveMoreVictoryPointLeader extends Effect{
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player has five more victory points every time he uses his faithpoint";
 	}
 
 }

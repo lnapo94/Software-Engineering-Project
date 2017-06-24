@@ -47,8 +47,7 @@ public class CardForEachObtain extends Effect{
 	
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "For each " + this.color + " card in player, he gains " + this.gains.toString();
 	}
 
 }

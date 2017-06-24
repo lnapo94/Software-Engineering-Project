@@ -26,8 +26,7 @@ public class NoMoneyMalusLeader extends Effect{
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player will not pay if there is another familiar in tower";
 	}
 
 }

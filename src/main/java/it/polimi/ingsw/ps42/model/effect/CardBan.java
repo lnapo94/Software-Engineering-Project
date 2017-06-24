@@ -38,8 +38,7 @@ public class CardBan extends Effect{
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return getTypeOfEffect().toString() + ": Applied to " + this.color.toString() + " cards";
 	}
 	
 	@Override

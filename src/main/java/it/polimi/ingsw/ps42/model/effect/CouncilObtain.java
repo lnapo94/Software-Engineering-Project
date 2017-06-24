@@ -36,8 +36,13 @@ public class CouncilObtain extends Effect {
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		String stringToShow = new String("Possible conversion: \n");
+		for(Obtain effect : possibleConversion)
+			stringToShow = stringToShow + "[" + possibleConversion.indexOf(effect) + "]: " + effect.print() + "\n";
+		
+		stringToShow = stringToShow + "\nQuantity: " + this.quantity;
+		
+		return stringToShow;
 	}
 	
 	@Override

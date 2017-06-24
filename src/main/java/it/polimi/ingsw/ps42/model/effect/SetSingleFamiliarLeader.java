@@ -42,8 +42,7 @@ public class SetSingleFamiliarLeader extends Effect{
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player can set a familiar with value = " + this.value;
 	}
 
 }

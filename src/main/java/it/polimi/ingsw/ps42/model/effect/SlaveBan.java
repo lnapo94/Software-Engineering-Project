@@ -28,8 +28,7 @@ public class SlaveBan extends Effect {
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player can increment something paying " + 1 / this.divisory + " slaves for 1 point";
 	}
 	
 	@Override

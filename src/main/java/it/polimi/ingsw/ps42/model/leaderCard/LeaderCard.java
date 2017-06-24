@@ -109,6 +109,38 @@ public class LeaderCard implements Serializable{
 		return this.getName() == card.getName();
 	}
 	
+	public LeaderRequirements getRequirements() {
+		return requirements.clone();
+	}
+	
+	public Effect getOnceARoundEffect() {
+		Effect temp = null;
+		if(onceARoundEffect != null)
+			temp = onceARoundEffect.clone();
+		return temp;
+	}
+	
+	public Effect getPermanentEffect() {
+		Effect temp = null;
+		if(permanentEffect != null)
+			temp = permanentEffect.clone();
+		return temp;
+	}
+	
+	@Override
+	public String toString() {
+		String stringToShow = new String("Name: " + getName() + "| Description: " + getDescription() + "\n");
+		
+		if(getOnceARoundEffect() != null)
+			stringToShow = stringToShow + "Once a round effect: " + getOnceARoundEffect().print() + "\n";
+		
+		if(getPermanentEffect() != null)
+			stringToShow = stringToShow + "Permanent effect: " + getPermanentEffect().print();
+		
+		return stringToShow;
+	}
+	
+	
 	@Override
 	public LeaderCard clone() {
 		LeaderRequirements tempRequirements = null;

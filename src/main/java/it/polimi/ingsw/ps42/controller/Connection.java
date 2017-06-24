@@ -26,7 +26,7 @@ public class Connection extends Observable implements Runnable{
 	@Override
 	public void run() {
 
-		System.out.println("connection is tring to run");
+		System.out.println("connection is trying to run");
 		try{
 			
 			while(isActive()){
@@ -39,6 +39,7 @@ public class Connection extends Observable implements Runnable{
 		}
 		catch (IOException | ClassNotFoundException e) {
 			System.out.println("Error occurred in trasmission, closing Connection");
+			
 		}
 		finally {
 			close();

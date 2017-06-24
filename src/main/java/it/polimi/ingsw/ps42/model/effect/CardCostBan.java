@@ -66,9 +66,8 @@ public class CardCostBan extends Effect{
 	}
 
 	@Override
-	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+	public String print() {		
+		return getTypeOfEffect().toString() + ": Applied to " + this.color.toString() + " cards";
 	}
 	
 	@Override

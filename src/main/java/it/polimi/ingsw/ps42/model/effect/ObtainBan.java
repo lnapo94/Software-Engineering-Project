@@ -53,8 +53,11 @@ public class ObtainBan extends Effect{
 	
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		String stringToShow = new String();
+		for(Unit unit : costs) {
+			stringToShow = stringToShow + "Everytime player gains " + unit.getResource() + ", he gains " + unit.getQuantity() + " " + unit.getResource() + " less";
+		}
+		return stringToShow;
 	}
 
 }

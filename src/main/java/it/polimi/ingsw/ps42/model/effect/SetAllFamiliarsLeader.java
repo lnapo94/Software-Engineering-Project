@@ -31,8 +31,7 @@ public class SetAllFamiliarsLeader extends Effect {
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player's colored familiars have the value = " + this.value + " from now"; 
 	}
 
 }

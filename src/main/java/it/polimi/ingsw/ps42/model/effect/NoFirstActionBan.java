@@ -23,8 +23,7 @@ public class NoFirstActionBan extends Effect {
 
 	@Override
 	public String print() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player can't to his first action";
 	}
 
 	@Override
