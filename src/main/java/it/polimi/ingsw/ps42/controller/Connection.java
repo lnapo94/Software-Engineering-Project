@@ -16,8 +16,10 @@ public class Connection extends Observable implements Runnable{
 	private ObjectOutputStream writer;
 	private boolean active;
 	
-	public Connection(Socket socket) {
+	public Connection(Socket socket, ObjectInputStream reader, ObjectOutputStream writer) {
 			this.socket = socket;
+			this.reader = reader;
+			this.writer = writer;
 			this.active = true;
 	}
 
@@ -26,9 +28,7 @@ public class Connection extends Observable implements Runnable{
 
 		System.out.println("connection is tring to run");
 		try{
-			writer=new ObjectOutputStream(socket.getOutputStream());
-			writer.flush();
-			reader= new ObjectInputStream(socket.getInputStream());
+			
 			while(isActive()){
 				Message message=(Message) reader.readObject();
 				System.out.println("nuovo msg da inoltrare al controller da: "+ message.getPlayerID());

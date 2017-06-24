@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps42.server;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
@@ -57,9 +59,9 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		}
 	}
 	
-	public synchronized void addPlayer(String playerID, Socket socket) throws ElementNotFoundException {
+	public synchronized void addPlayer(String playerID, Socket socket, ObjectInputStream reader, ObjectOutputStream writer) throws ElementNotFoundException {
 		//Add a player to a match
-		Connection connection = new Connection(socket);
+		Connection connection = new Connection(socket, reader, writer);
 		
 		//If the player yet exists, add it to the correct view
 		if(existAnotherPlayer(playerID)) {

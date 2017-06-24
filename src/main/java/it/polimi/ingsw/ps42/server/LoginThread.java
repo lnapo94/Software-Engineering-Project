@@ -78,7 +78,7 @@ public class LoginThread implements Runnable{
 			}while(message == null || !correctMessage(message));
 			
 			//Add player to the client
-			server.addPlayer(message.getUserName(), socket);
+			server.addPlayer(message.getUserName(), socket, input, output);
 		}
 		catch (IOException e) {
 			System.out.println("Unable to read from the socket");

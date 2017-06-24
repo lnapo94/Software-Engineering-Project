@@ -8,7 +8,9 @@ import java.net.UnknownHostException;
 import java.util.Observable;
 import java.util.Observer;
 
+import it.polimi.ingsw.ps42.message.LoginMessage;
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.message.PlayersListMessage;
 
 public class ClientSocket extends Observable implements Observer{
 
@@ -45,6 +47,18 @@ public class ClientSocket extends Observable implements Observer{
 		}	
 	}
 	
+	public void send(LoginMessage message) throws IOException{
+		
+		try {
+			writer.writeObject(message);
+			writer.flush();
+		} catch (IOException e) {
+			System.out.println("Error in sending the new message to: " );
+			isConnected = false;
+			throw new IOException();
+		}	
+	}
+	
 	public boolean isConnected(){
 		if(socket.isClosed())
 			isConnected=false;
@@ -55,9 +69,19 @@ public class ClientSocket extends Observable implements Observer{
 		
 		if(isConnected()){
 			try{
-				Message msg = (Message)reader.readObject();
-				setChanged();
-				notifyObservers(msg);
+				Object msg = reader.readObject();
+				if(msg instanceof Message) {
+					setChanged();
+					notifyObservers((Message)msg);
+				}
+				else if(msg instanceof LoginMessage){
+					setChanged();
+					notifyObservers((LoginMessage)msg);
+				}
+				else if(msg instanceof PlayersListMessage){
+					setChanged();
+					notifyObservers((PlayersListMessage)msg);
+				}
 			}
 			catch(IOException | ClassNotFoundException e){
 				System.out.println("errore nella lettura dei messaggi ricevuti");
@@ -98,8 +122,12 @@ public class ClientSocket extends Observable implements Observer{
 				
 			}
 		}
-		else{
-			System.out.println("Wrong message type");
+		else if (message instanceof LoginMessage){
+			try {
+				this.send((LoginMessage)message);
+			} catch (IOException e) {
+				System.out.println("Unable to read the message");
+			}
 		}
 	}
 	
