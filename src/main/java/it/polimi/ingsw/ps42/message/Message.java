@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitable;
 
-public abstract class Message implements Visitable, Serializable {
+public abstract class Message implements GenericMessage, Visitable, Serializable {
 	
 	/**
 	 * 

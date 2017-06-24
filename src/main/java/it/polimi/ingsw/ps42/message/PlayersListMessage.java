@@ -3,7 +3,7 @@ package it.polimi.ingsw.ps42.message;
 import java.io.Serializable;
 import java.util.List;
 
-public class PlayersListMessage implements Serializable{
+public class PlayersListMessage implements GenericMessage, Serializable{
 
 
 	/**

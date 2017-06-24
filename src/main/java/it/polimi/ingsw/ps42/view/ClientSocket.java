@@ -8,9 +8,7 @@ import java.net.UnknownHostException;
 import java.util.Observable;
 import java.util.Observer;
 
-import it.polimi.ingsw.ps42.message.LoginMessage;
-import it.polimi.ingsw.ps42.message.Message;
-import it.polimi.ingsw.ps42.message.PlayersListMessage;
+import it.polimi.ingsw.ps42.message.GenericMessage;
 
 public class ClientSocket extends Observable implements Observer{
 
@@ -35,25 +33,13 @@ public class ClientSocket extends Observable implements Observer{
 		this.addObserver(view);
 	}
 	
-	public void send(Message message) throws IOException{
+	public void send(GenericMessage message) throws IOException{
 		
 		try {
 			writer.writeObject(message);
 			writer.flush();
 		} catch (IOException e) {
-			System.out.println("Error in sending the new message to: "+message.getPlayerID() );
-			isConnected = false;
-			throw new IOException();
-		}	
-	}
-	
-	public void send(LoginMessage message) throws IOException{
-		
-		try {
-			writer.writeObject(message);
-			writer.flush();
-		} catch (IOException e) {
-			System.out.println("Error in sending the new message to: " );
+			System.out.println("Error in sending the new message ");
 			isConnected = false;
 			throw new IOException();
 		}	
@@ -70,18 +56,8 @@ public class ClientSocket extends Observable implements Observer{
 		if(isConnected()){
 			try{
 				Object msg = reader.readObject();
-				if(msg instanceof Message) {
-					setChanged();
-					notifyObservers((Message)msg);
-				}
-				else if(msg instanceof LoginMessage){
-					setChanged();
-					notifyObservers((LoginMessage)msg);
-				}
-				else if(msg instanceof PlayersListMessage){
-					setChanged();
-					notifyObservers((PlayersListMessage)msg);
-				}
+				setChanged();
+				notifyObservers(msg);
 			}
 			catch(IOException | ClassNotFoundException e){
 				System.out.println("errore nella lettura dei messaggi ricevuti");
@@ -114,21 +90,15 @@ public class ClientSocket extends Observable implements Observer{
 	@Override
 	public void update(Observable sender, Object message) {
 
-		if(message instanceof Message){
-			Message msg = (Message) message;
+		if(message instanceof GenericMessage){
+			GenericMessage msg = (GenericMessage) message;
 			try {
 				this.send(msg);
 			} catch (IOException e) {
-				
+				System.out.println("Unknown type of message");
 			}
 		}
-		else if (message instanceof LoginMessage){
-			try {
-				this.send((LoginMessage)message);
-			} catch (IOException e) {
-				System.out.println("Unable to read the message");
-			}
-		}
+		
 	}
 	
 	
