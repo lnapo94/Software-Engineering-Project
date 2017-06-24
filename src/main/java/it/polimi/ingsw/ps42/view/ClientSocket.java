@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.view;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -38,7 +39,10 @@ public class ClientSocket extends Observable implements Observer{
 		try {
 			writer.writeObject(message);
 			writer.flush();
-		} catch (IOException e) {
+		} catch(EOFException e) {
+			System.out.println("EOF reached");
+		}
+		catch (IOException e) {
 			System.out.println("Error in sending the new message ");
 			isConnected = false;
 			throw new IOException();
@@ -58,6 +62,8 @@ public class ClientSocket extends Observable implements Observer{
 				Object msg = reader.readObject();
 				setChanged();
 				notifyObservers(msg);
+			} catch(EOFException e) {
+				System.out.println("EOF reached");
 			}
 			catch(IOException | ClassNotFoundException e){
 				System.out.println("errore nella lettura dei messaggi ricevuti");
