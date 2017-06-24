@@ -29,7 +29,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	private static final int SERVER_PORT = 5555;
 	private static final int MATCH_NUMBER = 128;
 	
-	private static final long TIMER_SECONDS = 60;
+	private static final long TIMER_SECONDS = 2;
 	
 	private boolean isActive = true;
 	
@@ -53,7 +53,6 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			serverSocket = new ServerSocket(SERVER_PORT);
 			executor = Executors.newFixedThreadPool(MATCH_NUMBER);
 			playerTable = new HashMap<>();
-			timer = new Timer();
 		} catch (IOException e) {
 			System.out.println("Error in creation of serverSocket");
 		}
@@ -83,6 +82,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			executor.submit(connection);
 			
 			if(waitingView.getNumberOfPlayers() == 2) {
+				timer = new Timer();
 				timer.schedule(new ServerTimer(this), TIMER_SECONDS * 1000);
 			}
 			

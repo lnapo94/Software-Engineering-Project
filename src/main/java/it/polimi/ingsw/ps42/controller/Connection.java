@@ -74,10 +74,8 @@ public class Connection extends Observable implements Runnable{
 			writer.flush();
 		} catch (IOException e) {
 			System.out.println("Error in sending the new message ");
-			throw new IOException();
-		}	
-		finally {
 			active = false;
+			throw new IOException();
 		}
 	}
 	
