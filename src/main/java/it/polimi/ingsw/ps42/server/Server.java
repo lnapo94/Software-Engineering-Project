@@ -29,7 +29,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	private static final int SERVER_PORT = 5555;
 	private static final int MATCH_NUMBER = 128;
 	
-	private static final long TIMER_MINUTES = 2;
+	private static final long TIMER_SECONDS = 60;
 	
 	private boolean isActive = true;
 	
@@ -61,6 +61,11 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	
 	public synchronized void addPlayer(String playerID, Socket socket, ObjectInputStream reader, ObjectOutputStream writer) throws ElementNotFoundException {
 		//Add a player to a match
+		try {
+			writer.flush();
+		} catch (IOException e) {
+			System.out.println("Network error");
+		}
 		Connection connection = new Connection(socket, reader, writer);
 		
 		//If the player yet exists, add it to the correct view
@@ -73,15 +78,15 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			if(waitingView == null) 
 				waitingView = new ServerView();
 			
-			if(waitingView.getNumberOfPlayers() == 2) {
-				timer.schedule(new ServerTimer(this), TIMER_MINUTES * 60 * 1000);
-			}
-			
-			playerTable.put(playerID, waitingView);
-			
 			//Add a connection to the waiting view
 			waitingView.addConnection(connection, playerID);
 			executor.submit(connection);
+			
+			if(waitingView.getNumberOfPlayers() == 2) {
+				timer.schedule(new ServerTimer(this), TIMER_SECONDS * 1000);
+			}
+			
+			playerTable.put(playerID, waitingView);
 			
 			//If the waitingView is full, start the match
 			if(waitingView.getNumberOfPlayers() == 4) {
@@ -115,12 +120,12 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	}
 	
 	//Method used in timer
-	public void startMatch() {
+	public synchronized void startMatch() {
 		try {
 			if(waitingView != null) {
+				timer.cancel();
 				waitingView.run();
 				waitingView = null;
-				timer.cancel();
 			}
 		} catch (NotEnoughPlayersException | GameLogicError | IOException e) {
 			System.out.println("Unable to start the match");

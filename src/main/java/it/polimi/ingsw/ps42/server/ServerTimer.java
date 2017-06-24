@@ -14,6 +14,7 @@ public class ServerTimer extends TimerTask{
 	
 	@Override
 	public void run() {
+		System.out.println("Timer expired, starting match");
 		server.startMatch();
 	}
 

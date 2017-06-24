@@ -73,7 +73,7 @@ public class ServerView extends Observable implements Observer{
 	
 	public boolean nameNotUsed(String playerID){
 		
-		return connections.containsKey(playerID);
+		return !connections.containsKey(playerID);
 	}
 	
 	public int getNumberOfPlayers(){
