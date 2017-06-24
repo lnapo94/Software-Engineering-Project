@@ -197,12 +197,26 @@ public class Card implements Serializable{
 				if(controlPossibleChoice(immediateEffects))
 					resetPossibleChoice();
 				else {
-					CardRequest request = new ImmediateRequest(owner.getPlayerID(), this, possibleChoiceIndex, possibleChoice);
+					CardRequest request = new ImmediateRequest(owner.getPlayerID(), this, copyInteger(possibleChoiceIndex), copyPrintable(possibleChoice));
 					owner.addRequest(request);
 					resetPossibleChoice();
 				}
 			}
 		}
+	}
+	
+	private List<Printable> copyPrintable(List<Printable> array) {
+		List<Printable> temporary = new ArrayList<>();
+		for(Printable element : array)
+			temporary.add(element);
+		return temporary;
+	}
+	
+	private List<Integer> copyInteger(List<Integer> array) {
+		List<Integer> temporary = new ArrayList<>();
+		for(Integer element : array) 
+			temporary.add(element);
+		return temporary;
 	}
 	
 	public void enableImmediateEffect(int choice, Player player) {
