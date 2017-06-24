@@ -36,7 +36,7 @@ public class TerminalView extends View {
 			//Show possible BonusBar
 			System.out.println(bonusBar.toString());
 		}
-		return scanner.nextInt();
+		return Integer.parseInt(scanner.nextLine());
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class TerminalView extends View {
 			//Show possible LeaderCard
 			System.out.println(leaderCard.toString());
 		}
-		return scanner.nextInt();
+		return Integer.parseInt(scanner.nextLine());
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class TerminalView extends View {
 		for (Obtain obtain : possibleConversions) {
 			System.out.println(obtain.print());
 		}
-		return scanner.nextInt();
+		return Integer.parseInt(scanner.nextLine());
 	}
 
 	@Override
@@ -77,8 +77,6 @@ public class TerminalView extends View {
 					+ActionType.TAKE_BLUE+"\n "+ActionType.TAKE_GREEN+"\n "+ActionType.TAKE_VIOLET+"\n "+ActionType.TAKE_YELLOW+
 					"\n "+ActionType.YIELD);
 			
-			scanner.nextLine();
-			
 			moveType = ActionType.parseInput(scanner.nextLine());
 	
 			System.out.println("colore familiare?");
@@ -88,10 +86,10 @@ public class TerminalView extends View {
 			
 			familiarColor = FamiliarColor.parseInput(scanner.nextLine());
 			System.out.println("posizione?");
-			position = scanner.nextInt();
+			position = Integer.parseInt(scanner.nextLine());
 			
 			System.out.println("incremento del familiare?");
-			increaseValue= scanner.nextInt();
+			increaseValue = Integer.parseInt(scanner.nextLine());
 			
 			showPosition(moveType, position);
 			System.out.println("Confermi mossa?(si/no)");
@@ -180,8 +178,8 @@ public class TerminalView extends View {
 	}
 	
 	private void showPosition(ActionType type, int position){
-		
-		
+		System.out.println("CARTA SELEZIONATA: \n");
+		System.out.println(table.showCard(type, position));
 	}
 
 }
