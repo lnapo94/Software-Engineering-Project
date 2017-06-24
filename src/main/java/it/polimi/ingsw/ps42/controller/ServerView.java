@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import it.polimi.ingsw.ps42.message.GenericMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayersListMessage;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
@@ -110,7 +111,7 @@ public class ServerView extends Observable implements Observer{
 		}
 	}
 	
-	private void sendAll(Message message){
+	private void sendAll(GenericMessage message){
 		
 		//Send to Socket Client
 		connections.forEach((playerID, connection)->{
@@ -126,23 +127,6 @@ public class ServerView extends Observable implements Observer{
 		});
 		
 		//TODO: Send to RMI Client
-		
-	}
-	
-	private void sendAll(PlayersListMessage message){
-		
-		//Send to Socket Client
-		connections.forEach((playerID, connection)->{
-			try {
-				connection.send(message);
-			} catch (IOException e) {
-				//The player is disconnected so remove his connection
-				disconnectedPlayers.add(playerID);
-				connection.deleteObserver(this);
-				connections.remove(playerID, connection);
-			}
-			
-		});
 		
 	}
 	

@@ -2,7 +2,7 @@ package it.polimi.ingsw.ps42.message;
 
 import java.io.Serializable;
 
-public class LoginMessage implements Serializable{
+public class LoginMessage implements GenericMessage, Serializable{
 	//Message used to connect the client with the server
 	
 	/**
