@@ -216,7 +216,7 @@ public abstract class View extends Observable implements Observer {
 	
 	protected abstract FamiliarColor chooseFamiliarColor(LeaderFamiliarRequest message);
 	
-	protected abstract void notifyLeaderCardActiovation();
+	protected abstract void notifyLeaderCardActivation();
 	
 	protected abstract void notifyLeaderCardDiscard();
 	

@@ -7,6 +7,7 @@ import java.util.Scanner;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
+import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
@@ -31,50 +32,71 @@ public class TerminalView extends View {
 	@Override
 	protected int chooseBonusBar(List<BonusBar> bonusBarList) {
 		System.out.println("Scegli una BonusBar per la partita [0-"+(bonusBarList.size()-1)+"]");
+		for (BonusBar bonusBar : bonusBarList) {
+			//Show possible BonusBar
+			System.out.println(bonusBar.toString());
+		}
 		return scanner.nextInt();
 	}
 
 	@Override
 	protected int chooseLeaderCard(List<LeaderCard> leaderCardList) {
 		System.out.println("Scegli una Leader Card per la partita [0-"+(leaderCardList.size()-1)+"]");
+		for (LeaderCard leaderCard : leaderCardList) {
+			//Show possible LeaderCard
+			System.out.println(leaderCard.toString());
+		}
 		return scanner.nextInt();
 	}
 
 	@Override
 	protected int chooseCouncilConversion(List<Obtain> possibleConversions) {
 		System.out.println("Scegli una Conversione per il privilegio del consiglio [0-"+(possibleConversions.size()-1)+"]");
+		for (Obtain obtain : possibleConversions) {
+			System.out.println(obtain.print());
+		}
 		return scanner.nextInt();
 	}
 
 	@Override
 	protected PlayerMove choosePlayerMove(ActionPrototype prototype) {
 		System.out.println("Nuova mossa per il giocatore corrente");
+		int increaseValue, position;
+		ActionType moveType;
+		FamiliarColor familiarColor;
 		
 		printPlayerResources( player);
-		
-		if(prototype != null)
-			System.out.println("é una mossa bonus del tipo"+ prototype.getType().toString()+ 
-								" livello: "+ prototype.getLevel());
-		
-		System.out.println("tipo mossa?");
-		
-		System.out.println(ActionType.COUNCIL+"\n "+ActionType.MARKET+"\n "+ActionType.PRODUCE+"\n "+ActionType.TAKE_ALL+"\n "
-				+ActionType.TAKE_BLUE+"\n "+ActionType.TAKE_GREEN+"\n "+ActionType.TAKE_VIOLET+"\n "+ActionType.TAKE_YELLOW+
-				"\n "+ActionType.YIELD);
-		
-		scanner.nextLine();
-		ActionType moveType = ActionType.parseInput(scanner.nextLine());
-		System.out.println("colore familiare?");
-
-		System.out.println(FamiliarColor.BLACK+"\n "+FamiliarColor.NEUTRAL+"\n "+FamiliarColor.ORANGE+
-							"\n "+FamiliarColor.WHITE);
-		
-		FamiliarColor familiarColor = FamiliarColor.parseInput(scanner.nextLine());
-		System.out.println("posizione?");
-		int position = scanner.nextInt();
-		System.out.println("incremento del familiare?");
-		int increaseValue= scanner.nextInt();
-		
+		do{
+			if(prototype != null)
+				System.out.println("é una mossa bonus del tipo"+ prototype.getType().toString()+ 
+									" livello: "+ prototype.getLevel());
+			
+			System.out.println("tipo mossa?");
+			
+			System.out.println(ActionType.COUNCIL+"\n "+ActionType.MARKET+"\n "+ActionType.PRODUCE+"\n "+ActionType.TAKE_ALL+"\n "
+					+ActionType.TAKE_BLUE+"\n "+ActionType.TAKE_GREEN+"\n "+ActionType.TAKE_VIOLET+"\n "+ActionType.TAKE_YELLOW+
+					"\n "+ActionType.YIELD);
+			
+			scanner.nextLine();
+			
+			moveType = ActionType.parseInput(scanner.nextLine());
+	
+			System.out.println("colore familiare?");
+	
+			System.out.println(FamiliarColor.BLACK+"\n "+FamiliarColor.NEUTRAL+"\n "+FamiliarColor.ORANGE+
+								"\n "+FamiliarColor.WHITE);
+			
+			familiarColor = FamiliarColor.parseInput(scanner.nextLine());
+			System.out.println("posizione?");
+			position = scanner.nextInt();
+			
+			System.out.println("incremento del familiare?");
+			increaseValue= scanner.nextInt();
+			
+			showPosition(moveType, position);
+			System.out.println("Confermi mossa?(si/no)");
+		}
+		while(scanner.nextLine().toUpperCase().equals("NO"));
 		
 		return new PlayerMove(this.getViewPlayerID(), moveType, familiarColor, position, increaseValue);
 	}
@@ -90,11 +112,14 @@ public class TerminalView extends View {
 	@Override
 	protected int answerCardRequest(CardRequest message) {
 		System.out.println("Risolvi una richiesta della carta [0-"+(message.getPossibleChoiceIndex().size()-1)+"]");
+		for (Printable possibleChoice : message.showChoice()) {
+			System.out.println(possibleChoice.toString());
+		}
 		return scanner.nextInt();
 	}
 
 	@Override
-	protected void notifyLeaderCardActiovation() {
+	protected void notifyLeaderCardActivation() {
 		System.out.println("Il player corrente vuole attivare una carta leader");
 		
 	}
@@ -152,6 +177,11 @@ public class TerminalView extends View {
 		System.out.println("Insert player username");
 		
 		return scanner.nextLine();
+	}
+	
+	private void showPosition(ActionType type, int position){
+		
+		
 	}
 
 }

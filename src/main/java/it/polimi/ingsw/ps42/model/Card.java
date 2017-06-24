@@ -381,6 +381,42 @@ public class Card implements Serializable{
 		return temp;
 	}
 	
+	public String showCard(){
+		
+		StringBuilder cardBuilder = new StringBuilder();
+		cardBuilder.append("NAME: "+this.name+"\n");
+		cardBuilder.append("DESCRIPTION: "+this.description+"\n");
+		cardBuilder.append("LEVEL: "+this.level+"\n");
+		
+		cardBuilder.append("COSTS: \n");
+		for (Packet cost : this.costs) {
+			cardBuilder.append(cost.print()+"\n");
+		}
+		
+		cardBuilder.append("REQUIREMENTS: \n");
+		for (Packet requirement: this.requirements){
+			cardBuilder.append(requirement.print()+"\n");
+		}
+		
+		cardBuilder.append("IMMEDIATE EFFECTS: \n");
+		for (Effect immediate : this.immediateEffects){
+			cardBuilder.append(immediate.print()+"\n");
+		}
+		
+		cardBuilder.append("PERMANENT EFFECTS: \n");
+		for (Effect permanent : this.permanentEffects){
+			cardBuilder.append(permanent.print()+"\n");
+		}
+		
+		cardBuilder.append("FINAL EFFECTS: \n");
+		for (Effect finalEff : this.finalEffects){
+			cardBuilder.append(finalEff.print()+"\n");
+		}
+		
+		
+		return cardBuilder.toString();
+	}
+	
 	@Override
 	public Card clone() {
 		//Create temporary arrays of card

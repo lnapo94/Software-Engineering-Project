@@ -7,6 +7,7 @@ import java.util.List;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.effect.Effect;
+import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
@@ -497,5 +498,39 @@ public class TableView {
 
 		return removeCard(greenTower, position);
 
+	}
+	
+	//Methods to show the Cards on the TableView
+	public String showCard(ActionType action, int position){
+		
+		if(action == ActionType.TAKE_GREEN)
+			return showGreenCard(position);
+		if(action == ActionType.TAKE_YELLOW)
+			return showYellowCard(position);
+		if(action == ActionType.TAKE_BLUE)
+			return showBlueCard(position);
+		if(action == ActionType.TAKE_VIOLET)
+			return showVioletCard(position);
+		return null;
+	}
+	
+	private String showGreenCard(int position){
+		
+			return greenTower.get(position).getCard().showCard();
+	}
+	
+	private String showVioletCard(int position){
+		
+		return violetTower.get(position).getCard().showCard();
+	}
+	
+	private String showYellowCard(int position){
+		
+		return yellowTower.get(position).getCard().showCard();
+	}
+	
+	private String showBlueCard(int position){
+		
+		return blueTower.get(position).getCard().showCard();
 	}
 }
