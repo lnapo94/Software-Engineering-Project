@@ -34,14 +34,14 @@ public class TakeCardTest {
 
 	@Before
 	public void setUp() throws Exception {
-		//Create the player
+		//Create the player with only 5 money
 		p1 = new Player("Player 1");
 		Packet resource = new Packet();
 		resource.addUnit(new Unit(Resource.MONEY, 3));
 		p1.increaseResource(resource);
 		p1.synchResource();
 		//Create one tower
-		//With the lasts 2 floor with an effect
+		//With the lasts 2 floor with an 2 money obtain effect, the others empty
 		Packet packet = new Packet();
 		packet.addUnit(new Unit(Resource.MONEY, 2));
 		Obtain bonus = new Obtain(null, packet, null);
@@ -57,7 +57,7 @@ public class TakeCardTest {
 		tower.add(third);
 		tower.add(fourth);
 		
-		//Set a familiar to play
+		//Set a familiar to play with value 5
 		p1.setFamiliarValue(FamiliarColor.ORANGE, 5);
 		
 		//Create costs for the card
@@ -92,8 +92,11 @@ public class TakeCardTest {
 		secondImmediateEffects.add(new DoAction(ActionType.TAKE_GREEN, 5, discount, null));
 		
 		//Create the cards
+		//FistCard: cost: 2Money+2Wood OR 2Money; immEffect: +2Money OR +2MilitaryPoint.
 		Card c = new Card("Card", "", CardColor.GREEN, 1, 3, costs, immediateEffects, null, null, null);
+		//SecondCard: cost: 0; effect: none.
 		Card useless = new Card("", "", CardColor.GREEN, 1, 3, null, null, null, null, null);
+		//ThirdCard: cost: 0; immEffect: BonusAction(TakeGreen val 5, discount: 0)
 		Card discountedCard = new Card("card3", "Card with discount", CardColor.GREEN, 1, 2, null, secondImmediateEffects, null, null, null);
 		
 		//Add cards to tower
@@ -108,6 +111,7 @@ public class TakeCardTest {
 	public void test() {
 		
 		try {
+			assertEquals(3, p1.getResource(Resource.MONEY));
 			//Take the first card, you will receive a bonus action take green of level 5
 			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 0);
 			Response checker = takeCardAction.checkAction();
@@ -120,6 +124,7 @@ public class TakeCardTest {
 		try {
 			takeCardAction.doAction();
 			p1.synchResource();
+			assertEquals(3, p1.getResource(Resource.MONEY));
 			//Now player has a BonusAction to perform
 			ActionPrototype bonusAction = p1.getBonusAction();
 			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1, tower, 2, 5, 0);
@@ -130,7 +135,7 @@ public class TakeCardTest {
 		}
 		
 		Response checker = takeCardAction.checkAction();
-		assertTrue(checker == Response.SUCCESS);
+		assertEquals(checker , Response.SUCCESS);
 		List<CardRequest> requests = p1.getRequests();
 		
 		//Control request

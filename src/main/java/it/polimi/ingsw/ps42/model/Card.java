@@ -342,15 +342,7 @@ public class Card implements Serializable{
 		//Check if a generic player can pay a packet of costs
 		for (Unit unit : costs) {
 			if(unit.getQuantity() > player.getResource(unit.getResource())) {
-				//Restore the player resources
-					if(discount != null)
-						try {
-							player.decreaseResource(discount);
-							player.synchResource();
-						} catch (NotEnoughResourcesException e) {
-							System.out.println("[DEBUG]: problem in checkPlayerCanPay");
-						}
-					return false;
+				return false;
 			}
 		}
 		return true;
