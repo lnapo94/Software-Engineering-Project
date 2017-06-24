@@ -104,7 +104,7 @@ public class ClientSocket extends Observable implements Observer{
 	
 	public static void main(String[] args) {
 		
-		String host = "localhost"; 
+		String host = "192.168.1.111"; 
 		try {
 			ClientSocket client = new ClientSocket(host);
 			View view = new TerminalView();
