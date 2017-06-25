@@ -38,7 +38,9 @@ public class StaticList<E> implements Iterable<E>, Serializable{
 	
 	public E get(int index) {
 		//Get the element at specificated index
-		return list.get(index);
+		if(index < list.size())
+			return list.get(index);
+		return null;
 	}
 	
 	public void remove(E element) {

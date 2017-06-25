@@ -8,20 +8,22 @@ public class PlayerMoveTimer extends TimerTask{
 	
 	private GameLogic logic;
 	private final boolean isBanRequest;
+	private Player player;
 	
-	public PlayerMoveTimer(GameLogic logic, boolean isBanRequest) {
+	public PlayerMoveTimer(Player player, GameLogic logic, boolean isBanRequest) {
 		this.logic = logic;
 		this.isBanRequest = isBanRequest;
+		this.player = player;
 	}
 	
-	public PlayerMoveTimer(GameLogic logic) {
-		this(logic, false);
+	public PlayerMoveTimer(Player player, GameLogic logic) {
+		this(player, logic, false);
 	}
 	
 	@Override
 	public void run() {
+		System.out.println("Timer for the player move expired");
 		//Take the current player
-		Player player = logic.getCurrentPlayer();
 		player.removeAllRequests();
 		player.removeAllCouncilRequests();
 		player.removeAllLeaderRequests();
@@ -33,6 +35,8 @@ public class PlayerMoveTimer extends TimerTask{
 		//so cancel it
 		if(logic.isThereAnAction())
 			logic.rollBackTakeCardAction();
+		
+		logic.initAction();
 		
 		if(isBanRequest) {
 			//Conversion for the correct period

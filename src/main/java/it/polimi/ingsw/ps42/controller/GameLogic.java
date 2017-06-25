@@ -39,12 +39,18 @@ import java.io.IOException;
 import java.util.*;
 
 public class GameLogic implements Observer {
+	
+	private static final int TIMER_SECONDS = 5;
+	
     private static final int MAX_BANS_IN_FILE = 7;
     private static final int FAMILIARS_NUMBER = 4;
 
     private static final int THIRD_PERIOD = 2;
     private static final int FIRST_PERIOD = 0;
     private static final int SECOND_PERIOD = 1;
+    
+    //Variable used to know if the gameLogic is starting the game
+    private boolean isInitGame;
 
     //List of players in this match
     private List<Player> playersList;
@@ -68,6 +74,8 @@ public class GameLogic implements Observer {
     private int currentRound;
 
     private ServerView view;
+    
+    private HashMap<Player, Timer> timerTable;
 
     /** Private method used when GameLogic need to search the player
      *
@@ -148,6 +156,9 @@ public class GameLogic implements Observer {
 
         //Initialize the map
         leaderCardTable = new HashMap<>();
+        
+        //Initialize the timer map
+        timerTable = new HashMap<>();
     }
 
     /**
@@ -164,6 +175,10 @@ public class GameLogic implements Observer {
         if(players.size() == 4)
             return new Table(players.get(0), players.get(1), players.get(2), players.get(3));
         throw new NotEnoughPlayersException("There isn't enough player for this match");
+    }
+    
+    public boolean isInitGame() {
+    	return this.isInitGame;
     }
 
     private void loadLeaderCards() throws IOException {
@@ -188,19 +203,26 @@ public class GameLogic implements Observer {
         //First, load both bonus bars and leader cards
         loadBonusBars();
         loadLeaderCards();
+        isInitGame = true;
         askBonusBar();
     }
 
     /**
      * Method used to ask to the next player what bonus bar he wants
      */
-    private void askBonusBar() {
+    private synchronized void askBonusBar() {
         if(!roundOrder.isEmpty()) {
             currentPlayer = roundOrder.remove(0);
             currentPlayer.askChooseBonusBar(bonusBarList);
+            
+            //Set the timer
+            Timer timer = new Timer();
+            timer.schedule(new InitGameTimer(currentPlayer, this), TIMER_SECONDS * 1000);
+            timerTable.put(currentPlayer, timer);
         }
         else {
             roundOrder.addAll(playersList);
+            currentPlayer = null;
             askLeaderCard();
         }
     }
@@ -211,8 +233,11 @@ public class GameLogic implements Observer {
      */
     public void setBonusBar(int choice, String playerID) {
         if(playerID.equals(currentPlayer.getPlayerID())) {
+        	
+        	//Stop the timer
+        	timerTable.remove(currentPlayer).cancel();
+        	
             currentPlayer.setBonusBar(bonusBarList.remove(choice));
-            currentPlayer = null;
             askBonusBar();
         }
     }
@@ -236,12 +261,17 @@ public class GameLogic implements Observer {
         }
     }
 
-    private void askLeaderCard() {
+    private synchronized void askLeaderCard() {
         //If the player 1's arraylist of leader cards is empty, also the other must be empty, so end this procedure
         if(!leaderCardTable.isEmpty()) {
             reOrderHashMap();
             for(Player player : roundOrder) {
                 player.askChooseLeaderCard(leaderCardTable.get(player));
+
+                //Set the timer
+                Timer timer = new Timer();
+                timer.schedule(new InitGameTimer(player, this), TIMER_SECONDS * 1000);
+                timerTable.put(player, timer);
             }
         }
         else
@@ -251,26 +281,31 @@ public class GameLogic implements Observer {
     public void setLeaderCard(int choice, String playerID) {
         try {
             Player player = searchPlayer(playerID);
-
-            //Control if the message is uncorrect
-            if(choice > leaderCardTable.get(player).size()) {
-                //Retrasmit
-                Message message = new LeaderCardMessage(player.getPlayerID(), leaderCardTable.get(player));
-                message.setRetrasmission();
-                player.retrasmitMessage(message);
-            }
-            else {
-                player.setLeaderCard(leaderCardTable.get(player).remove(choice));
-                if (leaderCardTable.get(player).isEmpty())
-                    leaderCardTable.remove(player);
-
-                //Remove the player from the roundOrder and call askLeaderCard if this player is the last
-                roundOrder.remove(player);
-
-                if (roundOrder.isEmpty()) {
-                    roundOrder.addAll(playersList);
-                    askLeaderCard();
-                }
+            
+            if(roundOrder.contains(player)) {
+	            //Control if the message is uncorrect
+	            if(choice > leaderCardTable.get(player).size()) {
+	                //Retrasmit
+	                Message message = new LeaderCardMessage(player.getPlayerID(), leaderCardTable.get(player));
+	                message.setRetrasmission();
+	                player.retrasmitMessage(message);
+	            }
+	            else {
+	            	//Cancel the timer
+	            	timerTable.get(player).cancel();
+	            	
+	                player.setLeaderCard(leaderCardTable.get(player).remove(choice));
+	                if (leaderCardTable.get(player).isEmpty())
+	                    leaderCardTable.remove(player);
+	
+	                //Remove the player from the roundOrder and call askLeaderCard if this player is the last
+	                roundOrder.remove(player);
+	
+	                if (roundOrder.isEmpty()) {
+	                    roundOrder.addAll(playersList);
+	                    askLeaderCard();
+	                }
+	            }
             }
         } catch (ElementNotFoundException e) {
             System.out.println("Unable to find the player in GameLogic");
@@ -279,12 +314,15 @@ public class GameLogic implements Observer {
 
     private void startMatch() {
         //Ready to start with the first round
+    	isInitGame = false;
         currentRound = 1;
         initRound();
     }
 
     private void initRound() {
-
+    	//Debug
+    	System.out.println("Start the round number: " + getCurrentRound());
+    	
         //Place the cards in the towers
         table.placeGreenTower(cardsCreator.getNextGreenCards());
         table.placeYellowTower(cardsCreator.getNextYellowCards());
@@ -311,15 +349,21 @@ public class GameLogic implements Observer {
             playersWithRequest.add(player);
             checkOtherPlayerLeaderRequest(player);
         }
-
+        
         if(playersWithRequest.isEmpty()) {
             initAction();
         }
     }
     
     private void checkOtherPlayerLeaderRequest(Player player) {
-    	if(!player.isLeaderRequestEmpty())
+    	if(!player.isLeaderRequestEmpty()) {
     		player.askLeaderRequest(player.removeLeaderRequest());
+
+            //Set the timer
+            Timer timer = new Timer();
+            timer.schedule(new PlayerMoveTimer(player, this), TIMER_SECONDS * 1000);
+            timerTable.put(player, timer);
+    	}
     	else
     		playersWithRequest.remove(player);
     }
@@ -330,6 +374,9 @@ public class GameLogic implements Observer {
 			Player player = searchPlayer(request.getPlayerID());
 			//Control if the player has a request
 			if(playersWithRequest.contains(player)) {
+				
+				timerTable.remove(player).cancel();
+				
 				request.apply(player);
 				checkOtherPlayerLeaderRequest(player);
 			}
@@ -363,6 +410,11 @@ public class GameLogic implements Observer {
 			else {
 				playersWithRequest.add(player);
 				player.askIfPayTheBan(currentRound);
+
+                //Set the timer
+                Timer timer = new Timer();
+                timer.schedule(new PlayerMoveTimer(player, this, true), TIMER_SECONDS * 1000);
+                timerTable.put(player, timer);
 			}
 		}
 	}
@@ -372,6 +424,7 @@ public class GameLogic implements Observer {
 		for(Player player : this.playersList) {
 			//Enable the third ban
 			if(player.getResource(Resource.FAITHPOINT) < 5) {
+    			System.out.println("Check the third period ban");
 				table.getThirdBan().enableEffect(player);
 				BanUpdateMessage message = new BanUpdateMessage(player.getPlayerID(), THIRD_PERIOD);
 				
@@ -443,13 +496,19 @@ public class GameLogic implements Observer {
 		initRound();
 	}
 
-    private void initAction() {
+    public void initAction() {
     	if(!actionOrder.isEmpty()) {
     		currentPlayer = actionOrder.remove(0);
     		currentPlayer.askMove();
+    		
+            //Set the timer
+            Timer timer = new Timer();
+            timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS * 1000);
+            timerTable.put(currentPlayer, timer);
     	}
     	else {
     		if(currentRound == 2) {
+    			System.out.println("Check the first period ban");
     			checkBan(table.getFirstBan(), 3, FIRST_PERIOD);
     			
     			//If there isn't request, then restart with a new round
@@ -457,7 +516,8 @@ public class GameLogic implements Observer {
     				restartRound();
     			}
     		}
-    		if(currentRound == 4) {
+    		else if(currentRound == 4) {
+    			System.out.println("Check the second period ban");
     			checkBan(table.getSecondBan(), 4, SECOND_PERIOD);
     			
     			//If there isn't request, then restart with a new round
@@ -465,9 +525,11 @@ public class GameLogic implements Observer {
     				restartRound();
     			}
     		}
-    		if(currentRound == 6) {
+    		else if(currentRound == 6) {
     			endMatch();
     		}
+    		else
+    			restartRound();
     	}
     }
     
@@ -493,6 +555,8 @@ public class GameLogic implements Observer {
 			
 			//Control if player has a pending request
 			if(playersWithRequest.contains(player)) {
+				
+				timerTable.remove(player).cancel();
 				
 				if(wantToPayBan) {
 					faithPathIncrease(player);
@@ -548,6 +612,7 @@ public class GameLogic implements Observer {
 					player.retrasmitMessage(message);
 				}
 				else {
+					
 					//Control if there is a discount
 					if(bonusAction != null)
 						action.addDiscount(bonusAction.getDiscount());
@@ -555,6 +620,9 @@ public class GameLogic implements Observer {
 					Response response = action.checkAction();
 					
 					if(response == Response.CANNOT_PLAY) {
+						//Cancel the timer
+						timerTable.remove(player).cancel();
+						
 						//If player can't play, end his action, and move he to the end of actionOrder array
 						player.setCanPlay(true);
 						actionOrder.remove(actionOrder.indexOf(player));
@@ -566,6 +634,9 @@ public class GameLogic implements Observer {
 						player.retrasmitMessage(message);
 					}
 					else if(currentAction == null){
+						//Cancel the timer
+						timerTable.remove(player).cancel();
+						
 						currentAction = action;
 						checkRequest();
 					}
@@ -577,6 +648,10 @@ public class GameLogic implements Observer {
     }
     
     private void checkRequest() {
+    	
+    	if(timerTable.containsKey(currentPlayer))
+    		timerTable.remove(currentPlayer).cancel();
+    	
     	if(currentPlayer.hasRequestToAnswer()) {
     		
     		if(!currentPlayer.isRequestsEmpty()) {
@@ -589,6 +664,11 @@ public class GameLogic implements Observer {
         		playersWithRequest.add(currentPlayer);
         		currentPlayer.askCouncilRequest(currentPlayer.removeCouncilRequest());
         	}
+        
+            //Set the timer
+            Timer timer = new Timer();
+            timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS * 1000);
+            timerTable.put(currentPlayer, timer);
     	}
     	else if(currentAction != null)
     		doAction();
@@ -681,6 +761,7 @@ public class GameLogic implements Observer {
 
 	public void HandleLeaderUpdate(Player searchPlayer, LeaderCard card) {
 		searchPlayer.enableLeaderCard(card);
+		checkOtherPlayerLeaderRequest(searchPlayer);
 	}
 	
 	public Player getCurrentPlayer() {

@@ -39,6 +39,10 @@ public class MarketAction extends Action {
 	@Override
 	public Response checkAction() {
 		
+		//If there isn't any existing position
+		if(tablePosition.get(positionInTableList) == null)
+			return Response.FAILURE;
+		
 		if( player.canPlay() ){				//Checks if the player has ban 
 			
 			checkIncreaseEffect();
