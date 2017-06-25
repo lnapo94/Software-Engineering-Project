@@ -588,6 +588,12 @@ public class Player extends Observable{
 				leaderCardsList.remove(leaderCardsList.indexOf(card));
 				activatedLeaderCard.add(card);
 				
+				if(card.getOnceARoundEffect() != null)
+					card.enableOnceARoundEffect();
+				
+				if(card.getPermanentEffect() != null)
+					card.enablePermanentEffect();
+				
 				//Create the message
 				LeaderCardUpdateMessage message = new LeaderCardUpdateMessage(this.getPlayerID(), chosenCard);
 				setChanged();
