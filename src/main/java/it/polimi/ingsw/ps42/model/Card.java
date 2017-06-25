@@ -165,7 +165,7 @@ public class Card implements Serializable{
 					throw new NotEnoughResourcesException("The possibleChoice array is empty, cannot pay this");
 				}
 				decreaseDiscount(player, discount);
-				CardRequest request = new PayRequest(player.getPlayerID(), this, possibleChoiceIndex, possibleChoice, discount);
+				CardRequest request = new PayRequest(player.getPlayerID(), this, copyInteger(possibleChoiceIndex), copyPrintable(possibleChoice), discount);
 				player.addRequest(request);
 				resetPossibleChoice();
 			}
@@ -234,7 +234,7 @@ public class Card implements Serializable{
 				if(controlPossibleChoice(permanentEffects))
 					resetPossibleChoice();
 				else {
-					CardRequest request = new PermanentRequest(owner.getPlayerID(), this, possibleChoiceIndex, possibleChoice);
+					CardRequest request = new PermanentRequest(owner.getPlayerID(), this, copyInteger(possibleChoiceIndex), copyPrintable(possibleChoice));
 					owner.addRequest(request);
 					resetPossibleChoice();
 				}
@@ -257,7 +257,7 @@ public class Card implements Serializable{
 				if(controlPossibleChoice(finalEffects))
 					resetPossibleChoice();
 				else {
-					CardRequest request = new FinalRequest(owner.getPlayerID(), this, possibleChoiceIndex, possibleChoice);
+					CardRequest request = new FinalRequest(owner.getPlayerID(), this, copyInteger(possibleChoiceIndex), copyPrintable(possibleChoice));
 					owner.addRequest(request);
 					resetPossibleChoice();
 				}

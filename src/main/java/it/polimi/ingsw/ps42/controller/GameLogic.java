@@ -457,7 +457,7 @@ public class GameLogic implements Observer {
     				restartRound();
     			}
     		}
-    		if(currentRound == 4) {
+    		else if(currentRound == 4) {
     			checkBan(table.getSecondBan(), 4, SECOND_PERIOD);
     			
     			//If there isn't request, then restart with a new round
@@ -465,9 +465,11 @@ public class GameLogic implements Observer {
     				restartRound();
     			}
     		}
-    		if(currentRound == 6) {
+    		else if(currentRound == 6) {
     			endMatch();
     		}
+    		else
+    			restartRound();
     	}
     }
     
