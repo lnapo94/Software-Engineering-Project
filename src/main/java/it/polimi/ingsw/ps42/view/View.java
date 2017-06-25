@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
@@ -42,6 +44,9 @@ public abstract class View extends Observable implements Observer {
 	protected Player player;
 	protected List<Player> otherPlayers; 
 	protected Visitor viewVisitor;
+	
+	//Logger
+	private Logger logger = Logger.getLogger(View.class);
 	
 	public View() {
 		
@@ -299,7 +304,7 @@ public abstract class View extends Observable implements Observer {
 			Player player = searchPlayer(playerID);
 			player.setCurrentResources(resources);
 		} catch (ElementNotFoundException e) {
-			System.out.println("Error in Viewvisitor setResources");
+			logger.error("Error in ViewVisitor setResources");
 		}
 	}
 	

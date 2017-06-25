@@ -3,6 +3,8 @@ package it.polimi.ingsw.ps42.model.position;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
@@ -19,6 +21,9 @@ public class YieldAndProductPosition extends Position {
 	*/
 	private List<Familiar> bonusFamiliars;
 	
+	//Logger
+	private transient Logger logger = Logger.getLogger(YieldAndProductPosition.class);
+	
 	public YieldAndProductPosition(ActionType type, int level, Obtain bonus, int malus) {
 		super(type, level, bonus, malus);
 		bonusFamiliars = new ArrayList<>();
@@ -33,7 +38,7 @@ public class YieldAndProductPosition extends Position {
 					try {
 						card.enablePermanentEffect();
 					} catch (NotEnoughResourcesException e) {
-						System.out.println("[DEBUG]: The player can not afford this effect");
+						logger.debug("The player can not afford this effect");
 					}
 				}
 			}

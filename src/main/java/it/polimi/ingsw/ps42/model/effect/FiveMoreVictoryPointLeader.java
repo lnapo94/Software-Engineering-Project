@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 
@@ -9,6 +11,9 @@ public class FiveMoreVictoryPointLeader extends Effect{
 	 * 
 	 */
 	private static final long serialVersionUID = 3933038593087389609L;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(FiveMoreVictoryPointLeader.class);
 
 	public FiveMoreVictoryPointLeader() {
 		super(EffectType.FIVE_MORE_VICTORY_POINT);
@@ -16,6 +21,7 @@ public class FiveMoreVictoryPointLeader extends Effect{
 
 	@Override
 	public void enableEffect(Player player) {
+		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		player.setFiveMoreVictoryPoint();
 	}
 

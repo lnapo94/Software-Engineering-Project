@@ -2,6 +2,9 @@ package it.polimi.ingsw.ps42.controller;
 
 import java.util.TimerTask;
 
+import org.apache.log4j.Logger;
+
+import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 import it.polimi.ingsw.ps42.model.player.Player;
 
 public class PlayerMoveTimer extends TimerTask{
@@ -9,6 +12,9 @@ public class PlayerMoveTimer extends TimerTask{
 	private GameLogic logic;
 	private final boolean isBanRequest;
 	private Player player;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(ControllerVisitor.class);
 	
 	public PlayerMoveTimer(Player player, GameLogic logic, boolean isBanRequest) {
 		this.logic = logic;
@@ -22,7 +28,7 @@ public class PlayerMoveTimer extends TimerTask{
 	
 	@Override
 	public void run() {
-		System.out.println("Timer for the player move expired");
+		logger.info("Timer for the player move expired");
 		//Take the current player
 		player.removeAllRequests();
 		player.removeAllCouncilRequests();

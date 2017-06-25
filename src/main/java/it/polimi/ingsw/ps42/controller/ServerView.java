@@ -8,9 +8,12 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.GenericMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayersListMessage;
+import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
@@ -22,6 +25,9 @@ public class ServerView extends Observable implements Observer{
 	//TODO Gestire i timer
 	private Map<String, Connection> connections;
 	private List<String> disconnectedPlayers;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(ControllerVisitor.class);
 	
 	public ServerView() {
 	
@@ -83,6 +89,8 @@ public class ServerView extends Observable implements Observer{
 	
 	public void run() throws NotEnoughPlayersException, GameLogicError, IOException{
 		
+		logger.info("ServerView is now running...");
+		
 		List<String> playerIDList = new ArrayList<>();
 		connections.forEach((playerID, connection)->{
 			playerIDList.add(playerID);
@@ -100,7 +108,7 @@ public class ServerView extends Observable implements Observer{
 			Message message= (Message) messageToSend;
 			if(sender instanceof Connection){
 				//Send to the Game Logic
-				System.out.println("new msg for the game logic from:" +message.getPlayerID());
+				logger.info("new msg for the game logic from:" +message.getPlayerID());
 				setChanged();
 				notifyObservers(message);
 			}
@@ -119,6 +127,7 @@ public class ServerView extends Observable implements Observer{
 				connection.send(message);
 			} catch (IOException e) {
 				//The player is disconnected so remove his connection
+				logger.info("The player is disconnected so remove his connection");
 				disconnectedPlayers.add(playerID);
 				connection.deleteObserver(this);
 				connections.remove(playerID, connection);

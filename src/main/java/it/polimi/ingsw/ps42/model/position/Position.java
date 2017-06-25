@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.position;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
@@ -19,6 +21,8 @@ public abstract class Position {
 	private final int malus;
 	private final int level;
 	
+	private transient Logger logger = Logger.getLogger(Position.class);
+	
 	public Position(ActionType type, int level, Obtain bonus, int malus){
 		
 			this.type=type;
@@ -32,6 +36,8 @@ public abstract class Position {
 		//Clone of the position bonus to avoid problem from position clone in the setup
 		if(bonus != null) 
 			return new Obtain(bonus.getCosts(), bonus.getGains(), bonus.getCouncilObtain());
+		
+		logger.info("Position has not a bonus");
 		return null;
 	}
 	public int getMalus() {
@@ -47,12 +53,13 @@ public abstract class Position {
 		return type;
 	}
 	public void setFamiliar(Familiar familiar) throws FamiliarInWrongPosition{	//Invoked when the player move the familiar in this very position 
-		if( familiar != null ){		//TO-DO:decidere come gestire caso familiar==null
+		if( familiar != null ){
 			applyPositionEffect(familiar);
 			this.familiar=familiar;
 			familiar.setPosition(this);
 		}
-		else throw new FamiliarInWrongPosition("The familiar does not satisfy the position pre-requisites");
+		else 
+			throw new FamiliarInWrongPosition("The familiar does not satisfy the position pre-requisites");
 	}
 	
 	public void setFamiliarView(Familiar familiar) throws ElementNotFoundException{
@@ -87,7 +94,7 @@ public abstract class Position {
 		try {
 			player.decreaseResource(packet);
 		} catch (NotEnoughResourcesException e) {
-			System.out.println("[DEBUG]: error in position.resetBonus");
+			logger.error("Error in reset bonus...");
 		}
 	}
 	

@@ -1,6 +1,8 @@
 
 package it.polimi.ingsw.ps42.message.visitorPattern;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.controller.GameLogic;
 import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BanRequest;
@@ -28,6 +30,9 @@ import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 public class ControllerVisitor implements Visitor {
 
 	private GameLogic gameLogic;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(ControllerVisitor.class);
 	
 	public ControllerVisitor(GameLogic gameLogic){
 		
@@ -121,11 +126,11 @@ public class ControllerVisitor implements Visitor {
 				gameLogic.searchPlayer(message.getPlayerID()).retrasmitMessage(newMessage);				
 				
 			} catch (ElementNotFoundException e1) {
-				System.out.println("Player not found in gameLogic");
+				logger.fatal("Player not found in gameLogic");
 			}
 			
 		} catch (ElementNotFoundException e) {
-			System.out.println("Player not found in gameLogic");
+			logger.fatal("Player not found in gameLogic");
 		}
 	}
 
@@ -163,7 +168,7 @@ public class ControllerVisitor implements Visitor {
 		try {
 			gameLogic.HandleLeaderUpdate(gameLogic.searchPlayer(message.getPlayerID()), message.getCard());
 		} catch (ElementNotFoundException e) {
-			System.out.println("Unable to find the player. Method: leaderCardUpdateMessage");
+			logger.fatal("Unable to find the player. Method: leaderCardUpdateMessage");
 		}
 	}
 

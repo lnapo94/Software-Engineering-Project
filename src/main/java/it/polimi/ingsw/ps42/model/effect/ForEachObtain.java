@@ -2,6 +2,8 @@ package it.polimi.ingsw.ps42.model.effect;
 
 
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
@@ -16,6 +18,9 @@ public class ForEachObtain extends Effect{
 	private static final long serialVersionUID = 1063976216381694601L;
 	private Packet requirements;
 	private Packet gains;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(ForEachObtain.class);
 
 	public ForEachObtain(Packet requirements, Packet gains) {
 		super(EffectType.FOR_EACH_OBTAIN);
@@ -26,6 +31,8 @@ public class ForEachObtain extends Effect{
 
 	@Override
 	public void enableEffect(Player player) {
+		
+		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		
 		this.player=player;
 		int quantity;

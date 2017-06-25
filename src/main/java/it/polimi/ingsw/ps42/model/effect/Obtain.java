@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps42.model.effect;
 
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -16,6 +18,9 @@ public class Obtain extends Effect{
 	private Packet costs;
 	private Packet gains;
 	private CouncilObtain councilObtain;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(Obtain.class);
 	
 	public Obtain(Packet costs, Packet gains, CouncilObtain councilObtain) {
 		
@@ -46,9 +51,11 @@ public class Obtain extends Effect{
 		
 		this.player=player;
 		try {
+			logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 			player.decreaseResource(costs);
 		} catch (NotEnoughResourcesException e) {
 			player.increaseResource(costs);
+			logger.error("Player hasn't enough resources...");
 			throw new ArithmeticException("Effect was enabled, but it can't be payed");
 		}
 		player.increaseResource(gains);

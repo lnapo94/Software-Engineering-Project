@@ -40,6 +40,8 @@ import it.polimi.ingsw.ps42.parser.LeaderCardLoader;
 import java.io.IOException;
 import java.util.*;
 
+import org.apache.log4j.Logger;
+
 public class GameLogic implements Observer {
 	
 	private static final int TIMER_SECONDS = 5;
@@ -78,6 +80,9 @@ public class GameLogic implements Observer {
     private ServerView view;
     
     private HashMap<Player, Timer> timerTable;
+    
+    //Logger
+    private transient Logger logger = Logger.getLogger(GameLogic.class);
 
     /** Private method used when GameLogic need to search the player
      *
@@ -131,12 +136,12 @@ public class GameLogic implements Observer {
             loader.close();
         } catch (IOException e) {
 
-            System.out.println("Unable to open the ban file in GameLogic");
+            logger.error("Unable to open the ban file in GameLogic");
             throw new GameLogicError("File not found");
 
         } catch (ElementNotFoundException e) {
 
-            System.out.println("Unable to find the correct ban");
+            logger.error("Unable to find the correct ban");
             throw new GameLogicError("Ban not found");
 
         }
@@ -291,6 +296,7 @@ public class GameLogic implements Observer {
 	                Message message = new LeaderCardMessage(player.getPlayerID(), leaderCardTable.get(player));
 	                message.setRetrasmission();
 	                player.retrasmitMessage(message);
+	                logger.info("Retrasmit the message because isn't correct");
 	            }
 	            else {
 	            	//Cancel the timer
@@ -310,7 +316,7 @@ public class GameLogic implements Observer {
 	            }
             }
         } catch (ElementNotFoundException e) {
-            System.out.println("Unable to find the player in GameLogic");
+            logger.error("Unable to find the player in GameLogic");
         }
     }
 
@@ -335,7 +341,7 @@ public class GameLogic implements Observer {
         try {
             cardsCreator = cardsCreator.nextState();
         } catch (IOException e) {
-            System.out.println("Unable to open the cards file");
+            logger.error("Unable to open the cards file");
         }
 
         table.throwDice(new Random());
@@ -388,7 +394,7 @@ public class GameLogic implements Observer {
 				initAction();
 			}
 		} catch (ElementNotFoundException e) {
-			System.out.println("Unable to find the player in GameLogic");
+			logger.error("Unable to find the player in GameLogic");
 		}
     }
     
@@ -460,7 +466,7 @@ public class GameLogic implements Observer {
 				
 				loader.close();
 			} catch (IOException e) {
-				System.out.println("Unable to open the conversion file");
+				logger.error("Unable to open the conversion file");
 			}
 		}
 		
@@ -511,7 +517,7 @@ public class GameLogic implements Observer {
     		currentPlayer = actionOrder.remove(0);
     		
     		//DEBUG
-    		System.out.println("Player: " + currentPlayer.getPlayerID() + " is playing...");
+    		logger.debug("Player: " + currentPlayer.getPlayerID() + " is playing...");
     		currentPlayer.askMove();
     		
             //Set the timer
@@ -521,7 +527,7 @@ public class GameLogic implements Observer {
     	}
     	else {
     		if(currentRound == 2) {
-    			System.out.println("Check the first period ban");
+    			logger.debug("Check the first period ban");
     			checkBan(table.getFirstBan(), 3, FIRST_PERIOD);
     			
     			//If there isn't request, then restart with a new round
@@ -530,7 +536,7 @@ public class GameLogic implements Observer {
     			}
     		}
     		else if(currentRound == 4) {
-    			System.out.println("Check the second period ban");
+    			logger.debug("Check the second period ban");
     			checkBan(table.getSecondBan(), 4, SECOND_PERIOD);
     			
     			//If there isn't request, then restart with a new round
@@ -606,9 +612,9 @@ public class GameLogic implements Observer {
 				restartRound();
 				
 		} catch (ElementNotFoundException e) {
-			System.out.println("Player " + playerID + " cannot be found in handleBan");
+			logger.error("Player " + playerID + " cannot be found in handleBan");
 		} catch (IOException e) {
-			System.out.println("Cannot open the faithPath coversion table in GameLogic");
+			logger.error("Cannot open the faithPath coversion table in GameLogic");
 		}
     }
     
@@ -656,7 +662,7 @@ public class GameLogic implements Observer {
 				}
 			}
 		} catch (ElementNotFoundException e) {
-			System.out.println("Unable to find the player in handleAction");
+			logger.error("Unable to find the player in handleAction");
 		}
     }
     
@@ -698,7 +704,7 @@ public class GameLogic implements Observer {
 			
 			checkRequest();
 		} catch (FamiliarInWrongPosition e) {
-			System.out.println("[DEBUG]: familiar in wrong position in gamelogic");
+			logger.error("[DEBUG]: familiar in wrong position in gamelogic");
 		}
     }
     
@@ -740,7 +746,7 @@ public class GameLogic implements Observer {
 				}
 			}
 		} catch (ElementNotFoundException e) {
-			System.out.println("Unable to find the player to satisfy the requests");
+			logger.error("Unable to find the player to satisfy the requests");
 		}
     }
     
@@ -758,7 +764,7 @@ public class GameLogic implements Observer {
 				playersWithRequest.remove(player);
 			}
 		} catch(ElementNotFoundException e) {
-			System.out.println("Unable to find the player to satisfy the council requests");
+			logger.error("Unable to find the player to satisfy the council requests");
 		}
 	}	
 	

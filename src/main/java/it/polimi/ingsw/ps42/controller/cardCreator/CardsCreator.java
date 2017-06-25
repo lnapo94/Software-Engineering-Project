@@ -24,6 +24,7 @@ public abstract class CardsCreator {
 	
 	protected String folderPath;
 	
+	
 	public CardsCreator(String folderPath) throws IOException {
 		this.folderPath = folderPath;
 		

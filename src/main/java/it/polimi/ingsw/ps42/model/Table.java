@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
@@ -83,6 +85,9 @@ public class Table extends Observable{
 	//Initilial resources for all the players
 	private Packet initialResources;
 	
+	//Logger
+	private transient Logger logger = Logger.getLogger(Table.class);
+	
 	//The four Constructors. We have a constructor for each kind of match
 	//For example: with 2 players the table hasn't all the position
 
@@ -101,7 +106,7 @@ public class Table extends Observable{
 		try {
 			yieldAndProductConstructor(2);
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 		
 		//Add two more position for 4 players, then close the file
@@ -125,7 +130,7 @@ public class Table extends Observable{
 		try {
 			yieldAndProductConstructor(5);
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 	}
 
@@ -180,7 +185,7 @@ public class Table extends Observable{
 			firstProduct = loader.getNextYieldAndProductPosition();
 			loader.close();
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 		
 		//Setting the council
@@ -191,7 +196,7 @@ public class Table extends Observable{
 		try {
 			marketLoader = new PositionLoader("Resource//Position//MarketPosition//marketPosition.json");
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 		market.add(marketLoader.getNextMarketPosition());
 		market.add(marketLoader.getNextMarketPosition());
@@ -203,7 +208,7 @@ public class Table extends Observable{
 			councilCopy = councilLoader.getNextCouncilPosition();
 			councilLoader.close();
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 		
 		//Adding initial resources to the packet
@@ -250,7 +255,7 @@ public class Table extends Observable{
 			}
 			loader.close();
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 	}
 	

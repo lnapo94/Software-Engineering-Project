@@ -3,6 +3,8 @@ package it.polimi.ingsw.ps42.model.action;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CardUpdateMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
@@ -25,6 +27,9 @@ public class TakeCardAction extends Action{
 	
 	private StaticList<TowerPosition> tablePosition;
 	private int positionInTableList;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(TakeCardAction.class);
 
 	public TakeCardAction(ActionType type, Familiar familiar, StaticList<TowerPosition> tablePosition, int positionInTableList) throws NotEnoughResourcesException{
 		//Constructor for normal action
@@ -113,7 +118,7 @@ public class TakeCardAction extends Action{
 				position.setFamiliar(familiar);
 				player.synchResource();
 			} catch (FamiliarInWrongPosition e) {
-				System.out.println("[DEBUG]: familiar can't be positioned here");
+				logger.error("[DEBUG]: familiar can't be positioned here");
 				player.restoreResource();
 				return Response.FAILURE;
 			}
@@ -131,6 +136,7 @@ public class TakeCardAction extends Action{
 					player.decreaseResource(moneyMalus);
 					player.synchResource();
 				} catch (NotEnoughResourcesException e) {
+					logger.info("Player has not enough resources to pay the 3 money, stop.");
 					if(position.getBonus() != null)
 						position.resetBonus(player);
 					player.synchResource();
@@ -144,6 +150,7 @@ public class TakeCardAction extends Action{
 		try {
 			position.getCard().payCard(player, discount);
 		} catch (NotEnoughResourcesException e) {
+			logger.info("Player has not enough resources to pay the card, stop.");
 			rollBackAction();
 			return Response.LOW_LEVEL;
 		}
@@ -187,7 +194,7 @@ public class TakeCardAction extends Action{
 			if(position.getCard().getColor() == CardColor.BLUE)
 				position.getCard().enablePermanentEffect();
 		} catch (NotEnoughResourcesException e) {
-			System.out.println("[DEBUG]: Player can not pay for enable the immediate effect");
+			logger.debug("[DEBUG]: Player can not pay for enable the immediate effect");
 		}
 		position.removeCard();
 		

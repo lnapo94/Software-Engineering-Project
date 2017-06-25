@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 
@@ -9,6 +11,8 @@ public class NoMilitaryRequirementsLeader extends Effect{
 	 * 
 	 */
 	private static final long serialVersionUID = 2889343737369528024L;
+	
+	private transient Logger logger = Logger.getLogger(NoMilitaryRequirementsLeader.class);
 
 	public NoMilitaryRequirementsLeader() {
 		super(EffectType.NO_MILITARY_REQUIREMENTS);
@@ -16,6 +20,7 @@ public class NoMilitaryRequirementsLeader extends Effect{
 
 	@Override
 	public void enableEffect(Player player) {
+		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		player.setMilitaryRequirements();
 	}
 

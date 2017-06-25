@@ -2,6 +2,8 @@ package it.polimi.ingsw.ps42.model.effect;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
@@ -22,6 +24,9 @@ public class CardCostBan extends Effect{
 	 */
 	private static final long serialVersionUID = 7122058016852083837L;
 	private CardColor color;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(CardCostBan.class);
 
 	public CardCostBan(CardColor color) {
 		super(EffectType.YELLOW_COST_BAN); //TO-DO:discutere sul nome effetto e controllo sul colore
@@ -33,6 +38,7 @@ public class CardCostBan extends Effect{
 		this.player=player;
 		int banCost=0;
 		try{
+			logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 			StaticList<Card> deck = player.getCardList(color);	
 			for (Card singleCard : deck) {							//For each card of the player with the def. color
 				List<Packet> costs=singleCard.getCosts();		//Obtain for every cost the quantity of wood and stone
@@ -46,8 +52,9 @@ public class CardCostBan extends Effect{
 			player.decreaseResource(p); 						//Apply the ban to the player
 		}
 		catch (WrongColorException e) {
-			System.out.println("Ban failed beacause of a wrong initialization of the effect");
+			logger.error("Ban failed beacause of a wrong initialization of the effect");
 		} catch (NotEnoughResourcesException e) {
+			logger.info("Player hasn't enough resources, set it to zero");
 			player.setToZero(Resource.VICTORYPOINT);
 		}
 	}

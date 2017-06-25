@@ -12,6 +12,9 @@ import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import it.polimi.ingsw.ps42.client.ClientInterface;
 import it.polimi.ingsw.ps42.controller.Connection;
 import it.polimi.ingsw.ps42.controller.ServerView;
@@ -33,6 +36,9 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	
 	private boolean isActive = true;
 	
+	//Logger
+	private transient Logger logger = Logger.getLogger(Server.class);
+	
 	//Socket for the server
 	private ServerSocket serverSocket;
 	
@@ -49,12 +55,16 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	
 	public Server() throws RemoteException {
 		super();
+		
+		//Configure logger
+		PropertyConfigurator.configure("Logger//log4j.properties");
+		
 		try {
 			serverSocket = new ServerSocket(SERVER_PORT);
 			executor = Executors.newFixedThreadPool(MATCH_NUMBER);
 			playerTable = new HashMap<>();
 		} catch (IOException e) {
-			System.out.println("Error in creation of serverSocket");
+			logger.error("Error in Server Creation");
 		}
 	}
 	
@@ -63,8 +73,11 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		try {
 			writer.flush();
 		} catch (IOException e) {
-			System.out.println("Network error");
+			logger.fatal("Network Error");
 		}
+		
+		logger.info("Adding a new player...");
+		
 		Connection connection = new Connection(socket, reader, writer);
 		
 		//If the player yet exists, add it to the correct view
@@ -105,7 +118,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	
 	public void run() {
 		try {
-			System.out.println("Server is now running");
+			logger.info("Server is now running");
 			while(isActive) {
 				Socket socket = serverSocket.accept();
 				System.out.println("Connection accept, create thread");
@@ -114,7 +127,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			}
 		} 
 		catch(IOException e) {
-			System.out.println("Error while server was running...");
+			logger.error("Error while server was running...");
 			isActive = false;
 		}
 	}
@@ -128,7 +141,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 				waitingView = null;
 			}
 		} catch (NotEnoughPlayersException | GameLogicError | IOException e) {
-			System.out.println("Unable to start the match");
+			logger.error("Start the match error");
 		}
 
 	}
