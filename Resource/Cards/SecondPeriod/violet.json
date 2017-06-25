@@ -1,0 +1,714 @@
+{
+  "name": "Hiring Soldiers",
+  "description": "",
+  "color": "VIOLET",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 6
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MILITARYPOINT",
+            "quantity": 6
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 5
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Repairing the Abbey",
+  "description": "",
+  "color": "VIOLET",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 2
+        },
+        {
+          "resource": "WOOD",
+          "quantity": 2
+        },
+        {
+          "resource": "STONE",
+          "quantity": 2
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "FAITHPOINT",
+            "quantity": 2
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 6
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Building the Bastions",
+  "description": "",
+  "color": "VIOLET",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "STONE",
+          "quantity": 4
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MILITARYPOINT",
+            "quantity": 3
+          }
+        ]
+      },
+      "councilObtain": {
+        "quantity": 1,
+        "possibleConversion": [
+          {
+            "costs": {
+              "list": []
+            },
+            "gains": {
+              "list": [
+                {
+                  "resource": "STONE",
+                  "quantity": 1
+                },
+                {
+                  "resource": "WOOD",
+                  "quantity": 1
+                }
+              ]
+            },
+            "councilObtain": null,
+            "player": null,
+            "typeOfEffect": "OBTAIN"
+          },
+          {
+            "costs": {
+              "list": []
+            },
+            "gains": {
+              "list": [
+                {
+                  "resource": "SLAVE",
+                  "quantity": 2
+                }
+              ]
+            },
+            "councilObtain": null,
+            "player": null,
+            "typeOfEffect": "OBTAIN"
+          },
+          {
+            "costs": {
+              "list": []
+            },
+            "gains": {
+              "list": [
+                {
+                  "resource": "MONEY",
+                  "quantity": 2
+                }
+              ]
+            },
+            "councilObtain": null,
+            "player": null,
+            "typeOfEffect": "OBTAIN"
+          },
+          {
+            "costs": {
+              "list": []
+            },
+            "gains": {
+              "list": [
+                {
+                  "resource": "MILITARYPOINT",
+                  "quantity": 2
+                }
+              ]
+            },
+            "councilObtain": null,
+            "player": null,
+            "typeOfEffect": "OBTAIN"
+          },
+          {
+            "costs": {
+              "list": []
+            },
+            "gains": {
+              "list": [
+                {
+                  "resource": "FAITHPOINT",
+                  "quantity": 1
+                }
+              ]
+            },
+            "councilObtain": null,
+            "player": null,
+            "typeOfEffect": "OBTAIN"
+          }
+        ],
+        "player": null,
+        "typeOfEffect": "COUNCIL_OBTAIN"
+      },
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 2
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Support to the King",
+  "description": "",
+  "color": "VIOLET",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 3
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "list": [
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 6
+        }
+      ]
+    }
+  ],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MONEY",
+            "quantity": 5
+          }
+        ]
+      },
+      "councilObtain": {
+        "quantity": 1,
+        "possibleConversion": [
+          {
+            "costs": {
+              "list": []
+            },
+            "gains": {
+              "list": [
+                {
+                  "resource": "STONE",
+                  "quantity": 1
+                },
+                {
+                  "resource": "WOOD",
+                  "quantity": 1
+                }
+              ]
+            },
+            "councilObtain": null,
+            "player": null,
+            "typeOfEffect": "OBTAIN"
+          },
+          {
+            "costs": {
+              "list": []
+            },
+            "gains": {
+              "list": [
+                {
+                  "resource": "SLAVE",
+                  "quantity": 2
+                }
+              ]
+            },
+            "councilObtain": null,
+            "player": null,
+            "typeOfEffect": "OBTAIN"
+          },
+          {
+            "costs": {
+              "list": []
+            },
+            "gains": {
+              "list": [
+                {
+                  "resource": "MONEY",
+                  "quantity": 2
+                }
+              ]
+            },
+            "councilObtain": null,
+            "player": null,
+            "typeOfEffect": "OBTAIN"
+          },
+          {
+            "costs": {
+              "list": []
+            },
+            "gains": {
+              "list": [
+                {
+                  "resource": "MILITARYPOINT",
+                  "quantity": 2
+                }
+              ]
+            },
+            "councilObtain": null,
+            "player": null,
+            "typeOfEffect": "OBTAIN"
+          },
+          {
+            "costs": {
+              "list": []
+            },
+            "gains": {
+              "list": [
+                {
+                  "resource": "FAITHPOINT",
+                  "quantity": 1
+                }
+              ]
+            },
+            "councilObtain": null,
+            "player": null,
+            "typeOfEffect": "OBTAIN"
+          }
+        ],
+        "player": null,
+        "typeOfEffect": "COUNCIL_OBTAIN"
+      },
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 3
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Improving the Canals",
+  "description": "",
+  "color": "VIOLET",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 3
+        },
+        {
+          "resource": "SLAVE",
+          "quantity": 2
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "type": "YIELD",
+      "actionLevel": 4,
+      "discount": {
+        "list": []
+      },
+      "obtainEffect": null,
+      "player": null,
+      "typeOfEffect": "DO_ACTION",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.DoAction"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 5
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Hosting Foreigners",
+  "description": "",
+  "color": "VIOLET",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 4
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "SLAVE",
+            "quantity": 5
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 4
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Crusade",
+  "description": "",
+  "color": "VIOLET",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 4
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "list": [
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 8
+        }
+      ]
+    }
+  ],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "MONEY",
+            "quantity": 5
+          },
+          {
+            "resource": "FAITHPOINT",
+            "quantity": 1
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "FAITHPOINT",
+            "quantity": 5
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Support to the Cardinal",
+  "description": "",
+  "color": "VIOLET",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 3
+        },
+        {
+          "resource": "WOOD",
+          "quantity": 2
+        },
+        {
+          "resource": "STONE",
+          "quantity": 2
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "list": [
+        {
+          "resource": "MILITARYPOINT",
+          "quantity": 7
+        }
+      ]
+    }
+  ],
+  "immediateEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "FAITHPOINT",
+            "quantity": 3
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [
+    {
+      "costs": {
+        "list": []
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 4
+          }
+        ]
+      },
+      "councilObtain": null,
+      "player": null,
+      "typeOfEffect": "OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+    }
+  ],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}
