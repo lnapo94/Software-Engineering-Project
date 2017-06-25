@@ -182,4 +182,23 @@ public class TerminalView extends View {
 		System.out.println(table.showCard(type, position));
 	}
 
+	@Override
+	protected void showResult(List<String> finalChart) {
+		System.out.println("FINE DELLA PARTITA!");
+		if(finalChart.get(0).equals(player.getPlayerID()))
+			System.out.println("HAI VINTO!!!");
+		else
+			System.out.println("HAI PERSO...");
+		System.out.println("Classifica finale:");
+		for (String playerName: finalChart) {
+			System.out.println(playerName);
+		}
+	}
+
+	@Override
+	protected String askIfWantToPlay() {
+		System.out.println("Vuoi fare una nuova mossa?(si/no)");
+		return scanner.nextLine();
+	}
+
 }

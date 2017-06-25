@@ -11,12 +11,14 @@ import it.polimi.ingsw.ps42.message.CardUpdateMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.DiceMessage;
+import it.polimi.ingsw.ps42.message.EmptyMove;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
+import it.polimi.ingsw.ps42.message.WinnerMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.model.action.Action;
 import it.polimi.ingsw.ps42.model.action.ActionCreator;
@@ -179,6 +181,20 @@ public class ControllerVisitor implements Visitor {
 
 		gameLogic.handleLeaderFamiliarRequest(message);
 
+	}
+
+	@Override
+	public void visit(EmptyMove message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(WinnerMessage message) {
+		/*
+		 * No things to do since this message is only send to the View
+		 */
+		
 	}
 
 

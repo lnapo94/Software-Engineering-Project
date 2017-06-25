@@ -10,12 +10,14 @@ import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
+import it.polimi.ingsw.ps42.message.EmptyMove;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LoginMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.PlayersListMessage;
+import it.polimi.ingsw.ps42.message.WinnerMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.message.visitorPattern.ViewVisitor;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
@@ -156,10 +158,19 @@ public abstract class View extends Observable implements Observer {
 		
 		if(hasToAnswer(message.getPlayerID())){
 			//Ask to choose a Move to the Player
-			PlayerMove move = choosePlayerMove(message.getActionPrototype());
-			//Notify the Move to Game Logic
-			setChanged();
-			notifyObservers(move);
+			String response = askIfWantToPlay();
+			if(response.toUpperCase().equals("SI")){
+				
+				PlayerMove move = choosePlayerMove(message.getActionPrototype());
+				//Notify the Move to Game Logic
+				setChanged();
+				notifyObservers(move);
+			}
+			else {
+				//Notify the Game Logic with an EmptyMessage
+				setChanged();
+				notifyObservers(new EmptyMove(player.getPlayerID()));
+			}
 		}
 	}
 	
@@ -221,6 +232,8 @@ public abstract class View extends Observable implements Observer {
 	protected abstract void notifyLeaderCardDiscard();
 	
 	protected abstract String askPlayerID();
+	
+	protected abstract String askIfWantToPlay();
 	
 	//SETTER FOR TABLE BANS
 	public void setFirstBan(Effect firstBan){
@@ -410,7 +423,8 @@ public abstract class View extends Observable implements Observer {
 		Player player = searchPlayer(playerID);
 		player.enableLeaderCard(card);
 	}
-
+	
+	//Methods to handle the game initialization and end
 	private void handleLoginMessage(LoginMessage message){
 		if(message.existAnotherPlayer()){
 			this.askNewPlayerID();
@@ -418,6 +432,13 @@ public abstract class View extends Observable implements Observer {
 		else 
 			addPlayer(message.getUserName());
 	}
+	
+	public void handleResult(WinnerMessage message){
+		
+		showResult(message.getResult());
+	}
+	
+	protected abstract void showResult(List<String> finalChart);
 	
 	@Override
 	public void update(Observable sender, Object newMessage) {
