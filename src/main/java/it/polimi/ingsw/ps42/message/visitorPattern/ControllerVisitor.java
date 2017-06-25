@@ -187,8 +187,8 @@ public class ControllerVisitor implements Visitor {
 
 	@Override
 	public void visit(EmptyMove message) {
-		// TODO Auto-generated method stub
-		
+		//If the 
+		gameLogic.initAction();
 	}
 
 	@Override

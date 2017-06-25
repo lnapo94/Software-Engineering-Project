@@ -9,6 +9,7 @@ import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerToken;
+import it.polimi.ingsw.ps42.message.WinnerMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 import it.polimi.ingsw.ps42.model.Table;
@@ -27,6 +28,7 @@ import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Player;
+import it.polimi.ingsw.ps42.model.player.VictoryPointComparator;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 import it.polimi.ingsw.ps42.parser.BanLoader;
@@ -462,14 +464,19 @@ public class GameLogic implements Observer {
 			}
 		}
 		
-
-		//Notify the winner
-		Player winner = playersList.get(0);
-		for(Player player : playersList) {
-			if(player.getResource(Resource.VICTORYPOINT) > winner.getResource(Resource.VICTORYPOINT))
-				winner = player;
-		}
-	
+		//Reorder the playersList thanks to the comparator
+		playersList.sort(new VictoryPointComparator());
+		
+		List<String> ranking = new ArrayList<>();
+		
+		for(Player player : playersList)
+			ranking.add(player.getPlayerID());
+		
+		WinnerMessage message = new WinnerMessage(ranking.get(0), ranking);
+		
+		for(Player player : playersList)
+			player.notifyRanking(message);
+		
 	}
 	
 	private void restartRound() {
@@ -497,6 +504,9 @@ public class GameLogic implements Observer {
 	}
 
     public void initAction() {
+    	if(currentPlayer != null && timerTable.containsKey(currentPlayer))
+    		timerTable.remove(currentPlayer).cancel();
+    		
     	if(!actionOrder.isEmpty()) {
     		currentPlayer = actionOrder.remove(0);
     		currentPlayer.askMove();

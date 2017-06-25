@@ -14,6 +14,7 @@ import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
+import it.polimi.ingsw.ps42.message.WinnerMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderRequest;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
@@ -42,7 +43,7 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
  * 6: agg var di stato per requisito pti militari
  *  
  */
-public class Player extends Observable{
+public class Player extends Observable {
 	//This class represents the model of the Player
 	
 	//Max number of player's cards in each StaticList
@@ -656,5 +657,9 @@ public class Player extends Observable{
 		notifyObservers(message);
 	}
 	
+	public void notifyRanking(WinnerMessage message) {
+		setChanged();
+		notifyObservers(message);
+	}
 	
 }
