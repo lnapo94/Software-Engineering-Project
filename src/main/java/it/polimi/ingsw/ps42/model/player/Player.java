@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
@@ -102,6 +104,9 @@ public class Player extends Observable {
 	
 	//ArrayList used to store leader request
 	private List<LeaderRequest> leaderRequests;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(Player.class);
 	
 	
 	
@@ -201,7 +206,7 @@ public class Player extends Observable {
 			temp = getCardList(card.getColor());
 			temp.add(card);
 		} catch (WrongColorException e) {
-			System.out.println("Error in player.addCard(card): wrong color");
+			logger.error("Error in player.addCard(card): wrong color");
 		}
 	}
 	
@@ -211,6 +216,8 @@ public class Player extends Observable {
 			//Temporary variables used in the FOR EACH
 			Resource tempResource;
 			int tempQuantity;
+			
+			logger.info("Player is increasing his resources with: " + packet.print());
 			
 			for (Unit unit : packet) {
 				
@@ -241,7 +248,9 @@ public class Player extends Observable {
 			//Temporary variables used in the FOR EACH
 			Resource tempResource;
 			int tempQuantity;
-				
+			
+			logger.info("Player is decreasing his resources with: " + packet.print());
+			
 			for (Unit unit : packet) {
 					
 				tempResource = unit.getResource();

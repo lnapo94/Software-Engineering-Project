@@ -6,8 +6,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Observable;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.GenericMessage;
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 
 public class Connection extends Observable implements Runnable{
 
@@ -15,6 +18,9 @@ public class Connection extends Observable implements Runnable{
 	private ObjectInputStream reader;
 	private ObjectOutputStream writer;
 	private boolean active;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(ControllerVisitor.class);
 	
 	public Connection(Socket socket, ObjectInputStream reader, ObjectOutputStream writer) {
 			this.socket = socket;
@@ -26,7 +32,7 @@ public class Connection extends Observable implements Runnable{
 	@Override
 	public void run() {
 
-		System.out.println("connection is trying to run");
+		logger.info("connection is trying to run");
 		try{
 			
 			while(isActive()){
@@ -38,7 +44,7 @@ public class Connection extends Observable implements Runnable{
 		
 		}
 		catch (IOException | ClassNotFoundException e) {
-			System.out.println("Error occurred in trasmission, closing Connection");
+			logger.error("Error occurred in trasmission, closing Connection");
 			
 		}
 		finally {
@@ -63,7 +69,7 @@ public class Connection extends Observable implements Runnable{
 		try {
 			socket.close();
 		} catch (IOException e) {
-			System.out.println("error in socket close");
+			logger.error("error in socket close");
 		}
 		active=false;
 		
@@ -76,7 +82,8 @@ public class Connection extends Observable implements Runnable{
 			writer.writeObject(message);
 			writer.flush();
 		} catch (IOException e) {
-			System.out.println("Error in sending the new message ");
+			logger.error("Error in sending the new message ");
+			logger.info("Stop the connection, active = false");
 			active = false;
 			throw new IOException();
 		}

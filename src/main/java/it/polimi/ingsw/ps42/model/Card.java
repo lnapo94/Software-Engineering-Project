@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.FinalRequest;
 import it.polimi.ingsw.ps42.message.ImmediateRequest;
@@ -47,6 +49,9 @@ public class Card implements Serializable{
 	
 	//ArrayList of cost used for the cost player can pay effectively
 	private List<Packet> effectivelyCosts;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(Card.class);
 	
 	public Card(String name, String description, CardColor color, int period, 
 			int level, List<Packet> costs, List<Effect> immediateEffects, List<Packet> requirements,
@@ -225,9 +230,11 @@ public class Card implements Serializable{
 			enableEffect(choice, immediateEffects, player);
 		} catch(ArithmeticException e) {
 			//The chosen effect is no more applicable, try to choose another effect
+			logger.info("The chosen effect is no more applicable, try to choose another effect");
 			try {
 				enableImmediateEffect();
 			} catch (NotEnoughResourcesException e1) {
+				logger.info("There isn't more effect to enable in card");
 			}
 		}
 	}
@@ -256,8 +263,10 @@ public class Card implements Serializable{
 	} catch(ArithmeticException e) {
 		//The chosen effect is no more applicable, try to choose another effect
 		try {
+			logger.info("The chosen effect is no more applicable, try to choose another effect");
 			enablePermanentEffect();
 		} catch (NotEnoughResourcesException e1) {
+			logger.info("There is not permanent effect applicable");
 		}
 	}
 	}
@@ -287,8 +296,10 @@ public class Card implements Serializable{
 		} catch(ArithmeticException e) {
 			//The chosen effect is no more applicable, try to choose another effect
 			try {
+				logger.info("The chosen effect is no more applicable, try to choose another effect");
 				enableFinalEffect();
 			} catch (NotEnoughResourcesException e1) {
+				logger.info("There is no more final effect in card");
 			}
 		}
 	}

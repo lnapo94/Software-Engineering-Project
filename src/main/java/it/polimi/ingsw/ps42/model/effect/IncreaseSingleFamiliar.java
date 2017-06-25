@@ -1,6 +1,9 @@
 package it.polimi.ingsw.ps42.model.effect;
 
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
+
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
@@ -15,6 +18,9 @@ public class IncreaseSingleFamiliar extends Effect{
 	private static final long serialVersionUID = -752243268908442L;
 	private int value;
 	private FamiliarColor color;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(IncreaseSingleFamiliar.class);
 
 	public IncreaseSingleFamiliar(int value, FamiliarColor color) {
 		
@@ -28,12 +34,12 @@ public class IncreaseSingleFamiliar extends Effect{
 		//Increments the value of a single familiar for the current round
 		this.player=player;
 		try{
+			logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 			Familiar playerFamiliar=player.getFamiliar(color);
 			playerFamiliar.setIncrement(value);
 		}
 		catch (WrongColorException e) {
-			//e.printStackTrace("Familiars increase failed beacause of a wrong initialization of the effect");
-			//TO-DO:aggiungere metodo in wrong color exception che permetta append di un messaggio
+			logger.error("Familiars increase failed beacause of a wrong initialization of the effect");
 		}
 	}
 

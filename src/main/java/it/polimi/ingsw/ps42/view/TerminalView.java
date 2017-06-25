@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
@@ -22,6 +24,8 @@ public class TerminalView extends View {
 
 	
 	private Scanner scanner;
+	
+	private transient Logger logger = Logger.getLogger(TerminalView.class);
 	
 	public TerminalView() {
 		
@@ -153,7 +157,7 @@ public class TerminalView extends View {
 		try {
 			printPlayerResources( searchPlayer(playerID));
 		} catch (ElementNotFoundException e) {
-			System.out.println("Player not found in terminalView");
+			logger.error("Player not found in terminalView");
 		}
 	}
 	private void printPlayerResources( Player p){

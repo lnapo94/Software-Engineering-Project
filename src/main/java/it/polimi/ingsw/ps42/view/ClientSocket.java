@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps42.view;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,6 +7,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Observable;
 import java.util.Observer;
+
+import org.apache.log4j.Logger;
 
 import it.polimi.ingsw.ps42.message.GenericMessage;
 
@@ -18,6 +19,9 @@ public class ClientSocket extends Observable implements Observer{
 	private ObjectOutputStream writer;
 	private final static int PORT = 5555;
 	private boolean isConnected = false;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(ClientSocket.class);
 	
 	public ClientSocket(String host) throws UnknownHostException, IOException {
 		
@@ -39,11 +43,8 @@ public class ClientSocket extends Observable implements Observer{
 		try {
 			writer.writeObject(message);
 			writer.flush();
-		} catch(EOFException e) {
-			System.out.println("EOF reached");
-		}
-		catch (IOException e) {
-			System.out.println("Error in sending the new message ");
+		}catch (IOException e) {
+			logger.error("Error in sending the new message ");
 			isConnected = false;
 			throw new IOException();
 		}	
@@ -62,11 +63,8 @@ public class ClientSocket extends Observable implements Observer{
 				GenericMessage msg = (GenericMessage) reader.readObject();
 				setChanged();
 				notifyObservers(msg);
-			} catch(EOFException e) {
-				System.out.println("EOF reached");
-			}
-			catch(IOException | ClassNotFoundException e){
-				System.out.println("errore nella lettura dei messaggi ricevuti");
+			} catch(IOException | ClassNotFoundException e){
+				logger.error("Error in reading the input messages");
 				e.printStackTrace();
 				isConnected=false;
 			}
@@ -74,7 +72,7 @@ public class ClientSocket extends Observable implements Observer{
 	}
 	
 	public void close() throws IOException {
-		
+		logger.info("Closing the reader/writer for the socket");
 		reader.close();
 		writer.close();
 	}
@@ -83,7 +81,7 @@ public class ClientSocket extends Observable implements Observer{
 		new Thread( new Runnable(){
 			
 				public void run(){
-					System.out.println("inizio thread dal socket");
+					logger.info("Starting Connection Thread in ClientSocket");
 					while(isConnected()){
 						readMessage();
 					}
@@ -101,25 +99,22 @@ public class ClientSocket extends Observable implements Observer{
 			try {
 				this.send(msg);
 			} catch (IOException e) {
-				System.out.println("Unknown type of message");
+				logger.error("Unknown type of message");
 			}
 		}
 		
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnknownHostException, IOException {
 		
 		String host = "localhost"; 
-		try {
-			ClientSocket client = new ClientSocket(host);
-			View view = new TerminalView();
-			client.addView(view);
-			view.askNewPlayerID();
-			client.startReading();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		ClientSocket client = new ClientSocket(host);
+		View view = new TerminalView();
+		client.addView(view);
+		view.askNewPlayerID();
+		client.startReading();
 	}
 
 }

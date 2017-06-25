@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 
@@ -9,6 +11,9 @@ public class NoMoneyMalusLeader extends Effect{
 	 * 
 	 */
 	private static final long serialVersionUID = 6454523967505855024L;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(NoMoneyMalusLeader.class);
 
 	public NoMoneyMalusLeader() {
 		super(EffectType.NO_MONEY_MALUS);
@@ -16,6 +21,7 @@ public class NoMoneyMalusLeader extends Effect{
 
 	@Override
 	public void enableEffect(Player player) {
+		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		player.setNoMoneyMalus();
 	}
 

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 
@@ -10,6 +12,9 @@ public class NoBonusInTower extends Effect{
 	 * 
 	 */
 	private static final long serialVersionUID = 3468865507577574258L;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(NoBonusInTower.class);
 
 	public NoBonusInTower() {
 		super(EffectType.NO_TOWER_BONUS);
@@ -18,6 +23,7 @@ public class NoBonusInTower extends Effect{
 
 	@Override
 	public void enableEffect(Player player) {
+		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		this.player=player;
 		player.disableBonusInTower();
 	}

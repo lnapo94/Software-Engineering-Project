@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
@@ -16,6 +18,9 @@ public class ObtainBan extends Effect{
 	private Packet costs;
 	private Resource resource;
 	
+	//logger
+	private transient Logger logger = Logger.getLogger(ObtainBan.class);
+	
 	public ObtainBan(Packet costs) {
 		super(EffectType.OBTAIN_BAN);
 		this.costs = costs;
@@ -25,6 +30,7 @@ public class ObtainBan extends Effect{
 	public void enableEffect(Player player) {
 		//Enable the ObtainBan effect, hence decrease player's resource if
 		//he gains an exactly resource
+		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		for(Unit cost : costs)
 		if(resource == cost.getResource()) {
 			Packet packetForDecrement = new Packet();
@@ -32,6 +38,7 @@ public class ObtainBan extends Effect{
 			try {
 				player.decreaseResource(packetForDecrement);
 			} catch (NotEnoughResourcesException e) {
+				logger.info("Player has enough resources, so set it to zero");
 				player.setToZero(cost.getResource());
 			} finally {
 				//Finally case is done because every time this method is called

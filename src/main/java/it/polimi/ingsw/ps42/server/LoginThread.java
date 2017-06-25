@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.LoginMessage;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 
@@ -17,6 +19,9 @@ public class LoginThread implements Runnable{
 	//Object used to send and receive messages from the client
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(LoginThread.class);
 	
 	public LoginThread(Server server, Socket socket) {
 		this.server = server;
@@ -31,7 +36,7 @@ public class LoginThread implements Runnable{
 			input = new ObjectInputStream(socket.getInputStream());
 			
 		} catch (IOException e) {
-			System.out.println("Error in input/output socket creation");
+			logger.error("Error in input/output socket creation");
 			socketClose();
 		}
 	}
@@ -39,8 +44,9 @@ public class LoginThread implements Runnable{
 	private void socketClose() {
 		try {
 			this.socket.close();
+			logger.info("Closing socket: " + socket.toString());
 		} catch (IOException e) {
-			System.out.println("Error in socket closing");
+			logger.error("Error in socket closing");
 		}
 	}
 	
@@ -66,6 +72,7 @@ public class LoginThread implements Runnable{
 	public void run() {
 		//Wait for a client user name and control it
 		try {
+			logger.info("Start to run a login thread to wait the player's user name");
 			LoginMessage message = null;
 			//Wait for the client message
 			do {
@@ -75,17 +82,19 @@ public class LoginThread implements Runnable{
 				if(inputObject instanceof LoginMessage)
 					message = (LoginMessage) inputObject;
 				
+				logger.info("Received a user login");
+				
 			}while(message == null || !correctMessage(message));
 			
 			//Add player to the client
 			server.addPlayer(message.getUserName(), socket, input, output);
 		}
 		catch (IOException e) {
-			System.out.println("Unable to read from the socket");
+			logger.error("Unable to read from the socket");
 		} catch (ClassNotFoundException e) {
-			System.out.println("Unable to find the correct classe");
+			logger.error("Unable to find the correct class");
 		} catch (ElementNotFoundException e) {
-			System.out.println("Unable to add the player to a match");
+			logger.error("Unable to add the player to a match");
 		}
 	}
 

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.action.Action;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
@@ -19,6 +21,8 @@ public class IncreaseAction extends Effect {
 	private int value;
 	private Packet discount;
 	
+	private transient Logger logger = Logger.getLogger(IncreaseAction.class);
+	
 	//Variable used to know if the effect is activated yet or not
 	private boolean yetActivated;
 
@@ -33,7 +37,7 @@ public class IncreaseAction extends Effect {
 	@Override
 	public void enableEffect(Player player) {
 		if(yetActivated==false){		//If not activated yet then add the effect to the player
-		
+			logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 			this.player=player;
 			player.addIncreaseEffect(this);
 			yetActivated=true; 
@@ -44,6 +48,7 @@ public class IncreaseAction extends Effect {
 		//Increase the current action and add a discount if equals the type of the effect
 		
 		if( checkType(action)){
+			logger.info("Effect: " + this.getTypeOfEffect() + " activated its increment");
 			action.addIncrement(value);
 			action.addDiscount(discount);
 		}

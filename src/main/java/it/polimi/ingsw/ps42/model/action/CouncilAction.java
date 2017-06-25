@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.action;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
@@ -14,6 +16,9 @@ public class CouncilAction extends Action {
 
 	//Private Variables, the game logic must ask to the table the first free council position
 	private CouncilPosition tablePosition;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(CouncilAction.class);
 
 	public CouncilAction(ActionType type, Familiar familiar, CouncilPosition tablePosition) throws NotEnoughResourcesException{
 		//Constructor for normal action
@@ -59,7 +64,7 @@ public class CouncilAction extends Action {
 			try {
 				tablePosition.setFamiliar(familiar);
 			} catch (FamiliarInWrongPosition e) {
-				System.out.println("[DEBUG]: There is a wrong familiar in council Positions");
+				logger.error("[DEBUG]: There is a wrong familiar in council Positions");
 			}
 			Message familiarUpdate = new FamiliarUpdateMessage(player.getPlayerID(), familiar.getColor(), getType(), 0);
 			setChanged();

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 
@@ -11,6 +13,9 @@ public class SlaveBan extends Effect {
 	 */
 	private static final long serialVersionUID = -5371903224725167322L;
 	private int divisory;
+	
+	//Logger
+	private transient Logger logger = Logger.getLogger(SlaveBan.class);
 
 	public SlaveBan(int divisory) {
 		super(EffectType.SLAVE_BAN);
@@ -20,6 +25,8 @@ public class SlaveBan extends Effect {
 
 	@Override
 	public void enableEffect(Player player) {
+		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
+		logger.info("Divisoru: " + this.divisory);
 		this.player=player;
 		
 		player.setDivisory(divisory);

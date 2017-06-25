@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.effect.Effect;
@@ -74,6 +76,9 @@ public class TableView {
 	//A council position to copy
 	private CouncilPosition councilCopy;
 	
+	//Logger
+	private transient Logger logger = Logger.getLogger(TableView.class);
+	
 	//The four Constructors. We have a constructor for each kind of match
 	//For example: with 2 players the table hasn't all the position
 	
@@ -89,7 +94,7 @@ public class TableView {
 		try {
 			yieldAndProductConstructor(2);
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 		
 		//Add two more position for 4 players, then close the file
@@ -110,7 +115,7 @@ public class TableView {
 		try {
 			yieldAndProductConstructor(5);
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 	}
 
@@ -152,7 +157,7 @@ public class TableView {
 			firstProduct = loader.getNextYieldAndProductPosition();
 			loader.close();
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 		
 		//Setting the council
@@ -163,7 +168,7 @@ public class TableView {
 		try {
 			marketLoader = new PositionLoader("Resource//Position//MarketPosition//marketPosition.json");
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 		market.add(marketLoader.getNextMarketPosition());
 		market.add(marketLoader.getNextMarketPosition());
@@ -175,7 +180,7 @@ public class TableView {
 			councilCopy = councilLoader.getNextCouncilPosition();
 			councilLoader.close();
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 		
 		//Initialize the players banned lists
@@ -226,7 +231,7 @@ public class TableView {
 			}
 			loader.close();
 		} catch (IOException e) {
-			System.out.println("Unable to open the file");
+			logger.error("Unable to open the file");
 		}
 	}
 	

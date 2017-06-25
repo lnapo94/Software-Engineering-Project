@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps42.message.visitorPattern;
 
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
@@ -29,6 +31,9 @@ public class ViewVisitor implements Visitor {
 
 	private View view;
 	
+	//Logger
+	private transient Logger logger = Logger.getLogger(ControllerVisitor.class);
+	
 	public ViewVisitor( View view) {
 		this.view = view;
 	}
@@ -45,7 +50,7 @@ public class ViewVisitor implements Visitor {
 			try {
 				this.view.askBonusBar( message);
 			} catch (WrongChoiceException e) {
-				System.out.println("Error in Viewvisitor BonusBarMessage");
+				logger.error("Error in Viewvisitor BonusBarMessage");
 			}
 		}
 	}
@@ -61,7 +66,7 @@ public class ViewVisitor implements Visitor {
 				this.view.askLeaderCard(message);
 			}
 		catch(WrongChoiceException e){
-			System.out.println("Error in Viewvisitor LeaderCardMessage");
+			logger.error("Error in Viewvisitor LeaderCardMessage");
 		}
 	}
 
@@ -173,7 +178,7 @@ public class ViewVisitor implements Visitor {
 				}	
 			}
 			catch( ElementNotFoundException e){
-				System.out.println("Error in Viewvisitor FamiliarUpdateMessage");
+				logger.error("Error in Viewvisitor FamiliarUpdateMessage");
 			}
 			
 		}
@@ -208,7 +213,7 @@ public class ViewVisitor implements Visitor {
 				}	
 			}
 			catch(ElementNotFoundException e){
-				System.out.println("Error in Viewvisitor CardUpdateMessage");
+				logger.error("Error in Viewvisitor CardUpdateMessage");
 			}
 		}
 		
@@ -224,7 +229,7 @@ public class ViewVisitor implements Visitor {
 			try {
 				this.view.setBanToPlayer( message.getPlayerID(), message.getBan());
 			} catch (ElementNotFoundException e) {
-				System.out.println("Error in Viewvisitor BanUpdateMessage");
+				logger.error("Error in Viewvisitor BanUpdateMessage");
 			}
 		}
 		
@@ -239,7 +244,7 @@ public class ViewVisitor implements Visitor {
 			try {
 				this.view.askCouncilRequest(message);
 			} catch (WrongChoiceException e) {
-				System.out.println("Error in Viewvisitor CouncilRequest");
+				logger.error("Error in Viewvisitor CouncilRequest");
 			}
 		
 	}
@@ -262,7 +267,7 @@ public class ViewVisitor implements Visitor {
 			try {
 				this.view.setEnabledLeaderCard(message.getPlayerID(), message.getCard());
 			} catch (ElementNotFoundException e) {
-				System.out.println("Error in Viewvisitor LeaderCardUpdateMessage");
+				logger.error("Error in Viewvisitor LeaderCardUpdateMessage");
 			}
 		}
 			
