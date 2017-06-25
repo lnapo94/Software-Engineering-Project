@@ -509,6 +509,9 @@ public class GameLogic implements Observer {
     		
     	if(!actionOrder.isEmpty()) {
     		currentPlayer = actionOrder.remove(0);
+    		
+    		//DEBUG
+    		System.out.println("Player: " + currentPlayer.getPlayerID() + " is playing...");
     		currentPlayer.askMove();
     		
             //Set the timer
