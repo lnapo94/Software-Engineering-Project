@@ -37,7 +37,8 @@ public class ControllerVisitor implements Visitor {
 		/* Response message from the View about a BonusBar choice.
 		 * Give to the Game Logic the BonusBar chosen and the related player
 		 */
-		gameLogic.setBonusBar(message.getChoice(), message.getPlayerID());
+		if(gameLogic.isInitGame())
+			gameLogic.setBonusBar(message.getChoice(), message.getPlayerID());
 
 	}
 
@@ -46,7 +47,8 @@ public class ControllerVisitor implements Visitor {
 		/* Response Message from the View about the Leader Card choice.
 		 * Give to the Game Logic the Leader Card chosen and the related player
 		 */
-		gameLogic.setLeaderCard(message.getChoice(), message.getPlayerID());
+		if(gameLogic.isInitGame())
+			gameLogic.setLeaderCard(message.getChoice(), message.getPlayerID());
 
 	}
 

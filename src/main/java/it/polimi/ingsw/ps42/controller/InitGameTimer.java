@@ -16,7 +16,7 @@ public class InitGameTimer extends TimerTask{
 	
 	@Override
 	public void run() {
-		
+		System.out.println("Timer for the initialization expired");
 		if(logic.getCurrentPlayer() != null) {
 			logic.setBonusBar(0, player.getPlayerID());
 		}

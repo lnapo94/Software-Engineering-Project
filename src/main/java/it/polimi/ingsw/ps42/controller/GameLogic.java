@@ -40,7 +40,7 @@ import java.util.*;
 
 public class GameLogic implements Observer {
 	
-	private static final int TIMER_SECONDS = 10;
+	private static final int TIMER_SECONDS = 5;
 	
     private static final int MAX_BANS_IN_FILE = 7;
     private static final int FAMILIARS_NUMBER = 4;
@@ -48,6 +48,9 @@ public class GameLogic implements Observer {
     private static final int THIRD_PERIOD = 2;
     private static final int FIRST_PERIOD = 0;
     private static final int SECOND_PERIOD = 1;
+    
+    //Variable used to know if the gameLogic is starting the game
+    private boolean isInitGame;
 
     //List of players in this match
     private List<Player> playersList;
@@ -173,6 +176,10 @@ public class GameLogic implements Observer {
             return new Table(players.get(0), players.get(1), players.get(2), players.get(3));
         throw new NotEnoughPlayersException("There isn't enough player for this match");
     }
+    
+    public boolean isInitGame() {
+    	return this.isInitGame;
+    }
 
     private void loadLeaderCards() throws IOException {
         LeaderCardLoader loader = new LeaderCardLoader("Resource//LeaderCards//leaderCards.json");
@@ -196,6 +203,7 @@ public class GameLogic implements Observer {
         //First, load both bonus bars and leader cards
         loadBonusBars();
         loadLeaderCards();
+        isInitGame = true;
         askBonusBar();
     }
 
@@ -306,12 +314,15 @@ public class GameLogic implements Observer {
 
     private void startMatch() {
         //Ready to start with the first round
+    	isInitGame = false;
         currentRound = 1;
         initRound();
     }
 
     private void initRound() {
-
+    	//Debug
+    	System.out.println("Start the round number: " + getCurrentRound());
+    	
         //Place the cards in the towers
         table.placeGreenTower(cardsCreator.getNextGreenCards());
         table.placeYellowTower(cardsCreator.getNextYellowCards());
@@ -413,6 +424,7 @@ public class GameLogic implements Observer {
 		for(Player player : this.playersList) {
 			//Enable the third ban
 			if(player.getResource(Resource.FAITHPOINT) < 5) {
+    			System.out.println("Check the third period ban");
 				table.getThirdBan().enableEffect(player);
 				BanUpdateMessage message = new BanUpdateMessage(player.getPlayerID(), THIRD_PERIOD);
 				
@@ -484,7 +496,7 @@ public class GameLogic implements Observer {
 		initRound();
 	}
 
-    private void initAction() {
+    public void initAction() {
     	if(!actionOrder.isEmpty()) {
     		currentPlayer = actionOrder.remove(0);
     		currentPlayer.askMove();
@@ -496,6 +508,7 @@ public class GameLogic implements Observer {
     	}
     	else {
     		if(currentRound == 2) {
+    			System.out.println("Check the first period ban");
     			checkBan(table.getFirstBan(), 3, FIRST_PERIOD);
     			
     			//If there isn't request, then restart with a new round
@@ -504,6 +517,7 @@ public class GameLogic implements Observer {
     			}
     		}
     		else if(currentRound == 4) {
+    			System.out.println("Check the second period ban");
     			checkBan(table.getSecondBan(), 4, SECOND_PERIOD);
     			
     			//If there isn't request, then restart with a new round

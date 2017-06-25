@@ -22,6 +22,7 @@ public class PlayerMoveTimer extends TimerTask{
 	
 	@Override
 	public void run() {
+		System.out.println("Timer for the player move expired");
 		//Take the current player
 		player.removeAllRequests();
 		player.removeAllCouncilRequests();
@@ -34,6 +35,8 @@ public class PlayerMoveTimer extends TimerTask{
 		//so cancel it
 		if(logic.isThereAnAction())
 			logic.rollBackTakeCardAction();
+		
+		logic.initAction();
 		
 		if(isBanRequest) {
 			//Conversion for the correct period
