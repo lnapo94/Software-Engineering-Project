@@ -40,7 +40,7 @@ import java.util.*;
 
 public class GameLogic implements Observer {
 	
-	private static final int TIMER_SECONDS = 20;
+	private static final int TIMER_SECONDS = 10;
 	
     private static final int MAX_BANS_IN_FILE = 7;
     private static final int FAMILIARS_NUMBER = 4;
@@ -202,14 +202,14 @@ public class GameLogic implements Observer {
     /**
      * Method used to ask to the next player what bonus bar he wants
      */
-    private void askBonusBar() {
+    private synchronized void askBonusBar() {
         if(!roundOrder.isEmpty()) {
             currentPlayer = roundOrder.remove(0);
             currentPlayer.askChooseBonusBar(bonusBarList);
             
             //Set the timer
             Timer timer = new Timer();
-            timer.schedule(new InitGameTimer(currentPlayer, this), TIMER_SECONDS);
+            timer.schedule(new InitGameTimer(currentPlayer, this), TIMER_SECONDS * 1000);
             timerTable.put(currentPlayer, timer);
         }
         else {
@@ -253,7 +253,7 @@ public class GameLogic implements Observer {
         }
     }
 
-    private void askLeaderCard() {
+    private synchronized void askLeaderCard() {
         //If the player 1's arraylist of leader cards is empty, also the other must be empty, so end this procedure
         if(!leaderCardTable.isEmpty()) {
             reOrderHashMap();
@@ -262,7 +262,7 @@ public class GameLogic implements Observer {
 
                 //Set the timer
                 Timer timer = new Timer();
-                timer.schedule(new InitGameTimer(player, this), TIMER_SECONDS);
+                timer.schedule(new InitGameTimer(player, this), TIMER_SECONDS * 1000);
                 timerTable.put(player, timer);
             }
         }
@@ -350,7 +350,7 @@ public class GameLogic implements Observer {
 
             //Set the timer
             Timer timer = new Timer();
-            timer.schedule(new PlayerMoveTimer(player, this), TIMER_SECONDS);
+            timer.schedule(new PlayerMoveTimer(player, this), TIMER_SECONDS * 1000);
             timerTable.put(player, timer);
     	}
     	else
@@ -402,7 +402,7 @@ public class GameLogic implements Observer {
 
                 //Set the timer
                 Timer timer = new Timer();
-                timer.schedule(new PlayerMoveTimer(player, this, true), TIMER_SECONDS);
+                timer.schedule(new PlayerMoveTimer(player, this, true), TIMER_SECONDS * 1000);
                 timerTable.put(player, timer);
 			}
 		}
@@ -491,7 +491,7 @@ public class GameLogic implements Observer {
     		
             //Set the timer
             Timer timer = new Timer();
-            timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS);
+            timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS * 1000);
             timerTable.put(currentPlayer, timer);
     	}
     	else {
@@ -653,7 +653,7 @@ public class GameLogic implements Observer {
         
             //Set the timer
             Timer timer = new Timer();
-            timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS);
+            timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS * 1000);
             timerTable.put(currentPlayer, timer);
     	}
     	else if(currentAction != null)
