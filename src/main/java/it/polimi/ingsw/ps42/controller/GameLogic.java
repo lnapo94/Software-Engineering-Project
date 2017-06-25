@@ -612,7 +612,7 @@ public class GameLogic implements Observer {
 		}
     }
     
-    public void handleAction(Action action, String playerID) {
+    public synchronized void handleAction(Action action, String playerID) {
     	try {
 			Player player = searchPlayer(playerID);
 			if(player == currentPlayer) {
@@ -691,7 +691,7 @@ public class GameLogic implements Observer {
     		calculateWinner();
     }
     
-    private void doAction() {
+    private synchronized void doAction() {
     	try {
 			currentAction.doAction();
 			this.currentAction = null;
@@ -786,7 +786,7 @@ public class GameLogic implements Observer {
 	}
 	
 	public void rollBackTakeCardAction() {
-		if(currentAction instanceof TakeCardAction) {
+		if(currentAction != null && currentAction instanceof TakeCardAction) {
 			TakeCardAction action = (TakeCardAction) currentAction;
 			action.rollBackAction();
 		}

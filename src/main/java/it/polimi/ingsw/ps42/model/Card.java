@@ -220,7 +220,16 @@ public class Card implements Serializable{
 	}
 	
 	public void enableImmediateEffect(int choice, Player player) {
-		enableEffect(choice, immediateEffects, player);
+		//Try to enable the effect
+		try {
+			enableEffect(choice, immediateEffects, player);
+		} catch(ArithmeticException e) {
+			//The chosen effect is no more applicable, try to choose another effect
+			try {
+				enableImmediateEffect();
+			} catch (NotEnoughResourcesException e1) {
+			}
+		}
 	}
 	/* END IMMEDIATE EFFECT */
 	
@@ -242,8 +251,15 @@ public class Card implements Serializable{
 		}
 	}
 	
-	public void enablePermanentEffect(int choice, Player player) {
+	public void enablePermanentEffect(int choice, Player player) {try {
 		enableEffect(choice, permanentEffects, player);
+	} catch(ArithmeticException e) {
+		//The chosen effect is no more applicable, try to choose another effect
+		try {
+			enablePermanentEffect();
+		} catch (NotEnoughResourcesException e1) {
+		}
+	}
 	}
 	/*	END PERMANENT EFFECT */
 	
@@ -266,16 +282,17 @@ public class Card implements Serializable{
 	}
 	
 	public void enableFinalEffect(int choice, Player player) {
-		enableEffect(choice, finalEffects, player);
+		try {
+			enableEffect(choice, finalEffects, player);
+		} catch(ArithmeticException e) {
+			//The chosen effect is no more applicable, try to choose another effect
+			try {
+				enableFinalEffect();
+			} catch (NotEnoughResourcesException e1) {
+			}
+		}
 	}
 	/* END FINAL EFFECT */
-	
-	/*public Packet checkCosts(Player player) {
-		for(Packet cost : costs)
-			if(checkPlayerCanPay(cost, player, null))
-				return cost;
-		return null;
-	}*/
 	
 	//PRIVATE METHODS FOR CARD CLASS
 	private void resetPossibleChoice() {
