@@ -249,7 +249,7 @@ public class CardBuilder extends Builder {
 		return new IncreaseAction(type, actionLevel, discount);
 	}
 
-	private Effect askIncreaseAction() {
+	protected Effect askIncreaseAction() {
 		
 		String response;
 		ActionType type;

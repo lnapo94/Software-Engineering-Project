@@ -1186,4 +1186,249 @@
     "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
   },
   "permanentEffect": null
+}{
+  "name": "Cesare Borgia",
+  "description": "",
+  "requirements": {
+    "checker": false,
+    "resourceRequirements": {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 12
+        },
+        {
+          "resource": "FAITHPOINT",
+          "quantity": 2
+        }
+      ]
+    },
+    "cardRequirements": {
+      "YELLOW": 3
+    }
+  },
+  "effect": null,
+  "owner": null,
+  "onceARoundEffect": null,
+  "permanentEffect": {
+    "player": null,
+    "typeOfEffect": "NO_MILITARY_REQUIREMENTS",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.NoMilitaryRequirementsLeader"
+  }
+}{
+  "name": "Cosimo de\u0027Medici",
+  "description": "",
+  "requirements": {
+    "checker": false,
+    "resourceRequirements": null,
+    "cardRequirements": {
+      "YELLOW": 4,
+      "BLUE": 2
+    }
+  },
+  "effect": null,
+  "owner": null,
+  "onceARoundEffect": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": [
+        {
+          "resource": "SLAVE",
+          "quantity": 3
+        },
+        {
+          "resource": "VICTORYPOINT",
+          "quantity": 1
+        }
+      ]
+    },
+    "councilObtain": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+  },
+  "permanentEffect": null
+}{
+  "name": "Bartolomeo Colleoni",
+  "description": "",
+  "requirements": {
+    "checker": false,
+    "resourceRequirements": null,
+    "cardRequirements": {
+      "VIOLET": 2,
+      "GREEN": 4
+    }
+  },
+  "effect": null,
+  "owner": null,
+  "onceARoundEffect": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": [
+        {
+          "resource": "VICTORYPOINT",
+          "quantity": 4
+        }
+      ]
+    },
+    "councilObtain": null,
+    "player": null,
+    "typeOfEffect": "OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+  },
+  "permanentEffect": null
+}{
+  "name": "Ludovico III Gonzaga",
+  "description": "",
+  "requirements": {
+    "checker": false,
+    "resourceRequirements": {
+      "list": [
+        {
+          "resource": "SLAVE",
+          "quantity": 15
+        }
+      ]
+    },
+    "cardRequirements": {}
+  },
+  "effect": null,
+  "owner": null,
+  "onceARoundEffect": {
+    "costs": {
+      "list": []
+    },
+    "gains": {
+      "list": []
+    },
+    "councilObtain": {
+      "quantity": 1,
+      "possibleConversion": [
+        {
+          "costs": {
+            "list": []
+          },
+          "gains": {
+            "list": [
+              {
+                "resource": "STONE",
+                "quantity": 1
+              },
+              {
+                "resource": "WOOD",
+                "quantity": 1
+              }
+            ]
+          },
+          "councilObtain": null,
+          "player": null,
+          "typeOfEffect": "OBTAIN"
+        },
+        {
+          "costs": {
+            "list": []
+          },
+          "gains": {
+            "list": [
+              {
+                "resource": "SLAVE",
+                "quantity": 2
+              }
+            ]
+          },
+          "councilObtain": null,
+          "player": null,
+          "typeOfEffect": "OBTAIN"
+        },
+        {
+          "costs": {
+            "list": []
+          },
+          "gains": {
+            "list": [
+              {
+                "resource": "MONEY",
+                "quantity": 2
+              }
+            ]
+          },
+          "councilObtain": null,
+          "player": null,
+          "typeOfEffect": "OBTAIN"
+        },
+        {
+          "costs": {
+            "list": []
+          },
+          "gains": {
+            "list": [
+              {
+                "resource": "MILITARYPOINT",
+                "quantity": 2
+              }
+            ]
+          },
+          "councilObtain": null,
+          "player": null,
+          "typeOfEffect": "OBTAIN"
+        },
+        {
+          "costs": {
+            "list": []
+          },
+          "gains": {
+            "list": [
+              {
+                "resource": "FAITHPOINT",
+                "quantity": 1
+              }
+            ]
+          },
+          "councilObtain": null,
+          "player": null,
+          "typeOfEffect": "OBTAIN"
+        }
+      ],
+      "player": null,
+      "typeOfEffect": "COUNCIL_OBTAIN"
+    },
+    "player": null,
+    "typeOfEffect": "OBTAIN",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+  },
+  "permanentEffect": null
+}{
+  "name": "Pico della Mirandola",
+  "description": "",
+  "requirements": {
+    "checker": false,
+    "resourceRequirements": null,
+    "cardRequirements": {
+      "YELLOW": 2,
+      "VIOLET": 4
+    }
+  },
+  "effect": null,
+  "owner": null,
+  "onceARoundEffect": null,
+  "permanentEffect": {
+    "type": "TAKE_ALL",
+    "value": 0,
+    "discount": {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 3
+        }
+      ]
+    },
+    "yetActivated": false,
+    "player": null,
+    "typeOfEffect": "INCREASE_ACTION",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
+  }
 }

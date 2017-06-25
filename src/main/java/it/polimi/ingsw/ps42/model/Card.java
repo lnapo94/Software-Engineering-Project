@@ -403,30 +403,35 @@ public class Card implements Serializable{
 		cardBuilder.append("LEVEL: "+this.level+"\n");
 		
 		cardBuilder.append("COSTS: \n");
-		for (Packet cost : this.costs) {
-			cardBuilder.append(cost.print()+"\n");
+		if(costs.size() != 0){
+			for (Packet cost : this.costs) {
+				cardBuilder.append(cost.print()+"\n");
+			}
 		}
-		
-		cardBuilder.append("REQUIREMENTS: \n");
-		for (Packet requirement: this.requirements){
-			cardBuilder.append(requirement.print()+"\n");
+		if(requirements.size() != 0){
+			cardBuilder.append("REQUIREMENTS: \n");
+			for (Packet requirement: this.requirements){
+				cardBuilder.append(requirement.print()+"\n");
+			}
 		}
-		
-		cardBuilder.append("IMMEDIATE EFFECTS: \n");
-		for (Effect immediate : this.immediateEffects){
-			cardBuilder.append(immediate.print()+"\n");
+		if(immediateEffects.size() != 0){
+			cardBuilder.append("IMMEDIATE EFFECTS: \n");
+			for (Effect immediate : this.immediateEffects){
+				cardBuilder.append(immediate.print()+"\n");
+			}
 		}
-		
-		cardBuilder.append("PERMANENT EFFECTS: \n");
-		for (Effect permanent : this.permanentEffects){
-			cardBuilder.append(permanent.print()+"\n");
+		if(permanentEffects.size() != 0){
+			cardBuilder.append("PERMANENT EFFECTS: \n");
+			for (Effect permanent : this.permanentEffects){
+				cardBuilder.append(permanent.print()+"\n");
+			}
 		}
-		
-		cardBuilder.append("FINAL EFFECTS: \n");
-		for (Effect finalEff : this.finalEffects){
-			cardBuilder.append(finalEff.print()+"\n");
-		}
-		
+		if(finalEffects.size() != 0){
+			cardBuilder.append("FINAL EFFECTS: \n");
+			for (Effect finalEff : this.finalEffects){
+				cardBuilder.append(finalEff.print()+"\n");
+			}
+		}		
 		
 		return cardBuilder.toString();
 	}
