@@ -1,271 +1,4 @@
 {
-  "name": "Captain",
-  "description": "",
-  "color": "BLUE",
-  "period": 2,
-  "level": 0,
-  "owner": null,
-  "costs": [
-    {
-      "list": [
-        {
-          "resource": "MONEY",
-          "quantity": 4
-        }
-      ]
-    }
-  ],
-  "requirements": [],
-  "immediateEffects": [
-    {
-      "type": "TAKE_GREEN",
-      "value": 6,
-      "discount": {
-        "list": []
-      },
-      "yetActivated": false,
-      "player": null,
-      "typeOfEffect": "INCREASE_ACTION",
-      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
-    },
-    {
-      "costs": {
-        "list": []
-      },
-      "gains": {
-        "list": [
-          {
-            "resource": "MILITARYPOINT",
-            "quantity": 2
-          }
-        ]
-      },
-      "councilObtain": null,
-      "player": null,
-      "typeOfEffect": "OBTAIN",
-      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
-    }
-  ],
-  "permanentEffects": [],
-  "finalEffects": [],
-  "possibleChoice": [],
-  "possibleChoiceIndex": [],
-  "effectivelyCosts": []
-}{
-  "name": "Architect",
-  "description": "",
-  "color": "BLUE",
-  "period": 2,
-  "level": 0,
-  "owner": null,
-  "costs": [
-    {
-      "list": [
-        {
-          "resource": "MONEY",
-          "quantity": 4
-        }
-      ]
-    }
-  ],
-  "requirements": [],
-  "immediateEffects": [
-    {
-      "type": "TAKE_YELLOW",
-      "value": 6,
-      "discount": {
-        "list": [
-          {
-            "resource": "STONE",
-            "quantity": 1
-          },
-          {
-            "resource": "WOOD",
-            "quantity": 1
-          }
-        ]
-      },
-      "yetActivated": false,
-      "player": null,
-      "typeOfEffect": "INCREASE_ACTION",
-      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
-    }
-  ],
-  "permanentEffects": [],
-  "finalEffects": [],
-  "possibleChoice": [],
-  "possibleChoiceIndex": [],
-  "effectivelyCosts": []
-}{
-  "name": "Patron",
-  "description": "",
-  "color": "BLUE",
-  "period": 2,
-  "level": 0,
-  "owner": null,
-  "costs": [
-    {
-      "list": [
-        {
-          "resource": "MONEY",
-          "quantity": 3
-        }
-      ]
-    }
-  ],
-  "requirements": [],
-  "immediateEffects": [
-    {
-      "type": "TAKE_BLUE",
-      "value": 6,
-      "discount": {
-        "list": [
-          {
-            "resource": "MONEY",
-            "quantity": 2
-          }
-        ]
-      },
-      "yetActivated": false,
-      "player": null,
-      "typeOfEffect": "INCREASE_ACTION",
-      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
-    }
-  ],
-  "permanentEffects": [],
-  "finalEffects": [],
-  "possibleChoice": [],
-  "possibleChoiceIndex": [],
-  "effectivelyCosts": []
-}{
-  "name": "Hero",
-  "description": "",
-  "color": "BLUE",
-  "period": 2,
-  "level": 0,
-  "owner": null,
-  "costs": [
-    {
-      "list": [
-        {
-          "resource": "MONEY",
-          "quantity": 4
-        }
-      ]
-    }
-  ],
-  "requirements": [],
-  "immediateEffects": [
-    {
-      "type": "TAKE_VIOLET",
-      "value": 6,
-      "discount": {
-        "list": []
-      },
-      "yetActivated": false,
-      "player": null,
-      "typeOfEffect": "INCREASE_ACTION",
-      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
-    },
-    {
-      "quantity": 1,
-      "possibleConversion": [
-        {
-          "costs": {
-            "list": []
-          },
-          "gains": {
-            "list": [
-              {
-                "resource": "STONE",
-                "quantity": 1
-              },
-              {
-                "resource": "WOOD",
-                "quantity": 1
-              }
-            ]
-          },
-          "councilObtain": null,
-          "player": null,
-          "typeOfEffect": "OBTAIN"
-        },
-        {
-          "costs": {
-            "list": []
-          },
-          "gains": {
-            "list": [
-              {
-                "resource": "SLAVE",
-                "quantity": 2
-              }
-            ]
-          },
-          "councilObtain": null,
-          "player": null,
-          "typeOfEffect": "OBTAIN"
-        },
-        {
-          "costs": {
-            "list": []
-          },
-          "gains": {
-            "list": [
-              {
-                "resource": "MONEY",
-                "quantity": 2
-              }
-            ]
-          },
-          "councilObtain": null,
-          "player": null,
-          "typeOfEffect": "OBTAIN"
-        },
-        {
-          "costs": {
-            "list": []
-          },
-          "gains": {
-            "list": [
-              {
-                "resource": "MILITARYPOINT",
-                "quantity": 2
-              }
-            ]
-          },
-          "councilObtain": null,
-          "player": null,
-          "typeOfEffect": "OBTAIN"
-        },
-        {
-          "costs": {
-            "list": []
-          },
-          "gains": {
-            "list": [
-              {
-                "resource": "FAITHPOINT",
-                "quantity": 1
-              }
-            ]
-          },
-          "councilObtain": null,
-          "player": null,
-          "typeOfEffect": "OBTAIN"
-        }
-      ],
-      "player": null,
-      "typeOfEffect": "COUNCIL_OBTAIN",
-      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CouncilObtain"
-    }
-  ],
-  "permanentEffects": [],
-  "finalEffects": [],
-  "possibleChoice": [],
-  "possibleChoiceIndex": [],
-  "effectivelyCosts": []
-}{
   "name": "Peasant",
   "description": "",
   "color": "BLUE",
@@ -489,6 +222,279 @@
       "player": null,
       "typeOfEffect": "COUNCIL_OBTAIN",
       "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CouncilObtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Hero",
+  "description": "",
+  "color": "BLUE",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 4
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "type": "TAKE_VIOLET",
+      "actionLevel": 6,
+      "discount": {
+        "list": []
+      },
+      "obtainEffect": {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": []
+        },
+        "councilObtain": {
+          "quantity": 1,
+          "possibleConversion": [
+            {
+              "costs": {
+                "list": []
+              },
+              "gains": {
+                "list": [
+                  {
+                    "resource": "STONE",
+                    "quantity": 1
+                  },
+                  {
+                    "resource": "WOOD",
+                    "quantity": 1
+                  }
+                ]
+              },
+              "councilObtain": null,
+              "player": null,
+              "typeOfEffect": "OBTAIN"
+            },
+            {
+              "costs": {
+                "list": []
+              },
+              "gains": {
+                "list": [
+                  {
+                    "resource": "SLAVE",
+                    "quantity": 2
+                  }
+                ]
+              },
+              "councilObtain": null,
+              "player": null,
+              "typeOfEffect": "OBTAIN"
+            },
+            {
+              "costs": {
+                "list": []
+              },
+              "gains": {
+                "list": [
+                  {
+                    "resource": "MONEY",
+                    "quantity": 2
+                  }
+                ]
+              },
+              "councilObtain": null,
+              "player": null,
+              "typeOfEffect": "OBTAIN"
+            },
+            {
+              "costs": {
+                "list": []
+              },
+              "gains": {
+                "list": [
+                  {
+                    "resource": "MILITARYPOINT",
+                    "quantity": 2
+                  }
+                ]
+              },
+              "councilObtain": null,
+              "player": null,
+              "typeOfEffect": "OBTAIN"
+            },
+            {
+              "costs": {
+                "list": []
+              },
+              "gains": {
+                "list": [
+                  {
+                    "resource": "FAITHPOINT",
+                    "quantity": 1
+                  }
+                ]
+              },
+              "councilObtain": null,
+              "player": null,
+              "typeOfEffect": "OBTAIN"
+            }
+          ],
+          "player": null,
+          "typeOfEffect": "COUNCIL_OBTAIN"
+        },
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      "player": null,
+      "typeOfEffect": "DO_ACTION",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.DoAction"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Patron",
+  "description": "",
+  "color": "BLUE",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 3
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "type": "TAKE_BLUE",
+      "actionLevel": 6,
+      "discount": {
+        "list": [
+          {
+            "resource": "MONEY",
+            "quantity": 2
+          }
+        ]
+      },
+      "obtainEffect": null,
+      "player": null,
+      "typeOfEffect": "DO_ACTION",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.DoAction"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Architect",
+  "description": "",
+  "color": "BLUE",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 4
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "type": "TAKE_YELLOW",
+      "actionLevel": 6,
+      "discount": {
+        "list": [
+          {
+            "resource": "WOOD",
+            "quantity": 1
+          },
+          {
+            "resource": "STONE",
+            "quantity": 1
+          }
+        ]
+      },
+      "obtainEffect": null,
+      "player": null,
+      "typeOfEffect": "DO_ACTION",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.DoAction"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Capitain",
+  "description": "",
+  "color": "BLUE",
+  "period": 2,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 4
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "type": "TAKE_GREEN",
+      "actionLevel": 6,
+      "discount": {
+        "list": []
+      },
+      "obtainEffect": {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      "player": null,
+      "typeOfEffect": "DO_ACTION",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.DoAction"
     }
   ],
   "permanentEffects": [],

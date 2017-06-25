@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.effect.CardForEachObtain;
 import it.polimi.ingsw.ps42.model.effect.CouncilObtain;
+import it.polimi.ingsw.ps42.model.effect.DoAction;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.ForEachObtain;
 import it.polimi.ingsw.ps42.model.effect.IncreaseAction;
@@ -233,6 +234,7 @@ public class CardBuilder extends Builder {
 		ActionType type;
 		int actionLevel;
 		Packet discount = new Packet();
+		Obtain obtainEffect = null;
 		System.out.println("Tipo azione bonus?");
 		System.out.println(ActionType.COUNCIL+"\n "+ActionType.MARKET+"\n "+ActionType.PRODUCE+"\n "+ActionType.TAKE_ALL+"\n "
 							+ActionType.TAKE_BLUE+"\n "+ActionType.TAKE_GREEN+"\n "+ActionType.TAKE_VIOLET+"\n "+ActionType.TAKE_YELLOW+
@@ -246,7 +248,12 @@ public class CardBuilder extends Builder {
 		response = scanner.nextLine();
 		if(response.toUpperCase().equals("SI") )
 			discount = askPacket();
-		return new IncreaseAction(type, actionLevel, discount);
+		System.out.println("Aggiungere effetto obtain o privilegio del consiglio all'azione? (si/no)");
+		response = scanner.nextLine();
+		if(response.toUpperCase().equals("SI") )
+			obtainEffect = askObtain();
+		
+		return new DoAction(type, actionLevel, discount, obtainEffect);
 	}
 
 	protected Effect askIncreaseAction() {
@@ -336,7 +343,7 @@ public class CardBuilder extends Builder {
 		CardBuilder builder;
 		Scanner scanner = new Scanner(System.in);
 		try {
-			builder = new CardBuilder("BlueCardsSecondPeriod.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
+			builder = new CardBuilder("Resource//Cards//SecondPeriod//blue.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
 			String response;
 			int i =0;
 			do{

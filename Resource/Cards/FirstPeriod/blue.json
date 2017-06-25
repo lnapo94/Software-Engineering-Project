@@ -386,8 +386,9 @@
   "possibleChoice": [],
   "possibleChoiceIndex": [],
   "effectivelyCosts": []
-}{
-  "name": "Abbes",
+}
+{
+  "name": "Abbess",
   "description": "",
   "color": "BLUE",
   "period": 1,
@@ -407,31 +408,29 @@
   "immediateEffects": [
     {
       "type": "TAKE_ALL",
-      "value": 4,
+      "actionLevel": 4,
       "discount": {
         "list": []
       },
-      "yetActivated": false,
-      "player": null,
-      "typeOfEffect": "INCREASE_ACTION",
-      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
-    },
-    {
-      "costs": {
-        "list": []
+      "obtainEffect": {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
       },
-      "gains": {
-        "list": [
-          {
-            "resource": "FAITHPOINT",
-            "quantity": 1
-          }
-        ]
-      },
-      "councilObtain": null,
       "player": null,
-      "typeOfEffect": "OBTAIN",
-      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.Obtain"
+      "typeOfEffect": "DO_ACTION",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.DoAction"
     }
   ],
   "permanentEffects": [],
