@@ -50,7 +50,7 @@ public class ClientSocket extends Observable implements Observer{
 	}
 	
 	public boolean isConnected(){
-		if(socket.isClosed())
+		if(socket.isInputShutdown() || socket.isOutputShutdown())
 			isConnected=false;
 		return isConnected;
 	}
@@ -59,7 +59,7 @@ public class ClientSocket extends Observable implements Observer{
 		
 		if(isConnected()){
 			try{
-				Object msg = reader.readObject();
+				GenericMessage msg = (GenericMessage) reader.readObject();
 				setChanged();
 				notifyObservers(msg);
 			} catch(EOFException e) {
@@ -110,7 +110,7 @@ public class ClientSocket extends Observable implements Observer{
 	
 	public static void main(String[] args) {
 		
-		String host = "192.168.1.111"; 
+		String host = "localhost"; 
 		try {
 			ClientSocket client = new ClientSocket(host);
 			View view = new TerminalView();

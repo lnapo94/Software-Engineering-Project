@@ -47,6 +47,8 @@ public class Connection extends Observable implements Runnable{
 	}
 	
 	private boolean isActive(){
+		if(socket.isInputShutdown() || socket.isOutputShutdown())
+			active = false;
 		return active;
 	}
 	
