@@ -26,7 +26,7 @@ public class SlaveBan extends Effect {
 	@Override
 	public void enableEffect(Player player) {
 		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
-		logger.info("Divisoru: " + this.divisory);
+		logger.info("Divisory: " + this.divisory);
 		this.player=player;
 		
 		player.setDivisory(divisory);

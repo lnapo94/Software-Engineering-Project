@@ -305,6 +305,7 @@ public abstract class View extends Observable implements Observer {
 			player.setCurrentResources(resources);
 		} catch (ElementNotFoundException e) {
 			logger.error("Error in ViewVisitor setResources");
+			logger.info(e);
 		}
 	}
 	

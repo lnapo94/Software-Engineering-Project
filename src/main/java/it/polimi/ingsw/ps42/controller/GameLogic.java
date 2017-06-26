@@ -36,12 +36,20 @@ import it.polimi.ingsw.ps42.parser.BonusBarLoader;
 import it.polimi.ingsw.ps42.parser.ConversionLoader;
 import it.polimi.ingsw.ps42.parser.FaithPathLoader;
 import it.polimi.ingsw.ps42.parser.LeaderCardLoader;
+import it.polimi.ingsw.ps42.server.match.ServerView;
 
 import java.io.IOException;
 import java.util.*;
 
 import org.apache.log4j.Logger;
 
+/**
+ * All the operation necessary to the Game
+ * This class represent also the most part of the Controller
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class GameLogic implements Observer {
 	
 	private static final long TIMER_SECONDS = 5;
@@ -95,7 +103,16 @@ public class GameLogic implements Observer {
                 return player;
         throw new ElementNotFoundException("The player isn't in GameLogic");
     }
-
+    
+    /**
+     * Constructor of the GameLogic called by the ServerView when a match starts
+     * 
+     * @param playerIDList					The list of the player in this game
+     * @param view							The Server view used to implements the MVC in the Server
+     * @throws NotEnoughPlayersException	Exception thrown when there isn't enough player in this match, it means that there is a big error in the code
+     * @throws GameLogicError				Exception thrown when a fatal error occured in GameLogic
+     * @throws IOException					Exception thrown when there is an Input/Output Exception, such as in reading File or in reading/writing socket
+     */
     public GameLogic(List<String> playerIDList, ServerView view) throws NotEnoughPlayersException, GameLogicError, IOException {
         playersList = new ArrayList<>();
 
@@ -171,6 +188,7 @@ public class GameLogic implements Observer {
     }
 
     /**
+     * Method used to load the correct Table given the number of players
      *
      * @param players                       The players used to construct the correct kind of table
      * @return Table                        The correct table for the match
@@ -186,10 +204,20 @@ public class GameLogic implements Observer {
         throw new NotEnoughPlayersException("There isn't enough player for this match");
     }
     
+    /**
+     * Method used to verify if the initialization phase is done
+     * 
+     * @return	true if the GameLogic is initializing the match, false if the GameLogic ends the initialization phase
+     */
     public boolean isInitGame() {
     	return this.isInitGame;
     }
 
+    /**
+     * Method used to load the leader card from file
+     * 
+     * @throws IOException	Exception thrown when there are errors with the file
+     */
     private void loadLeaderCards() throws IOException {
         LeaderCardLoader loader = new LeaderCardLoader("Resource//LeaderCards//leaderCards.json");
 

@@ -118,7 +118,8 @@ public class TakeCardAction extends Action{
 				position.setFamiliar(familiar);
 				player.synchResource();
 			} catch (FamiliarInWrongPosition e) {
-				logger.error("[DEBUG]: familiar can't be positioned here");
+				logger.debug("familiar can't be positioned here");
+				logger.info(e);
 				player.restoreResource();
 				return Response.FAILURE;
 			}
@@ -137,6 +138,7 @@ public class TakeCardAction extends Action{
 					player.synchResource();
 				} catch (NotEnoughResourcesException e) {
 					logger.info("Player has not enough resources to pay the 3 money, stop.");
+					logger.info(e);
 					if(position.getBonus() != null)
 						position.resetBonus(player);
 					player.synchResource();
@@ -151,6 +153,7 @@ public class TakeCardAction extends Action{
 			position.getCard().payCard(player, discount);
 		} catch (NotEnoughResourcesException e) {
 			logger.info("Player has not enough resources to pay the card, stop.");
+			logger.info(e);
 			rollBackAction();
 			return Response.LOW_LEVEL;
 		}
@@ -194,7 +197,8 @@ public class TakeCardAction extends Action{
 			if(position.getCard().getColor() == CardColor.BLUE)
 				position.getCard().enablePermanentEffect();
 		} catch (NotEnoughResourcesException e) {
-			logger.debug("[DEBUG]: Player can not pay for enable the immediate effect");
+			logger.debug("Player can not pay for enable the immediate effect");
+			logger.info(e);
 		}
 		position.removeCard();
 		

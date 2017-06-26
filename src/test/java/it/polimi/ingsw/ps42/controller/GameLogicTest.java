@@ -8,6 +8,7 @@ import org.junit.Test;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
+import it.polimi.ingsw.ps42.server.match.ServerView;
 import it.polimi.ingsw.ps42.view.TerminalView;
 
 public class GameLogicTest {

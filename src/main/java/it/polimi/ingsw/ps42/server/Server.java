@@ -16,12 +16,12 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import it.polimi.ingsw.ps42.client.ClientInterface;
-import it.polimi.ingsw.ps42.controller.Connection;
-import it.polimi.ingsw.ps42.controller.ServerView;
 import it.polimi.ingsw.ps42.message.LoginMessage;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
+import it.polimi.ingsw.ps42.server.match.Connection;
+import it.polimi.ingsw.ps42.server.match.ServerView;
 
 public class Server extends UnicastRemoteObject implements ServerInterface{
 
@@ -57,7 +57,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		super();
 		
 		//Configure logger
-		PropertyConfigurator.configure("Logger//log4j.properties");
+		PropertyConfigurator.configure("Logger//Properties//server_log.properties");
 		
 		try {
 			serverSocket = new ServerSocket(SERVER_PORT);
@@ -65,6 +65,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			playerTable = new HashMap<>();
 		} catch (IOException e) {
 			logger.error("Error in Server Creation");
+			logger.info(e);
 		}
 	}
 	
@@ -74,11 +75,12 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			writer.flush();
 		} catch (IOException e) {
 			logger.fatal("Network Error");
+			logger.info(e);
 		}
 		
 		logger.info("Adding a new player...");
 		
-		Connection connection = new Connection(socket, reader, writer);
+		Connection connection = new Connection(playerID, socket, reader, writer);
 		
 		//If the player yet exists, add it to the correct view
 		if(existAnotherPlayer(playerID)) {
@@ -128,6 +130,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		} 
 		catch(IOException e) {
 			logger.error("Error while server was running...");
+			logger.info(e);
 			isActive = false;
 		}
 	}
@@ -142,6 +145,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			}
 		} catch (NotEnoughPlayersException | GameLogicError | IOException e) {
 			logger.error("Start the match error");
+			logger.info(e);
 		}
 
 	}

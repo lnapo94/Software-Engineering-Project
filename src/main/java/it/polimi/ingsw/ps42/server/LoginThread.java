@@ -37,6 +37,7 @@ public class LoginThread implements Runnable{
 			
 		} catch (IOException e) {
 			logger.error("Error in input/output socket creation");
+			logger.info(e);
 			socketClose();
 		}
 	}
@@ -47,6 +48,7 @@ public class LoginThread implements Runnable{
 			logger.info("Closing socket: " + socket.toString());
 		} catch (IOException e) {
 			logger.error("Error in socket closing");
+			logger.info(e);
 		}
 	}
 	

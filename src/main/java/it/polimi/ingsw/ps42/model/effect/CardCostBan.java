@@ -53,8 +53,10 @@ public class CardCostBan extends Effect{
 		}
 		catch (WrongColorException e) {
 			logger.error("Ban failed beacause of a wrong initialization of the effect");
+			logger.info(e);
 		} catch (NotEnoughResourcesException e) {
 			logger.info("Player hasn't enough resources, set it to zero");
+			logger.info(e);
 			player.setToZero(Resource.VICTORYPOINT);
 		}
 	}

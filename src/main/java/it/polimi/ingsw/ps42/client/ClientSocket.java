@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps42.view;
+package it.polimi.ingsw.ps42.client;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import it.polimi.ingsw.ps42.message.GenericMessage;
+import it.polimi.ingsw.ps42.view.TerminalView;
+import it.polimi.ingsw.ps42.view.View;
 
 public class ClientSocket extends Observable implements Observer{
 
@@ -33,7 +35,7 @@ public class ClientSocket extends Observable implements Observer{
 		isConnected = true;
 		
 		//Setting client logger property
-		PropertyConfigurator.configure("Logger//log4j.properties");
+		PropertyConfigurator.configure("Logger//Properties//client_log.properties");
 	}
 	
 	public void addView(View view){
@@ -49,6 +51,7 @@ public class ClientSocket extends Observable implements Observer{
 			writer.flush();
 		}catch (IOException e) {
 			logger.error("Error in sending the new message ");
+			logger.info(e);
 			isConnected = false;
 			throw new IOException();
 		}	
@@ -104,6 +107,7 @@ public class ClientSocket extends Observable implements Observer{
 				this.send(msg);
 			} catch (IOException e) {
 				logger.error("Unknown type of message");
+				logger.info(e);
 			}
 		}
 		

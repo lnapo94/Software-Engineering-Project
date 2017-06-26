@@ -160,6 +160,7 @@ public class TerminalView extends View {
 			printPlayerResources( searchPlayer(playerID));
 		} catch (ElementNotFoundException e) {
 			logger.error("Player not found in terminalView");
+			logger.info(e);
 		}
 	}
 	private void printPlayerResources( Player p){

@@ -107,6 +107,7 @@ public class Table extends Observable{
 			yieldAndProductConstructor(2);
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 		
 		//Add two more position for 4 players, then close the file
@@ -131,6 +132,7 @@ public class Table extends Observable{
 			yieldAndProductConstructor(5);
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 	}
 
@@ -186,6 +188,7 @@ public class Table extends Observable{
 			loader.close();
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 		
 		//Setting the council
@@ -197,6 +200,7 @@ public class Table extends Observable{
 			marketLoader = new PositionLoader("Resource//Position//MarketPosition//marketPosition.json");
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 		market.add(marketLoader.getNextMarketPosition());
 		market.add(marketLoader.getNextMarketPosition());
@@ -209,6 +213,7 @@ public class Table extends Observable{
 			councilLoader.close();
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 		
 		//Adding initial resources to the packet
@@ -256,6 +261,7 @@ public class Table extends Observable{
 			loader.close();
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 	}
 	

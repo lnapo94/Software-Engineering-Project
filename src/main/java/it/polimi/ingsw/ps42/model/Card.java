@@ -231,10 +231,12 @@ public class Card implements Serializable{
 		} catch(ArithmeticException e) {
 			//The chosen effect is no more applicable, try to choose another effect
 			logger.info("The chosen effect is no more applicable, try to choose another effect");
+			logger.info(e);
 			try {
 				enableImmediateEffect();
 			} catch (NotEnoughResourcesException e1) {
 				logger.info("There isn't more effect to enable in card");
+				logger.info(e1);
 			}
 		}
 	}
@@ -264,9 +266,11 @@ public class Card implements Serializable{
 		//The chosen effect is no more applicable, try to choose another effect
 		try {
 			logger.info("The chosen effect is no more applicable, try to choose another effect");
+			logger.info(e);
 			enablePermanentEffect();
 		} catch (NotEnoughResourcesException e1) {
 			logger.info("There is not permanent effect applicable");
+			logger.info(e1);
 		}
 	}
 	}
@@ -297,9 +301,11 @@ public class Card implements Serializable{
 			//The chosen effect is no more applicable, try to choose another effect
 			try {
 				logger.info("The chosen effect is no more applicable, try to choose another effect");
+				logger.info(e);
 				enableFinalEffect();
 			} catch (NotEnoughResourcesException e1) {
 				logger.info("There is no more final effect in card");
+				logger.info(e1);
 			}
 		}
 	}
