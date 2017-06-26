@@ -99,9 +99,9 @@ public class GameLogic implements Observer {
 
     /** Private method used when GameLogic need to search the player
      *
-     * @param playerID  the player ID String
-     * @return Player   the player whose playerID is equal to the passed playerID
-     * @throws ElementNotFoundException 
+     * @param playerID  					the player ID String
+     * @return Player   					the player whose playerID is equal to the passed playerID
+     * @throws ElementNotFoundException 	Fatal error, thrown if there isn't the player in GameLogic with the passed playerID
      */
     public Player searchPlayer(String playerID) throws ElementNotFoundException {
     	Player player = searchInArrayList(playerID, playersList);
@@ -259,6 +259,11 @@ public class GameLogic implements Observer {
         loader.close();
     }
 
+    /**
+     * Private method used to load the bonus bar from file
+     * 
+     * @throws IOException	Exception thrown if there isn't the bonus bar file in the specified path
+     */
     private void loadBonusBars() throws IOException {
         BonusBarLoader loader = new BonusBarLoader("Resource//BonusBars//bonusBars.json");
         bonusBarList = loader.getBonusBars();
@@ -311,6 +316,9 @@ public class GameLogic implements Observer {
         }
     }
 
+    /**
+     * Private method used to shift the leader cards through the player
+     */
     private void reOrderHashMap() {
         //Shift the map
         //Save the first deck of cards
@@ -330,6 +338,10 @@ public class GameLogic implements Observer {
         }
     }
 
+    /**
+     * Private method used to ask which leader card the players want
+     * At the end of this phase, start the match
+     */
     private synchronized void askLeaderCard() {
         //If the player 1's arraylist of leader cards is empty, also the other must be empty, so end this procedure
         if(!leaderCardTable.isEmpty()) {
@@ -347,6 +359,13 @@ public class GameLogic implements Observer {
             startMatch();
     }
 
+    /**
+     * Method called by the controller visitor to set the chosen leader card
+     * to the player
+     * 
+     * @param choice		Index of which card the player wants
+     * @param playerID		The player who chosen that card
+     */
     public void setLeaderCard(int choice, String playerID) {
         try {
             Player player = searchPlayer(playerID);
@@ -383,13 +402,22 @@ public class GameLogic implements Observer {
         }
     }
 
+    /**
+     * Simple method called to start a match
+     * Simply set the current round and start the round
+     */
     private void startMatch() {
         //Ready to start with the first round
     	isInitGame = false;
         currentRound = 1;
         initRound();
     }
-
+    
+    /**
+     * Method used to initialize the round
+     * It place cards on table, throw the dice, enable the leader cards
+     * and finally start the initialization of the action
+     */
     private void initRound() {
     	//Debug
     	logger.info("Start the round number: " + getCurrentRound());
@@ -427,6 +455,12 @@ public class GameLogic implements Observer {
         }
     }
     
+    /**
+     * Private method used to check the players leader cards request,
+     * such as the color of the familiar player wants to increase
+     * 
+     * @param player	The player to check
+     */
     private void checkOtherPlayerLeaderRequest(Player player) {
     	if(!player.isLeaderRequestEmpty()) {
     		player.askLeaderRequest(player.removeLeaderRequest());
@@ -440,6 +474,11 @@ public class GameLogic implements Observer {
     		playersWithRequest.remove(player);
     }
     
+    /**
+     * Method called by the visitor to handle the answer to a leader request
+     *  
+     * @param request	The message taken from the client
+     */
     public void handleLeaderFamiliarRequest(LeaderFamiliarRequest request) {
     	//Method used to manage the leader familiar request
     	try {
@@ -463,7 +502,14 @@ public class GameLogic implements Observer {
 		}
     }
     
-	//Private Method to control the ban for all the players
+    /**
+     * Private method used to know if the player can afford a ban. In this case, ask
+     * directly to the player if he wants
+     * 
+     * @param ban					The ban to enable
+     * @param faithPointToHave		Faith point player must have to pay the ban
+     * @param period				The current period of activation
+     */
 	private void checkBan(Effect ban, int faithPointToHave, int period) {
 		
 		for(Player player : this.playersList) {
@@ -492,6 +538,9 @@ public class GameLogic implements Observer {
 		}
 	}
 	
+	/**
+	 * Private method called at the end of the match to verify the last ban
+	 */
 	private void endMatch() {
 		//At the end of the match
 		for(Player player : this.playersList) {
@@ -508,6 +557,11 @@ public class GameLogic implements Observer {
 		checkRequest();
 	}
 	
+	/**
+	 * Method used to calculate correctly the player's victory points.
+	 * This method calculate all the players' victory points and finally
+	 * notify the winner
+	 */
 	private void calculateWinner() {
 		
 		for(Player player : this.playersList) {
@@ -551,6 +605,10 @@ public class GameLogic implements Observer {
 		
 	}
 	
+	/**
+	 * Method called to restart a round. But first it takes the correct roundOrder from
+	 * the table and populates both actionOrder and roundOrder arraylists
+	 */
 	private void restartRound() {
 		
 		//If there is someone to reconnect, add now to the next round
@@ -586,6 +644,12 @@ public class GameLogic implements Observer {
 		initRound();
 	}
 
+	/**
+	 * Method used to init the action. This method is also called by the visitor
+	 * when a player give an empty move. It asks to the player the PlayerMove. If all
+	 * the players have done their actions, restart the round, but also control the ban
+	 * if necessary
+	 */
     public void initAction() {
     	if(currentPlayer != null && timerTable.containsKey(currentPlayer))
     		timerTable.remove(currentPlayer).cancel();
@@ -629,6 +693,11 @@ public class GameLogic implements Observer {
     	}
     }
     
+    /**
+     * Method called to increase victory point when player uses his faith point
+     * @param player		The player whose victory points are to increase
+     * @throws IOException	Thrown if there isn't the file in the specified path
+     */
     private void faithPathIncrease(Player player) throws IOException {
     	FaithPathLoader loader = new FaithPathLoader("Resource//Configuration//faithPointPathConfiguration.json");
 		Packet victoryPoint = new Packet();
@@ -645,6 +714,14 @@ public class GameLogic implements Observer {
 		loader.close();
     }
 
+    /**
+     * Method used to handle the answer after a ban request. Method called
+     * by the controller visitor
+     * 
+     * @param playerID			The player who answers
+     * @param index				The period of the ban
+     * @param wantToPayBan		Variable used to know if the player wants to pay or not
+     */
     public void handleBan(String playerID, int index, boolean wantToPayBan) {
     	try {
 			Player player = searchPlayer(playerID);
@@ -697,6 +774,11 @@ public class GameLogic implements Observer {
 		}
     }
     
+    /**
+     * Method called by the visitor to handle a PlayerMove
+     * @param action		The action created from the PlayerMove
+     * @param playerID		The player who is playing
+     */
     public synchronized void handleAction(Action action, String playerID) {
     	try {
 			Player player = searchPlayer(playerID);
@@ -746,6 +828,14 @@ public class GameLogic implements Observer {
 		}
     }
     
+    /**
+     * Private method used to check the requests
+     * If the player has requests, add the player to an arraylists.
+     * When the player finishes to answer, continue with the correct method:
+     * 1) if there is an action, then apply the doAction
+     * 2) if it's the sixth round, finish the match
+     * 3) else the match is finished, so calculate the winner
+     */
     private void checkRequest() {
     	
     	if(timerTable.containsKey(currentPlayer))
@@ -777,6 +867,10 @@ public class GameLogic implements Observer {
     		calculateWinner();
     }
     
+    /**
+     * Method used to finish the action applying the doAction method of Action
+     * After that, check some requests
+     */
     private synchronized void doAction() {
     	try {
 			currentAction.doAction();
