@@ -21,8 +21,7 @@ import it.polimi.ingsw.ps42.client.ClientInterface;
 import it.polimi.ingsw.ps42.controller.GameLogic;
 
 public class ServerView extends Observable implements Observer{
-	
-	//TODO Gestire i timer
+
 	private Map<String, Connection> connections;
 	private List<String> disconnectedPlayers;
 	
@@ -128,15 +127,15 @@ public class ServerView extends Observable implements Observer{
 			} catch (IOException e) {
 				//The player is disconnected so remove his connection
 				logger.info("The player is disconnected so remove his connection");
+				logger.info(e);
 				disconnectedPlayers.add(playerID);
 				connection.deleteObserver(this);
-				connections.remove(playerID, connection);
 			}
 			
 		});
-		
-		//TODO: Send to RMI Client
-		
+
+		for(String playerID : disconnectedPlayers)
+			connections.remove(playerID);
 	}
 	
 

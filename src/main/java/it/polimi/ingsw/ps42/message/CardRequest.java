@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.message;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.player.Player;
 
-public abstract class CardRequest extends Message {
+public abstract class CardRequest extends Message implements Serializable {
 
 	/**
 	 * 

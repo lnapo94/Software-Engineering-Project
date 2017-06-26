@@ -1,9 +1,15 @@
 package it.polimi.ingsw.ps42.model.action;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
-public class ActionPrototype {
+public class ActionPrototype implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1684309278669876519L;
 	/*Prototype of an action, created when a bonus action occurs, 
 	 * has to be put in the player to be later better defined by the game logic
 	 */

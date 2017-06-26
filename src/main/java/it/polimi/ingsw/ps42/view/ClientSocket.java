@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import it.polimi.ingsw.ps42.message.GenericMessage;
 
@@ -30,6 +31,9 @@ public class ClientSocket extends Observable implements Observer{
 		writer.flush();
 		reader = new ObjectInputStream(socket.getInputStream());
 		isConnected = true;
+		
+		//Setting client logger property
+		PropertyConfigurator.configure("Logger//log4j.properties");
 	}
 	
 	public void addView(View view){
@@ -65,7 +69,7 @@ public class ClientSocket extends Observable implements Observer{
 				notifyObservers(msg);
 			} catch(IOException | ClassNotFoundException e){
 				logger.error("Error in reading the input messages");
-				e.printStackTrace();
+				logger.info(e);
 				isConnected=false;
 			}
 		}
