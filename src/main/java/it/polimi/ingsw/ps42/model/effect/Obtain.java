@@ -56,6 +56,7 @@ public class Obtain extends Effect{
 		} catch (NotEnoughResourcesException e) {
 			player.increaseResource(costs);
 			logger.error("Player hasn't enough resources...");
+			logger.info(e);
 			throw new ArithmeticException("Effect was enabled, but it can't be payed");
 		}
 		player.increaseResource(gains);

@@ -193,6 +193,7 @@ public class Player extends Observable {
 			getFamiliar(color).setValue(value);
 		} catch (WrongColorException e) {
 			System.out.println("Wrong color passed in player.setFamiliarValue");
+			logger.info(e);
 		}
 	}
 	
@@ -207,6 +208,7 @@ public class Player extends Observable {
 			temp.add(card);
 		} catch (WrongColorException e) {
 			logger.error("Error in player.addCard(card): wrong color");
+			logger.info(e);
 		}
 	}
 	

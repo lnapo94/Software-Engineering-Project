@@ -57,7 +57,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		super();
 		
 		//Configure logger
-		PropertyConfigurator.configure("Logger//log4j.properties");
+		PropertyConfigurator.configure("Logger//Properties//server_log.properties");
 		
 		try {
 			serverSocket = new ServerSocket(SERVER_PORT);
@@ -65,6 +65,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			playerTable = new HashMap<>();
 		} catch (IOException e) {
 			logger.error("Error in Server Creation");
+			logger.info(e);
 		}
 	}
 	
@@ -74,6 +75,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			writer.flush();
 		} catch (IOException e) {
 			logger.fatal("Network Error");
+			logger.info(e);
 		}
 		
 		logger.info("Adding a new player...");
@@ -128,6 +130,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		} 
 		catch(IOException e) {
 			logger.error("Error while server was running...");
+			logger.info(e);
 			isActive = false;
 		}
 	}
@@ -142,6 +145,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			}
 		} catch (NotEnoughPlayersException | GameLogicError | IOException e) {
 			logger.error("Start the match error");
+			logger.info(e);
 		}
 
 	}

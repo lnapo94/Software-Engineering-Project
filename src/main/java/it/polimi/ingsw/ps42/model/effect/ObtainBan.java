@@ -39,6 +39,7 @@ public class ObtainBan extends Effect{
 				player.decreaseResource(packetForDecrement);
 			} catch (NotEnoughResourcesException e) {
 				logger.info("Player has enough resources, so set it to zero");
+				logger.info(e);
 				player.setToZero(cost.getResource());
 			} finally {
 				//Finally case is done because every time this method is called

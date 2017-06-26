@@ -95,6 +95,7 @@ public class TableView {
 			yieldAndProductConstructor(2);
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 		
 		//Add two more position for 4 players, then close the file
@@ -116,6 +117,7 @@ public class TableView {
 			yieldAndProductConstructor(5);
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 	}
 
@@ -158,6 +160,7 @@ public class TableView {
 			loader.close();
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 		
 		//Setting the council
@@ -169,6 +172,7 @@ public class TableView {
 			marketLoader = new PositionLoader("Resource//Position//MarketPosition//marketPosition.json");
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 		market.add(marketLoader.getNextMarketPosition());
 		market.add(marketLoader.getNextMarketPosition());
@@ -181,6 +185,7 @@ public class TableView {
 			councilLoader.close();
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 		
 		//Initialize the players banned lists
@@ -232,6 +237,7 @@ public class TableView {
 			loader.close();
 		} catch (IOException e) {
 			logger.error("Unable to open the file");
+			logger.info(e);
 		}
 	}
 	
@@ -454,7 +460,7 @@ public class TableView {
 	public void placeInYellowTower(Familiar familiar, int position) throws ElementNotFoundException{
 			
 		if(yellowTower.size() > position && position >= 0)
-		place(familiar, yellowTower.get(position));
+			place(familiar, yellowTower.get(position));
 	}
 
 	public void placeInVioletTower(Familiar familiar, int position) throws ElementNotFoundException{

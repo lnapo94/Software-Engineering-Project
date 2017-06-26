@@ -39,6 +39,7 @@ public class YieldAndProductPosition extends Position {
 						card.enablePermanentEffect();
 					} catch (NotEnoughResourcesException e) {
 						logger.debug("The player can not afford this effect");
+						logger.info(e);
 					}
 				}
 			}

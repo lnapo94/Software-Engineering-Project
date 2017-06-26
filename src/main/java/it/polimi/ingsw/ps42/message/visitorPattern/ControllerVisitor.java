@@ -127,10 +127,12 @@ public class ControllerVisitor implements Visitor {
 				
 			} catch (ElementNotFoundException e1) {
 				logger.fatal("Player not found in gameLogic");
+				logger.info(e1);
 			}
 			
 		} catch (ElementNotFoundException e) {
 			logger.fatal("Player not found in gameLogic");
+			logger.info(e);
 		}
 	}
 
@@ -169,6 +171,7 @@ public class ControllerVisitor implements Visitor {
 			gameLogic.HandleLeaderUpdate(gameLogic.searchPlayer(message.getPlayerID()), message.getCard());
 		} catch (ElementNotFoundException e) {
 			logger.fatal("Unable to find the player. Method: leaderCardUpdateMessage");
+			logger.info(e);
 		}
 	}
 

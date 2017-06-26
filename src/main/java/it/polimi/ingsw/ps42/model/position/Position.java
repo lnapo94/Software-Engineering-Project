@@ -95,6 +95,7 @@ public abstract class Position {
 			player.decreaseResource(packet);
 		} catch (NotEnoughResourcesException e) {
 			logger.error("Error in reset bonus...");
+			logger.info(e);
 		}
 	}
 	

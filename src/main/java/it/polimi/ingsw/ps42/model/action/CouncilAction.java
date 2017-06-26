@@ -65,6 +65,7 @@ public class CouncilAction extends Action {
 				tablePosition.setFamiliar(familiar);
 			} catch (FamiliarInWrongPosition e) {
 				logger.error("[DEBUG]: There is a wrong familiar in council Positions");
+				logger.info(e);
 			}
 			Message familiarUpdate = new FamiliarUpdateMessage(player.getPlayerID(), familiar.getColor(), getType(), 0);
 			setChanged();

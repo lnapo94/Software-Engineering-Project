@@ -35,7 +35,7 @@ public class ClientSocket extends Observable implements Observer{
 		isConnected = true;
 		
 		//Setting client logger property
-		PropertyConfigurator.configure("Logger//log4j.properties");
+		PropertyConfigurator.configure("Logger//Properties//client_log.properties");
 	}
 	
 	public void addView(View view){
@@ -51,6 +51,7 @@ public class ClientSocket extends Observable implements Observer{
 			writer.flush();
 		}catch (IOException e) {
 			logger.error("Error in sending the new message ");
+			logger.info(e);
 			isConnected = false;
 			throw new IOException();
 		}	
@@ -106,6 +107,7 @@ public class ClientSocket extends Observable implements Observer{
 				this.send(msg);
 			} catch (IOException e) {
 				logger.error("Unknown type of message");
+				logger.info(e);
 			}
 		}
 		

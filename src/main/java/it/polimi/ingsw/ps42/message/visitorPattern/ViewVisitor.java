@@ -51,6 +51,7 @@ public class ViewVisitor implements Visitor {
 				this.view.askBonusBar( message);
 			} catch (WrongChoiceException e) {
 				logger.error("Error in Viewvisitor BonusBarMessage");
+				logger.info(e);
 			}
 		}
 	}
@@ -67,6 +68,7 @@ public class ViewVisitor implements Visitor {
 			}
 		catch(WrongChoiceException e){
 			logger.error("Error in Viewvisitor LeaderCardMessage");
+			logger.info(e);
 		}
 	}
 
@@ -116,7 +118,7 @@ public class ViewVisitor implements Visitor {
 					this.view.setVioletCards(message.getDeck());
 					break;
 				default:
-					System.out.println("[DEBUG] wrong message from GameLogic");
+					logger.debug("wrong message from GameLogic");
 			}
 			
 		}
@@ -174,11 +176,12 @@ public class ViewVisitor implements Visitor {
 				 		this.view.setFamiliarInProduce(playerID, color, position);
 				 		break;
 				 	default:
-						System.out.println("[DEBUG] wrong message from GameLogic");
+						logger.debug("[DEBUG] wrong message from GameLogic");
 				}	
 			}
 			catch( ElementNotFoundException e){
 				logger.error("Error in Viewvisitor FamiliarUpdateMessage");
+				logger.info(e);
 			}
 			
 		}
@@ -209,11 +212,12 @@ public class ViewVisitor implements Visitor {
 					this.view.setYellowCard(playerID, position);
 					break;
 				default:
-					System.out.println("[DEBUG] wrong message from GameLogic");
+					logger.debug("[DEBUG] wrong message from GameLogic");
 				}	
 			}
 			catch(ElementNotFoundException e){
 				logger.error("Error in Viewvisitor CardUpdateMessage");
+				logger.info(e);
 			}
 		}
 		
@@ -230,6 +234,7 @@ public class ViewVisitor implements Visitor {
 				this.view.setBanToPlayer( message.getPlayerID(), message.getBan());
 			} catch (ElementNotFoundException e) {
 				logger.error("Error in Viewvisitor BanUpdateMessage");
+				logger.info(e);
 			}
 		}
 		
@@ -245,6 +250,7 @@ public class ViewVisitor implements Visitor {
 				this.view.askCouncilRequest(message);
 			} catch (WrongChoiceException e) {
 				logger.error("Error in Viewvisitor CouncilRequest");
+				logger.info(e);
 			}
 		
 	}
@@ -268,6 +274,7 @@ public class ViewVisitor implements Visitor {
 				this.view.setEnabledLeaderCard(message.getPlayerID(), message.getCard());
 			} catch (ElementNotFoundException e) {
 				logger.error("Error in Viewvisitor LeaderCardUpdateMessage");
+				logger.info(e);
 			}
 		}
 			

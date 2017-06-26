@@ -37,6 +37,7 @@ public class CardBan extends Effect{
 			}
 			catch (WrongColorException e) {
 				logger.error("Ban failed beacause of a wrong initialization of the effect");
+				logger.info(e);
 			}
 		
 	}
