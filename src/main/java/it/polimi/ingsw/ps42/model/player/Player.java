@@ -413,12 +413,7 @@ public class Player extends Observable {
 		//upload the correct values of the resources HashMap
 		//Notify the View with a ResourceUpdate Message
 		copyResources(currentResources, nextResources);
-		
-		HashMap<Resource, Integer> resourcesCopy = new HashMap<>();
-		copyResources(resourcesCopy, currentResources);
-		Message updateMessage = new ResourceUpdateMessage(ID, resourcesCopy);
-		setChanged();
-		notifyObservers(updateMessage);
+		sendResources();
 	}
 	
 	public void restoreResource() {
@@ -671,6 +666,14 @@ public class Player extends Observable {
 	public void notifyRanking(WinnerMessage message) {
 		setChanged();
 		notifyObservers(message);
+	}
+	
+	public void sendResources() {
+		HashMap<Resource, Integer> resourcesCopy = new HashMap<>();
+		copyResources(resourcesCopy, currentResources);
+		Message updateMessage = new ResourceUpdateMessage(ID, resourcesCopy);
+		setChanged();
+		notifyObservers(updateMessage);
 	}
 	
 }

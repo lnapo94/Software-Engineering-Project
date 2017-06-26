@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 import it.polimi.ingsw.ps42.message.GenericMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayersListMessage;
-import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
@@ -26,7 +25,7 @@ public class ServerView extends Observable implements Observer{
 	private List<String> disconnectedPlayers;
 	
 	//Logger
-	private transient Logger logger = Logger.getLogger(ControllerVisitor.class);
+	private transient Logger logger = Logger.getLogger(ServerView.class);
 	
 	public ServerView() {
 	
@@ -41,6 +40,8 @@ public class ServerView extends Observable implements Observer{
 			//If was connected then delete the old connection and add the new one
 			disconnectedPlayers.remove(search(playerID));
 			connect(connection, playerID);
+			setChanged();
+			notifyObservers(playerID);
 		}
 		else if(nameNotUsed(playerID))
 			//If is a new Player add him to the game
@@ -136,14 +137,19 @@ public class ServerView extends Observable implements Observer{
 			
 		});
 
-		for(String playerID : disconnectedPlayers)
+		for(String playerID : disconnectedPlayers) {
 			connections.remove(playerID);
+			setChanged();
+			notifyObservers(playerID);
+		}
 	}
 	
 	public void deleteConnection(String playerID) {
 		disconnectedPlayers.add(playerID);
 		Connection connection = connections.remove(playerID);
 		connection.deleteObserver(this);
+		setChanged();
+		notifyObservers(playerID);
 	}
 	
 

@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 
 import it.polimi.ingsw.ps42.message.GenericMessage;
 import it.polimi.ingsw.ps42.message.Message;
-import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 
 public class Connection extends Observable implements Runnable{
 
@@ -21,7 +20,7 @@ public class Connection extends Observable implements Runnable{
 	private String playerID;
 	
 	//Logger
-	private transient Logger logger = Logger.getLogger(ControllerVisitor.class);
+	private transient Logger logger = Logger.getLogger(Connection.class);
 	
 	public Connection(String playerID, Socket socket, ObjectInputStream reader, ObjectOutputStream writer) {
 			this.socket = socket;
@@ -61,6 +60,7 @@ public class Connection extends Observable implements Runnable{
 	}
 	
 	private void close(){
+		setChanged();
 		notifyObservers(this.playerID);
 		closeConnection();
 		logger.info("Cancel the client");

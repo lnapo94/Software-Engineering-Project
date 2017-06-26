@@ -52,7 +52,7 @@ import org.apache.log4j.Logger;
  */
 public class GameLogic implements Observer {
 	
-	private static final long TIMER_SECONDS = 5;
+	private static final long TIMER_SECONDS = 120;
 	
     private static final int MAX_BANS_IN_FILE = 7;
     private static final int FAMILIARS_NUMBER = 4;
@@ -89,6 +89,10 @@ public class GameLogic implements Observer {
     
     private HashMap<Player, Timer> timerTable;
     
+    //Arrays for reconnection
+    private List<Player> disconnectedPlayers;
+    private List<Player> toReconnectPlayers;
+    
     //Logger
     private transient Logger logger = Logger.getLogger(GameLogic.class);
 
@@ -96,12 +100,28 @@ public class GameLogic implements Observer {
      *
      * @param playerID  the player ID String
      * @return Player   the player whose playerID is equal to the passed playerID
+     * @throws ElementNotFoundException 
      */
     public Player searchPlayer(String playerID) throws ElementNotFoundException {
-        for(Player player : playersList)
+    	Player player = searchInArrayList(playerID, playersList);
+    	if(player != null)
+    		return player;
+    	else {
+    		player = searchInArrayList(playerID, disconnectedPlayers);
+    		if(player != null)
+    			return player;
+    		else
+    	        throw new ElementNotFoundException("The player isn't in GameLogic");
+    	}
+    	
+    }
+
+    
+    private Player searchInArrayList(String playerID, List<Player> list) {
+    	for(Player player : list)
             if(player.getPlayerID().equals(playerID))
                 return player;
-        throw new ElementNotFoundException("The player isn't in GameLogic");
+    	return null;
     }
     
     /**
@@ -185,6 +205,10 @@ public class GameLogic implements Observer {
         
         //Initialize the timer map
         timerTable = new HashMap<>();
+        
+        //Initialize arraylists for reconnections
+        disconnectedPlayers = new ArrayList<>();
+        toReconnectPlayers = new ArrayList<>();
     }
 
     /**
@@ -520,6 +544,13 @@ public class GameLogic implements Observer {
 	}
 	
 	private void restartRound() {
+		
+		//If there is someone to reconnect, add now to the next round
+		for(Player player : toReconnectPlayers) {
+			roundOrder.add(player);
+			player.sendResources();
+		}
+		
 		//Control the new order and reset the table
 		List<Player> newOrder = table.resetTable();
 		if(!newOrder.isEmpty()) {
@@ -846,6 +877,10 @@ public class GameLogic implements Observer {
 		while(playersWithRequest.contains(player))
 			playersWithRequest.remove(player);
 	}
+	
+	public boolean isConnected(Player player) {
+		return this.playersList.contains(player);
+	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -853,6 +888,34 @@ public class GameLogic implements Observer {
 		if(arg1 instanceof Message) {
 			message = (Message) arg1;
 			message.accept(controllerVisitor);
+		}
+		else if(arg1 instanceof String) {
+			try {
+				Player player = searchPlayer((String) arg1);
+				//If players was disconnected, try to re-add he
+				if(disconnectedPlayers.contains(player)) {
+					logger.info("Player " + player.getPlayerID() + " is trying to reconnect");
+					disconnectedPlayers.remove(player);
+					toReconnectPlayers.add(player);
+				}
+				else {
+					logger.info("Player: " + player.getPlayerID() + " is disconnected");
+					
+					disconnectedPlayers.add(player);
+					
+					toReconnectPlayers.remove(player);
+					playersList.remove(player);
+					roundOrder.remove(player);
+					
+					player.setCanPlay(true);
+					
+					while(actionOrder.contains(player))
+						actionOrder.remove(player);
+				}
+			} catch (ElementNotFoundException e) {
+				logger.fatal("Unable to find the player in the GameLogic");
+				logger.info(e);
+			}
 		}
 	}
 }
