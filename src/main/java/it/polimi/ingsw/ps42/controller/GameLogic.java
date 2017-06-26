@@ -44,7 +44,7 @@ import org.apache.log4j.Logger;
 
 public class GameLogic implements Observer {
 	
-	private static final int TIMER_SECONDS = 5;
+	private static final long TIMER_SECONDS = 5;
 	
     private static final int MAX_BANS_IN_FILE = 7;
     private static final int FAMILIARS_NUMBER = 4;
@@ -137,11 +137,13 @@ public class GameLogic implements Observer {
         } catch (IOException e) {
 
             logger.error("Unable to open the ban file in GameLogic");
+            logger.info(e);
             throw new GameLogicError("File not found");
 
         } catch (ElementNotFoundException e) {
 
             logger.error("Unable to find the correct ban");
+            logger.info(e);
             throw new GameLogicError("Ban not found");
 
         }
@@ -317,6 +319,7 @@ public class GameLogic implements Observer {
             }
         } catch (ElementNotFoundException e) {
             logger.error("Unable to find the player in GameLogic");
+            logger.info(e);
         }
     }
 
@@ -342,6 +345,7 @@ public class GameLogic implements Observer {
             cardsCreator = cardsCreator.nextState();
         } catch (IOException e) {
             logger.error("Unable to open the cards file");
+            logger.info(e);
         }
 
         table.throwDice(new Random());
@@ -395,6 +399,7 @@ public class GameLogic implements Observer {
 			}
 		} catch (ElementNotFoundException e) {
 			logger.error("Unable to find the player in GameLogic");
+			logger.info(e);
 		}
     }
     
@@ -467,6 +472,7 @@ public class GameLogic implements Observer {
 				loader.close();
 			} catch (IOException e) {
 				logger.error("Unable to open the conversion file");
+				logger.info(e);
 			}
 		}
 		
@@ -613,8 +619,10 @@ public class GameLogic implements Observer {
 				
 		} catch (ElementNotFoundException e) {
 			logger.error("Player " + playerID + " cannot be found in handleBan");
+			logger.info(e);
 		} catch (IOException e) {
 			logger.error("Cannot open the faithPath coversion table in GameLogic");
+			logger.info(e);
 		}
     }
     
@@ -663,6 +671,7 @@ public class GameLogic implements Observer {
 			}
 		} catch (ElementNotFoundException e) {
 			logger.error("Unable to find the player in handleAction");
+			logger.info(e);
 		}
     }
     
@@ -704,7 +713,8 @@ public class GameLogic implements Observer {
 			
 			checkRequest();
 		} catch (FamiliarInWrongPosition e) {
-			logger.error("[DEBUG]: familiar in wrong position in gamelogic");
+			logger.debug("[DEBUG]: familiar in wrong position in gamelogic");
+			logger.info(e);
 		}
     }
     
@@ -747,6 +757,7 @@ public class GameLogic implements Observer {
 			}
 		} catch (ElementNotFoundException e) {
 			logger.error("Unable to find the player to satisfy the requests");
+			logger.info(e);
 		}
     }
     
@@ -765,6 +776,7 @@ public class GameLogic implements Observer {
 			}
 		} catch(ElementNotFoundException e) {
 			logger.error("Unable to find the player to satisfy the council requests");
+			logger.info(e);
 		}
 	}	
 	

@@ -45,7 +45,7 @@ public class Connection extends Observable implements Runnable{
 		}
 		catch (IOException | ClassNotFoundException e) {
 			logger.error("Error occurred in trasmission, closing Connection");
-			
+			logger.info(e);
 		}
 		finally {
 			close();
@@ -70,6 +70,7 @@ public class Connection extends Observable implements Runnable{
 			socket.close();
 		} catch (IOException e) {
 			logger.error("error in socket close");
+			logger.info(e);
 		}
 		active=false;
 		
@@ -84,6 +85,7 @@ public class Connection extends Observable implements Runnable{
 		} catch (IOException e) {
 			logger.error("Error in sending the new message ");
 			logger.info("Stop the connection, active = false");
+			logger.info(e);
 			active = false;
 			throw new IOException();
 		}
