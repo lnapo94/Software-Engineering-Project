@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps42.controller;
+package it.polimi.ingsw.ps42.server.match;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -116,6 +116,8 @@ public class ServerView extends Observable implements Observer{
 				sendAll(message);
 			}
 		}
+		else if(messageToSend instanceof String)
+			deleteConnection((String) messageToSend);
 	}
 	
 	private void sendAll(GenericMessage message){
@@ -136,6 +138,12 @@ public class ServerView extends Observable implements Observer{
 
 		for(String playerID : disconnectedPlayers)
 			connections.remove(playerID);
+	}
+	
+	public void deleteConnection(String playerID) {
+		disconnectedPlayers.add(playerID);
+		Connection connection = connections.remove(playerID);
+		connection.deleteObserver(this);
 	}
 	
 

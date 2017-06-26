@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps42.controller;
+package it.polimi.ingsw.ps42.server.match;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,15 +18,17 @@ public class Connection extends Observable implements Runnable{
 	private ObjectInputStream reader;
 	private ObjectOutputStream writer;
 	private boolean active;
+	private String playerID;
 	
 	//Logger
 	private transient Logger logger = Logger.getLogger(ControllerVisitor.class);
 	
-	public Connection(Socket socket, ObjectInputStream reader, ObjectOutputStream writer) {
+	public Connection(String playerID, Socket socket, ObjectInputStream reader, ObjectOutputStream writer) {
 			this.socket = socket;
 			this.reader = reader;
 			this.writer = writer;
 			this.active = true;
+			this.playerID = playerID;
 	}
 
 	@Override
@@ -59,9 +61,9 @@ public class Connection extends Observable implements Runnable{
 	}
 	
 	private void close(){
-		
+		notifyObservers(this.playerID);
 		closeConnection();
-		System.out.println("deregistro il client ");
+		logger.info("Cancel the client");
 	}
 	
 	private synchronized void closeConnection(){
@@ -79,10 +81,11 @@ public class Connection extends Observable implements Runnable{
 	public void send(GenericMessage message) throws IOException{
 		
 		try {
-			System.out.println("new msg to send");
+			logger.info("new msg to send");
 			writer.writeObject(message);
 			writer.flush();
 		} catch (IOException e) {
+			close();
 			logger.error("Error in sending the new message ");
 			logger.info("Stop the connection, active = false");
 			logger.info(e);

@@ -16,12 +16,12 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import it.polimi.ingsw.ps42.client.ClientInterface;
-import it.polimi.ingsw.ps42.controller.Connection;
-import it.polimi.ingsw.ps42.controller.ServerView;
 import it.polimi.ingsw.ps42.message.LoginMessage;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
+import it.polimi.ingsw.ps42.server.match.Connection;
+import it.polimi.ingsw.ps42.server.match.ServerView;
 
 public class Server extends UnicastRemoteObject implements ServerInterface{
 
@@ -78,7 +78,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		
 		logger.info("Adding a new player...");
 		
-		Connection connection = new Connection(socket, reader, writer);
+		Connection connection = new Connection(playerID, socket, reader, writer);
 		
 		//If the player yet exists, add it to the correct view
 		if(existAnotherPlayer(playerID)) {

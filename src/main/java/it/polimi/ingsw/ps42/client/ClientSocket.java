@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps42.view;
+package it.polimi.ingsw.ps42.client;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import it.polimi.ingsw.ps42.message.GenericMessage;
+import it.polimi.ingsw.ps42.view.TerminalView;
+import it.polimi.ingsw.ps42.view.View;
 
 public class ClientSocket extends Observable implements Observer{
 

@@ -36,6 +36,7 @@ import it.polimi.ingsw.ps42.parser.BonusBarLoader;
 import it.polimi.ingsw.ps42.parser.ConversionLoader;
 import it.polimi.ingsw.ps42.parser.FaithPathLoader;
 import it.polimi.ingsw.ps42.parser.LeaderCardLoader;
+import it.polimi.ingsw.ps42.server.match.ServerView;
 
 import java.io.IOException;
 import java.util.*;
