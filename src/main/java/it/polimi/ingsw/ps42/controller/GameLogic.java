@@ -36,6 +36,7 @@ import it.polimi.ingsw.ps42.parser.BonusBarLoader;
 import it.polimi.ingsw.ps42.parser.ConversionLoader;
 import it.polimi.ingsw.ps42.parser.FaithPathLoader;
 import it.polimi.ingsw.ps42.parser.LeaderCardLoader;
+import it.polimi.ingsw.ps42.parser.TimerLoader;
 import it.polimi.ingsw.ps42.server.match.ServerView;
 
 import java.io.IOException;
@@ -52,7 +53,7 @@ import org.apache.log4j.Logger;
  */
 public class GameLogic implements Observer {
 	
-	private static final long TIMER_SECONDS = 120;
+	private static long TIMER_SECONDS;
 	
     private static final int MAX_BANS_IN_FILE = 7;
     private static final int FAMILIARS_NUMBER = 4;
@@ -134,7 +135,14 @@ public class GameLogic implements Observer {
      * @throws IOException					Exception thrown when there is an Input/Output Exception, such as in reading File or in reading/writing socket
      */
     public GameLogic(List<String> playerIDList, ServerView view) throws NotEnoughPlayersException, GameLogicError, IOException {
-        playersList = new ArrayList<>();
+        
+    	//Load the timer
+    	TimerLoader timerLoader = new TimerLoader("Resource//Configuration//timers.json");
+    	TIMER_SECONDS = timerLoader.getPlayerMoveTimer();
+    	
+    	logger.info("Timer for the player move is setted to: "+ TIMER_SECONDS);
+    	
+    	playersList = new ArrayList<>();
 
         //Construct the real players
         for(String playerID : playerIDList)
