@@ -84,8 +84,8 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		
 		//If the player yet exists, add it to the correct view
 		if(existAnotherPlayer(playerID)) {
-			playerTable.get(playerID).addConnection(connection, playerID);
 			executor.submit(connection);
+			playerTable.get(playerID).addConnection(connection, playerID);
 		}
 		else {
 			//If there isn't a waiting match, create it

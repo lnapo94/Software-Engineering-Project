@@ -47,10 +47,9 @@ public class Connection extends Observable implements Runnable{
 		catch (IOException | ClassNotFoundException e) {
 			logger.error("Error occurred in trasmission, closing Connection");
 			logger.info(e);
-		}
-		finally {
 			close();
 		}
+		
 	}
 	
 	private boolean isActive(){

@@ -40,6 +40,7 @@ public class ServerView extends Observable implements Observer{
 			//If was connected then delete the old connection and add the new one
 			disconnectedPlayers.remove(search(playerID));
 			connect(connection, playerID);
+			sendPlayersList();
 			setChanged();
 			notifyObservers(playerID);
 		}
@@ -91,14 +92,24 @@ public class ServerView extends Observable implements Observer{
 		
 		logger.info("ServerView is now running...");
 		
+		sendPlayersList();
+		
+		List<String> playerIDList = new ArrayList<>();
+		connections.forEach((playerID, connection)->{
+			playerIDList.add(playerID);
+		});
+		
+		GameLogic gameLogic = new GameLogic(playerIDList, this);
+		gameLogic.loadGame();
+	}
+	
+	private void sendPlayersList() {
 		List<String> playerIDList = new ArrayList<>();
 		connections.forEach((playerID, connection)->{
 			playerIDList.add(playerID);
 		});
 		PlayersListMessage message = new PlayersListMessage(playerIDList);
 		sendAll(message);
-		GameLogic gameLogic = new GameLogic(playerIDList, this);
-		gameLogic.loadGame();
 	}
 	
 	@Override
@@ -117,8 +128,11 @@ public class ServerView extends Observable implements Observer{
 				sendAll(message);
 			}
 		}
-		else if(messageToSend instanceof String)
+		else if(messageToSend instanceof String) {
 			deleteConnection((String) messageToSend);
+			setChanged();
+			notifyObservers(messageToSend);
+		}
 	}
 	
 	private void sendAll(GenericMessage message){
@@ -139,8 +153,6 @@ public class ServerView extends Observable implements Observer{
 
 		for(String playerID : disconnectedPlayers) {
 			connections.remove(playerID);
-			setChanged();
-			notifyObservers(playerID);
 		}
 	}
 	
@@ -148,8 +160,6 @@ public class ServerView extends Observable implements Observer{
 		disconnectedPlayers.add(playerID);
 		Connection connection = connections.remove(playerID);
 		connection.deleteObserver(this);
-		setChanged();
-		notifyObservers(playerID);
 	}
 	
 

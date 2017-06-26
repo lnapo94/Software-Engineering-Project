@@ -384,7 +384,10 @@ public class GameLogic implements Observer {
 
     private void initRound() {
     	//Debug
-    	System.out.println("Start the round number: " + getCurrentRound());
+    	logger.info("Start the round number: " + getCurrentRound());
+    	
+        table.throwDice(new Random());
+
     	
         //Place the cards in the towers
         table.placeGreenTower(cardsCreator.getNextGreenCards());
@@ -399,9 +402,6 @@ public class GameLogic implements Observer {
             logger.error("Unable to open the cards file");
             logger.info(e);
         }
-
-        table.throwDice(new Random());
-
 
         for(Player player : playersList) {
 
@@ -546,9 +546,13 @@ public class GameLogic implements Observer {
 	private void restartRound() {
 		
 		//If there is someone to reconnect, add now to the next round
-		for(Player player : toReconnectPlayers) {
+		for(int i = 0; i < toReconnectPlayers.size(); i++) {
+			Player player = toReconnectPlayers.get(0);
+			playersList.add(player);
 			roundOrder.add(player);
+			
 			player.sendResources();
+			toReconnectPlayers.remove(player);
 		}
 		
 		//Control the new order and reset the table
