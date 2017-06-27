@@ -67,9 +67,11 @@ public class ClientSocket extends Observable implements Observer{
 		
 		if(isConnected()){
 			try{
-				GenericMessage msg = (GenericMessage) reader.readObject();
-				setChanged();
-				notifyObservers(msg);
+				Object msg = reader.readObject();
+				if(msg instanceof GenericMessage) {
+					setChanged();
+					notifyObservers((GenericMessage) msg);
+				}
 			} catch(IOException | ClassNotFoundException e){
 				logger.error("Error in reading the input messages");
 				logger.info(e);

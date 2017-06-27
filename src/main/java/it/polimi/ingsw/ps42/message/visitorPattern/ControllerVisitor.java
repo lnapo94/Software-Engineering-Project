@@ -26,6 +26,7 @@ import it.polimi.ingsw.ps42.model.action.Action;
 import it.polimi.ingsw.ps42.model.action.ActionCreator;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
+import it.polimi.ingsw.ps42.model.player.Player;
 
 public class ControllerVisitor implements Visitor {
 
@@ -115,8 +116,11 @@ public class ControllerVisitor implements Visitor {
 		 */
 		
 		try {
-			Action action = new ActionCreator(gameLogic.searchPlayer(message.getPlayerID()), gameLogic.getTable(), message, gameLogic.getBonusActionValue()).getCreatedAction();
-			gameLogic.handleAction(action, message.getPlayerID());
+			Player player = gameLogic.searchPlayer(message.getPlayerID());
+			if(gameLogic.isConnected(player)) {
+				Action action = new ActionCreator(player, gameLogic.getTable(), message, gameLogic.getBonusActionValue()).getCreatedAction();
+				gameLogic.handleAction(action, message.getPlayerID());
+			}
 		} catch (NotEnoughResourcesException e) {
 			
 			try {
@@ -141,7 +145,13 @@ public class ControllerVisitor implements Visitor {
 		/*Response Message by the View to a specific request. 
 		 * Send with a method to the GameLogic
 		 */
-		gameLogic.handleRequest(message);
+		try {
+			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
+				gameLogic.handleRequest(message);
+		} catch (ElementNotFoundException e) {
+			logger.fatal("Player not found in gameLogic");
+			logger.info(e);
+		}
 	}
 
 	@Override
@@ -149,7 +159,13 @@ public class ControllerVisitor implements Visitor {
 		/*Response Message by the View to a Council request.
 		 * Send to the Game Logic with a method
 		 */
-		gameLogic.handleCouncilRequest(message);
+		try {
+			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
+				gameLogic.handleCouncilRequest(message);
+		} catch (ElementNotFoundException e) {
+			logger.fatal("Player not found in gameLogic");
+			logger.info(e);
+		}
 		
 	}
 
@@ -168,7 +184,8 @@ public class ControllerVisitor implements Visitor {
 		 * arraylist in player and create a message
 		 */
 		try {
-			gameLogic.HandleLeaderUpdate(gameLogic.searchPlayer(message.getPlayerID()), message.getCard());
+			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
+				gameLogic.HandleLeaderUpdate(gameLogic.searchPlayer(message.getPlayerID()), message.getCard());
 		} catch (ElementNotFoundException e) {
 			logger.fatal("Unable to find the player. Method: leaderCardUpdateMessage");
 			logger.info(e);
@@ -181,22 +198,40 @@ public class ControllerVisitor implements Visitor {
 		 * Enable the chosen ban if the variable is set to false,
 		 * else reduce the faith point and assign the victory point to player 
 		 */
-		gameLogic.handleBan(message.getPlayerID(), message.getBanNumber(), message.wantPayForBan());
+		try {
+			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
+				gameLogic.handleBan(message.getPlayerID(), message.getBanNumber(), message.wantPayForBan());
+		} catch (ElementNotFoundException e) {
+			logger.fatal("Player not found in gameLogic");
+			logger.info(e);
+		}
 
 	}
 
 	@Override
 	public void visit(LeaderFamiliarRequest message) {
 		//Message received by the view, do the apply for the leader card
-
-		gameLogic.handleLeaderFamiliarRequest(message);
+		
+		try {
+			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
+				gameLogic.handleLeaderFamiliarRequest(message);
+		} catch (ElementNotFoundException e) {
+			logger.fatal("Player not found in gameLogic");
+			logger.info(e);
+		}
 
 	}
 
 	@Override
 	public void visit(EmptyMove message) {
-		//If the 
-		gameLogic.initAction();
+		//If the player doesn't want to play
+		try {
+			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
+				gameLogic.initAction();
+		} catch (ElementNotFoundException e) {
+			logger.fatal("Player not found in gameLogic");
+			logger.info(e);
+		}
 	}
 
 	@Override

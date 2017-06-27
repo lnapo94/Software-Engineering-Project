@@ -8,6 +8,12 @@ import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.parser.CardLoader;
 
+/**
+ * Abstract class to implement the State Pattern with this cards loader
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public abstract class CardsCreator {
 	//Max number of card in the StaticLists
 	private final static int CARDS_NUMBER = 8;
@@ -24,7 +30,12 @@ public abstract class CardsCreator {
 	
 	protected String folderPath;
 	
-	
+	/**
+	 * The constructor of the cards creator
+	 * 
+	 * @param folderPath		The path to the folder which contains the correct cards to load
+	 * @throws IOException		Exception thrown if there is a Input/Output problem. Probably the path isn't correct
+	 */
 	public CardsCreator(String folderPath) throws IOException {
 		this.folderPath = folderPath;
 		
@@ -39,6 +50,12 @@ public abstract class CardsCreator {
 		highIndex = 4;
 	}
 	
+	/**
+	 * Private method to shuffle the cards
+	 * 
+	 * @param cards		StaticList of cards to shuffle
+	 * @return			The StaticList shuffled
+	 */
 	private StaticList<Card> shuffle(StaticList<Card> cards) {
 		//TODO testing
 		//Shuffle the cards list
@@ -57,24 +74,47 @@ public abstract class CardsCreator {
 		return temporary;
 	}
 	
+	/**
+	 * Load the next 4 green cards
+	 * @return	StaticList with 4 green cards
+	 */
 	public StaticList<Card> getNextGreenCards() {
 		return getNextCards(green, lowIndex, highIndex);
 	}
-	
+
+	/**
+	 * Load the next 4 yellow cards
+	 * @return	StaticList with 4 yellow cards
+	 */
 	public StaticList<Card> getNextYellowCards() {
 		return getNextCards(yellow, lowIndex, highIndex);
 	}
-	
+
+	/**
+	 * Load the next 4 blue cards
+	 * @return	StaticList with 4 blue cards
+	 */
 	public StaticList<Card> getNextBlueCards() {
 		return getNextCards(blue, lowIndex, highIndex);
 	}
-	
+
+	/**
+	 * Load the next 4 violet cards
+	 * @return	StaticList with 4 violet cards
+	 */
 	public StaticList<Card> getNextVioletCards() {
 		return getNextCards(violet, lowIndex, highIndex);
 	}
 	
+	/**
+	 * Private method used to get the next (highIndex - lowIndex) cards to give it to the Table
+	 * 
+	 * @param cards			The correct StaticList to copy
+	 * @param lowIndex		The index of the first card to copy
+	 * @param highIndex		The index of the last card to copy (not included)
+	 * @return				StaticList of 4 chosen cards
+	 */
 	
-	//Private method used to get the next (highIndex - lowIndex) cards to give it to the Table
 	private StaticList<Card> getNextCards(StaticList<Card> cards, int lowIndex, int highIndex) {
 		
 		StaticList<Card> temporary = new StaticList<>(highIndex - lowIndex);
@@ -85,8 +125,15 @@ public abstract class CardsCreator {
 		return temporary;
 	}
 	
-	//Private method used to load the card
-	//Card file must be at most with 8 card
+	/**
+	 * 	Private method used to load the card
+	 *	Card file must be at most with 8 card
+	 *
+	 * @param fileName			The name of the cards file in the directory specified in construction
+	 * @return					The StaticList of 8 cards
+	 * @throws IOException		Thrown if there is a problem with the file. Maybe the name isn't correct or there are less card than 8 in the file
+	 */
+
 	private StaticList<Card> loadCard(String fileName) throws IOException {
 		
 		//Construct the correct path to file
@@ -111,5 +158,11 @@ public abstract class CardsCreator {
 		return temporary;
 	}
 	
+	/**
+	 * Method to implement in the inherited classes to go to the new state
+	 * 
+	 * @return					Return the new state
+	 * @throws IOException		Thrown if there is a problem in the new state creation
+	 */
 	public abstract CardsCreator nextState() throws IOException;
 }

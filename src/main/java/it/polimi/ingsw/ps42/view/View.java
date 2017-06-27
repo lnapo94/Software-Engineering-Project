@@ -444,6 +444,10 @@ public abstract class View extends Observable implements Observer {
 		showResult(message.getResult());
 	}
 	
+	public void resetTable() {
+		table.resetTable();
+	}
+	
 	protected abstract void showResult(List<String> finalChart);
 	
 	@Override

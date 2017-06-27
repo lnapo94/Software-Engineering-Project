@@ -20,6 +20,7 @@ import it.polimi.ingsw.ps42.message.LoginMessage;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
+import it.polimi.ingsw.ps42.parser.TimerLoader;
 import it.polimi.ingsw.ps42.server.match.Connection;
 import it.polimi.ingsw.ps42.server.match.ServerView;
 
@@ -32,7 +33,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	private static final int SERVER_PORT = 5555;
 	private static final int MATCH_NUMBER = 128;
 	
-	private static final long TIMER_SECONDS = 2;
+	private static long TIMER_SECONDS;
 	
 	private boolean isActive = true;
 	
@@ -53,11 +54,17 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	
 	private Timer timer;
 	
-	public Server() throws RemoteException {
+	public Server() throws IOException {
 		super();
 		
 		//Configure logger
 		PropertyConfigurator.configure("Logger//Properties//server_log.properties");
+		
+		//Load timer
+		TimerLoader loader = new TimerLoader("Resource//Configuration//timers.json");
+		TIMER_SECONDS = loader.getServerTimer();
+		
+		logger.info("Timer for the match is setted to: " + TIMER_SECONDS);
 		
 		try {
 			serverSocket = new ServerSocket(SERVER_PORT);
@@ -84,8 +91,8 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		
 		//If the player yet exists, add it to the correct view
 		if(existAnotherPlayer(playerID)) {
-			playerTable.get(playerID).addConnection(connection, playerID);
 			executor.submit(connection);
+			playerTable.get(playerID).addConnection(connection, playerID);
 		}
 		else {
 			//If there isn't a waiting match, create it
@@ -168,7 +175,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		
 	}
 	
-	public static void main(String[] args) throws RemoteException {
+	public static void main(String[] args) throws IOException {
 		Server server = new Server();
 		server.run();
 	}

@@ -90,7 +90,9 @@ public class ViewVisitor implements Visitor {
 		/*Message forwarded by the Model every round, the visitor 
 		 * has to call a method of the View for setting the dice value to every familiars.
 		 */
-
+		
+		view.resetTable();
+		
 		if(message != null){	
 			this.view.setBlackDie(message.getBlackDie());
 			this.view.setWhiteDie(message.getWhiteDie());
