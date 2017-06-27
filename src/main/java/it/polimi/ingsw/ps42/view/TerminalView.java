@@ -85,11 +85,11 @@ public class TerminalView extends View {
 	
 			System.out.println("colore familiare?");
 	
-			for (FamiliarColor color : FamiliarColor.values()) {
+			/*for (FamiliarColor color : FamiliarColor.values()) {
 				if(!player.getFamiliar(color).isPositioned())
 					System.out.println(color.toString());
 			}
-			
+			*/
 			familiarColor = FamiliarColor.parseInput(scanner.nextLine());
 			System.out.println("posizione?");
 			position = Integer.parseInt(scanner.nextLine());
