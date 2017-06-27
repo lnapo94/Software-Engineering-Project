@@ -1,0 +1,441 @@
+{
+  "name": "Noble",
+  "description": "",
+  "color": "BLUE",
+  "period": 3,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 6
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "color": "GREEN",
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 2
+          }
+        ]
+      },
+      "player": null,
+      "typeOfEffect": "CARD_FOR_EACH_OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CardForEachObtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Governor",
+  "description": "",
+  "color": "BLUE",
+  "period": 3,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 6
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "color": "YELLOW",
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 2
+          }
+        ]
+      },
+      "player": null,
+      "typeOfEffect": "CARD_FOR_EACH_OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CardForEachObtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Paramour",
+  "description": "",
+  "color": "BLUE",
+  "period": 3,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 7
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "color": "BLUE",
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 2
+          }
+        ]
+      },
+      "player": null,
+      "typeOfEffect": "CARD_FOR_EACH_OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CardForEachObtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Herald",
+  "description": "",
+  "color": "BLUE",
+  "period": 3,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 6
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "color": "VIOLET",
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 2
+          }
+        ]
+      },
+      "player": null,
+      "typeOfEffect": "CARD_FOR_EACH_OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CardForEachObtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Cardinal",
+  "description": "",
+  "color": "BLUE",
+  "period": 3,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 4
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "type": "YIELD",
+      "actionLevel": 4,
+      "discount": {
+        "list": []
+      },
+      "obtainEffect": {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      "player": null,
+      "typeOfEffect": "DO_ACTION",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.DoAction"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Bishop",
+  "description": "",
+  "color": "BLUE",
+  "period": 3,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 5
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "type": "PRODUCE",
+      "actionLevel": 4,
+      "discount": {
+        "list": []
+      },
+      "obtainEffect": {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      "player": null,
+      "typeOfEffect": "DO_ACTION",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.DoAction"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "General",
+  "description": "",
+  "color": "BLUE",
+  "period": 3,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 5
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "requirements": {
+        "list": [
+          {
+            "resource": "MILITARYPOINT",
+            "quantity": 2
+          }
+        ]
+      },
+      "gains": {
+        "list": [
+          {
+            "resource": "VICTORYPOINT",
+            "quantity": 1
+          }
+        ]
+      },
+      "player": null,
+      "typeOfEffect": "FOR_EACH_OBTAIN",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.ForEachObtain"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}{
+  "name": "Ambassador",
+  "description": "",
+  "color": "BLUE",
+  "period": 3,
+  "level": 0,
+  "owner": null,
+  "costs": [
+    {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 6
+        }
+      ]
+    }
+  ],
+  "requirements": [],
+  "immediateEffects": [
+    {
+      "type": "TAKE_ALL",
+      "actionLevel": 7,
+      "discount": {
+        "list": []
+      },
+      "obtainEffect": {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": []
+        },
+        "councilObtain": {
+          "quantity": 1,
+          "possibleConversion": [
+            {
+              "costs": {
+                "list": []
+              },
+              "gains": {
+                "list": [
+                  {
+                    "resource": "STONE",
+                    "quantity": 1
+                  },
+                  {
+                    "resource": "WOOD",
+                    "quantity": 1
+                  }
+                ]
+              },
+              "councilObtain": null,
+              "player": null,
+              "typeOfEffect": "OBTAIN"
+            },
+            {
+              "costs": {
+                "list": []
+              },
+              "gains": {
+                "list": [
+                  {
+                    "resource": "SLAVE",
+                    "quantity": 2
+                  }
+                ]
+              },
+              "councilObtain": null,
+              "player": null,
+              "typeOfEffect": "OBTAIN"
+            },
+            {
+              "costs": {
+                "list": []
+              },
+              "gains": {
+                "list": [
+                  {
+                    "resource": "MONEY",
+                    "quantity": 2
+                  }
+                ]
+              },
+              "councilObtain": null,
+              "player": null,
+              "typeOfEffect": "OBTAIN"
+            },
+            {
+              "costs": {
+                "list": []
+              },
+              "gains": {
+                "list": [
+                  {
+                    "resource": "MILITARYPOINT",
+                    "quantity": 2
+                  }
+                ]
+              },
+              "councilObtain": null,
+              "player": null,
+              "typeOfEffect": "OBTAIN"
+            },
+            {
+              "costs": {
+                "list": []
+              },
+              "gains": {
+                "list": [
+                  {
+                    "resource": "FAITHPOINT",
+                    "quantity": 1
+                  }
+                ]
+              },
+              "councilObtain": null,
+              "player": null,
+              "typeOfEffect": "OBTAIN"
+            }
+          ],
+          "player": null,
+          "typeOfEffect": "COUNCIL_OBTAIN"
+        },
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      "player": null,
+      "typeOfEffect": "DO_ACTION",
+      "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.DoAction"
+    }
+  ],
+  "permanentEffects": [],
+  "finalEffects": [],
+  "possibleChoice": [],
+  "possibleChoiceIndex": [],
+  "effectivelyCosts": []
+}

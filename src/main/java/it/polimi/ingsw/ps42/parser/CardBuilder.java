@@ -343,7 +343,7 @@ public class CardBuilder extends Builder {
 		CardBuilder builder;
 		Scanner scanner = new Scanner(System.in);
 		try {
-			builder = new CardBuilder("Resource//Cards//SecondPeriod//violet.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
+			builder = new CardBuilder("Resource//Cards//ThirdPeriod//blue.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
 			String response;
 			int i =0;
 			do{
