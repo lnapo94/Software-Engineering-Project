@@ -5,7 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Timer;
@@ -103,7 +105,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			waitingView.addConnection(connection, playerID);
 			executor.submit(connection);
 			
-			if(waitingView.getNumberOfPlayers() == 2) {
+			if(waitingView.getNumberOfPlayers() == 2 && timer == null) {
 				timer = new Timer();
 				timer.schedule(new ServerTimer(this), TIMER_SECONDS * 1000);
 			}
@@ -149,6 +151,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 				timer.cancel();
 				waitingView.run();
 				waitingView = null;
+				timer = null;
 			}
 		} catch (NotEnoughPlayersException | GameLogicError | IOException e) {
 			logger.error("Start the match error");
@@ -157,28 +160,52 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 
 	}
 
-	@Override
-	public void addClient(ClientInterface client) throws RemoteException {
-		// TODO Auto-generated method stub
+	private synchronized void addRMIClient(ClientInterface client, String playerID) throws RemoteException {
+		logger.info("Trying to add a new RMI player");
+		if(waitingView == null) 
+			waitingView = new ServerView();
 		
+		waitingView.connectRMIClient(client, playerID);
+		client.setNewServerInterface(waitingView.getIndex());
+		
+		if(waitingView.getNumberOfPlayers() == 2 && timer == null) {
+			timer = new Timer();
+			timer.schedule(new ServerTimer(this), TIMER_SECONDS * 1000);
+		}
+		
+		playerTable.put(playerID, waitingView);
+		
+		//If the waitingView is full, start the match
+		if(waitingView.getNumberOfPlayers() == 4) {
+			startMatch();
+		}
 	}
 
 	@Override
-	public void sendLoginMessage(LoginMessage loginMessage) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+	public void sendLoginMessage(ClientInterface client, LoginMessage loginMessage) throws RemoteException {
+		String playerID = loginMessage.getUserName();
+		if(existAnotherPlayer(playerID)) {
+			if(playerWasPlaying(playerID)) {
+				client.setNewServerInterface(playerTable.get(playerID).getIndex());
+				playerTable.get(playerID).connectRMIClient(client, playerID);
+			}
+			else {
+				loginMessage.playerIdYetUsed();
+				client.notify(loginMessage);
+			}
+		}
+		else
+			addRMIClient(client, playerID);
 	}
 
-	@Override
-	public void addToGame() throws RemoteException {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public static void main(String[] args) throws IOException {
 		Server server = new Server();
+
+		LocateRegistry.createRegistry(1099);
+		Naming.rebind("Server", server);
+		
 		server.run();
 	}
-
 	
 }

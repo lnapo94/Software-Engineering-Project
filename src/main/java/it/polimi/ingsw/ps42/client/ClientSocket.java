@@ -118,7 +118,7 @@ public class ClientSocket extends Observable implements Observer{
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		
-		String host = "192.168.1.31"; 
+		String host = "localhost"; 
 
 		ClientSocket client = new ClientSocket(host);
 		View view = new TerminalView();
