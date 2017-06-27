@@ -883,6 +883,9 @@ public class GameLogic implements Observer {
 		}
     }
     
+    /**
+     * Method used to control if the player has some bonus action. 
+     */
     private void finishAction() {
     	bonusAction = currentPlayer.getBonusAction();
     	currentPlayer.synchResource();
@@ -894,7 +897,11 @@ public class GameLogic implements Observer {
     		initAction();
     	}
     }
-    
+    /**
+     * Method called by the visitor when the current player answers to a card request
+     * 
+     * @param request	The request send to the player 
+     */
     public void handleRequest(CardRequest request) {
     	try {
 			Player player = searchPlayer(request.getPlayerID());
@@ -926,6 +933,11 @@ public class GameLogic implements Observer {
 		}
     }
     
+    /**
+     * Method called by the visitor when the current player answers to a council request
+     * 
+     * @param councilRequest	The request send to the player
+     */
 	public void handleCouncilRequest(CouncilRequest councilRequest){
 		/* Method called by the Visitor to set a council request response to a Player:
 		 * if something wrong retransmit the message, else add the request to the player council request
@@ -945,29 +957,55 @@ public class GameLogic implements Observer {
 		}
 	}	
 	
+	/**
+	 * Return the current table, used by the controller visitor to create the action
+	 * @return	The reference to the current table
+	 */
 	public Table getTable() {
 		return this.table;
 	}
 	
+	/**
+	 * Used to create the correct action in controller visitor
+	 * 
+	 * @return	The value of the current bonus action, if there is one bonus action
+	 * 			else 0
+	 */
 	public int getBonusActionValue() {
 		if(this.bonusAction != null)
 			return this.bonusAction.getLevel();
 		return 0;
 	}
 
+	/**
+	 * Method called by the visitor when the current player wants to enable the leader card
+	 * @param searchPlayer	Player who answers to the request
+	 * @param card			The card to enable
+	 */
 	public void HandleLeaderUpdate(Player searchPlayer, LeaderCard card) {
 		searchPlayer.enableLeaderCard(card);
 		checkOtherPlayerLeaderRequest(searchPlayer);
 	}
 	
+	/**
+	 * 
+	 * @return Reference to the current player
+	 */
 	public Player getCurrentPlayer() {
 		return this.currentPlayer;
 	}
 	
+	/**
+	 * 
+	 * @return	True if there is an action incompleted, false in other cases
+	 */
 	public boolean isThereAnAction() {
 		return this.currentAction != null;
 	}
 	
+	/**
+	 * Method used to rollback an action if there is a TakeCardAction
+	 */
 	public void rollBackTakeCardAction() {
 		if(currentAction != null && currentAction instanceof TakeCardAction) {
 			TakeCardAction action = (TakeCardAction) currentAction;
@@ -975,19 +1013,39 @@ public class GameLogic implements Observer {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return The current ROund
+	 */
 	public int getCurrentRound() {
 		return this.currentRound;
 	}
 	
+	/**
+	 * Remove the player from the playersWithRequest list
+	 * 
+	 * @param player	The player to remove
+	 */
 	public void removePlayerFromPendingRequest(Player player) {
 		while(playersWithRequest.contains(player))
 			playersWithRequest.remove(player);
 	}
 	
+	/**
+	 * Control if the player is connected
+	 * 
+	 * @param player	The player to control
+	 * @return			True if he is connected, False if he isn't connected
+	 */
 	public boolean isConnected(Player player) {
 		return this.playersList.contains(player);
 	}
 
+	/**
+	 * Method used when a notify arrives to the controller. If the notify is a message, pass
+	 * it to the visitor, else if the notify is a String, it means there is a disconnection
+	 * or a reconnection of one player, so handle it
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		Message message;
