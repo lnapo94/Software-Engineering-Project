@@ -81,10 +81,22 @@ public class GUIView {
 		
 		JLabel GreenCard4 = new JLabel("cartaverde");
 		GreenCard4.setHorizontalAlignment(SwingConstants.CENTER);
-		GreenCard4.setBounds(24, 28, 140, 235);
+		GreenCard4.setBounds(70, 50, 185, 310);
 		layeredPane.add(GreenCard4);
-		GreenCard4.setIcon(new ImageIcon(GUIView.class.getResource("/Images/Cards/FirstPeriod/Green/1.png")));
 		
+		try{
+			BufferedImage immagineCartaVerde = ImageIO.read(GUIView.class.getResource("/Images/Cards/cartaTagliata.png"));
+			int cardWidth = immagineCartaVerde.getWidth();
+			int cardHeight = immagineCartaVerde.getHeight();
+			int cardScaledWidth = GreenCard4.getWidth();
+			int cardScaledHeight = (int)(cardHeight*cardScaledWidth/(cardWidth));
+			Image cardResized = immagineCartaVerde.getScaledInstance(cardScaledWidth, cardScaledHeight, Image.SCALE_SMOOTH);
+			
+			GreenCard4.setIcon(new ImageIcon(cardResized));
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
 		JLabel BlueCard4 = new JLabel("");
 		BlueCard4.setBounds(0, 0, 136, 240);
 		layeredPane.add(BlueCard4);
