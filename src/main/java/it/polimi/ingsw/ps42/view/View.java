@@ -62,6 +62,7 @@ public abstract class View extends Observable implements Observer {
 	
 	public void askNewPlayerID(){
 		String name = askPlayerID();
+		player = new Player(name);
 		LoginMessage message = new LoginMessage(name);
 		setChanged();
 		notifyObservers(message);
