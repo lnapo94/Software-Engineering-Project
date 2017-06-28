@@ -25,6 +25,10 @@ public class IncreaseAction extends Effect {
 	
 	//Variable used to know if the effect is activated yet or not
 	private boolean yetActivated;
+	
+	public IncreaseAction() {
+		super();
+	}
 
 	public IncreaseAction(ActionType type, int value, Packet discount) {
 		super(EffectType.INCREASE_ACTION);

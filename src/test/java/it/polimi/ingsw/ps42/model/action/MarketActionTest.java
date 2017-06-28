@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.StaticList;
@@ -40,6 +42,11 @@ public class MarketActionTest {
 	private Action marketActionIncremented;
 	private Action action;
 	private CouncilObtain councilBonus;
+	
+	@BeforeClass
+	public static void classSetUp() {
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+	}
 	
 	@Before
 	public void setup(){

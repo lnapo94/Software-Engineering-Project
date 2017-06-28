@@ -1,7 +1,5 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import org.apache.log4j.Logger;
-
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 
@@ -13,8 +11,6 @@ public class NoFirstActionBan extends Effect {
 	 */
 	private static final long serialVersionUID = -4347788955119043485L;
 	
-	private transient Logger logger = Logger.getLogger(NoFirstActionBan.class);
-
 	public NoFirstActionBan() {
 		super(EffectType.NO_FIRST_ACTION_BAN);
 	}

@@ -5,7 +5,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.Card;
@@ -20,6 +22,11 @@ public class CardCostBanTest {
 	private Player p1;
 	private Player p2;
 	private CardCostBan ban;
+	
+	@BeforeClass
+	public static void classSetUp() {
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+	}
 
 	@Before
 	public void setUp() throws Exception {

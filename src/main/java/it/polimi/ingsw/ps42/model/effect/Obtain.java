@@ -19,12 +19,14 @@ public class Obtain extends Effect{
 	private Packet gains;
 	private CouncilObtain councilObtain;
 	
-	//Logger
-	private transient Logger logger = Logger.getLogger(Obtain.class);
+	public Obtain() {
+		super();
+	}
 	
 	public Obtain(Packet costs, Packet gains, CouncilObtain councilObtain) {
 		
 		super(EffectType.OBTAIN);
+		logger = Logger.getLogger(Obtain.class);
 		this.costs=costs;
 		this.gains=gains;
 		this.councilObtain = councilObtain;

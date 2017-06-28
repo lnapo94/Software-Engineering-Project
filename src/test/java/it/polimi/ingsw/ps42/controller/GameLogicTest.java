@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps42.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
@@ -15,6 +16,9 @@ public class GameLogicTest {
 
 	@Test
 	public void test() throws NotEnoughPlayersException, GameLogicError, IOException, ElementNotFoundException {
+
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+		
 		GameLogic logic;
 		TerminalView view1 = new TerminalView();
 		TerminalView view2 = new TerminalView();

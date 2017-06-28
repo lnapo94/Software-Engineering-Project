@@ -1,7 +1,5 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import org.apache.log4j.Logger;
-
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -15,11 +13,12 @@ public class SetSingleFamiliarLeader extends Effect{
 	 */
 	private static final long serialVersionUID = -3007031091349849711L;
 	private FamiliarColor color;
-	final private int value;
+	private int value;
 	
-	//Logger
-	private transient Logger logger = Logger.getLogger(SetSingleFamiliarLeader.class);
-
+	public SetSingleFamiliarLeader() {
+		super();
+	}
+	
 	public SetSingleFamiliarLeader(int value) {
 		super(EffectType.SET_SINGLE_FAMILIAR_LEADER);
 		this.value = value;

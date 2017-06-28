@@ -5,8 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.message.CouncilRequest;
@@ -25,6 +27,11 @@ public class CouncilObtainTest {
 	private Player player2;
 	private Card card;
 	private Card card2;
+	
+	@BeforeClass
+	public static void classSetUp() {
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+	}
 	
 	@Before
 	public void setup(){

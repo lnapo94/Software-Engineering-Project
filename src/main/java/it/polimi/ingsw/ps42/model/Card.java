@@ -31,17 +31,17 @@ public class Card implements Serializable{
 	 * (Packet or Effect) the elements have to be considered in OR while IN the single 
 	 * Packet/Effect they are in AND
 	 */
-	private final String name;
-	private final String description;
-	private final CardColor color;
-	private final int period;
-	private final int level;
+	private String name;
+	private String description;
+	private CardColor color;
+	private int period;
+	private int level;
 	private Player owner;
-	private final List<Packet> costs;
-	private final List<Packet> requirements;
-	private final List<Effect> immediateEffects;
-	private final List<Effect> permanentEffects;
-	private final List<Effect> finalEffects;
+	private List<Packet> costs;
+	private List<Packet> requirements;
+	private List<Effect> immediateEffects;
+	private List<Effect> permanentEffects;
+	private List<Effect> finalEffects;
 	
 	//ArrayList used for check if player can pay to obtain the card or enable the effect
 	private List<Printable> possibleChoice;
@@ -51,7 +51,11 @@ public class Card implements Serializable{
 	private List<Packet> effectivelyCosts;
 	
 	//Logger
-	private transient Logger logger = Logger.getLogger(Card.class);
+	private transient Logger logger;
+	
+	public Card() {
+		 logger = Logger.getLogger(Card.class);
+	}
 	
 	public Card(String name, String description, CardColor color, int period, 
 			int level, List<Packet> costs, List<Effect> immediateEffects, List<Packet> requirements,

@@ -6,11 +6,18 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.PropertyConfigurator;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 
 public class PacketTest {
+	
+	@BeforeClass
+	public static void classSetUp() {
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+	}
 
 	@Test
 	public void test() {

@@ -3,7 +3,9 @@ package it.polimi.ingsw.ps42.model.effect;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.Card;
@@ -16,6 +18,11 @@ public class CardBanTest {
 	Player p1;
 	Card green;
 	Card yellow;
+	
+	@BeforeClass
+	public static void classSetUp() {
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+	}
 
 	@Before
 	public void setUp() throws Exception {

@@ -2,8 +2,6 @@ package it.polimi.ingsw.ps42.model.effect;
 
 
 
-import org.apache.log4j.Logger;
-
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
@@ -19,8 +17,9 @@ public class ForEachObtain extends Effect{
 	private Packet requirements;
 	private Packet gains;
 	
-	//Logger
-	private transient Logger logger = Logger.getLogger(ForEachObtain.class);
+	public ForEachObtain() {
+		super();
+	}
 
 	public ForEachObtain(Packet requirements, Packet gains) {
 		super(EffectType.FOR_EACH_OBTAIN);

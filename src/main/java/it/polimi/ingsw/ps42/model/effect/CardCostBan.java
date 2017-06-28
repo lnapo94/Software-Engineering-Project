@@ -2,8 +2,6 @@ package it.polimi.ingsw.ps42.model.effect;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
@@ -25,8 +23,9 @@ public class CardCostBan extends Effect{
 	private static final long serialVersionUID = 7122058016852083837L;
 	private CardColor color;
 	
-	//Logger
-	private transient Logger logger = Logger.getLogger(CardCostBan.class);
+	public CardCostBan() {
+		super();
+	}
 
 	public CardCostBan(CardColor color) {
 		super(EffectType.YELLOW_COST_BAN); //TO-DO:discutere sul nome effetto e controllo sul colore

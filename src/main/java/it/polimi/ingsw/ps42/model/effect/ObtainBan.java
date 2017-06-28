@@ -1,7 +1,5 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import org.apache.log4j.Logger;
-
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
@@ -18,8 +16,9 @@ public class ObtainBan extends Effect{
 	private Packet costs;
 	private Resource resource;
 	
-	//logger
-	private transient Logger logger = Logger.getLogger(ObtainBan.class);
+	public ObtainBan() {
+		super();
+	}
 	
 	public ObtainBan(Packet costs) {
 		super(EffectType.OBTAIN_BAN);

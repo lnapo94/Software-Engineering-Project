@@ -1,7 +1,5 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import org.apache.log4j.Logger;
-
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
@@ -20,9 +18,10 @@ public class DoAction extends Effect{
 	private int actionLevel;
 	private Packet discount;
 	private Obtain obtainEffect;
-	
-	//Logger
-	private transient Logger logger = Logger.getLogger(DoAction.class);
+
+	public DoAction() {
+		super();
+	}
 	
 	public DoAction(ActionType type, int actionLevel, Packet discount, Obtain obtainEffect) {
 		super(EffectType.DO_ACTION);

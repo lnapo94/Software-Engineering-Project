@@ -3,8 +3,6 @@ package it.polimi.ingsw.ps42.model.effect;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -17,11 +15,12 @@ public class CouncilObtain extends Effect {
 	 * 
 	 */
 	private static final long serialVersionUID = -314367395260372419L;
-	private final int quantity;
-	private final List<Obtain> possibleConversion;
+	private int quantity;
+	private List<Obtain> possibleConversion;
 	
-	//Logger
-	private transient Logger logger = Logger.getLogger(CouncilObtain.class);
+	public CouncilObtain() {
+		super();
+	}
 
 	public CouncilObtain(int quantity,List<Obtain> possibleConversion ) {
 		super(EffectType.COUNCIL_OBTAIN);

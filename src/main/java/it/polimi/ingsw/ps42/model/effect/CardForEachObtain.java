@@ -1,7 +1,5 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import org.apache.log4j.Logger;
-
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -17,9 +15,9 @@ public class CardForEachObtain extends Effect{
 	private CardColor color;
 	private Packet gains;
 	
-	//Logger
-	private transient Logger logger = Logger.getLogger(CardForEachObtain.class);
-
+	public CardForEachObtain() {
+		super();
+	}
 	public CardForEachObtain(CardColor color, Packet gains) {
 		super(EffectType.CARD_FOR_EACH_OBTAIN);
 		this.color = color;

@@ -1,10 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
-
-import org.apache.log4j.Logger;
-
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -18,9 +15,9 @@ public class IncreaseFamiliarsPoint extends Effect{
 	private static final long serialVersionUID = 4636122239357858799L;
 	private int value;
 	
-	//Logger
-	private transient Logger logger = Logger.getLogger(IncreaseFamiliarsPoint.class);
-
+	public IncreaseFamiliarsPoint() {
+		super();
+	}
 	public IncreaseFamiliarsPoint(int value) {
 		super(EffectType.INCREASE_FAMILIARS);
 		this.value=value;

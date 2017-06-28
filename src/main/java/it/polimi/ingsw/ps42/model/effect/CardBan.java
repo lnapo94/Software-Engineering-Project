@@ -1,7 +1,5 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import org.apache.log4j.Logger;
-
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
@@ -18,8 +16,9 @@ public class CardBan extends Effect{
 	private static final long serialVersionUID = -3508591321623009266L;
 	private CardColor color;
 	
-	private transient Logger logger = Logger.getLogger(CardBan.class);
-	
+	public CardBan() {
+		super();
+	}
 	
 	public CardBan(CardColor color) {
 		super(EffectType.CARD_BAN);

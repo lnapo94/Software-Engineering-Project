@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.Card;
@@ -18,6 +20,11 @@ public class LeaderCardTest {
 
 	LeaderCard requirementsCard;
 	Player enableEffectPlayer;
+	
+	@BeforeClass
+	public static void classSetUp() {
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+	}
 	
 	@Before
 	public void setUpSatisfyRequirementsTest() throws Exception {
@@ -64,8 +71,6 @@ public class LeaderCardTest {
 		
 		assertEquals(0, enableEffectPlayer.getLeaderCardList().size());
 		assertEquals(1, enableEffectPlayer.getActivatedLeaderCard().size());
-		
-		enableEffectPlayer.getActivatedLeaderCard().get(0).enableOnceARoundEffect();
 		
 		//Requirements in player to satisfy
 		assertEquals(1, enableEffectPlayer.getLeaderRequests().size());

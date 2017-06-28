@@ -7,7 +7,9 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.message.CardRequest;
@@ -55,6 +57,11 @@ public class CardTest {
 	private Card secondCard;
 	private Card thirdCard;
 
+	@BeforeClass
+	public static void classSetUp() {
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+	}
+	
 	@Before
 	public void setUp() throws Exception {
 		//Create possible Packet/Effect arrays for various card

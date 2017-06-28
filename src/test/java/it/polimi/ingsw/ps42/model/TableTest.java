@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps42.model;
 
 import static org.junit.Assert.assertTrue;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,6 +23,7 @@ public class TableTest {
 
 	@Before
 	public void setUp() throws Exception {
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
 		p1 = new Player("P1");
 		Player p2 = new Player("P2");
 		table = new Table(p1, p2, p1, p2);
@@ -31,7 +33,7 @@ public class TableTest {
 	public void test() throws NotEnoughResourcesException, FamiliarInWrongPosition {
 		p1.setFamiliarValue(FamiliarColor.ORANGE, 3);
 		PlayerMove move = new PlayerMove(p1.getPlayerID(), ActionType.MARKET,FamiliarColor.ORANGE, 3, 0);
-		Action action = new ActionCreator(p1, table, move, 3).getCreatedAction();
+		Action action = new ActionCreator(p1, table, move, 1).getCreatedAction();
 		assertTrue(Response.SUCCESS == action.checkAction());
 		action.doAction();
 		assertTrue(p1.getCouncilRequests().size() == 1);

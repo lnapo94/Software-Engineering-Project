@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.message.CardRequest;
@@ -21,6 +23,11 @@ public class ForEachObtainTest {
 
 	private Player player;
 	private Card cardImmediate;
+	
+	@BeforeClass
+	public static void classSetUp() {
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+	}
 	
 	
 	@Before

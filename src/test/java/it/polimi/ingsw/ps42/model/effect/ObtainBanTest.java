@@ -2,7 +2,9 @@ package it.polimi.ingsw.ps42.model.effect;
 
 import static org.junit.Assert.assertEquals;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
@@ -15,6 +17,11 @@ public class ObtainBanTest {
 	private Player p1;
 	private ObtainBan ban;
 	private Packet packetForThePlayer;
+	
+	@BeforeClass
+	public static void classSetUp() {
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+	}
 	
 	@Before
 	public void setUp() throws Exception {
