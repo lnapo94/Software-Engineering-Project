@@ -160,6 +160,10 @@ public class LeaderCardBuilder extends CardBuilder{
 			break;
 		case "INCREASE_ACTION":
 			effect = askIncreaseAction();
+			break;
+		case "INCREASE_FAMILIARS":
+			effect = askIncreaseFamiliars();
+			break;
 		}
 		
 		return effect;

@@ -1186,6 +1186,242 @@
     "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
   },
   "permanentEffect": null
+}
+{
+  "name": "Federico da Montefeltro",
+  "description": "",
+  "requirements": {
+    "checker": false,
+    "resourceRequirements": null,
+    "cardRequirements": {
+      "GREEN": 5
+    }
+  },
+  "effect": {
+    "quantity": 1,
+    "possibleConversion": [
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "STONE",
+              "quantity": 1
+            },
+            {
+              "resource": "WOOD",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "SLAVE",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MONEY",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      }
+    ],
+    "player": null,
+    "typeOfEffect": "COUNCIL_OBTAIN"
+  },
+  "owner": null,
+  "onceARoundEffect": {
+    "color": null,
+    "value": 6,
+    "player": null,
+    "typeOfEffect": "SET_SINGLE_FAMILIAR_LEADER",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.SetSingleFamiliarLeader"
+  },
+  "permanentEffect": null
+}{
+  "name": "Sisto IV",
+  "description": "",
+  "requirements": {
+    "checker": false,
+    "resourceRequirements": {
+      "list": [
+        {
+          "resource": "WOOD",
+          "quantity": 6
+        },
+        {
+          "resource": "STONE",
+          "quantity": 6
+        },
+        {
+          "resource": "MONEY",
+          "quantity": 6
+        },
+        {
+          "resource": "SLAVE",
+          "quantity": 6
+        }
+      ]
+    },
+    "cardRequirements": {}
+  },
+  "effect": {
+    "quantity": 1,
+    "possibleConversion": [
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "STONE",
+              "quantity": 1
+            },
+            {
+              "resource": "WOOD",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "SLAVE",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MONEY",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      }
+    ],
+    "player": null,
+    "typeOfEffect": "COUNCIL_OBTAIN"
+  },
+  "owner": null,
+  "onceARoundEffect": null,
+  "permanentEffect": {
+    "player": null,
+    "typeOfEffect": "FIVE_MORE_VICTORY_POINT",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.FiveMoreVictoryPointLeader"
+  }
 }{
   "name": "Cesare Borgia",
   "description": "",
@@ -1207,7 +1443,97 @@
       "YELLOW": 3
     }
   },
-  "effect": null,
+  "effect": {
+    "quantity": 1,
+    "possibleConversion": [
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "STONE",
+              "quantity": 1
+            },
+            {
+              "resource": "WOOD",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "SLAVE",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MONEY",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      }
+    ],
+    "player": null,
+    "typeOfEffect": "COUNCIL_OBTAIN"
+  },
   "owner": null,
   "onceARoundEffect": null,
   "permanentEffect": {
@@ -1216,17 +1542,107 @@
     "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.NoMilitaryRequirementsLeader"
   }
 }{
-  "name": "Cosimo de\u0027Medici",
+  "name": "Cosimo de\u0027 Medici",
   "description": "",
   "requirements": {
     "checker": false,
     "resourceRequirements": null,
     "cardRequirements": {
-      "YELLOW": 4,
-      "BLUE": 2
+      "BLUE": 2,
+      "YELLOW": 4
     }
   },
-  "effect": null,
+  "effect": {
+    "quantity": 1,
+    "possibleConversion": [
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "STONE",
+              "quantity": 1
+            },
+            {
+              "resource": "WOOD",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "SLAVE",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MONEY",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      }
+    ],
+    "player": null,
+    "typeOfEffect": "COUNCIL_OBTAIN"
+  },
   "owner": null,
   "onceARoundEffect": {
     "costs": {
@@ -1257,11 +1673,101 @@
     "checker": false,
     "resourceRequirements": null,
     "cardRequirements": {
-      "VIOLET": 2,
-      "GREEN": 4
+      "GREEN": 4,
+      "VIOLET": 2
     }
   },
-  "effect": null,
+  "effect": {
+    "quantity": 1,
+    "possibleConversion": [
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "STONE",
+              "quantity": 1
+            },
+            {
+              "resource": "WOOD",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "SLAVE",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MONEY",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      }
+    ],
+    "player": null,
+    "typeOfEffect": "COUNCIL_OBTAIN"
+  },
   "owner": null,
   "onceARoundEffect": {
     "costs": {
@@ -1296,7 +1802,97 @@
     },
     "cardRequirements": {}
   },
-  "effect": null,
+  "effect": {
+    "quantity": 1,
+    "possibleConversion": [
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "STONE",
+              "quantity": 1
+            },
+            {
+              "resource": "WOOD",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "SLAVE",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MONEY",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      }
+    ],
+    "player": null,
+    "typeOfEffect": "COUNCIL_OBTAIN"
+  },
   "owner": null,
   "onceARoundEffect": {
     "costs": {
@@ -1402,33 +1998,112 @@
   },
   "permanentEffect": null
 }{
-  "name": "Pico della Mirandola",
+  "name": "Lucrezia Borgia",
   "description": "",
   "requirements": {
     "checker": false,
     "resourceRequirements": null,
     "cardRequirements": {
-      "YELLOW": 2,
-      "VIOLET": 4
+      "ALL": 6
     }
   },
-  "effect": null,
-  "owner": null,
-  "onceARoundEffect": null,
-  "permanentEffect": {
-    "type": "TAKE_ALL",
-    "value": 0,
-    "discount": {
-      "list": [
-        {
-          "resource": "MONEY",
-          "quantity": 3
-        }
-      ]
-    },
-    "yetActivated": false,
+  "effect": {
+    "quantity": 1,
+    "possibleConversion": [
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "STONE",
+              "quantity": 1
+            },
+            {
+              "resource": "WOOD",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "SLAVE",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MONEY",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      }
+    ],
     "player": null,
-    "typeOfEffect": "INCREASE_ACTION",
-    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
-  }
+    "typeOfEffect": "COUNCIL_OBTAIN"
+  },
+  "owner": null,
+  "onceARoundEffect": {
+    "value": 2,
+    "player": null,
+    "typeOfEffect": "INCREASE_FAMILIARS",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseFamiliarsPoint"
+  },
+  "permanentEffect": null
 }
