@@ -2,6 +2,11 @@ package it.polimi.ingsw.ps42.message;
 
 import java.io.Serializable;
 
+/**
+ * Class to know which user name the player wants. Used only with the Server
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class LoginMessage implements GenericMessage, Serializable{
 	//Message used to connect the client with the server
 	

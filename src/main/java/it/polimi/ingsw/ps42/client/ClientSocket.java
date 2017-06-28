@@ -15,6 +15,13 @@ import it.polimi.ingsw.ps42.message.GenericMessage;
 import it.polimi.ingsw.ps42.view.TerminalView;
 import it.polimi.ingsw.ps42.view.View;
 
+/**
+ * Class to load the Client, both from CLI and GUI
+ * This class is used only for a Socket-type connection
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ClientSocket extends Observable implements Observer{
 
 	private Socket socket;
@@ -26,6 +33,13 @@ public class ClientSocket extends Observable implements Observer{
 	//Logger
 	private transient Logger logger = Logger.getLogger(ClientSocket.class);
 	
+	/**
+	 * Constructor of the Socket Client
+	 * 
+	 * @param host						The IP address of the Server
+	 * @throws UnknownHostException		Thrown if the path represent an Unknown IP
+	 * @throws IOException				Thrown if there is a network error
+	 */
 	public ClientSocket(String host) throws UnknownHostException, IOException {
 		
 		this.socket = new Socket(host, PORT);
@@ -38,12 +52,24 @@ public class ClientSocket extends Observable implements Observer{
 		PropertyConfigurator.configure("Logger//Properties//client_log.properties");
 	}
 	
+	/**
+	 * Method used to add the View (GUI or CLI) as Observer of the ClientSocket
+	 * and vice versa
+	 * 
+	 * @param view	The view to add
+	 */
 	public void addView(View view){
 
 		view.addObserver(this);
 		this.addObserver(view);
 	}
 	
+	/**
+	 * Method used to send a GenericMessage from the User to the Server
+	 * 
+	 * @param message		The message to send
+	 * @throws IOException	Thrown if there is a network error, such as a connection closing
+	 */
 	public void send(GenericMessage message) throws IOException{
 		
 		try {
@@ -57,12 +83,21 @@ public class ClientSocket extends Observable implements Observer{
 		}	
 	}
 	
+	/**
+	 * Method used to know if the connection is still active
+	 * 
+	 * @return	True if the Client is connected to the Server, otherwise False
+	 */
 	public boolean isConnected(){
 		if(socket.isInputShutdown() || socket.isOutputShutdown())
 			isConnected=false;
 		return isConnected;
 	}
 	
+	/**
+	 * Method called to start to read messages from the socket.
+	 * The client is in waiting of a message from the Server
+	 */
 	public void readMessage() {
 		
 		if(isConnected()){
@@ -80,12 +115,21 @@ public class ClientSocket extends Observable implements Observer{
 		}
 	}
 	
+	/**
+	 * Method used to close the connection
+	 * 
+	 * @throws IOException	Thrown if there are some problems in closing
+	 */
 	public void close() throws IOException {
 		logger.info("Closing the reader/writer for the socket");
 		reader.close();
 		writer.close();
 	}
 	
+	/**
+	 * Method that start the communication with the Server.
+	 * It is used to read always a message from the socket
+	 */
 	public void startReading(){
 		new Thread( new Runnable(){
 			
@@ -100,6 +144,10 @@ public class ClientSocket extends Observable implements Observer{
 		}).start();
 			
 	}
+	
+	/**
+	 * Method used when the user give an input to send to the Server
+	 */
 	@Override
 	public void update(Observable sender, Object message) {
 
@@ -115,7 +163,13 @@ public class ClientSocket extends Observable implements Observer{
 		
 	}
 	
-	
+	/**
+	 * Main method to start the ClientSocket Class
+	 * 
+	 * @param args
+	 * @throws UnknownHostException		Thrown if the {@code String host = "IP address"} is an Unknown IP address
+	 * @throws IOException				Thrown if there is a network problem
+	 */
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		
 		String host = "localhost"; 

@@ -4,9 +4,13 @@ import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 
+/**
+ * Class that contains the informations given from the player
+ * The game logic parse these information to create a complete Action
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class PlayerMove extends Message{
-	//Class that contains the informations given from the player
-	//The game logic parse these information to create a complete Action
 	
 	/**
 	 * 
@@ -46,6 +50,10 @@ public class PlayerMove extends Message{
 		return increaseValue;
 	}
 
+	
+	/**
+	 * Method used to visit this message
+	 */
 	@Override
 	public void accept(Visitor v) {
 		//Method used to start the visit

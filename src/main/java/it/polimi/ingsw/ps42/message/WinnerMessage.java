@@ -4,6 +4,11 @@ import java.util.List;
 
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 
+/**
+ * Message sent when a match finished
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class WinnerMessage extends Message{
 
 	/**
@@ -24,6 +29,9 @@ public class WinnerMessage extends Message{
 		return result;
 	}
 	
+	/**
+	 * Method used to visit this message
+	 */
 	@Override
 	public void accept(Visitor v) {
 		

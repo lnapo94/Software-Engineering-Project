@@ -3,12 +3,13 @@ package it.polimi.ingsw.ps42.message;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 
+/**
+ * Message to notify the View that the player has to do an Action,
+ * wraps a Player Move and an Action Prototype for the bonus Actions
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class PlayerToken extends Message{
-
-	/*Message to notify the View that the player has to do an Action,
-	 * wraps a Player Move and an Action Prototype for the bonus Actions 
-	 */
-	
 	/**
 	 * 
 	 */
@@ -43,7 +44,9 @@ public class PlayerToken extends Message{
 	public boolean isBonusAction(){
 		return this.actionPrototype != null;
 	}
-	
+	/**
+	 * Method used to visit this message
+	 */
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);

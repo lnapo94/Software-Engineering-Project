@@ -2,6 +2,11 @@ package it.polimi.ingsw.ps42.message;
 
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 
+/**
+ * Message used to update the dice values in the View
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class DiceMessage extends Message{
 	//Message used to update the dice values
 	
@@ -32,6 +37,9 @@ public class DiceMessage extends Message{
 		return this.white;
 	}
 
+	/**
+	 * Method used to visit this message
+	 */
 	@Override
 	public void accept(Visitor v) {
 		//Method used to start the visit

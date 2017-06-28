@@ -3,6 +3,11 @@ package it.polimi.ingsw.ps42.message;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 
+/**
+ * Class used to know which leader card the player wants to enable
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class LeaderCardUpdateMessage extends Message {
 	
 	/**
@@ -19,7 +24,10 @@ public class LeaderCardUpdateMessage extends Message {
 	public LeaderCard getCard() {
 		return this.card;
 	}
-
+	
+	/**
+	 * Method used to visit this message
+	 */
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);

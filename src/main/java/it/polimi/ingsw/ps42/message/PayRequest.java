@@ -9,8 +9,13 @@ import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
+/**
+ * This request is created to know which cost player wants to pay
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class PayRequest extends CardRequest{
-	//This request is created to know which cost player wants to pay
+	
 	
 	/**
 	 * 
@@ -31,7 +36,10 @@ public class PayRequest extends CardRequest{
 			throw new ArithmeticException("Card cannot be payed, control goes down");
 		}
 	}
-
+	
+	/**
+	 * Method used to visit this message
+	 */
 	@Override
 	public void accept(Visitor v) {
 		//Method used to start the visit

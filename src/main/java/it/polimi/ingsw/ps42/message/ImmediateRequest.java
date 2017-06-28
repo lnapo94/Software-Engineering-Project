@@ -7,6 +7,11 @@ import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * Class used to know which immediate card effect player wants to enable
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ImmediateRequest extends CardRequest{
 	//Used to know which immediate card effect player wants to enable
 
@@ -23,7 +28,10 @@ public class ImmediateRequest extends CardRequest{
 	public void apply(Player player) {
 		card.enableImmediateEffect(possibleChoiceIndex.get(userChoice), player);
 	}
-
+	
+	/**
+	 * Method used to visit this message
+	 */
 	@Override
 	public void accept(Visitor v) {
 		//Method used to start the visit

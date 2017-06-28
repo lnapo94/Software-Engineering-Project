@@ -2,6 +2,11 @@ package it.polimi.ingsw.ps42.message;
 
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 
+/**
+ * Simple message used to notify the Controller that the specify player doesn't want to do a move
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class EmptyMove extends Message {
 
 	/**
@@ -14,6 +19,9 @@ public class EmptyMove extends Message {
 		
 	}
 
+	/**
+	 * Method used to visit this message
+	 */
 	@Override
 	public void accept(Visitor v) {
 		

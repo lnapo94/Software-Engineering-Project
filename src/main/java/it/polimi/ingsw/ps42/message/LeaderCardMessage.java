@@ -6,6 +6,11 @@ import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 
+/**
+ * Message used to choose the leader card in the view
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class LeaderCardMessage extends Message{
 	
 	/**
@@ -15,6 +20,12 @@ public class LeaderCardMessage extends Message{
 	private List<LeaderCard> leaderCardList;
 	private int choice;
 	
+	/**
+	 * Constructor of this message
+	 * 
+	 * @param playerID			The interested player
+	 * @param leaderCardList	The available leader cards
+	 */
 	public LeaderCardMessage(String playerID, List<LeaderCard> leaderCardList) {
 		super(playerID);
 		this.leaderCardList = leaderCardList;
@@ -33,7 +44,10 @@ public class LeaderCardMessage extends Message{
 	public int getChoice() {
 		return this.choice;
 	}
-
+	
+	/**
+	 * Method used to visit this message
+	 */
 	@Override
 	public void accept(Visitor v) {
 		v.visit(this);
