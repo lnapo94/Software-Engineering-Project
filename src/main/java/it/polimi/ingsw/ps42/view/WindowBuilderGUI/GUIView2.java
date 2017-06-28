@@ -10,6 +10,8 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Rectangle;
 
 import javax.swing.JLayeredPane;
 import java.awt.BorderLayout;
@@ -22,17 +24,25 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JSplitPane;
 
+import it.polimi.ingsw.ps42.view.TableInterface;
 import it.polimi.ingsw.ps42.view.GUI.CardLabel;
+import it.polimi.ingsw.ps42.view.GUI.CardZoom;
+import it.polimi.ingsw.ps42.view.GUI.DraggableComponent;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JButton;
 
-public class GUIView2 {
+public class GUIView2 implements TableInterface{
 
 	private JFrame frame;
-	private JLabel cardZoom;
+	private CardZoom cardZoom;
+	private BufferedImage movingImage;
+	private JLabel towerFamPosition;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -130,8 +140,8 @@ public class GUIView2 {
 		JLayeredPane rightLayeredPane = new JLayeredPane();
 		splitPane.setRightComponent(rightLayeredPane);
 		
-		cardZoom = new JLabel("");
-		cardZoom.setBounds(0, 0, GreenCard4.getWidth()*3,GreenCard4.getHeight()*3 );
+		cardZoom = new CardZoom(null, new Dimension(GreenCard4.getWidth()*3,GreenCard4.getHeight()*3));
+		cardZoom.setLocation(0, 0);
 		rightLayeredPane.add(cardZoom);
 		
 		CardLabel cardLabel = new CardLabel(30, 320, cardDimension, cardZoom);
@@ -142,17 +152,86 @@ public class GUIView2 {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
+		
+		try{
+			DraggableComponent familiarStart = new DraggableComponent(750, 1510, tableLabel.getSize(), ImageIO.read(GUIView2.class.getResource("/Images/Others/BluFamiliareNero.png")));
+			familiarStart.enableListener();
+			familiarStart.setCanMove(true);
+			towerFamPosition = new JLabel("");
+			towerFamPosition.setBounds(545, 120, (int)(tableLabel.getWidth()*0.06), (int)(tableLabel.getHeight()*0.06));
+			
+			familiarStart.setTable(this);
+			
+			
+			JButton btnNewButton = new JButton("resetFamiliar");
+			btnNewButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent event) {
+					familiarStart.resetFamiliar();
+					towerFamPosition.setIcon(null);
+				}
+			});
+			btnNewButton.setBounds(0, 0, 250, 41);
+			leftLayeredPane.add(btnNewButton);
+			
+			
+			leftLayeredPane.add(towerFamPosition);
+			leftLayeredPane.add(familiarStart);
+			this.movingImage = familiarStart.getImage();
+			
+		}
+		catch (IOException e) {
+			
+		}
+		
 		leftLayeredPane.add(cardLabel);
 		leftLayeredPane.add(GreenCard4);
 		leftLayeredPane.add(tableLabel);
-		
-		
-		
 		
 	}
 	
 	public void zoomImage(Icon imageToZoom){
 		
 		cardZoom.setIcon(imageToZoom);
+	}
+	
+	private ImageIcon resizeImage(BufferedImage imageToResize, Dimension newDimension){
+		Image cardResized = null;
+		if(imageToResize != null){
+			int width = (int)newDimension.getWidth();
+			int height = (int)newDimension.getHeight();
+			int scaledHeight = height;
+			int scaledWidth= (int)(width*scaledHeight/(height));
+			cardResized = imageToResize.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+		}
+		
+		return new ImageIcon(cardResized);
+	}
+	
+	public BufferedImage getMovingImage(){
+		return this.movingImage;
+	}
+	
+	public void setMovingImage(BufferedImage image){
+		this.movingImage = image;
+	}
+
+	public boolean handleEvent(int x, int y, BufferedImage image) {
+		System.out.println("x: "+x+"; y: "+y);
+		if( containsPoint(towerFamPosition, x, y) )
+		{
+			towerFamPosition.setIcon(resizeImage(image, towerFamPosition.getSize()));
+			return true;
+		}
+		else return false;
+	}
+	
+	private boolean containsPoint(JLabel label, int x, int y){
+		Point p = label.getLocationOnScreen();
+		if(p.getX() < x && x < p.getX()+label.getWidth()
+				&& p.getY() < y && y < p.getY() + label.getHeight())
+			return true;
+		else return false;
 	}
 }
