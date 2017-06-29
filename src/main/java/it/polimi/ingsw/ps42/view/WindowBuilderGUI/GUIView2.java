@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.PopupMenu;
 import java.awt.Rectangle;
 
 import javax.swing.JLayeredPane;
@@ -24,10 +25,14 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JSplitPane;
 
+import it.polimi.ingsw.ps42.message.PlayerMove;
+import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.view.TableInterface;
 import it.polimi.ingsw.ps42.view.GUI.CardLabel;
 import it.polimi.ingsw.ps42.view.GUI.CardZoom;
 import it.polimi.ingsw.ps42.view.GUI.DraggableComponent;
+import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -35,6 +40,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
+import java.awt.Choice;
 
 public class GUIView2 implements TableInterface{
 
@@ -61,15 +67,17 @@ public class GUIView2 implements TableInterface{
 
 	/**
 	 * Create the application.
+	 * @throws IOException 
 	 */
-	public GUIView2() {
+	public GUIView2() throws IOException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws IOException 
 	 */
-	private void initialize() {
+	private void initialize() throws IOException {
 		frame = new JFrame();
 		//Create a full Screen main frame 
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -78,17 +86,27 @@ public class GUIView2 implements TableInterface{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		/*
 		JSplitPane splitPane = new JSplitPane();
 		splitPane.setBounds(5, 5, frame.getWidth(), frame.getHeight());
 		splitPane.setDividerLocation(0.42);
 		frame.getContentPane().add(splitPane);
+		*/
+		
+		
+		JLayeredPane splitPane = new JLayeredPane();
+		splitPane.setBounds(5, 5, frame.getWidth(), frame.getHeight());
+		frame.getContentPane().add(splitPane);
+				
 		
 		JLayeredPane leftLayeredPane = new JLayeredPane();
-		leftLayeredPane.setSize((int)(splitPane.getWidth()*0.5), splitPane.getHeight());
-		splitPane.setLeftComponent(leftLayeredPane);
+		leftLayeredPane.setSize((int)(splitPane.getWidth()), splitPane.getHeight());
+		leftLayeredPane.setLocation(0, 0);
+//		splitPane.setLeftComponent(leftLayeredPane);
+splitPane.add(leftLayeredPane);
 		
 		JLabel tableLabel = new JLabel("");
-		tableLabel.setSize(new Dimension(leftLayeredPane.getWidth(), leftLayeredPane.getHeight()));
+		tableLabel.setSize(new Dimension((int)(leftLayeredPane.getWidth()*0.5), leftLayeredPane.getHeight()));
 		
 		Dimension cardDimension = null;
 		try {
@@ -137,12 +155,16 @@ public class GUIView2 implements TableInterface{
 			e.printStackTrace();
 		}
 		
-		JLayeredPane rightLayeredPane = new JLayeredPane();
-		splitPane.setRightComponent(rightLayeredPane);
+		/*JLayeredPane rightLayeredPane = new JLayeredPane();
+		rightLayeredPane.setSize((int)(splitPane.getWidth()*0.5), splitPane.getHeight());
+		rightLayeredPane.setLocation((int)(splitPane.getWidth()*0.5), 0);
+		splitPane.add(rightLayeredPane);
+		*/
 		
-		cardZoom = new CardZoom(null, new Dimension(GreenCard4.getWidth()*3,GreenCard4.getHeight()*3));
-		cardZoom.setLocation(0, 0);
-		rightLayeredPane.add(cardZoom);
+		BufferedImage cardBack = ImageIO.read(GUIView.class.getResource("/Images/LeaderCards/back.jpg"));
+		cardZoom = new CardZoom(cardBack, new Dimension(GreenCard4.getWidth()*3,GreenCard4.getHeight()*3));
+		cardZoom.setLocation((int)(leftLayeredPane.getWidth()*0.5), 0);
+		leftLayeredPane.add(cardZoom);
 		
 		CardLabel cardLabel = new CardLabel(30, 320, cardDimension, cardZoom);
 		try {
@@ -172,6 +194,16 @@ public class GUIView2 implements TableInterface{
 					towerFamPosition.setIcon(null);
 				}
 			});
+			
+			Choice choice = new Choice();
+			choice.setBounds(100, 1000, 300, 300);
+			//PopupMenu menu = new PopupMenu("menu delle scelte");
+			//menu.add("item11");
+			//choice.add(menu);
+			choice.add("scelta1");
+			choice.add("Scelta 2");
+			leftLayeredPane.add(choice);
+			
 			btnNewButton.setBounds(0, 0, 250, 41);
 			leftLayeredPane.add(btnNewButton);
 			
@@ -234,4 +266,12 @@ public class GUIView2 implements TableInterface{
 			return true;
 		else return false;
 	}
+
+	@Override
+	public void askIncrement(ActionType type, int position, FamiliarColor color) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

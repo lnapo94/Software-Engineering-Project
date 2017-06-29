@@ -1,15 +1,12 @@
 package it.polimi.ingsw.ps42.view.GUI;
 
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
+import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.view.TableInterface;
 
 public class DraggableComponent extends FunctionalLabel {
@@ -30,6 +27,7 @@ public class DraggableComponent extends FunctionalLabel {
 	private int initialY;
 	
 	private TableInterface table;
+	private Dimension dimension;
 	
 	private class FamiliarPressedListener implements MouseListener{
 
@@ -65,8 +63,9 @@ public class DraggableComponent extends FunctionalLabel {
 				setLocation(initialX, initialY);
 			}
 			else{
-				if(table.handleEvent(event.getXOnScreen(), event.getYOnScreen(), image))
+				if(table.handleEvent(event.getXOnScreen(), event.getYOnScreen(), image)){
 					setIcon(null);
+				}
 				else 
 					setLocation(initialX, initialY);
 			}
@@ -96,7 +95,9 @@ public class DraggableComponent extends FunctionalLabel {
 	
 	public DraggableComponent(int x, int y, Dimension dimension, BufferedImage image) {
 		super();
-		setBounds(x, y, (int)(dimension.getWidth()*0.06), (int)(dimension.getHeight()*0.06));
+		dimension = new Dimension((int)(dimension.getWidth()*0.06), (int)(dimension.getHeight()*0.05)); 
+		setLocation(x, y);
+		setSize(dimension);
 		myX = x;
 		myY = y;
 		screenX = x;
@@ -129,4 +130,5 @@ public class DraggableComponent extends FunctionalLabel {
 		setLocation(initialX, initialY);
 		setIcon(resizeImage(image, this.getSize()));
 	}
+	
 }
