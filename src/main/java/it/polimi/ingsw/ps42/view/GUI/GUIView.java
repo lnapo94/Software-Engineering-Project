@@ -119,13 +119,15 @@ public class GUIView extends View {
 		
 		buildCardPosition(cardDimension, leftLayeredPane);
 		
-		buildFamiliarStartingPositions();
+		buildFamiliarStartingPositions(leftLayeredPane);
+		
+		buildFamiliarMovePositions(leftLayeredPane);
 	}
 	/**
-	 * 
-	 * @param cardDimension
-	 * @param leftPane
-	 * @throws IOException
+	 * Initialize the Card Position Label
+	 * @param cardDimension Dimension of the card that will be placed
+	 * @param leftPane Pane where the Card will be placed
+	 * @throws IOException 
 	 */
 	private void buildCardPosition(Dimension cardDimension, JLayeredPane leftPane) throws IOException{
 		
@@ -143,7 +145,7 @@ public class GUIView extends View {
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
 		deltaY = (int)(tableImageDimension.getHeight()*0.03);
-		deltaX += (int) (tableImageDimension.getWidth()*0.24);
+		deltaX += (int) (tableImageDimension.getWidth()*0.241);
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
@@ -152,7 +154,7 @@ public class GUIView extends View {
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
 		deltaY = (int)(tableImageDimension.getHeight()*0.03);
-		deltaX += (int) (tableImageDimension.getWidth()*0.24);
+		deltaX += (int) (tableImageDimension.getWidth()*0.241);
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
@@ -161,7 +163,7 @@ public class GUIView extends View {
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
 		deltaY = (int)(tableImageDimension.getHeight()*0.03);
-		deltaX += (int) (tableImageDimension.getWidth()*0.24);
+		deltaX += (int) (tableImageDimension.getWidth()*0.241);
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
@@ -177,7 +179,43 @@ public class GUIView extends View {
 		greenTower.get(1).placeCard(ImageIO.read(GUIView.class.getResource("/Images/Cards/FirstPeriod/Green/1.png")));
 	}
 	
-	private void buildFamiliarStartingPositions(){
+	/**
+	 * 
+	 * @param pane
+	 * @throws IOException
+	 */
+	private void buildFamiliarStartingPositions(JLayeredPane pane) throws IOException{
+		
+		int deltaX = (int)(tableImageDimension.getWidth()*0.56 );
+		int deltaY = (int)(tableImageDimension.getHeight()*0.93);
+		
+		blackFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+		blackFamiliar.enableListener();
+		pane.add(blackFamiliar, 0);
+		
+		int border = (int)(blackFamiliar.getWidth()*1.1); 
+		deltaX += border;
+		whiteFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+		whiteFamiliar.enableListener();
+		pane.add(whiteFamiliar, 0);
+		
+		deltaX += border;
+		orangeFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+		orangeFamiliar.enableListener();
+		pane.add(orangeFamiliar, 0);
+		
+		deltaX += border;
+		neutralFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+		neutralFamiliar.enableListener();
+		pane.add(neutralFamiliar, 0);
+		
+	}
+	
+	/**
+	 * 
+	 * @param pane
+	 */
+	private void buildFamiliarMovePositions(JLayeredPane pane){
 		
 	}
 	
