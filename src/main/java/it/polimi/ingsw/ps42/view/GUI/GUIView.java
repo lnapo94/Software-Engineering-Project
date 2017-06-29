@@ -72,6 +72,7 @@ public class GUIView extends View implements TableInterface{
 	private List<JLabel> produce;
 	//Council Positions
 	private List<JLabel> council;
+	private List<JLabel> market;
 	
 	//New Order 
 	private List<JLabel> newOrder;
@@ -111,18 +112,6 @@ public class GUIView extends View implements TableInterface{
 		
 		Dimension leftPaneDimension = new Dimension((int)(mainLayeredPane.getWidth()*0.42), mainLayeredPane.getHeight());
 		Dimension rightPanelDimension = new Dimension((int)(mainLayeredPane.getWidth()*0.58), mainLayeredPane.getHeight());
-		
-		//Set up the LeftPart of the Layered Pane
-/*		JLayeredPane leftLayeredPane = new JLayeredPane();
-		leftLayeredPane.setSize(leftPaneDimension);
-		leftLayeredPane.setMinimumSize(leftPaneDimension);
-		splitPane.setLeftComponent(leftLayeredPane);
-		//Setup the Right Layered Pane
-		JLayeredPane rightLayeredPane = new JLayeredPane();
-		rightLayeredPane.setSize(rightPanelDimension);
-		rightLayeredPane.setMinimumSize(rightPanelDimension);
-		splitPane.setRightComponent(rightLayeredPane);
-*/
 		
 		//Set the Table main Image
 		JLabel tableLabel = new JLabel();
@@ -166,6 +155,8 @@ public class GUIView extends View implements TableInterface{
 		enableMove();
 		
 		window = new UsernameWindow(this, mainFrame, "Wrong Name");
+		
+		//new IncrementWindow(this, ActionType.TAKE_BLUE, FamiliarColor.ORANGE, 2);
 	}
 	/**
 	 * Initialize the Card Position Label
@@ -233,26 +224,26 @@ public class GUIView extends View implements TableInterface{
 		int deltaX = (int)(tableImageDimension.getWidth()*0.56 );
 		int deltaY = (int)(tableImageDimension.getHeight()*0.93);
 		
-		blackFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+		blackFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), FamiliarColor.BLACK);
 		blackFamiliar.enableListener();
 		blackFamiliar.setTable(this);
 		mainPane.add(blackFamiliar, 0);
 		
 		int border = (int)(blackFamiliar.getWidth()*1.1); 
 		deltaX += border;
-		whiteFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+		whiteFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), FamiliarColor.WHITE);
 		whiteFamiliar.enableListener();
 		whiteFamiliar.setTable(this);
 		mainPane.add(whiteFamiliar, 0);
 		
 		deltaX += border;
-		orangeFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+		orangeFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), FamiliarColor.ORANGE);
 		orangeFamiliar.enableListener();
 		orangeFamiliar.setTable(this);
 		mainPane.add(orangeFamiliar, 0);
 		
 		deltaX += border;
-		neutralFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+		neutralFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), FamiliarColor.NEUTRAL);
 		neutralFamiliar.enableListener();
 		neutralFamiliar.setTable(this);
 		mainPane.add(neutralFamiliar, 0);
@@ -290,6 +281,58 @@ public class GUIView extends View implements TableInterface{
 		//firstCouncil.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
 		council.add(firstCouncil);
 		mainPane.add(firstCouncil, 0);
+		
+		//Build the Market, Yield and Product familiarMove positions
+		yield = new ArrayList<>();
+		produce = new ArrayList<>();
+		market = new ArrayList<>();
+
+		int deltaY = (int)(tableImageDimension.getHeight()*0.11);
+		placeYieldAndProductPosition(mainPane, positionDimension, produce, deltaY);
+		deltaY += (int)(tableImageDimension.getHeight()*0.145);
+		placeYieldAndProductPosition(mainPane, positionDimension, yield, deltaY);
+		
+		deltaX = (int)(tableImageDimension.getWidth()*1.615 + cardZoom.getWidth() );
+		deltaY = (int)(tableImageDimension.getHeight()*0.08);
+		placeMarket(positionDimension, deltaX, deltaY, mainPane);
+		deltaX += (int)(positionDimension.getWidth()*1.85);
+		placeMarket(positionDimension, deltaX, deltaY, mainPane);
+		deltaX += (int)(positionDimension.getWidth()*1.75);
+		deltaY = (int)(tableImageDimension.getHeight()*0.12);
+		placeMarket(positionDimension, deltaX, deltaY, mainPane);
+		deltaX += (int)(positionDimension.getWidth()*1.75);
+		placeMarket(positionDimension, deltaX, deltaY, mainPane);
+	}
+	
+	private void placeMarket(Dimension positionDimension, int x, int y, JLayeredPane mainPane) throws IOException{
+
+		JLabel position = new JLabel();
+		position.setSize(positionDimension);
+		position.setLocation(x, y);
+		position.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
+		market.add(position);
+		mainPane.add(position, 0);
+	}
+	
+	private void placeYieldAndProductPosition(JLayeredPane mainPane, Dimension positionDimension, List<JLabel> yieldAndProduct, int deltaY) throws IOException{
+		
+		int deltaX = (int)(tableImageDimension.getWidth()*1.03 + cardZoom.getWidth() );
+		JLabel position = new JLabel();
+		position.setSize(positionDimension);
+		position.setLocation(deltaX, deltaY);
+		//position.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
+		yieldAndProduct.add(position);
+		mainPane.add(position, 0);
+		deltaX += positionDimension.getWidth();
+		for(int i=0; i<2; i++){
+			deltaX += positionDimension.getWidth()*1.4;
+			JLabel tempPosition = new JLabel();
+			tempPosition.setSize(positionDimension);
+			tempPosition.setLocation(deltaX, deltaY);
+			//tempPosition.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
+			yieldAndProduct.add(tempPosition);
+			mainPane.add(tempPosition, 0);
+		}
 	}
 	
 	private void placeFamiliarPosition(JLayeredPane mainPane, Dimension positionDimension, List<JLabel> tower, int rightShift) throws IOException{
@@ -321,36 +364,56 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	@Override
-	public boolean handleEvent(int x, int y, BufferedImage image) {
+	public boolean handleEvent(int x, int y, BufferedImage image, FamiliarColor color) {
 		System.out.println("x: "+x+"; y: "+y);
 		//For each position check if contains the point (x,y), if so change the imageIcon
+
 		for (JLabel position : greenTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
 				position.setIcon(resizeImage(image, position.getSize()));
+				createNewMove(ActionType.TAKE_GREEN, color, greenTowerForFamiliar.indexOf(position));
 				return true;
 			}
 		}
 		for (JLabel position : yellowTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
 				position.setIcon(resizeImage(image, position.getSize()));
+				createNewMove(ActionType.TAKE_YELLOW, color, yellowTowerForFamiliar.indexOf(position));
 				return true;
 			}
 		}
 		for (JLabel position : blueTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
 				position.setIcon(resizeImage(image, position.getSize()));
+				createNewMove( ActionType.TAKE_BLUE, color, blueTowerForFamiliar.indexOf(position));
 				return true;
 			}
 		}
 		for (JLabel position : violetTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
 				position.setIcon(resizeImage(image, position.getSize()));
+				createNewMove(ActionType.TAKE_VIOLET, color, violetTowerForFamiliar.indexOf(position));
 				return true;
 			}
 		}
 		for (JLabel position : council) {
 			if( containsPoint(position, x, y) ){
 				position.setIcon(resizeImage(image, position.getSize()));
+				createNewMove( ActionType.COUNCIL, color, council.indexOf(position));
+				return true;
+			}
+		}
+		for (JLabel position : yield) {
+			if( containsPoint(position, x, y) ){
+				position.setIcon(resizeImage(image, position.getSize()));
+				createNewMove( ActionType.YIELD, color, yield.indexOf(position));
+				return true;
+			}
+		}
+		for (JLabel position : produce) {
+			if( containsPoint(position, x, y) ){
+				position.setIcon(resizeImage(image, position.getSize()));
+				createNewMove( ActionType.PRODUCE, color, produce.indexOf(position));
 				return true;
 			}
 		}
@@ -366,13 +429,10 @@ public class GUIView extends View implements TableInterface{
 			else return false;
 	
 	}
-
-	@Override
-	public void askIncrement(ActionType type, int position, FamiliarColor color) {
-		//Ask the player if he wants to increase the Action value with some of his slaves
-		int increaseValue = 0;
-		
-		this.nextMove = new PlayerMove(player.getPlayerID(), type, color, position, increaseValue);
+	
+	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position){
+		//Ask the Player if he wants to increment the actual move and set the increment
+		new IncrementWindow(this, type, familiarColor, position);
 		
 	}
 	private void enableMove(){
@@ -443,22 +503,11 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void choosePlayerMove(ActionPrototype prototype) {
 		//Enable the Player to perform a new Move
-		
-		ActionType type = null;
-		FamiliarColor familiarColor = null;
-		int position = 0;
-		int increaseValue = 0;
-		//Enable the draggableFamiliar to move
-		enableMove();
-		while(nextMove != null){
-/*			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-*/
+		if(prototype != null){
+			//Show ActionPrototype
+			
 		}
-		
+		enableMove();
 	}
 
 	@Override
@@ -512,6 +561,10 @@ public class GUIView extends View implements TableInterface{
 	protected void showResult(List<String> finalChart) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public JFrame getMainFrame() {
+		return mainFrame;
 	}
 	
 	public static void main(String[] args) {
