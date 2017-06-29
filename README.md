@@ -23,7 +23,7 @@ We have implemented the GUI for the Client to play at this game
 ### How to Use our Distributed Application?
 Our application is divided in two main part, Server and Client. First, you must start the server. To do it, you should go to the server package (it.polimi.ingsw.ps42.server) and then start the Server.java
 
-After that, you can start the client, and to do that you should have to go to the client package (it.polimi.ingsw.client) and start the ClientSocket.java
+After that, you can start the client, and to do that you should have to go to the client package (it.polimi.ingsw.ps42.client) and start the ClientSocket.java
 
 The timers to wait the start of a match or to wait the player move is setted to 30 seconds, to change that you can go in Resource/Configuration/timers.json
 
