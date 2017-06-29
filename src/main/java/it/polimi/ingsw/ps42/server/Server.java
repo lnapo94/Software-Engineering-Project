@@ -5,7 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Timer;
@@ -65,6 +67,14 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		TIMER_SECONDS = loader.getServerTimer();
 		
 		logger.info("Timer for the match is setted to: " + TIMER_SECONDS);
+		
+		logger.info("Starting RMI procedure");
+		logger.info("Create registry...");
+		LocateRegistry.createRegistry(1099);
+		logger.info("Export the server");
+		Naming.rebind("Server", this);
+		logger.info("RMI procedure done!");
+		
 		
 		try {
 			serverSocket = new ServerSocket(SERVER_PORT);
@@ -158,25 +168,48 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	}
 
 	@Override
-	public void addClient(ClientInterface client) throws RemoteException {
-		// TODO Auto-generated method stub
+	public void sendLoginMessage(ClientInterface client, LoginMessage loginMessage) throws RemoteException {
 		
-	}
-
-	@Override
-	public void sendLoginMessage(LoginMessage loginMessage) throws RemoteException {
-		// TODO Auto-generated method stub
+		logger.info("Adding a new player...");
 		
-	}
-
-	@Override
-	public void addToGame() throws RemoteException {
-		// TODO Auto-generated method stub
+		String playerID = loginMessage.getUserName();
 		
+		//If the player yet exists, add it to the correct view
+		if(existAnotherPlayer(playerID)) {
+			if(playerWasPlaying(playerID)) {
+				client.notifyServerView(playerTable.get(playerID).getID());
+			}
+			else {
+				loginMessage.playerIdYetUsed();
+				client.notify(loginMessage);
+			}
+		}
+		else {
+			//If there isn't a waiting match, create it
+			if(waitingView == null) 
+				waitingView = new ServerView();
+			
+			//Add a connection to the waiting view
+			client.notifyServerView(waitingView.getID());
+			
+			if(waitingView.getNumberOfPlayers() == 2) {
+				timer = new Timer();
+				timer.schedule(new ServerTimer(this), TIMER_SECONDS * 1000);
+			}
+			
+			playerTable.put(playerID, waitingView);
+			
+			//If the waitingView is full, start the match
+			if(waitingView.getNumberOfPlayers() == 4) {
+				startMatch();
+			}
+		}
+		logger.info("RMI Player added");
 	}
 	
+	
 	public static void main(String[] args) throws IOException {
-		Server server = new Server();
+		Server server = new Server();		
 		server.run();
 	}
 
