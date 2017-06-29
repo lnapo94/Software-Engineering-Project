@@ -16,7 +16,7 @@ public class TimerBuilder extends Builder {
 	@Override
 	protected void initGson() {
 		GsonBuilder builder = new GsonBuilder().serializeNulls().setPrettyPrinting();
-		Type type = new TypeToken<HashMap<Integer, Integer>>(){}.getType();
+		Type type = new TypeToken<HashMap<String, Integer>>(){}.getType();
 		this.gson = builder.registerTypeAdapter(type, new Serializer()).create();
 	}
 	

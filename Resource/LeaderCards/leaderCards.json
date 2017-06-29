@@ -2106,4 +2106,124 @@
     "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseFamiliarsPoint"
   },
   "permanentEffect": null
+}{
+  "name": "Pico della Mirandola",
+  "description": "",
+  "requirements": {
+    "checker": false,
+    "resourceRequirements": null,
+    "cardRequirements": {
+      "YELLOW": 2,
+      "VIOLET": 4
+    }
+  },
+  "effect": {
+    "quantity": 1,
+    "possibleConversion": [
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "STONE",
+              "quantity": 1
+            },
+            {
+              "resource": "WOOD",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "SLAVE",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MONEY",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "player": null,
+        "typeOfEffect": "OBTAIN"
+      }
+    ],
+    "player": null,
+    "typeOfEffect": "COUNCIL_OBTAIN"
+  },
+  "owner": null,
+  "onceARoundEffect": null,
+  "permanentEffect": {
+    "type": "TAKE_ALL",
+    "value": 0,
+    "discount": {
+      "list": [
+        {
+          "resource": "MONEY",
+          "quantity": 3
+        }
+      ]
+    },
+    "yetActivated": false,
+    "player": null,
+    "typeOfEffect": "INCREASE_ACTION",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
+  }
 }

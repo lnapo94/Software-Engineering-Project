@@ -50,6 +50,10 @@ public class StaticList<E> implements Iterable<E>, Serializable{
 		list.remove(element);
 	}
 	
+	public E remove(int index) {
+		return list.remove(index);
+	}
+	
 	public void removeAll() {
 		//Remove all the element from the StaticList
 		list = new ArrayList<>();
