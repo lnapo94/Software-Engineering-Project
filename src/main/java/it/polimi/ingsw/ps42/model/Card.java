@@ -20,7 +20,11 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
-
+/**
+ * Class that represent the card object of the Lorenzo il Magnifico game
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class Card implements Serializable{
 	/**
 	 * 
@@ -57,6 +61,20 @@ public class Card implements Serializable{
 		 logger = Logger.getLogger(Card.class);
 	}
 	
+	/**
+	 * The constructor of the card
+	 * 
+	 * @param name				The name to give to the card
+	 * @param description		A brief description
+	 * @param color				The color of the card (Green, Yellow, Blue or Violet)
+	 * @param period			The period of the card
+	 * @param level				The level of the action in the card
+	 * @param costs				All the packets that represents a cost (The costs are in "OR")
+	 * @param immediateEffects	All the effects activated when the card is taken (The effects are in "OR")
+	 * @param requirements		All the packets of the requirements (The requirements are in "OR")
+	 * @param permanentEffect	All the effects activated with a yield (Green) or product (Yellow) action (The effects are in "OR")
+	 * @param finalEffects		All the final effects activated at the end of the match (The effects are in "OR")
+	 */
 	public Card(String name, String description, CardColor color, int period, 
 			int level, List<Packet> costs, List<Effect> immediateEffects, List<Packet> requirements,
 			List<Effect> permanentEffect, List<Effect> finalEffects){
@@ -79,42 +97,73 @@ public class Card implements Serializable{
 		this.effectivelyCosts = new ArrayList<>();
 	}
 	
+	/**
+	 * Getter to know the card name
+	 * @return	The name of the card
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Getter to know the card description
+	 * @return	The description of the card
+	 */
 	public String getDescription() {
 		return description;
 	}
 	
+	/**
+	 * Getter to know the card color
+	 * @return	The color of the card
+	 */
 	public CardColor getColor() {
 		return color;
 	}
 	
+	/**
+	 * Getter to know the card period
+	 * @return	The period of the card
+	 */
 	public int getPeriod() {
 		return period;
 	}
 	
+	/**
+	 * Getter to know the card action level
+	 * @return	The action level of the card
+	 */
 	public int getLevel() {
 		return level;
 	}
 	
+	/**
+	 * Getter to know the card costs
+	 * @return	The list of packet which represent the costs. This list is only a copy of real costs
+	 */
 	public List<Packet> getCosts() {
 		//Return a copy of costs array
 		return copyPacketList(costs);
 	}
-	
-	/*public List<Packet> getRequirements() {
-		//Return a copy of requirements array
-		return copyPacketList(requirements);
-	}*/
-	
+
+	/**
+	 * Method used to set the owner of the card
+	 * @param owner		The owner of the card
+	 */
 	public void setPlayer(Player owner) {
 		this.owner = owner;
 	}
 	
 	
 	/*	PAY A CARD METHODS	*/
+	
+	/**
+	 * Method used to pay a card if is known which cost the player wants to pay
+	 * @param player						The interested player
+	 * @param choice						The cost to pay
+	 * @param discount						A possible discount (If there isn't a discount, set it to null)
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 */
 	public void payCard(Player player, int choice, Packet discount) throws NotEnoughResourcesException {
 		Packet chosenCost = costs.get(choice);
 		
@@ -128,6 +177,12 @@ public class Card implements Serializable{
 		player.decreaseResource(chosenCost);
 	}
 	
+	/**
+	 * Method used to pay a card, even if the cost to pay is unknown
+	 * @param player						The interested player
+	 * @param discount						A possible discount (If there isn't a discount, set it to null)
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resoures
+	 */
 	public void payCard(Player player, Packet discount) throws NotEnoughResourcesException {
 		
 		//First of all, control if card costs are null
@@ -181,7 +236,11 @@ public class Card implements Serializable{
 		}
 	}
 	
-	//Methods for the discount
+	/**
+	 * Private method used to increase the resources with the discount, only for check
+	 * @param player	The interested player
+	 * @param discount	The discount to verify
+	 */
 	private void increaseDiscount(Player player, Packet discount) {
 		if(discount != null) {
 			player.increaseResource(discount);
@@ -189,6 +248,11 @@ public class Card implements Serializable{
 		}
 	}
 	
+	/**
+	 * Private method used to decrease the resources with the discount, only after a check
+	 * @param player	The interested player
+	 * @param discount	The verified discount 
+	 */
 	private void decreaseDiscount(Player player, Packet discount) throws NotEnoughResourcesException {
 		if(discount != null) {
 			player.decreaseResource(discount);
@@ -197,6 +261,12 @@ public class Card implements Serializable{
 	}
 	
 	/*	IMMEDIATE EFFECT */
+	
+	/**
+	 * Method used to enable the immediate effect of the card
+	 * 
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 */
 	public void enableImmediateEffect() throws NotEnoughResourcesException {
 		if(immediateEffects != null && !( immediateEffects.isEmpty() ) ) {
 			//If the effectList exist
@@ -214,6 +284,11 @@ public class Card implements Serializable{
 		}
 	}
 	
+	/**
+	 * Private method used to copy a list of Printable
+	 * @param array		The list to copy
+	 * @return			The copied list
+	 */
 	private List<Printable> copyPrintable(List<Printable> array) {
 		List<Printable> temporary = new ArrayList<>();
 		for(Printable element : array)
@@ -221,6 +296,11 @@ public class Card implements Serializable{
 		return temporary;
 	}
 	
+	/**
+	 * Private method used to copy a list of Integer
+	 * @param array		The list to copy
+	 * @return			The copied list
+	 */
 	private List<Integer> copyInteger(List<Integer> array) {
 		List<Integer> temporary = new ArrayList<>();
 		for(Integer element : array) 
@@ -228,6 +308,13 @@ public class Card implements Serializable{
 		return temporary;
 	}
 	
+	/**
+	 * Method used to enable the immediate effect of the card, if it is known
+	 * the player choice
+	 * 
+	 * @param  choice						The effect which player wants to enable
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 */
 	public void enableImmediateEffect(int choice, Player player) {
 		//Try to enable the effect
 		try {
@@ -247,6 +334,12 @@ public class Card implements Serializable{
 	/* END IMMEDIATE EFFECT */
 	
 	/*	PERMANENT EFFECT */
+	
+	/**
+	 * Method used to enable the permanent effect of the card
+	 * 
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 */
 	public void enablePermanentEffect() throws NotEnoughResourcesException {
 		if(permanentEffects != null && !( permanentEffects.isEmpty() ) ) {
 			//If the effectList exist
@@ -264,6 +357,13 @@ public class Card implements Serializable{
 		}
 	}
 	
+	/**
+	 * Method used to enable the permanent effect of the card, if it is known
+	 * the player choice
+	 * 
+	 * @param  choice						The effect which player wants to enable
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 */
 	public void enablePermanentEffect(int choice, Player player) {try {
 		enableEffect(choice, permanentEffects, player);
 	} catch(ArithmeticException e) {
@@ -281,6 +381,12 @@ public class Card implements Serializable{
 	/*	END PERMANENT EFFECT */
 	
 	/* FINAL EFFECT */
+	
+	/**
+	 * Method used to enable the final effect of the card
+	 * 
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 */
 	public void enableFinalEffect() throws NotEnoughResourcesException {
 		if(finalEffects != null && !( finalEffects.isEmpty() ) ) {
 			//If the effectList exist
@@ -298,6 +404,13 @@ public class Card implements Serializable{
 		}
 	}
 	
+	/**
+	 * Method used to enable the final effect of the card, if it is known
+	 * the player choice
+	 * 
+	 * @param  choice						The effect which player wants to enable
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 */
 	public void enableFinalEffect(int choice, Player player) {
 		try {
 			enableEffect(choice, finalEffects, player);
@@ -316,11 +429,22 @@ public class Card implements Serializable{
 	/* END FINAL EFFECT */
 	
 	//PRIVATE METHODS FOR CARD CLASS
+	
+	/**
+	 * Used to reset the possible choice when a request is created
+	 */
 	private void resetPossibleChoice() {
 		this.possibleChoice = new ArrayList<>();
 		this.possibleChoiceIndex = new ArrayList<>();
 	}
 	
+	/**
+	 * Used to control which effect can be activated after a control done before this method
+	 * 
+	 * @param effectList					The list of effect to control
+	 * @return								True if the effect can be activated immediately, otherwise False
+	 * @throws NotEnoughResourcesException	Thrown if the player can't enable any effect
+	 */
 	private boolean controlPossibleChoice(List<Effect> effectList) throws NotEnoughResourcesException {
 		//ONLY PRIVATE request
 		//Used only to verify if the arrays of choices isn't empty
@@ -338,10 +462,23 @@ public class Card implements Serializable{
 		return false;
 	}
 	
+	/**
+	 * Used to enable the effect
+	 * 
+	 * @param choice		The index of the chosen effect
+	 * @param effectList	The list in which there is the effect to enable
+	 * @param player		The interested player
+	 */
 	private void enableEffect(int choice, List<Effect> effectList, Player player) {
 			effectList.get(choice).enableEffect(player);
 	}
 	
+	/**
+	 * Method used to verify if the effect list can be enabled immediately
+	 * 
+	 * @param effectList	The list to control
+	 * @return				True if the effect can be enabled immediately, otherwise False
+	 */
 	private boolean canEnableNowEffect(List<Effect> effectList) {
 		//Control if the effect can be enabled immediately
 		
@@ -360,6 +497,12 @@ public class Card implements Serializable{
 		return false;
 	}
 	
+	/**
+	 * Method used to verify if the effect can be enabled immediately
+	 * 
+	 * @param effectList	The single effect to control
+	 * @return				True if the effect can be enabled immediately, otherwise False
+	 */
 	private boolean checkActivable(Effect effect, int index) {
 		//Return true if the effect can be enabled
 		boolean checker = true;
@@ -385,11 +528,26 @@ public class Card implements Serializable{
 		return checker;
 	}
 	
+	/**
+	 * Method used to know if the owner can pay a cost
+	 * 
+	 * @param costs		The packet of cost to verify
+	 * @param discount	A possible discount (If there isn't discount, set it to null)
+	 * @return			True if he can pay, otherwise False
+	 */
 	private boolean checkOwnerCanPay(Packet costs, Packet discount) {
 		//Check if the owner can pay an effect
 		return checkPlayerCanPay(costs, owner, discount);
 	}
 	
+	/**
+	 * Method used to know if a generic player can pay a cost
+	 * 
+	 * @param costs		The packet of cost to verify
+	 * @param player 	The generic player to control
+	 * @param discount	A possible discount (If there isn't discount, set it to null)
+	 * @return			True if he can pay, otherwise False
+	 */
 	private boolean checkPlayerCanPay(Packet costs, Player player, Packet discount) {
 		//Check if a generic player can pay a packet of costs
 		for (Unit unit : costs) {
@@ -400,6 +558,11 @@ public class Card implements Serializable{
 		return true;
 	}
 	
+	/**
+	 * Method used to check if the player satisfy at least one requirement
+	 * 
+	 * @param player	The interested player
+	 */
 	private void checkRequirements(Player player) {
 		//Used to fill the effectivelyCosts array to pay the card
 		//Costs with requirement before than normal costs
@@ -423,6 +586,12 @@ public class Card implements Serializable{
 		}
 	}
 	
+	/**
+	 * Used to copy a list of packet
+	 * 
+	 * @param start		The packet list to copy
+	 * @return			the copied list
+	 */
 	private List<Packet> copyPacketList(List<Packet> start) {
 		List<Packet> temp = new ArrayList<>();
 		if(start != null) {
@@ -433,6 +602,11 @@ public class Card implements Serializable{
 		return temp;
 	}
 	
+	/**
+	 * Method used to show the card
+	 * 
+	 * @return	A well-formatted string
+	 */
 	public String showCard(){
 		
 		StringBuilder cardBuilder = new StringBuilder();
@@ -474,6 +648,9 @@ public class Card implements Serializable{
 		return cardBuilder.toString();
 	}
 	
+	/**
+	 * Method used to clone the card
+	 */
 	@Override
 	public Card clone() {
 		//Create temporary arrays of card

@@ -9,7 +9,7 @@ import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.parser.CardLoader;
 
 /**
- * Abstract class to implement the State Pattern with this cards loader
+ * Abstract class used to implement the State Pattern with this cards loader
  * 
  * @author Luca Napoletano, Claudio Montanari
  *

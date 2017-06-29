@@ -19,6 +19,11 @@ import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 import it.polimi.ingsw.ps42.message.WinnerMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 
+/**
+ * Common interface for all the Visitors
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public interface Visitor {
 	//All the methods to visit the messages
 	

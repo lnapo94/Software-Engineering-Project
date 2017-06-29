@@ -24,9 +24,12 @@ import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.view.View;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
-import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 
-
+/**
+ * Class that implements all the method used by a visitor in the view
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ViewVisitor implements Visitor {
 
 	private View view;
@@ -38,34 +41,39 @@ public class ViewVisitor implements Visitor {
 		this.view = view;
 	}
 	
+	/** 
+	 * Message forwarded by the Model, the visitor has to 
+	 * call a method of the view for asking a BonusBar from
+	 * the possible choice (then re-forwarded to the game logic).
+	 */
 	@Override
 	public void visit(BonusBarMessage message) {
-		/*Message forwarded by the Model, the visitor has to 
-		 * call a method of the view for asking a BonusBar from
-		 * the possible choice (then re-forwarded to the game logic).
-		 */
 		
 		if(message != null ){	
 			this.view.askBonusBar( message);
 		}
 	}
 
+	/**
+	 * Message forwarded by the Model, the visitor has to 
+	 * call a method of the view for asking a LeaderCard from
+	 * the possible choice (then re-forwarded to the game logic).
+	 */
 	@Override
 	public void visit(LeaderCardMessage message) {
-		/*Message forwarded by the Model, the visitor has to 
-		 * call a method of the view for asking a LeaderCard from
-		 * the possible choice (then re-forwarded to the game logic).
-		 */
+		
 		if(message != null)
 			this.view.askLeaderCard(message);
 
 	}
 
+	/**
+	 * Message forwarded by the Model at the start of the game, the visitor 
+	 * has to call a method of the View for setting the new Bans.
+	 */
 	@Override
 	public void visit(BanMessage message) {
-		/*Message forwarded by the Model at the start of the game, the visitor 
-		 * has to call a method of the View for setting the new Bans.
-		 */
+		
 		if(message != null){	
 			this.view.setFirstBan(message.getFirstEffect());
 			this.view.setSecondBan(message.getSecondEffect());
@@ -74,11 +82,12 @@ public class ViewVisitor implements Visitor {
 		
 	}
 
+	/**
+	 * Message forwarded by the Model every round, the visitor 
+	 * has to call a method of the View for setting the dice value to every familiars.
+	 */
 	@Override
 	public void visit(DiceMessage message) {
-		/*Message forwarded by the Model every round, the visitor 
-		 * has to call a method of the View for setting the dice value to every familiars.
-		 */
 		
 		view.resetTable();
 		
@@ -89,11 +98,13 @@ public class ViewVisitor implements Visitor {
 		}
 	}
 
+	/**
+	 * Message forwarded by the Model every round, the visitor has to
+	 * call a method of the View for setting the Cards received on the proper Tower.
+	 */
 	@Override
 	public void visit(CardsMessage message) {
-		/*Message forwarded by the Model every round, the visitor has to
-		 * call a method of the View for setting the Cards received on the proper Tower.
-		 */
+
 		if(message != null){
 			switch(message.getColor()){
 				case GREEN:
@@ -115,13 +126,15 @@ public class ViewVisitor implements Visitor {
 		}
 		
 	}
-
+	
+	/**
+	 * Message forwarded by the Model every time a call to the syncResources method in 
+	 * player is made, the visitor has to call a method of the View that update the 
+	 * resources of that player.
+	 */
 	@Override
 	public void visit(ResourceUpdateMessage message) {
-		/*Message forwarded by the Model every time a call to the syncResources method in 
-		 * player is made, the visitor has to call a method of the View that update the 
-		 * resources of that player.
-		 */
+
 		if(message != null){
 			
 			this.view.setResources(message.getResources(), message.getPlayerID());
@@ -129,13 +142,15 @@ public class ViewVisitor implements Visitor {
 			
 		
 	}
-
+	
+	/**
+	 * Message forwarded by the Model every time a Familiar is moved by a
+	 * player, the visitor has to call a method of the View that update the 
+	 * familiar's position of that player.
+	 */
 	@Override
 	public void visit(FamiliarUpdateMessage message) {
-		/*Message forwarded by the Model every time a Familiar is moved by a
-		 * player, the visitor has to call a method of the View that update the 
-		 * familiar's position of that player.
-		 */
+
 		if( message != null){
 			String playerID = message.getPlayerID();
 			int position = message.getPosition();
@@ -178,13 +193,15 @@ public class ViewVisitor implements Visitor {
 		}
 		
 	}
-
+	
+	/**
+	 * Message forwarded by the Model every time a Card is taken by a
+	 * player, the visitor has to call a method of the View that update the 
+	 * cards of that Player and the state of the Table.
+	 */
 	@Override
 	public void visit(CardUpdateMessage message) {
-		/*Message forwarded by the Model every time a Card is taken by a
-		 * player, the visitor has to call a method of the View that update the 
-		 * cards of that Player and the state of the Table.
-		 */
+		
 		if(message != null){
 			String playerID = message.getPlayerID();
 			int position = message.getPosition();
@@ -213,13 +230,15 @@ public class ViewVisitor implements Visitor {
 		}
 		
 	}
-
+	
+	/**
+	 * Message forwarded by the Model at the end of a Period if the player
+	 * do not has the required faithPoint, the visitor has to call a method of the View that update the 
+	 * bans of that player.
+	 */
 	@Override
 	public void visit(BanUpdateMessage message) {
-		/*Message forwarded by the Model at the end of a Period if the player
-		 * do not has the required faithPoint, the visitor has to call a method of the View that update the 
-		 * bans of that player.
-		 */
+
 		if(message != null){
 			try {
 				this.view.setBanToPlayer( message.getPlayerID(), message.getBan());
@@ -230,31 +249,36 @@ public class ViewVisitor implements Visitor {
 		}
 		
 	}
-
+	
+	/**
+	 * Message forwarded by the Model every time a player has some Council Requests, 
+	 * the visitor has to call a method of the View that ask to that player a choice.
+	 */
 	@Override
 	public void visit(CouncilRequest message) {
-		/*Message forwarded by the Model every time a player has some Council Requests, 
-		 * the visitor has to call a method of the View that ask to that player a choice.
-		 */		
+			
 		if( message != null)
 				this.view.askCouncilRequest(message);
 		
 	}
-
+	
+	/**
+	 * Message forwarded by the Model every time a player has to perform a move, 
+	 * the visitor has to call a method of the View that ask a move to that player.
+	 */	
 	@Override
 	public void visit(PlayerToken message) {
-		/*Message forwarded by the Model every time a player has to perform a move, 
-		 * the visitor has to call a method of the View that ask a move to that player.
-		 */		
+	
 		if(message != null)
 			this.view.askPlayerMove(message);
 	}
 
+	/**	
+	 * Set the card to the enabledLeaderCard player's array
+	 */
 	@Override
 	public void visit(LeaderCardUpdateMessage message) {
-		/*	
-		 * Set the card to the enabledLeaderCard player's array
-		 */
+
 		if(message != null){
 			try {
 				this.view.setEnabledLeaderCard(message.getPlayerID(), message.getCard());
@@ -267,55 +291,61 @@ public class ViewVisitor implements Visitor {
 		
 	}
 
+	/**
+	 * Ask to the player if he wants pay for the ban or not
+	 */	
 	@Override
 	public void visit(BanRequest message) {
-		/*
-		 * Ask to the player if he wants pay for the ban or not
-		 */		
+	
 		if( message != null)
 			this.view.askPayBan(message);
 	}
-
+	
+	/**
+	 * Ask to the Player to answer the Request		
+	 */
 	@Override
 	public void visit(CardRequest message) {
-		/*
-		 * Ask to the Player to answer the Request		
-		 */
-		
+
 		if( message != null){
 			this.view.askCardRequest( message);
 		}
 	}
 
+	/**
+	 * Nothings to do since this Message is never received
+	 */
 	@Override
 	public void visit(PlayerMove message) {
-		//Nothings to do since this Message is never received
 		
 	}
 
+	/**
+	 * Ask to the player to choose 
+	 */
 	@Override
 	public void visit(LeaderFamiliarRequest message) {
-		/*
-		 * Ask to the player to choose 
-		 */
+
 		if(message != null){
 			this.view.handleLeaderFamiliarRequest(message);
 		}
 		
 	}
-
+	
+	/**
+	 * No things to do since this message is only sent to the Game Logic
+	 */
 	@Override
 	public void visit(EmptyMove message) {
-		/*
-		 * No things to do since this message is only sent to the Game Logic
-		 */
+
 	}
 
+	/**
+	 * Show to the Player the final rank
+	 */
 	@Override
 	public void visit(WinnerMessage message) {
-		/*
-		 * Show to the Player the final rank
-		 */
+
 		if(message != null){
 			view.handleResult(message);
 		}

@@ -5,6 +5,12 @@ import it.polimi.ingsw.ps42.message.visitorPattern.Visitor;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * Abstract class which represent a generic leader card request to send to the player
+ * It is used to apply the Strategy Pattern
+ * @author luca
+ *
+ */
 public abstract class LeaderRequest extends Message{
 	
 	/**

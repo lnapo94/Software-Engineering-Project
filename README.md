@@ -30,4 +30,4 @@ The timers to wait the start of a match or to wait the player move is setted to 
 Furthermore you can configure a lot of thing with our Game, such as cards effects, bans effects, resources, positions bonuses/maluses, the bonus bars effects to give to the player and so on...
 Finally, we have used a logger to know everything in our application. We decided to use log4j, and, if you want, you can configure this logger easily, you should go in Logger/Properties/ to see all the configuration. At the moment, we have setted 3 kind of configuration, one for the client, one for the server and one for the test units. All this log file are stores Logger/ directory.
 
-**Enjoy our _Lorenzo il Magnifico_ applications**
+**Enjoy our _Lorenzo il Magnifico_ application**

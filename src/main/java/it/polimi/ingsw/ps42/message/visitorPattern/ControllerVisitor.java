@@ -28,6 +28,11 @@ import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * Class that implements all the visitor methods used in Controller (a.k.a. GameLogic)
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ControllerVisitor implements Visitor {
 
 	private GameLogic gameLogic;
@@ -35,86 +40,102 @@ public class ControllerVisitor implements Visitor {
 	//Logger
 	private transient Logger logger = Logger.getLogger(ControllerVisitor.class);
 	
+	/**
+	 * Constructor of the visitor, it needs the GameLogic for some operations
+	 * @param gameLogic
+	 */
 	public ControllerVisitor(GameLogic gameLogic){
 		
 		this.gameLogic = gameLogic;
 	}
 	
+	/**
+	 * Response message from the View about a BonusBar choice.
+	 * Give to the Game Logic the BonusBar chosen and the related player
+	 */
 	@Override
 	public void visit(BonusBarMessage message) {
-		/* Response message from the View about a BonusBar choice.
-		 * Give to the Game Logic the BonusBar chosen and the related player
-		 */
 		if(gameLogic.isInitGame())
 			gameLogic.setBonusBar(message.getChoice(), message.getPlayerID());
 
 	}
 
+	/**
+	 * Response Message from the View about the Leader Card choice.
+	 * Give to the Game Logic the Leader Card chosen and the related player
+	 */
 	@Override
 	public void visit(LeaderCardMessage message) {
-		/* Response Message from the View about the Leader Card choice.
-		 * Give to the Game Logic the Leader Card chosen and the related player
-		 */
+		
 		if(gameLogic.isInitGame())
 			gameLogic.setLeaderCard(message.getChoice(), message.getPlayerID());
 
 	}
 
+	/** 
+	 * Nothing to do (this message is only received by the View)
+	 */
 	@Override
 	public void visit(BanMessage message) {
-		/* Nothing to do (this message is only received by the View)
-		 */
+		
 		
 	}
-
+	
+	/** 
+	 * Nothing to do (this message is only received by the View)
+	 */
 	@Override
 	public void visit(DiceMessage message) {
-		/*Nothing to do (this message is only received by the View)
-		 */
 		
 	}
 
+	/** 
+	 * Nothing to do (this message is only received by the View)
+	 */
 	@Override
 	public void visit(CardsMessage message) {
-		/*Nothing to do (this message is only received by the View)
-		 */
 		
 	}
 
+	/** 
+	 * Nothing to do (this message is only received by the View)
+	 */
 	@Override
 	public void visit(ResourceUpdateMessage message) {
-		/*Nothing to do (this message is only received by the View)
-		 */
-		
+
 	}
 
+	/** 
+	 * Nothing to do (this message is only received by the View)
+	 */
 	@Override
 	public void visit(FamiliarUpdateMessage message) {
-		/*Nothing to do (this message is only received by the View)
-		 */
-		
+
 	}
 
+	/** 
+	 * Nothing to do (this message is only received by the View)
+	 */
 	@Override
 	public void visit(CardUpdateMessage message) {
-		/*Nothing to do (this message is only received by the View)
-		 */
-		
+
 	}
 
+	/** 
+	 * Nothing to do (this message is only received by the View)
+	 */
 	@Override
 	public void visit(BanUpdateMessage message) {
-		/*Nothing to do (this message is only received by the View)
-		 */
-		
-	}
 
+	}
+	
+	/**
+	 * Response Message from the View about the Player move.
+	 * Build the correct Action and send it to the Game Logic with a method
+	 */
 	@Override
 	public void visit(PlayerMove message) {
-		/*Response Message from the View about the Player move.
-		 * Build the correct Action and send it to the Game Logic with a method
-		 */
-		
+
 		try {
 			Player player = gameLogic.searchPlayer(message.getPlayerID());
 			if(gameLogic.isConnected(player)) {
@@ -140,11 +161,13 @@ public class ControllerVisitor implements Visitor {
 		}
 	}
 
+	/**
+	 * Response Message by the View to a specific request. 
+	 * Send with a method to the GameLogic
+	 */
 	@Override
 	public void visit(CardRequest message) {
-		/*Response Message by the View to a specific request. 
-		 * Send with a method to the GameLogic
-		 */
+
 		try {
 			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
 				gameLogic.handleRequest(message);
@@ -154,11 +177,13 @@ public class ControllerVisitor implements Visitor {
 		}
 	}
 
+	/**
+	 * Response Message by the View to a Council request.
+	 * Send to the Game Logic with a method
+	 */
 	@Override
 	public void visit(CouncilRequest message) {
-		/*Response Message by the View to a Council request.
-		 * Send to the Game Logic with a method
-		 */
+
 		try {
 			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
 				gameLogic.handleCouncilRequest(message);
@@ -169,20 +194,22 @@ public class ControllerVisitor implements Visitor {
 		
 	}
 
+	/** 
+	 * Nothing to do (this message is only received by the View)
+	 */
 	@Override
 	public void visit(PlayerToken message) {
-		/*Nothing to do (this message is only received by the View)
-		 */
 		
 	}
 
+	/**
+	 * Someone requires to enable a specific card
+	 * Check if the card can be activated, if so move the card in the correct
+	 * arraylist in player and create a message
+	 */
 	@Override
 	public void visit(LeaderCardUpdateMessage message) {
-		/*
-		 * Someone requires to enable a specific card
-		 * Check if the card can be activated, if so move the card in the correct
-		 * arraylist in player and create a message
-		 */
+
 		try {
 			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
 				gameLogic.HandleLeaderUpdate(gameLogic.searchPlayer(message.getPlayerID()), message.getCard());
@@ -192,12 +219,13 @@ public class ControllerVisitor implements Visitor {
 		}
 	}
 
+	/**
+	 * Enable the chosen ban if the variable is set to false,
+	 * else reduce the faith point and assign the victory point to player 
+	 */
 	@Override
 	public void visit(BanRequest message) {
-		/*
-		 * Enable the chosen ban if the variable is set to false,
-		 * else reduce the faith point and assign the victory point to player 
-		 */
+
 		try {
 			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
 				gameLogic.handleBan(message.getPlayerID(), message.getBanNumber(), message.wantPayForBan());
@@ -208,9 +236,11 @@ public class ControllerVisitor implements Visitor {
 
 	}
 
+	/**
+	 * Message received by the view, do the apply for the leader card
+	 */
 	@Override
 	public void visit(LeaderFamiliarRequest message) {
-		//Message received by the view, do the apply for the leader card
 		
 		try {
 			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
@@ -222,9 +252,12 @@ public class ControllerVisitor implements Visitor {
 
 	}
 
+	/**
+	 * If the player doesn't want to play
+	 */
 	@Override
 	public void visit(EmptyMove message) {
-		//If the player doesn't want to play
+
 		try {
 			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
 				gameLogic.initAction();
@@ -234,11 +267,11 @@ public class ControllerVisitor implements Visitor {
 		}
 	}
 
+	/** 
+	 * Nothing to do (this message is only received by the View)
+	 */
 	@Override
 	public void visit(WinnerMessage message) {
-		/*
-		 * No things to do since this message is only send to the View
-		 */
 		
 	}
 

@@ -5,7 +5,8 @@ import java.io.Serializable;
 import it.polimi.ingsw.ps42.message.visitorPattern.Visitable;
 
 /**
- * Abstract class used to represent all the Game Messages
+ * Abstract class used to represent all the Game Messages. Used to implement the
+ * Visitor pattern
  * @author luca
  *
  */
