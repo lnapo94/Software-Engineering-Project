@@ -24,6 +24,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
+import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
@@ -421,25 +422,28 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	@Override
-	protected int chooseBonusBar(List<BonusBar> bonusBarList) {
-		// TODO Auto-generated method stub
-		return 0;
+	protected void chooseBonusBar(List<BonusBar> bonusBarList) {
+		//Ask the Player to choose a BonusBar from the given List
+		
+		
 	}
 
 	@Override
-	protected int chooseLeaderCard(List<LeaderCard> leaderCardList) {
-		// TODO Auto-generated method stub
-		return 0;
+	protected void chooseLeaderCard(List<LeaderCard> leaderCardList) {
+		// Ask the Player to choose a LeaderCard from the given List
+
 	}
 
 	@Override
-	protected int chooseCouncilConversion(List<Obtain> possibleConversions) {
-		// TODO Auto-generated method stub
-		return 0;
+	protected void chooseCouncilConversion(List<Obtain> possibleConversions, int quantity) {
+		// Ask the Player to choose a council conversion quantity
+
 	}
 
 	@Override
-	protected PlayerMove choosePlayerMove(ActionPrototype prototype) {
+	protected void choosePlayerMove(ActionPrototype prototype) {
+		//Enable the Player to perform a new Move
+		
 		ActionType type = null;
 		FamiliarColor familiarColor = null;
 		int position = 0;
@@ -454,25 +458,26 @@ public class GUIView extends View implements TableInterface{
 			}
 */
 		}
-		return nextMove;
+		
 	}
 
 	@Override
-	protected boolean chooseIfPayBan(int banPeriod) {
-		// TODO Auto-generated method stub
-		return false;
+	protected void chooseIfPayBan(int banPeriod) {
+		// Ask to the Player if he wants to pay for the current Period Ban
+		
+		
 	}
 
 	@Override
-	protected int answerCardRequest(CardRequest message) {
-		// TODO Auto-generated method stub
-		return 0;
+	protected void answerCardRequest(CardRequest message) {
+		// Ask to the player to choose from the given card request
+		
 	}
 
 	@Override
-	protected FamiliarColor chooseFamiliarColor(LeaderFamiliarRequest message) {
-		// TODO Auto-generated method stub
-		return null;
+	protected void chooseFamiliarColor(LeaderFamiliarRequest message) {
+		// Ask to the Player what color to choose for the leaderCard Request
+		
 	}
 
 	@Override
@@ -488,16 +493,19 @@ public class GUIView extends View implements TableInterface{
 	}
 
 	@Override
-	protected String askPlayerID() {
+	public void askNewPlayerID() {
 		//Show a window asking the Player username
 		
-		return null;
+		
 	}
 
 	@Override
-	protected String askIfWantToPlay() {
-		// TODO Auto-generated method stub
-		return "si";
+	protected void askIfWantToPlay(PlayerToken moveToken) {
+		//Ask to the Player if he wants to perform a new Action 
+		
+		//If so ask a new PlayerMove
+		this.choosePlayerMove(moveToken.getActionPrototype());
+		
 	}
 
 	@Override

@@ -60,9 +60,8 @@ public abstract class View extends Observable implements Observer {
 		this.player = new Player(playerID);
 	}
 	
-	public void askNewPlayerID(){
-		String name = askPlayerID();
-		LoginMessage message = new LoginMessage(name);
+	public void setNewPlayerID(String playerID){
+		LoginMessage message = new LoginMessage(playerID);
 		setChanged();
 		notifyObservers(message);
 	}
@@ -98,147 +97,184 @@ public abstract class View extends Observable implements Observer {
 		return player.getPlayerID().equals(playerID);
 	}
 	
-	public void askBonusBar(BonusBarMessage message) throws WrongChoiceException{
+	public void askBonusBar(BonusBarMessage message) {
 		
 		if( hasToAnswer(message.getPlayerID())){
 			//Ask to choose a BonusBar
-			int choice = chooseBonusBar(message.getAvailableBonusBar());
-			message.setChoice(choice);
-			
-			//Add the BonusBar to the Player
-			player.setBonusBar(message.getAvailableBonusBar().get(choice));
-			
-			//Send a new Message to the Game Logic to notify the choice
-			List<BonusBar> availableBonusBar = new ArrayList<>();
-			for (BonusBar bonusBar : message.getAvailableBonusBar()) {
-				availableBonusBar.add(bonusBar.clone());
-			}
-			Message bonusBarMessage = new BonusBarMessage(player.getPlayerID(), availableBonusBar);
-			setChanged();
-			notifyObservers(bonusBarMessage);
+			chooseBonusBar(message.getAvailableBonusBar());
 		}
 
 	}
 	
-	public void askLeaderCard(LeaderCardMessage message ) throws WrongChoiceException{
+	public void setBonusBarChoice(List<BonusBar> bonusBars, int choice){
+			
+			//Send a new Message to the Game Logic to notify the choice
+			List<BonusBar> availableBonusBar = new ArrayList<>();
+			for (BonusBar bonusBar : bonusBars) {
+				availableBonusBar.add(bonusBar.clone());
+			}
+			BonusBarMessage message = new BonusBarMessage(player.getPlayerID(), availableBonusBar);
+			try {
+				message.setChoice(choice);				
+				setChanged();
+				notifyObservers(message);
+				
+				//Add the BonusBar to the Player
+				player.setBonusBar(bonusBars.get(choice));
+				
+			} catch (WrongChoiceException e) {
+				logger.debug("Wrong BonusBar choice has been made");
+				askBonusBar(new BonusBarMessage(player.getPlayerID(), bonusBars));
+			}
+		
+	}
+	
+	public void askLeaderCard(LeaderCardMessage message ) {
 		
 		if( hasToAnswer(message.getPlayerID())){
 			//Ask to choose a Leader Card
 			List<LeaderCard> possibleChoice = message.getAvailableLeaderCards();
-			int choice = chooseLeaderCard(possibleChoice);
+			chooseLeaderCard(possibleChoice);
 			
-			//Set the LeaderCard to the Player
-			if(choice < possibleChoice.size())
-				player.setLeaderCard(possibleChoice.get(choice));
-			
-			//Send a new Message to the Game Logic to notify the choice
-			List<LeaderCard> leaderCardList = new ArrayList<>();
-			for (LeaderCard leaderCard : possibleChoice) {
-				leaderCardList.add(leaderCard.clone());
-			}
-			LeaderCardMessage leaderCardMessage = new LeaderCardMessage(player.getPlayerID(), leaderCardList);
-			leaderCardMessage.setChoice(choice);
-			setChanged();
-			notifyObservers(leaderCardMessage);
 		}
 	}
 		
-	public void askCouncilRequest( CouncilRequest message) throws WrongChoiceException{
+	public void setLeaderCardChoice(List<LeaderCard> leaderCards, int choice){
+
+		//Set the LeaderCard to the Player
+		if(choice < leaderCards.size())
+			player.setLeaderCard(leaderCards.get(choice));
+		
+		//Send a new Message to the Game Logic to notify the choice
+		List<LeaderCard> leaderCardList = new ArrayList<>();
+		for (LeaderCard leaderCard : leaderCards) {
+			leaderCardList.add(leaderCard.clone());
+		}
+		LeaderCardMessage leaderCardMessage = new LeaderCardMessage(player.getPlayerID(), leaderCardList);
+		try {
+			leaderCardMessage.setChoice(choice);
+			setChanged();
+			notifyObservers(leaderCardMessage);
+		} catch (WrongChoiceException e) {
+			logger.debug("Wrong LeaderCard choice has been made");
+			this.askLeaderCard(leaderCardMessage);
+		}
+		
+	}
+	
+	public void askCouncilRequest( CouncilRequest message) {
 		
 		if( hasToAnswer(message.getPlayerID())){
 			//Ask to choose a Conversion for the Council Privilege
-			int quantity = message.getQuantity();
-			while(quantity > 0){
-				message.addChoice(chooseCouncilConversion(message.getPossibleChoice()));
-				quantity--;
-			}
-			//Notify the choice to the Game Logic
-			setChanged();
-			notifyObservers(message);
+			chooseCouncilConversion(message.getPossibleChoice(), message.getQuantity());
 		}
 		
+	}
+	
+	public void setCouncilRequestResponse(List<Obtain> possibleConversion, List<Integer> choice, int quantity ){
+		
+		CouncilRequest message = new CouncilRequest(player.getPlayerID(), possibleConversion, quantity);
+		//Notify the choice to the Game Logic
+		setChanged();
+		notifyObservers(message);
 	}
 	
 	public void askPlayerMove( PlayerToken message){
 		
 		if(hasToAnswer(message.getPlayerID())){
 			//Ask to choose a Move to the Player
-			String response = askIfWantToPlay();
-			if(response.toUpperCase().equals("SI")){
-				
-				PlayerMove move = choosePlayerMove(message.getActionPrototype());
-				//Notify the Move to Game Logic
-				setChanged();
-				notifyObservers(move);
-			}
-			else {
-				//Notify the Game Logic with an EmptyMessage
-				setChanged();
-				notifyObservers(new EmptyMove(player.getPlayerID()));
-			}
+			askIfWantToPlay(message);
 		}
+	}
+	
+	public void setNewMove(PlayerMove move){
+		
+		//Notify the Move to Game Logic
+		setChanged();
+		notifyObservers(move);
+	}
+	
+	public void setEmptyMove(){
+
+		//Notify the Game Logic with an EmptyMessage
+		setChanged();
+		notifyObservers(new EmptyMove(player.getPlayerID()));
 	}
 	
 	public void askPayBan(BanRequest message){
 	
 		if(hasToAnswer(message.getPlayerID())){
 			//Ask to the player if he wants to pay the faithPoint instead of getting the ban
-			if( chooseIfPayBan( message.getBanNumber()))
-				message.wantPayForBan();
-			
-			//Notify the choice to the Game Logic
-			setChanged();
-			notifyObservers(message);
+			chooseIfPayBan( message.getBanNumber());
+
 		}
+	}
+	
+	public void setPayBanResponse(boolean wantToPay, int banNumber){
+
+		BanRequest message = new BanRequest(player.getPlayerID(),banNumber);
+		if(wantToPay)
+			message.wantPayForBan();
+		//Notify the choice to the Game Logic
+		setChanged();
+		notifyObservers(message);
 	}
 	
 	public void askCardRequest( CardRequest message){
 		
 		if(hasToAnswer(message.getPlayerID())){
 			//Ask to the player to answer
-			message.setChoice(answerCardRequest(message));
-			
-			//Notify the choice to the Game Logic
-			setChanged();
-			notifyObservers(message);
+			answerCardRequest(message);	
 		}
+	}
+	
+	public void setCardRequestResponse(CardRequest message, int response){
+		
+		message.setChoice(response);
+		//Notify the choice to the Game Logic
+		setChanged();
+		notifyObservers(message);
 	}
 	
 	public void handleLeaderFamiliarRequest(LeaderFamiliarRequest message){
 		
 		if(hasToAnswer(message.getPlayerID())){
 			//Ask to the Player to choose a FamiliarColor
-			FamiliarColor color = chooseFamiliarColor(message);
-			message.setFamiliarColor(color);
-			
-			//Notify the Game Logic of the choice
-			setChanged();
-			notifyObservers(message);
+			chooseFamiliarColor(message);
 		}
 	}
 	
+	public void setLeaderFamiliarRequestResponse(FamiliarColor color, LeaderFamiliarRequest message){
+		//Set the color chosen to the LeaderFamiliarRequest
+		
+		message.setFamiliarColor(color);
+		//Notify the Game Logic of the choice
+		setChanged();
+		notifyObservers(message);
+	}
+	
 	//Methods For Input/Output Implemented by Concrete Classes
-	protected abstract int chooseBonusBar(List<BonusBar> bonusBarList);
+	public abstract void askNewPlayerID();
+	
+	protected abstract void chooseBonusBar(List<BonusBar> bonusBarList);
 
-	protected abstract int chooseLeaderCard(List<LeaderCard> leaderCardList);
+	protected abstract void chooseLeaderCard(List<LeaderCard> leaderCardList);
 	
-	protected abstract int chooseCouncilConversion(List<Obtain> possibleConversions);
+	protected abstract void chooseCouncilConversion(List<Obtain> possibleConversions, int quantity);
 	
-	protected abstract PlayerMove choosePlayerMove(ActionPrototype prototype);
+	protected abstract void choosePlayerMove(ActionPrototype prototype);
 	
-	protected abstract boolean chooseIfPayBan(int banPeriod);
+	protected abstract void chooseIfPayBan(int banPeriod);
 	
-	protected abstract int answerCardRequest( CardRequest message);
+	protected abstract void answerCardRequest( CardRequest message);
 	
-	protected abstract FamiliarColor chooseFamiliarColor(LeaderFamiliarRequest message);
+	protected abstract void chooseFamiliarColor(LeaderFamiliarRequest message);
 	
 	protected abstract void notifyLeaderCardActivation();
 	
 	protected abstract void notifyLeaderCardDiscard();
 	
-	protected abstract String askPlayerID();
-	
-	protected abstract String askIfWantToPlay();
+	protected abstract void askIfWantToPlay(PlayerToken moveToken);
 	
 	//SETTER FOR TABLE BANS
 	public void setFirstBan(Effect firstBan){

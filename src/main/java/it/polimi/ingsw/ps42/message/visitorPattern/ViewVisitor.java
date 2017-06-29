@@ -45,14 +45,8 @@ public class ViewVisitor implements Visitor {
 		 * the possible choice (then re-forwarded to the game logic).
 		 */
 		
-		if(message != null ){
-			
-			try {
-				this.view.askBonusBar( message);
-			} catch (WrongChoiceException e) {
-				logger.error("Error in Viewvisitor BonusBarMessage");
-				logger.info(e);
-			}
+		if(message != null ){	
+			this.view.askBonusBar( message);
 		}
 	}
 
@@ -63,13 +57,8 @@ public class ViewVisitor implements Visitor {
 		 * the possible choice (then re-forwarded to the game logic).
 		 */
 		if(message != null)
-			try{
-				this.view.askLeaderCard(message);
-			}
-		catch(WrongChoiceException e){
-			logger.error("Error in Viewvisitor LeaderCardMessage");
-			logger.info(e);
-		}
+			this.view.askLeaderCard(message);
+
 	}
 
 	@Override
@@ -248,12 +237,7 @@ public class ViewVisitor implements Visitor {
 		 * the visitor has to call a method of the View that ask to that player a choice.
 		 */		
 		if( message != null)
-			try {
 				this.view.askCouncilRequest(message);
-			} catch (WrongChoiceException e) {
-				logger.error("Error in Viewvisitor CouncilRequest");
-				logger.info(e);
-			}
 		
 	}
 

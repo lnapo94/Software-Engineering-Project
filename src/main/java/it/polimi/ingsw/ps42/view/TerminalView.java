@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
+import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
@@ -34,36 +36,40 @@ public class TerminalView extends View {
 	}
 	
 	@Override
-	protected int chooseBonusBar(List<BonusBar> bonusBarList) {
+	protected void chooseBonusBar(List<BonusBar> bonusBarList) {
 		System.out.println("Scegli una BonusBar per la partita [0-"+(bonusBarList.size()-1)+"]");
 		for (BonusBar bonusBar : bonusBarList) {
 			//Show possible BonusBar
 			System.out.println(bonusBar.toString());
 		}
-		return Integer.parseInt(scanner.nextLine());
+		setBonusBarChoice(bonusBarList, Integer.parseInt(scanner.nextLine()));
 	}
 
 	@Override
-	protected int chooseLeaderCard(List<LeaderCard> leaderCardList) {
+	protected void chooseLeaderCard(List<LeaderCard> leaderCardList) {
 		System.out.println("Scegli una Leader Card per la partita [0-"+(leaderCardList.size()-1)+"]");
 		for (LeaderCard leaderCard : leaderCardList) {
 			//Show possible LeaderCard
 			System.out.println(leaderCard.toString());
 		}
-		return Integer.parseInt(scanner.nextLine());
+		this.setLeaderCardChoice(leaderCardList, Integer.parseInt(scanner.nextLine()));
 	}
 
 	@Override
-	protected int chooseCouncilConversion(List<Obtain> possibleConversions) {
-		System.out.println("Scegli una Conversione per il privilegio del consiglio [0-"+(possibleConversions.size()-1)+"]");
-		for (Obtain obtain : possibleConversions) {
-			System.out.println(obtain.print());
+	protected void chooseCouncilConversion(List<Obtain> possibleConversions, int quantity) {
+		List<Integer> choiceList = new ArrayList<>();
+		for(int i=0; i<quantity; i++){
+			System.out.println("Scegli una Conversione per il privilegio del consiglio [0-"+(possibleConversions.size()-1)+"]");
+			for (Obtain obtain : possibleConversions) {
+				System.out.println(obtain.print());
+			}			
+		choiceList.add(Integer.parseInt(scanner.nextLine()));
 		}
-		return Integer.parseInt(scanner.nextLine());
+		this.setCouncilRequestResponse(possibleConversions, choiceList, quantity);
 	}
 
 	@Override
-	protected PlayerMove choosePlayerMove(ActionPrototype prototype) {
+	protected void choosePlayerMove(ActionPrototype prototype) {
 		System.out.println("Nuova mossa per il giocatore corrente");
 		int increaseValue, position;
 		ActionType moveType;
@@ -102,24 +108,24 @@ public class TerminalView extends View {
 		}
 		while(scanner.nextLine().toUpperCase().equals("NO"));
 		
-		return new PlayerMove(this.getViewPlayerID(), moveType, familiarColor, position, increaseValue);
+		this.setNewMove(new PlayerMove(this.getViewPlayerID(), moveType, familiarColor, position, increaseValue));
 	}
 
 	@Override
-	protected boolean chooseIfPayBan(int banPeriod) {
+	protected void chooseIfPayBan(int banPeriod) {
 		System.out.println("Scegli se pagare una scomunica (si/no)");
 		String response = scanner.nextLine();
 		
-		return response.toUpperCase().equals("SI");
+		this.setPayBanResponse(response.toUpperCase().equals("SI"), banPeriod);
 	}
 
 	@Override
-	protected int answerCardRequest(CardRequest message) {
+	protected void answerCardRequest(CardRequest message) {
 		System.out.println("Risolvi una richiesta della carta [0-"+(message.getPossibleChoiceIndex().size()-1)+"]");
 		for (Printable possibleChoice : message.showChoice()) {
 			System.out.println(possibleChoice.toString());
 		}
-		return Integer.parseInt(scanner.nextLine());
+		this.setCardRequestResponse(message, Integer.parseInt(scanner.nextLine()));
 	}
 
 	@Override
@@ -172,16 +178,16 @@ public class TerminalView extends View {
 	}
 
 	@Override
-	protected FamiliarColor chooseFamiliarColor(LeaderFamiliarRequest message) {
+	protected void chooseFamiliarColor(LeaderFamiliarRequest message) {
 		System.out.println("Choose a color for the familar increment");
-		return FamiliarColor.parseInput(scanner.nextLine());
+		this.setLeaderFamiliarRequestResponse(FamiliarColor.parseInput(scanner.nextLine()), message);
 	}
 
 	@Override
-	public String askPlayerID() {
+	public void askNewPlayerID() {
 		System.out.println("Insert player username");
 		
-		return scanner.nextLine();
+		this.setNewPlayerID(scanner.nextLine());
 	}
 	
 	private void showPosition(ActionType type, int position){
@@ -203,9 +209,13 @@ public class TerminalView extends View {
 	}
 
 	@Override
-	protected String askIfWantToPlay() {
+	protected void askIfWantToPlay(PlayerToken moveToken) {
 		System.out.println("Vuoi fare una nuova mossa?(si/no)");
-		return scanner.nextLine();
+		if(scanner.nextLine().equalsIgnoreCase("SI")){
+			this.choosePlayerMove(moveToken.getActionPrototype());
+		}
+		else
+			this.setEmptyMove();
 	}
 
 }

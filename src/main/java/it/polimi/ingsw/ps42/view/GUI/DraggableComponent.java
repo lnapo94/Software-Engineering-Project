@@ -6,7 +6,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
-import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.view.TableInterface;
 
 public class DraggableComponent extends FunctionalLabel {
@@ -27,7 +26,6 @@ public class DraggableComponent extends FunctionalLabel {
 	private int initialY;
 	
 	private TableInterface table;
-	private Dimension dimension;
 	
 	private class FamiliarPressedListener implements MouseListener{
 
