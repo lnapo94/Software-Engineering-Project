@@ -164,7 +164,7 @@ public class GUIView extends View implements TableInterface{
 		
 		enableMove();
 		
-		window = new UsernameWindow(mainFrame, "Login");
+		window = new UsernameWindow(this, mainFrame, "Wrong Name");
 	}
 	/**
 	 * Initialize the Card Position Label
