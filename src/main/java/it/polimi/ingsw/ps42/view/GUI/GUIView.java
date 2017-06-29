@@ -19,15 +19,21 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.border.LineBorder;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
+import it.polimi.ingsw.ps42.model.Card;
+import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
+import it.polimi.ingsw.ps42.parser.ImageLoader;
 import it.polimi.ingsw.ps42.view.TableInterface;
 import it.polimi.ingsw.ps42.view.View;
 
@@ -72,9 +78,18 @@ public class GUIView extends View implements TableInterface{
 	private List<CardLabel> bans;
 	//The player next move
 	private PlayerMove nextMove;
+	//The Loader for all the images of the game
+	private ImageLoader imageLoader;
+	//GUI Logger
+	private Logger logger = Logger.getLogger(GUIView.class);
+	//Game dialog window
+	private UsernameWindow window;
 	
 	public GUIView() throws IOException {
+		
 		super();
+		PropertyConfigurator.configure("Logger//Properties//client_log.properties");
+		imageLoader = new ImageLoader("Resource//Configuration//imagePaths.json");
 		initialize();
 		mainFrame.setVisible(true);
 	}
@@ -148,6 +163,8 @@ public class GUIView extends View implements TableInterface{
 		buildFamiliarMovePositions(mainLayeredPane);
 		
 		enableMove();
+		
+		window = new UsernameWindow(mainFrame, "Login");
 	}
 	/**
 	 * Initialize the Card Position Label
@@ -370,6 +387,38 @@ public class GUIView extends View implements TableInterface{
 		neutralFamiliar.resetFamiliar();
 	}
 	
+	@Override
+	public void setGreenCards(StaticList<Card> cards) {
+		super.setGreenCards(cards);
+		placeCards(greenTower, cards);
+	}
+	
+	@Override
+	public void setYellowCards(StaticList<Card> cards) {
+		super.setYellowCards(cards);
+		placeCards(yellowTower, cards);
+	}
+	@Override
+	public void setBlueCards(StaticList<Card> cards) {
+		super.setBlueCards(cards);
+		placeCards(blueTower, cards);
+	}
+	@Override
+	public void setVioletCards(StaticList<Card> cards) {
+		super.setVioletCards(cards);
+		placeCards(violetTower, cards);
+	}
+	private void placeCards(List<CardLabel> tower, StaticList<Card> cards) {
+		for(int i=0; i<4; i++){
+			BufferedImage cardImage;
+			try {
+				cardImage = imageLoader.loadCardImage(cards.get(i).getName());
+				tower.get(i).placeCard(cardImage);
+			} catch (IOException e) {
+				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
+			}
+		}
+	}
 	
 	@Override
 	protected int chooseBonusBar(List<BonusBar> bonusBarList) {
@@ -440,7 +489,8 @@ public class GUIView extends View implements TableInterface{
 
 	@Override
 	protected String askPlayerID() {
-		// TODO Auto-generated method stub
+		//Show a window asking the Player username
+		
 		return null;
 	}
 
