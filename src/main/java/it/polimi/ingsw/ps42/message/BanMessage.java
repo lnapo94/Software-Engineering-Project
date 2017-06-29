@@ -19,6 +19,10 @@ public class BanMessage extends Message{
 	private Effect secondEffect;
 	private Effect thirdEffect;
 	
+	private int indexOfFirstBan;
+	private int indexOfThirdBan;
+	private int indexOfSecondBan;
+	
 	/**
 	 * Constructor of the BanMessage
 	 * 
@@ -26,11 +30,15 @@ public class BanMessage extends Message{
 	 * @param secondEffect		The second casual ban of the current match
 	 * @param thirdEffect		The third casual ban of the current match
 	 */
-	public BanMessage( Effect firstEffect, Effect secondEffect, Effect thirdEffect) {
+	public BanMessage(Effect firstEffect, int indexOfFirstBan, Effect secondEffect, int indexOfSecondBan, Effect thirdEffect, int indexOfThirdBan) {
 		super(null);
 		this.firstEffect = firstEffect;
 		this.secondEffect = secondEffect;
 		this.thirdEffect = thirdEffect;
+		
+		this.indexOfFirstBan = indexOfFirstBan;
+		this.indexOfSecondBan = indexOfSecondBan;
+		this.indexOfThirdBan = indexOfThirdBan;
 	}
 	
 	/**
@@ -58,6 +66,18 @@ public class BanMessage extends Message{
 	 */
 	public Effect getThirdEffect() {
 		return thirdEffect;
+	}
+	
+	public int getIndexOfFirstBan() {
+		return indexOfFirstBan;
+	}
+	
+	public int getIndexOfSecondBan() {
+		return indexOfSecondBan;
+	}
+	
+	public int getIndexOfThirdBan() {
+		return indexOfThirdBan;
 	}
 	
 	/**

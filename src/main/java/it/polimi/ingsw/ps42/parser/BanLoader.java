@@ -11,6 +11,8 @@ import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 
 public class BanLoader extends Loader{
+	
+	private int indexOfBan;
 
 	public BanLoader(String fileName) throws IOException {
 		
@@ -40,9 +42,15 @@ public class BanLoader extends Loader{
 			
 			}
 		}
-		if(effects.size() > index)
+		if(effects.size() > index) {
+			this.indexOfBan = index;
 			return effects.get(index);
+		}
 		else throw new ElementNotFoundException("The index passed is too big for the file dimension");
+	}
+	
+	public int getBanIndex() {
+		return this.indexOfBan;
 	}
 
 }

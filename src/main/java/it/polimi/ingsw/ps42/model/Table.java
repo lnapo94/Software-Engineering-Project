@@ -72,6 +72,10 @@ public class Table extends Observable{
 	private Effect secondBan;
 	private Effect thirdBan;
 	
+	private int indexOfFirstBan;
+	private int indexOfSecondBan;
+	private int indexOfThirdBan;
+	
 	//The Council position. In this position we have the CouncilObtain and
 	//a player can book a better position in the next round
 	private List<CouncilPosition> council;
@@ -345,23 +349,25 @@ public class Table extends Observable{
 
 	public Effect getThirdBan(){
 		return thirdBan;
-
 	}
 
-	public void addFirstBan(Effect ban) {
+	public void addFirstBan(Effect ban, int indexOfFirstBan) {
 		firstBan = ban;
+		this.indexOfFirstBan = indexOfFirstBan;
 	}
 
-	public void addSecondBan(Effect ban) {
+	public void addSecondBan(Effect ban, int indexOfSecondBan) {
 		secondBan = ban;
+		this.indexOfSecondBan = indexOfSecondBan;
 	}
 
-	public void addThirdBan(Effect ban) {
+	public void addThirdBan(Effect ban, int indexOfThirdBan) {
 		thirdBan = ban;
+		this.indexOfThirdBan = indexOfThirdBan;
 		
 		//Notify each player's View of the three game's bans with a BanMessage
 
-		Message banMessage = new BanMessage( this.firstBan.clone(), this.secondBan.clone(), this.thirdBan.clone());
+		Message banMessage = new BanMessage(this.firstBan.clone(), this.indexOfFirstBan, this.secondBan.clone(), this.indexOfSecondBan, this.thirdBan.clone(), this.indexOfThirdBan);
 		setChanged();
 		notifyObservers(banMessage);
 	}

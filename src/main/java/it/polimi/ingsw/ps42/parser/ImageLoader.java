@@ -17,6 +17,7 @@ public class ImageLoader extends Loader{
 	
 	private HashMap<String, String> cardsPath;
 	private HashMap<String, String> leaderCardsPath;
+	private HashMap<String, String> bansPath;
 
 	public ImageLoader(String fileName) throws IOException {
 		super(fileName);
@@ -28,7 +29,11 @@ public class ImageLoader extends Loader{
 		
 		leaderCardsPath = loader();
 		if(cardsPath == null)
-			throw new IOException();		
+			throw new IOException();	
+		
+		bansPath = loader();
+		if(bansPath == null)
+			throw new IOException();
 	}
 
 	@Override
@@ -61,11 +66,29 @@ public class ImageLoader extends Loader{
 		return loadGenericImage(leaderCardsPath, leaderCardName);
 	}
 	
+	public BufferedImage loadBanImage(Integer period, Integer index) throws IOException {
+		final int OFFSET = 7;
+		
+		Integer exactIndex = index + period * OFFSET;
+		return loadGenericImage(bansPath, exactIndex.toString());
+	}
+	
 	public int cardsMapSize() {
 		return cardsPath.size();
 	}
 	
 	public int leaderCardsMapSize() {
 		return leaderCardsPath.size();
+	}
+	
+	public int bansMapSize() {
+		return bansPath.size();
+	}
+	
+	public static void main(String[] args) throws IOException {
+		ImageLoader loader = new ImageLoader("Resource//Configuration//imagePaths.json");
+		System.out.println(loader.cardsMapSize());
+		System.out.println(loader.leaderCardsMapSize());
+		System.out.println(loader.bansMapSize());
 	}
 }
