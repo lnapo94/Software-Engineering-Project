@@ -177,7 +177,7 @@ splitPane.add(leftLayeredPane);
 		
 		
 		try{
-			DraggableComponent familiarStart = new DraggableComponent(750, 1510, tableLabel.getSize(), ImageIO.read(GUIView2.class.getResource("/Images/Others/BluFamiliareNero.png")));
+			DraggableComponent familiarStart = new DraggableComponent(750, 1510, tableLabel.getSize(), ImageIO.read(GUIView2.class.getResource("/Images/Others/BluFamiliareNero.png")), FamiliarColor.ORANGE);
 			familiarStart.enableListener();
 			familiarStart.setCanMove(true);
 			towerFamPosition = new JLabel("");
@@ -249,7 +249,7 @@ splitPane.add(leftLayeredPane);
 		this.movingImage = image;
 	}
 
-	public boolean handleEvent(int x, int y, BufferedImage image) {
+	public boolean handleEvent(int x, int y, BufferedImage image, FamiliarColor color) {
 		System.out.println("x: "+x+"; y: "+y);
 		if( containsPoint(towerFamPosition, x, y) )
 		{
@@ -267,11 +267,6 @@ splitPane.add(leftLayeredPane);
 		else return false;
 	}
 
-	@Override
-	public void askIncrement(ActionType type, int position, FamiliarColor color) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 }

@@ -18,8 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import it.polimi.ingsw.ps42.message.LoginMessage;
-
 public class UsernameWindow extends JDialog{
 
 	

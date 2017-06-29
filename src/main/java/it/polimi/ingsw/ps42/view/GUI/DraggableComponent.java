@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.view.TableInterface;
 
 public class DraggableComponent extends FunctionalLabel {
@@ -15,6 +16,7 @@ public class DraggableComponent extends FunctionalLabel {
 	 */
 	private static final long serialVersionUID = 3784924483053777524L;
 
+	private FamiliarColor familiarColor;
 	private volatile int screenX;
 	private volatile int screenY;
 	private volatile int myX;
@@ -61,7 +63,7 @@ public class DraggableComponent extends FunctionalLabel {
 				setLocation(initialX, initialY);
 			}
 			else{
-				if(table.handleEvent(event.getXOnScreen(), event.getYOnScreen(), image)){
+				if(table.handleEvent(event.getXOnScreen(), event.getYOnScreen(), image, getFamiliarColor() )){
 					setIcon(null);
 				}
 				else 
@@ -91,8 +93,9 @@ public class DraggableComponent extends FunctionalLabel {
 		
 	}
 	
-	public DraggableComponent(int x, int y, Dimension dimension, BufferedImage image) {
+	public DraggableComponent(int x, int y, Dimension dimension, BufferedImage image, FamiliarColor color) {
 		super();
+		this.familiarColor= color;
 		dimension = new Dimension((int)(dimension.getWidth()*0.06), (int)(dimension.getHeight()*0.05)); 
 		setLocation(x, y);
 		setSize(dimension);
@@ -127,6 +130,10 @@ public class DraggableComponent extends FunctionalLabel {
 	public void resetFamiliar(){
 		setLocation(initialX, initialY);
 		setIcon(resizeImage(image, this.getSize()));
+	}
+	
+	public FamiliarColor getFamiliarColor() {
+		return familiarColor;
 	}
 	
 }
