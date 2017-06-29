@@ -35,8 +35,10 @@ import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.parser.ImageLoader;
+import it.polimi.ingsw.ps42.parser.LeaderCardLoader;
 import it.polimi.ingsw.ps42.view.TableInterface;
 import it.polimi.ingsw.ps42.view.View;
+import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardChooseDialog;
 
 public class GUIView extends View implements TableInterface{
 
@@ -83,8 +85,6 @@ public class GUIView extends View implements TableInterface{
 	private ImageLoader imageLoader;
 	//GUI Logger
 	private Logger logger = Logger.getLogger(GUIView.class);
-	//Game dialog window
-	private UsernameWindow window;
 	
 	public GUIView() throws IOException {
 		
@@ -164,8 +164,9 @@ public class GUIView extends View implements TableInterface{
 		buildFamiliarMovePositions(mainLayeredPane);
 		
 		enableMove();
+
+		LoginWindow login = new LoginWindow(this, mainFrame, "ciao");
 		
-		window = new UsernameWindow(this, mainFrame, "Wrong Name");
 	}
 	/**
 	 * Initialize the Card Position Label
@@ -431,7 +432,12 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void chooseLeaderCard(List<LeaderCard> leaderCardList) {
 		// Ask the Player to choose a LeaderCard from the given List
-
+		try {
+			LeaderCardChooseDialog dialog = new LeaderCardChooseDialog(this, mainFrame, leaderCardList);
+		} catch (IOException e) {
+			logger.error("Error in open the image conversion file");
+			logger.info(e);
+		}
 	}
 
 	@Override

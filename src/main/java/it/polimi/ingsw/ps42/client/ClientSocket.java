@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -14,6 +15,7 @@ import org.apache.log4j.PropertyConfigurator;
 import it.polimi.ingsw.ps42.message.GenericMessage;
 import it.polimi.ingsw.ps42.view.TerminalView;
 import it.polimi.ingsw.ps42.view.View;
+import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
 /**
  * Class to load the Client, both from CLI and GUI
@@ -174,8 +176,21 @@ public class ClientSocket extends Observable implements Observer{
 		
 		String host = "localhost"; 
 
+		Scanner scanner = new Scanner(System.in);
+		
 		ClientSocket client = new ClientSocket(host);
-		View view = new TerminalView();
+		System.out.println("Which Client do you want? [G : GUI], [C : CLI]");
+		String input = scanner.nextLine();
+		View view = null;
+		
+		input = input.toUpperCase();
+		
+		if(input.equals("G")) {
+			view = new GUIView();
+		} else if (input.equals("C")){
+			view = new TerminalView();
+		}
+		 
 		client.addView(view);
 		view.askNewPlayerID();
 		client.startReading();
