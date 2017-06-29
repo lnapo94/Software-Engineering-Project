@@ -171,13 +171,16 @@ public class GameLogic implements Observer {
         //Load the three bans from a file
         try {
             BanLoader loader = new BanLoader("Resource//BansFile//firstPeriodBans.json");
-            table.addFirstBan(loader.getBan(new Random().nextInt(MAX_BANS_IN_FILE)));
+            Effect ban = loader.getBan(new Random().nextInt(MAX_BANS_IN_FILE));
+            table.addFirstBan(ban, loader.getBanIndex());
 
             loader.setFileName("Resource//BansFile//secondPeriodBans.json");
-            table.addSecondBan(loader.getBan(new Random().nextInt(MAX_BANS_IN_FILE)));
+            ban = loader.getBan(new Random().nextInt(MAX_BANS_IN_FILE));
+            table.addSecondBan(ban, loader.getBanIndex());
 
             loader.setFileName("Resource//BansFile//thirdPeriodBans.json");
-            table.addThirdBan(loader.getBan(new Random().nextInt(MAX_BANS_IN_FILE)));
+            ban = loader.getBan(new Random().nextInt(MAX_BANS_IN_FILE));
+            table.addThirdBan(ban, loader.getBanIndex());
             loader.close();
         } catch (IOException e) {
 
