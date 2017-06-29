@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.PopupMenu;
 import java.awt.Rectangle;
 
 import javax.swing.JLayeredPane;
@@ -24,6 +25,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JSplitPane;
 
+import it.polimi.ingsw.ps42.message.PlayerMove;
+import it.polimi.ingsw.ps42.model.enumeration.ActionType;
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.view.TableInterface;
 import it.polimi.ingsw.ps42.view.GUI.CardLabel;
 import it.polimi.ingsw.ps42.view.GUI.CardZoom;
@@ -36,6 +40,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
+import java.awt.Choice;
 
 public class GUIView2 implements TableInterface{
 
@@ -189,6 +194,16 @@ splitPane.add(leftLayeredPane);
 					towerFamPosition.setIcon(null);
 				}
 			});
+			
+			Choice choice = new Choice();
+			choice.setBounds(100, 1000, 300, 300);
+			//PopupMenu menu = new PopupMenu("menu delle scelte");
+			//menu.add("item11");
+			//choice.add(menu);
+			choice.add("scelta1");
+			choice.add("Scelta 2");
+			leftLayeredPane.add(choice);
+			
 			btnNewButton.setBounds(0, 0, 250, 41);
 			leftLayeredPane.add(btnNewButton);
 			
@@ -251,4 +266,12 @@ splitPane.add(leftLayeredPane);
 			return true;
 		else return false;
 	}
+
+	@Override
+	public void askIncrement(ActionType type, int position, FamiliarColor color) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }
