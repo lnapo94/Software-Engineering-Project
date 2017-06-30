@@ -69,8 +69,11 @@ public class TerminalView extends View {
 	}
 
 	@Override
-	protected void choosePlayerMove(ActionPrototype prototype) {
-		System.out.println("Nuova mossa per il giocatore corrente");
+	protected void choosePlayerMove(ActionPrototype prototype, boolean isRetrasmission) {
+		if(isRetrasmission)
+			System.out.println("Mossa precedente errata, riprova con un'altra mossa");
+		else
+			System.out.println("Nuova mossa per il giocatore corrente");
 		int increaseValue, position;
 		ActionType moveType;
 		FamiliarColor familiarColor;
@@ -212,7 +215,7 @@ public class TerminalView extends View {
 	protected void askIfWantToPlay(PlayerToken moveToken) {
 		System.out.println("Vuoi fare una nuova mossa?(si/no)");
 		if(scanner.nextLine().equalsIgnoreCase("SI")){
-			this.choosePlayerMove(moveToken.getActionPrototype());
+			this.choosePlayerMove(moveToken.getActionPrototype(), moveToken.isRetrasmission());
 		}
 		else
 			this.setEmptyMove();

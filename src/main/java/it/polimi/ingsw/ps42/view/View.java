@@ -262,7 +262,7 @@ public abstract class View extends Observable implements Observer {
 	
 	protected abstract void chooseCouncilConversion(List<Obtain> possibleConversions, int quantity);
 	
-	protected abstract void choosePlayerMove(ActionPrototype prototype);
+	protected abstract void choosePlayerMove(ActionPrototype prototype, boolean isRestrasmission);
 	
 	protected abstract void chooseIfPayBan(int banPeriod);
 	

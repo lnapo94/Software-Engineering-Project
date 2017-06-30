@@ -59,15 +59,18 @@ public class DraggableComponent extends FunctionalLabel {
 
 		@Override
 		public void mouseReleased(MouseEvent event) {
-			if( !canMove ){
-				setLocation(initialX, initialY);
-			}
-			else{
-				if(table.handleEvent(event.getXOnScreen(), event.getYOnScreen(), image, getFamiliarColor() )){
-					setIcon(null);
-				}
-				else 
+			if(event.getSource() instanceof DraggableComponent){
+				DraggableComponent source = (DraggableComponent) event.getSource();
+				if( !canMove ){
 					setLocation(initialX, initialY);
+				}
+				else{
+					if(table.handleEvent(event.getXOnScreen(), event.getYOnScreen(), source , getFamiliarColor() )){
+						setIcon(null);
+					}
+					else 
+						setLocation(initialX, initialY);
+				}
 			}
 		}
 

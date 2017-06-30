@@ -361,6 +361,15 @@ public class TableView {
 		
 	//RESET THE TABLE
 	public List<Player> resetTable() {
+		
+		//Reset all the Player's Familiars
+		for (Player player : players) {
+			player.getFamiliar(FamiliarColor.BLACK).resetPosition();
+			player.getFamiliar(FamiliarColor.NEUTRAL).resetPosition();
+			player.getFamiliar(FamiliarColor.WHITE).resetPosition();
+			player.getFamiliar(FamiliarColor.ORANGE).resetPosition();
+		}
+		
 		//Reset all the tower position
 		for(int i = 0; i < FLOORS; i++) {
 				
@@ -425,6 +434,7 @@ public class TableView {
 			
 		if(position.isEmpty()){
 			position.setFamiliarView(familiar);
+			familiar.setPosition(position);
 		}
 	}
 		

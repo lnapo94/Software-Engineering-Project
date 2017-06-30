@@ -258,11 +258,11 @@ splitPane.add(leftLayeredPane);
 		this.movingImage = image;
 	}
 
-	public boolean handleEvent(int x, int y, BufferedImage image, FamiliarColor color) {
+	public boolean handleEvent(int x, int y, DraggableComponent image, FamiliarColor color) {
 		System.out.println("x: "+x+"; y: "+y);
 		if( containsPoint(towerFamPosition, x, y) )
 		{
-			towerFamPosition.setIcon(resizeImage(image, towerFamPosition.getSize()));
+			towerFamPosition.setIcon(resizeImage(image.getImage(), towerFamPosition.getSize()));
 			return true;
 		}
 		else return false;
