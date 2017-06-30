@@ -89,7 +89,7 @@ public class IncrementWindow extends JDialog{
 		
 	}
      
-	public IncrementWindow(GUIView view, ActionType type, FamiliarColor familiarColor,int position, int maxIncrement) {
+	public IncrementWindow(GUIView view, ActionType type, FamiliarColor familiarColor,int position,int actionValue , int maxIncrement) {
 		super(view.getMainFrame());
 		this.view = view;
 		this.mainFrame = view.getMainFrame();
@@ -112,7 +112,7 @@ public class IncrementWindow extends JDialog{
 		JLabel second = new JLabel(" Action type: "+ type.toString());
 		second.setFont(font);
 		this.add(second);
-		JLabel third = new JLabel(" Action value: "+ position);
+		JLabel third = new JLabel(" Action value: "+ actionValue);
 		third.setFont(font);
 		this.add(third);
 		JLabel fourth = new JLabel(" Familiar color: "+ familiarColor.toString());

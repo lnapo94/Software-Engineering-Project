@@ -370,60 +370,74 @@ public class GUIView extends View implements TableInterface{
 	public boolean handleEvent(int x, int y, DraggableComponent familiarMoving, FamiliarColor color) {
 	
 		//For each position check if contains the point (x,y), if so change the imageIcon
-
+		int actionValue = 0;
 		for (JLabel position : greenTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
+				actionValue = 1 + greenTowerForFamiliar.indexOf(position)*2;
 				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
-				createNewMove(ActionType.TAKE_GREEN, color, greenTowerForFamiliar.indexOf(position), familiarMoving);
+				createNewMove(ActionType.TAKE_GREEN, color, greenTowerForFamiliar.indexOf(position), actionValue, familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : yellowTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
+				actionValue = 1 + yellowTowerForFamiliar.indexOf(position)*2;
 				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
-				createNewMove(ActionType.TAKE_YELLOW, color, yellowTowerForFamiliar.indexOf(position), familiarMoving);
+				createNewMove(ActionType.TAKE_YELLOW, color, yellowTowerForFamiliar.indexOf(position),actionValue, familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : blueTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
+				actionValue = 1 + blueTowerForFamiliar.indexOf(position)*2;
 				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
-				createNewMove( ActionType.TAKE_BLUE, color, blueTowerForFamiliar.indexOf(position), familiarMoving);
+				createNewMove( ActionType.TAKE_BLUE, color, blueTowerForFamiliar.indexOf(position),actionValue, familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : violetTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
+				actionValue = 1 + violetTowerForFamiliar.indexOf(position)*2;
 				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
-				createNewMove(ActionType.TAKE_VIOLET, color, violetTowerForFamiliar.indexOf(position), familiarMoving);
+				createNewMove(ActionType.TAKE_VIOLET, color, violetTowerForFamiliar.indexOf(position),actionValue, familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : council) {
 			if( containsPoint(position, x, y) ){
 				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
-				createNewMove( ActionType.COUNCIL, color, council.indexOf(position), familiarMoving);
+				actionValue = 1;
+				createNewMove( ActionType.COUNCIL, color, council.indexOf(position), actionValue, familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : yield) {
 			if( containsPoint(position, x, y) ){
 				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
-				createNewMove( ActionType.YIELD, color, yield.indexOf(position), familiarMoving);
+				if(yield.indexOf(position) == 0)
+					actionValue = 1;
+				else
+					actionValue = -3;
+				createNewMove( ActionType.YIELD, color, yield.indexOf(position), actionValue, familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : produce) {
 			if( containsPoint(position, x, y) ){
 				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
-				createNewMove( ActionType.PRODUCE, color, produce.indexOf(position), familiarMoving);
+				if(yield.indexOf(position) == 0)
+					actionValue = 1;
+				else
+					actionValue = -3;
+				createNewMove( ActionType.PRODUCE, color, produce.indexOf(position),actionValue , familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : market) {
 			if( containsPoint(position, x, y) ){
 				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
-				createNewMove( ActionType.MARKET, color, produce.indexOf(position), familiarMoving);
+				actionValue = 1;
+				createNewMove( ActionType.MARKET, color, produce.indexOf(position),actionValue , familiarMoving);
 				return true;
 			}
 		}
@@ -446,10 +460,10 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 	
-	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position, DraggableComponent familiarMoving){
+	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position, int actionValue, DraggableComponent familiarMoving){
 		//Ask the Player if he wants to increment the actual move and set the increment
 		this.movingFamiliar = familiarMoving;
-		new IncrementWindow(this, type, familiarColor, position, player.getResource(Resource.SLAVE));
+		new IncrementWindow(this, type, familiarColor, position, actionValue, player.getResource(Resource.SLAVE));
 		
 	}
 	
@@ -561,7 +575,7 @@ public class GUIView extends View implements TableInterface{
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
 				logger.info(e);
 			}
-		
+		greenTower.get(position).setIcon(null);
 	}
 	
 	@Override
@@ -577,7 +591,7 @@ public class GUIView extends View implements TableInterface{
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
 				logger.info(e);
 			}
-	
+		yellowTower.get(position).setIcon(null);
 	}
 	
 	@Override
@@ -586,13 +600,15 @@ public class GUIView extends View implements TableInterface{
 		Player player = searchPlayer(playerID);
 		Card card = this.table.getBlueCard(position);
 		player.addCard(card);
-		if(hasToAnswer(playerID))
+		if(hasToAnswer(playerID)){
 			try {
 				cardContainer.addBlueCard(imageLoader.loadCardImage(card.getName()));
 			} catch (IOException e) {
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
 				logger.info(e);
 			}
+		}
+		blueTower.get(position).setIcon(null);
 	}
 	
 	@Override
@@ -608,7 +624,7 @@ public class GUIView extends View implements TableInterface{
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
 				logger.info(e);
 			}
-	
+		violetTower.get(position).setIcon(null);
 	}
 
 	@Override
@@ -638,7 +654,7 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void choosePlayerMove(ActionPrototype prototype, boolean isRetrasmission) {
 		//Enable the Player to perform a new Move, if is a retrasmission then cancel the precedent
-		if(isRetrasmission)
+		if(isRetrasmission && nextMove != null)
 			cancelMove(nextMove.getActionType(), nextMove.getPosition());
 		if(prototype != null){
 			//Show ActionPrototype
