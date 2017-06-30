@@ -247,6 +247,10 @@ public class GameLogic implements Observer {
     public boolean isInitGame() {
     	return this.isInitGame;
     }
+    
+    public ServerView getView() {
+    	return this.view;
+    }
 
     /**
      * Method used to load the leader card from file

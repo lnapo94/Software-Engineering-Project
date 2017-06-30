@@ -140,6 +140,7 @@ public class ControllerVisitor implements Visitor {
 			Player player = gameLogic.searchPlayer(message.getPlayerID());
 			if(gameLogic.isConnected(player)) {
 				Action action = new ActionCreator(player, gameLogic.getTable(), message, gameLogic.getBonusActionValue()).getCreatedAction();
+				action.addObserver(gameLogic.getView());
 				gameLogic.handleAction(action, message.getPlayerID());
 			}
 		} catch (NotEnoughResourcesException e) {

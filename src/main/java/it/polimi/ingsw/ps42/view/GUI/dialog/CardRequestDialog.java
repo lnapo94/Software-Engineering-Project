@@ -64,6 +64,7 @@ public class CardRequestDialog extends JDialog{
 			
 			JRadioButton button = new JRadioButton();
 			button.setFont(font);
+			button.setSize((int) (this.getWidth() * 0.1), (int) (this.getHeight() * 0.1));
 			radioButtonsContainer.add(button);
 			group.add(button);
 			
