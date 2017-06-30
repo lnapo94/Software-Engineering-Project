@@ -39,6 +39,7 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.parser.ImageLoader;
 import it.polimi.ingsw.ps42.view.TableInterface;
 import it.polimi.ingsw.ps42.view.View;
+import it.polimi.ingsw.ps42.view.GUI.dialog.BonusBarRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.CardRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardChooseDialog;
 
@@ -575,7 +576,8 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void chooseBonusBar(List<BonusBar> bonusBarList) {
 		//Ask the Player to choose a BonusBar from the given List
-			
+		BonusBarRequestDialog dialog = new BonusBarRequestDialog(this, bonusBarList);
+		dialog.run();
 	}
 
 	@Override
