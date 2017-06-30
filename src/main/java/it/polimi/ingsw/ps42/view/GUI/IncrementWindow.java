@@ -53,17 +53,18 @@ public class IncrementWindow extends JDialog{
 		@Override
 		public void keyPressed(KeyEvent e) {
 			
-			if(e.getKeyCode() == KeyEvent.VK_ENTER)
+			if(e.getKeyCode() == KeyEvent.VK_ENTER){
 				trySendMove();
-			
+				close();
+			}
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
 			
-			if(e.getKeyCode() == KeyEvent.VK_ESCAPE) 
+			if(e.getKeyCode() == KeyEvent.VK_ESCAPE){ 
 				cancelMove();
-			
+			}
 		}
 
 		@Override
@@ -78,9 +79,10 @@ public class IncrementWindow extends JDialog{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			if(e.getSource() == confirmButton)
+			if(e.getSource() == confirmButton){
 				trySendMove();
-			
+				close();
+			}
 		}
 		
 	}
@@ -134,6 +136,7 @@ public class IncrementWindow extends JDialog{
 		//Add all the listener
 		slider.addChangeListener(new SliderListener());
 		confirmButton.addActionListener(new ButtonAction());
+		confirmButton.addKeyListener(new KeyboardListener());
 		this.getContentPane().addKeyListener(new KeyboardListener());
 	}
 	
@@ -145,5 +148,9 @@ public class IncrementWindow extends JDialog{
 	private void trySendMove(){
 		PlayerMove move = new PlayerMove(view.getViewPlayerID(), type, familiarColor, position, increment);
 		this.view.setNewMove(move);
+	}
+	
+	private void close(){
+		dispose();
 	}
 }
