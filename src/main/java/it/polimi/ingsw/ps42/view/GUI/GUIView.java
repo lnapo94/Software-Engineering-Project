@@ -269,9 +269,9 @@ public class GUIView extends View implements TableInterface{
 		Dimension positionDimension = new Dimension((int)(tableImageDimension.getWidth()*0.06), (int)(tableImageDimension.getHeight()*0.05));
 		placeFamiliarPosition(mainPane, positionDimension, greenTowerForFamiliar, deltaX);
 		deltaX += (int)(tableImageDimension.getWidth()*0.242);
-		placeFamiliarPosition(mainPane, positionDimension, yellowTowerForFamiliar, deltaX);
-		deltaX += (int)(tableImageDimension.getWidth()*0.242);
 		placeFamiliarPosition(mainPane, positionDimension, blueTowerForFamiliar, deltaX);
+		deltaX += (int)(tableImageDimension.getWidth()*0.242);
+		placeFamiliarPosition(mainPane, positionDimension, yellowTowerForFamiliar, deltaX);
 		deltaX += (int)(tableImageDimension.getWidth()*0.241);
 		placeFamiliarPosition(mainPane, positionDimension, violetTowerForFamiliar, deltaX);		
 		
@@ -583,7 +583,7 @@ public class GUIView extends View implements TableInterface{
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
 				logger.info(e);
 			}
-		greenTower.get(position).setIcon(null);
+		greenTower.get(position).removeCard();
 	}
 	
 	@Override
@@ -599,7 +599,7 @@ public class GUIView extends View implements TableInterface{
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
 				logger.info(e);
 			}
-		yellowTower.get(position).setIcon(null);
+		yellowTower.get(position).removeCard();
 	}
 	
 	@Override
@@ -616,7 +616,7 @@ public class GUIView extends View implements TableInterface{
 				logger.info(e);
 			}
 		}
-		blueTower.get(position).setIcon(null);
+		blueTower.get(position).removeCard();
 	}
 	
 	@Override
@@ -632,7 +632,7 @@ public class GUIView extends View implements TableInterface{
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
 				logger.info(e);
 			}
-		violetTower.get(position).setIcon(null);
+		violetTower.get(position).removeCard();
 	}
 
 	@Override
