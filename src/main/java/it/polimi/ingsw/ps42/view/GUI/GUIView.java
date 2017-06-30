@@ -157,8 +157,6 @@ public class GUIView extends View implements TableInterface{
 		
 		buildFamiliarMovePositions(mainLayeredPane);
 		
-		enableMove();
-		
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
 
@@ -436,6 +434,12 @@ public class GUIView extends View implements TableInterface{
 				return true;
 			else return false;
 	
+	}
+	
+	@Override
+	public void addPlayer(String playerID) {
+		super.addPlayer(playerID);
+		enableMove();
 	}
 	
 	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position, DraggableComponent familiarMoving){
