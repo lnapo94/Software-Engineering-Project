@@ -789,7 +789,7 @@ public class GameLogic implements Observer {
     public synchronized void handleAction(Action action, String playerID) {
     	try {
 			Player player = searchPlayer(playerID);
-			if(player == currentPlayer) {
+			if(player.getPlayerID().equals(currentPlayer.getPlayerID())) {
 				
 				if(bonusAction != null && !bonusAction.checkAction(action)) {
 					PlayerToken message = new PlayerToken(currentPlayer.getPlayerID(), bonusAction);

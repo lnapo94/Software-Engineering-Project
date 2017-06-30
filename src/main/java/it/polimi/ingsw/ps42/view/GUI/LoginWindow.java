@@ -114,6 +114,7 @@ public class LoginWindow extends JDialog{
 		
 		if(control) {
 			view.setNewPlayerID(input);
+			parent.setTitle(parent.getTitle() + " - " + input);
 			this.dispose();
 		}
 	}
