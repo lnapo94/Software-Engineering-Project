@@ -92,7 +92,7 @@ public abstract class View extends Observable implements Observer {
 	}
 	
 	//Methods to Ask Player Input
-	private boolean hasToAnswer(String playerID){
+	protected boolean hasToAnswer(String playerID){
 		
 		return player.getPlayerID().equals(playerID);
 	}

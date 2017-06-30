@@ -32,8 +32,11 @@ import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
+import it.polimi.ingsw.ps42.model.enumeration.Resource;
+import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
+import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.parser.ImageLoader;
 import it.polimi.ingsw.ps42.parser.LeaderCardLoader;
 import it.polimi.ingsw.ps42.view.TableInterface;
@@ -48,6 +51,9 @@ public class GUIView extends View implements TableInterface{
 	
 	//The Label where the zoom of the Card is displayed
 	private CardZoom cardZoom;
+	
+	//The Container for all the cards taken
+	private CardContainer cardContainer;
 	
 	//The Image of the familiar currently moving
 	private BufferedImage movingImage;
@@ -140,10 +146,9 @@ public class GUIView extends View implements TableInterface{
 		mainLayeredPane.add(lowTableLabel, -1);
 		
 		//Set the Cards taken container
-		JLabel cardContainer = new JLabel();
-		cardContainer.setSize((int)(rightPanelDimension.getWidth()*0.8),(int) (rightPanelDimension.getHeight()-cardZoom.getHeight()));
-		cardContainer.setLocation((int)leftPaneDimension.getWidth(), (int)cardZoom.getHeight());
-		cardContainer.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/cardContainer.jpg")), cardContainer.getSize()));
+		Dimension containerDimension = new Dimension((int)(rightPanelDimension.getWidth()*0.8),(int) (rightPanelDimension.getHeight()-cardZoom.getHeight()));
+		Point containerLocation = new Point((int)leftPaneDimension.getWidth(), (int)cardZoom.getHeight());
+		cardContainer = new CardContainer(containerDimension, containerLocation, cardZoom, ImageIO.read(GUIView.class.getResource("/Images/Others/cardContainer.jpg")), cardDimension);
 		mainLayeredPane.add(cardContainer, -1);
 		
 		//Build the main Familiar positions
@@ -154,7 +159,7 @@ public class GUIView extends View implements TableInterface{
 		buildFamiliarMovePositions(mainLayeredPane);
 		
 		enableMove();
-
+		
 		LoginWindow login = new LoginWindow(this, "");
 
 	}
@@ -184,7 +189,7 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			yellowTower.add(card);
+			blueTower.add(card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
@@ -193,7 +198,7 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			blueTower.add(card);
+			yellowTower.add(card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
@@ -207,11 +212,6 @@ public class GUIView extends View implements TableInterface{
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
 
-		blueTower.get(0).placeCard(ImageIO.read(GUIView.class.getResource("/Images/Cards/cartaTagliata.png")));
-		violetTower.get(0).placeCard(ImageIO.read(GUIView.class.getResource("/Images/Cards/cartaTagliata.png")));
-		greenTower.get(0).placeCard(ImageIO.read(GUIView.class.getResource("/Images/Cards/cartaTagliata.png")));
-		yellowTower.get(0).placeCard(ImageIO.read(GUIView.class.getResource("/Images/Cards/cartaTagliata.png")));
-		greenTower.get(1).placeCard(ImageIO.read(GUIView.class.getResource("/Images/Cards/FirstPeriod/Green/1.png")));
 	}
 	
 	/**
@@ -366,7 +366,7 @@ public class GUIView extends View implements TableInterface{
 	
 	@Override
 	public boolean handleEvent(int x, int y, BufferedImage image, FamiliarColor color) {
-		System.out.println("x: "+x+"; y: "+y);
+	
 		//For each position check if contains the point (x,y), if so change the imageIcon
 
 		for (JLabel position : greenTowerForFamiliar) {
@@ -440,9 +440,15 @@ public class GUIView extends View implements TableInterface{
 	
 	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position){
 		//Ask the Player if he wants to increment the actual move and set the increment
-		new IncrementWindow(this, type, familiarColor, position);
+		new IncrementWindow(this, type, familiarColor, position, player.getResource(Resource.SLAVE));
 		
 	}
+	
+	public void cancelMove(){
+		//Restore the position of the moved Familiar
+		
+	}
+	
 	private void enableMove(){
 		blackFamiliar.setCanMove(true);
 		whiteFamiliar.setCanMove(true);
@@ -489,6 +495,65 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 	
+	@Override
+	public void setGreenCard(String playerID, int position) throws ElementNotFoundException {
+
+		Player player = searchPlayer(playerID);
+		Card card = this.table.getGreenCard(position);
+		player.addCard(card);
+		if(hasToAnswer(playerID))
+			try {
+				cardContainer.addGreenCard(imageLoader.loadCardImage(card.getName()));
+			} catch (IOException e) {
+				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
+			}
+		
+	}
+	
+	@Override
+	public void setYellowCard(String playerID, int position) throws ElementNotFoundException {
+
+		Player player = searchPlayer(playerID);
+		Card card = this.table.getYellowCard(position);
+		player.addCard(card);
+		if(hasToAnswer(playerID))
+			try {
+				cardContainer.addYellowCard(imageLoader.loadCardImage(card.getName()));
+			} catch (IOException e) {
+				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
+			}
+	
+	}
+	
+	@Override
+	public void setBlueCard(String playerID, int position) throws ElementNotFoundException {
+		
+		Player player = searchPlayer(playerID);
+		Card card = this.table.getBlueCard(position);
+		player.addCard(card);
+		if(hasToAnswer(playerID))
+			try {
+				cardContainer.addBlueCard(imageLoader.loadCardImage(card.getName()));
+			} catch (IOException e) {
+				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
+			}
+	}
+	
+	@Override
+	public void setVioletCard(String playerID, int position) throws ElementNotFoundException {
+
+		Player player = searchPlayer(playerID);
+		Card card = this.table.getVioletCard(position);
+		player.addCard(card);
+		if(hasToAnswer(playerID))
+			try {
+				cardContainer.addVioletCard(imageLoader.loadCardImage(card.getName()));
+			} catch (IOException e) {
+				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
+			}
+	
+	}
+
 	@Override
 	protected void chooseBonusBar(List<BonusBar> bonusBarList) {
 		//Ask the Player to choose a BonusBar from the given List

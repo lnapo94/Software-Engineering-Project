@@ -16,26 +16,6 @@ public class CardLabel extends FunctionalLabel {
 	private BufferedImage cardImage;
 	private CardZoom zoomLabel;
 	
-	public CardLabel(int x, int y, Dimension dimension, CardZoom zoomLabel) {
-		super();
-		this.zoomLabel = zoomLabel;
-		this.setBounds(x, y, (int)dimension.getWidth(), (int)dimension.getHeight());
-		this.addMouseListener(mouseAdapter);
-	}
-	
-	public void addZoomLabel(CardZoom zoomLabel){
-		this.zoomLabel = zoomLabel;
-	}
-	
-	public void placeCard(BufferedImage cardImage){
-		this.cardImage = cardImage;
-		this.setIcon(resizeImage(cardImage, new Dimension(this.getWidth(), this.getHeight())));
-	}
-	
-	public BufferedImage getCardImage() {
-		return cardImage;
-	}
-	
 	private MouseAdapter mouseAdapter = new MouseAdapter() {
 		
 		@Override
@@ -53,5 +33,36 @@ public class CardLabel extends FunctionalLabel {
 			zoomLabel.showDefaultImage();
 		}
 	};
+	
+	
+	public CardLabel(int x, int y, Dimension dimension, CardZoom zoomLabel) {
+		super();
+		this.cardImage = null;
+		this.zoomLabel = zoomLabel;
+		this.setBounds(x, y, (int)dimension.getWidth(), (int)dimension.getHeight());
+		this.addMouseListener(mouseAdapter);
+	}
+	
+	public void addZoomLabel(CardZoom zoomLabel){
+		this.zoomLabel = zoomLabel;
+	}
+	
+	public void placeCard(BufferedImage cardImage){
+		this.cardImage = cardImage;
+		this.setIcon(resizeImage(cardImage, new Dimension(this.getWidth(), this.getHeight())));
+	}
+	
+	public void removeCard(){
+		this.cardImage = null;
+		this.setIcon(null);
+	}
+	
+	public BufferedImage getCardImage() {
+		return cardImage;
+	}
+
+	public boolean hasACard(){
+		return cardImage != null;
+	}
 
 }

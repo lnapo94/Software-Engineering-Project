@@ -41,6 +41,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import java.awt.Choice;
+import javax.swing.JSlider;
 
 public class GUIView2 implements TableInterface{
 
@@ -202,6 +203,14 @@ splitPane.add(leftLayeredPane);
 			//choice.add(menu);
 			choice.add("scelta1");
 			choice.add("Scelta 2");
+			
+			JSlider slider = new JSlider();
+			slider.setSnapToTicks(true);
+			slider.setPaintTicks(true);
+			slider.setPaintLabels(true);
+			slider.setMaximum(10);
+			slider.setBounds(347, 171, 232, 57);
+			leftLayeredPane.add(slider);
 			leftLayeredPane.add(choice);
 			
 			btnNewButton.setBounds(0, 0, 250, 41);
@@ -266,7 +275,4 @@ splitPane.add(leftLayeredPane);
 			return true;
 		else return false;
 	}
-
-
-	
 }
