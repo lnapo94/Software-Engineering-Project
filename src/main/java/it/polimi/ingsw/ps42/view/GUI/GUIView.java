@@ -179,7 +179,7 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			greenTower.add(card);
+			greenTower.add(3-i, card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
@@ -188,7 +188,7 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			blueTower.add(card);
+			blueTower.add(3-i, card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
@@ -197,7 +197,7 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			yellowTower.add(card);
+			yellowTower.add(3-i, card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
@@ -206,7 +206,7 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			violetTower.add(card);
+			violetTower.add(3-i, card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
