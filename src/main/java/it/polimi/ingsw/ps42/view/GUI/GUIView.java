@@ -179,7 +179,7 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			greenTower.add(3-i, card);
+			greenTower.add(card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
@@ -188,7 +188,7 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			blueTower.add(3-i, card);
+			blueTower.add(card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
@@ -197,7 +197,7 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			yellowTower.add(3-i, card);
+			yellowTower.add(card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
@@ -206,13 +206,29 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			violetTower.add(3-i, card);
+			violetTower.add(card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
 
+		reverse(greenTower);
+		reverse(blueTower);
+		reverse(violetTower);
+		reverse(yellowTower);
 	}
 	
+	private void reverse(List<CardLabel> tower){
+		
+		CardLabel first = tower.get(0);
+		CardLabel last = tower.get(3);
+		tower.add(3, first);
+		tower.add(0, last);
+		first = tower.get(1);
+		last = tower.get(2);
+		tower.add(2, first);
+		tower.add(1, last);
+		
+	}
 	/**
 	 * 
 	 * @param mainPane
