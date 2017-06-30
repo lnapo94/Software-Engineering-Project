@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -30,6 +31,8 @@ public class IncrementWindow extends JDialog{
 	private JFrame mainFrame;
 	private JSlider slider;
 	private JButton confirmButton;
+	private JButton deleteButton;
+	
 	private JLabel incrementLabel;
 	
 	private ActionType type;
@@ -85,12 +88,17 @@ public class IncrementWindow extends JDialog{
 				trySendMove();
 				close();
 			}
+			else if(e.getSource() == deleteButton){
+				view.cancelMove(type, position);
+				close();
+			}
 		}
 		
 	}
-     
+    
 	public IncrementWindow(GUIView view, ActionType type, FamiliarColor familiarColor,int position,int actionValue , int maxIncrement) {
 		super(view.getMainFrame());
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.view = view;
 		this.mainFrame = view.getMainFrame();
 		this.type = type;
@@ -130,7 +138,10 @@ public class IncrementWindow extends JDialog{
 		slider.setFont(font);
 		this.add(slider);
 		
-		//Set the Confirm Button
+		//Set the Confirm and Delete Buttons
+		deleteButton = new JButton("Cancel");
+		confirmButton.setFont(font);
+		this.add(deleteButton);
 		confirmButton = new JButton("Confirm");
 		confirmButton.setFont(font);
 		this.add(confirmButton);
@@ -139,6 +150,7 @@ public class IncrementWindow extends JDialog{
 		slider.addChangeListener(new SliderListener());
 		confirmButton.addActionListener(new ButtonAction());
 		confirmButton.addKeyListener(new KeyboardListener());
+		deleteButton.addActionListener(new ButtonAction());
 		this.getContentPane().addKeyListener(new KeyboardListener());
 	}
 	
