@@ -36,6 +36,7 @@ import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
+import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.parser.ImageLoader;
 import it.polimi.ingsw.ps42.parser.LeaderCardLoader;
@@ -56,7 +57,7 @@ public class GUIView extends View implements TableInterface{
 	private CardContainer cardContainer;
 	
 	//The Image of the familiar currently moving
-	private BufferedImage movingImage;
+	private DraggableComponent movingFamiliar;
 	
 	//The List of CardLabels separated by Color
 	private List<CardLabel> greenTower;
@@ -161,7 +162,7 @@ public class GUIView extends View implements TableInterface{
 		enableMove();
 		
 		LoginWindow login = new LoginWindow(this, "");
-
+		
 	}
 	/**
 	 * Initialize the Card Position Label
@@ -365,63 +366,63 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	@Override
-	public boolean handleEvent(int x, int y, BufferedImage image, FamiliarColor color) {
+	public boolean handleEvent(int x, int y, DraggableComponent familiarMoving, FamiliarColor color) {
 	
 		//For each position check if contains the point (x,y), if so change the imageIcon
 
 		for (JLabel position : greenTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(image, position.getSize()));
-				createNewMove(ActionType.TAKE_GREEN, color, greenTowerForFamiliar.indexOf(position));
+				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				createNewMove(ActionType.TAKE_GREEN, color, greenTowerForFamiliar.indexOf(position), familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : yellowTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(image, position.getSize()));
-				createNewMove(ActionType.TAKE_YELLOW, color, yellowTowerForFamiliar.indexOf(position));
+				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				createNewMove(ActionType.TAKE_YELLOW, color, yellowTowerForFamiliar.indexOf(position), familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : blueTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(image, position.getSize()));
-				createNewMove( ActionType.TAKE_BLUE, color, blueTowerForFamiliar.indexOf(position));
+				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				createNewMove( ActionType.TAKE_BLUE, color, blueTowerForFamiliar.indexOf(position), familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : violetTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(image, position.getSize()));
-				createNewMove(ActionType.TAKE_VIOLET, color, violetTowerForFamiliar.indexOf(position));
+				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				createNewMove(ActionType.TAKE_VIOLET, color, violetTowerForFamiliar.indexOf(position), familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : council) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(image, position.getSize()));
-				createNewMove( ActionType.COUNCIL, color, council.indexOf(position));
+				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				createNewMove( ActionType.COUNCIL, color, council.indexOf(position), familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : yield) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(image, position.getSize()));
-				createNewMove( ActionType.YIELD, color, yield.indexOf(position));
+				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				createNewMove( ActionType.YIELD, color, yield.indexOf(position), familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : produce) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(image, position.getSize()));
-				createNewMove( ActionType.PRODUCE, color, produce.indexOf(position));
+				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				createNewMove( ActionType.PRODUCE, color, produce.indexOf(position), familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : market) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(image, position.getSize()));
-				createNewMove( ActionType.MARKET, color, produce.indexOf(position));
+				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				createNewMove( ActionType.MARKET, color, produce.indexOf(position), familiarMoving);
 				return true;
 			}
 		}
@@ -438,8 +439,9 @@ public class GUIView extends View implements TableInterface{
 	
 	}
 	
-	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position){
+	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position, DraggableComponent familiarMoving){
 		//Ask the Player if he wants to increment the actual move and set the increment
+		this.movingFamiliar = familiarMoving;
 		new IncrementWindow(this, type, familiarColor, position, player.getResource(Resource.SLAVE));
 		
 	}
@@ -450,16 +452,29 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	private void enableMove(){
-		blackFamiliar.setCanMove(true);
-		whiteFamiliar.setCanMove(true);
-		orangeFamiliar.setCanMove(true);
-		neutralFamiliar.setCanMove(true);
+		enableFamiliar(blackFamiliar, player.getFamiliar(FamiliarColor.BLACK));
+		enableFamiliar(whiteFamiliar, player.getFamiliar(FamiliarColor.WHITE));
+		enableFamiliar(orangeFamiliar, player.getFamiliar(FamiliarColor.ORANGE));
+		enableFamiliar(neutralFamiliar, player.getFamiliar(FamiliarColor.NEUTRAL));
+		
 	}
+	
+	private void enableFamiliar(DraggableComponent familiarIcon, Familiar familiar){
+		if(!familiar.isPositioned())
+			familiarIcon.setCanMove(true);
+	}
+	
 	private void restoreFamiliar(){
 		blackFamiliar.resetFamiliar();
 		whiteFamiliar.resetFamiliar();
 		orangeFamiliar.resetFamiliar();
 		neutralFamiliar.resetFamiliar();
+	}
+	
+	@Override
+	public void resetTable() {
+		super.resetTable();
+		restoreFamiliar();
 	}
 	
 	@Override
@@ -579,8 +594,10 @@ public class GUIView extends View implements TableInterface{
 	}
 
 	@Override
-	protected void choosePlayerMove(ActionPrototype prototype) {
-		//Enable the Player to perform a new Move
+	protected void choosePlayerMove(ActionPrototype prototype, boolean isRetrasmission) {
+		//Enable the Player to perform a new Move, if is a retrasmission then cancel the precedent
+		if(isRetrasmission)
+			cancelMove();
 		if(prototype != null){
 			//Show ActionPrototype
 			
@@ -631,7 +648,7 @@ public class GUIView extends View implements TableInterface{
 		//Ask to the Player if he wants to perform a new Action 
 		
 		//If so ask a new PlayerMove
-		this.choosePlayerMove(moveToken.getActionPrototype());
+		this.choosePlayerMove(moveToken.getActionPrototype(), moveToken.isRetrasmission());
 		
 	}
 
