@@ -37,9 +37,9 @@ import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.parser.ImageLoader;
-import it.polimi.ingsw.ps42.parser.LeaderCardLoader;
 import it.polimi.ingsw.ps42.view.TableInterface;
 import it.polimi.ingsw.ps42.view.View;
+import it.polimi.ingsw.ps42.view.GUI.dialog.CardRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardChooseDialog;
 
 public class GUIView extends View implements TableInterface{
@@ -613,7 +613,8 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void answerCardRequest(CardRequest message) {
 		// Ask to the player to choose from the given card request
-		
+		CardRequestDialog dialog = new CardRequestDialog(this, message);
+		dialog.run();
 	}
 
 	@Override
