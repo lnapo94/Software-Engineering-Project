@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -106,7 +107,7 @@ public class IncrementWindow extends JDialog{
 		this.position = position;
 		
 		Dimension dimension = new Dimension((int)(mainFrame.getWidth()*0.3), (int)(mainFrame.getHeight()*0.4));
-		this.setLayout(new GridLayout(7, 1));
+		this.setLayout(new GridLayout(8, 1));
 		this.setSize(dimension);
 		this.setLocation((int)(mainFrame.getWidth()*0.4),(int)(mainFrame.getHeight()*0.3));
 		this.setVisible(true);
@@ -138,13 +139,16 @@ public class IncrementWindow extends JDialog{
 		slider.setFont(font);
 		this.add(slider);
 		
+		JPanel buttonPane = new JPanel(new GridLayout(1, 2));
+		buttonPane.setVisible(true);
 		//Set the Confirm and Delete Buttons
 		deleteButton = new JButton("Cancel");
-		confirmButton.setFont(font);
-		this.add(deleteButton);
+		deleteButton.setFont(font);
+		buttonPane.add(deleteButton);
 		confirmButton = new JButton("Confirm");
 		confirmButton.setFont(font);
-		this.add(confirmButton);
+		buttonPane.add(confirmButton);
+		this.add(buttonPane);
 		
 		//Add all the listener
 		slider.addChangeListener(new SliderListener());
@@ -152,6 +156,7 @@ public class IncrementWindow extends JDialog{
 		confirmButton.addKeyListener(new KeyboardListener());
 		deleteButton.addActionListener(new ButtonAction());
 		this.getContentPane().addKeyListener(new KeyboardListener());
+		this.mainFrame.addKeyListener(new KeyboardListener());
 	}
 	
 	private void cancelMove(){

@@ -509,19 +509,19 @@ public class TableView {
 		
 	public Card getYellowCard(int position) throws ElementNotFoundException{
 
-		return removeCard(greenTower, position);
+		return removeCard(yellowTower, position);
 
 	}
 		
 	public Card getVioletCard(int position) throws ElementNotFoundException{
 
-		return removeCard(greenTower, position);
+		return removeCard(violetTower, position);
 
 	}
 		
 	public Card getBlueCard(int position) throws ElementNotFoundException{
 
-		return removeCard(greenTower, position);
+		return removeCard(blueTower, position);
 
 	}
 	
