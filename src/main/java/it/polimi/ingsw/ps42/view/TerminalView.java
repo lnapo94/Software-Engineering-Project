@@ -123,7 +123,7 @@ public class TerminalView extends View {
 	protected void answerCardRequest(CardRequest message) {
 		System.out.println("Risolvi una richiesta della carta [0-"+(message.getPossibleChoiceIndex().size()-1)+"]");
 		for (Printable possibleChoice : message.showChoice()) {
-			System.out.println(possibleChoice.toString());
+			System.out.println(possibleChoice.print());
 		}
 		this.setCardRequestResponse(message, Integer.parseInt(scanner.nextLine()));
 	}

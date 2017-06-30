@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps42.view.GUI;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Frame;
@@ -17,7 +16,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -156,6 +154,7 @@ public class GUIView extends View implements TableInterface{
 		enableMove();
 
 		LoginWindow login = new LoginWindow(this, "");
+		login.run();
 
 	}
 	/**
@@ -492,8 +491,7 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void chooseBonusBar(List<BonusBar> bonusBarList) {
 		//Ask the Player to choose a BonusBar from the given List
-		
-		
+			
 	}
 
 	@Override
@@ -557,8 +555,8 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	public void askNewPlayerID() {
 		//Show a window asking the Player username
-		
-		
+		LoginWindow login = new LoginWindow(this, "Used ID yet chosen by another player");
+		login.run();
 	}
 
 	@Override

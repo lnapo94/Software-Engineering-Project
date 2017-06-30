@@ -199,7 +199,6 @@ public class ClientSocket extends Observable implements Observer{
 		 
 		scanner.close();
 		client.addView(view);
-		view.askNewPlayerID();
 		client.startReading();
 	}
 
