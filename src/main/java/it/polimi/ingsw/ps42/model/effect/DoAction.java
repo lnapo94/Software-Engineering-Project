@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
@@ -52,6 +54,8 @@ public class DoAction extends Effect{
 	@Override
 	public void enableEffect(Player player) {
 		this.player=player;
+		
+		logger = Logger.getLogger(DoAction.class);
 		
 		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		

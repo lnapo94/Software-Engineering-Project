@@ -3,6 +3,8 @@ package it.polimi.ingsw.ps42.model.effect;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -46,6 +48,8 @@ public class CouncilObtain extends Effect {
 	 */
 	@Override
 	public void enableEffect(Player player) {
+		
+		logger = Logger.getLogger(CouncilObtain.class);
 		
 		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.Card;
 
 import it.polimi.ingsw.ps42.model.StaticList;
@@ -43,7 +45,7 @@ public class CardBan extends Effect{
 	 */
 	@Override
 	public void enableEffect(Player player) {
-		
+		logger = Logger.getLogger(CardBan.class);
 			this.player=player;
 			try{
 				logger.info("Effect: " + this.getTypeOfEffect() + " activated");

@@ -317,6 +317,7 @@ public class Card implements Serializable{
 	 */
 	public void enableImmediateEffect(int choice, Player player) {
 		//Try to enable the effect
+		logger = Logger.getLogger(Card.class);
 		try {
 			enableEffect(choice, immediateEffects, player);
 		} catch(ArithmeticException e) {
@@ -364,9 +365,11 @@ public class Card implements Serializable{
 	 * @param  choice						The effect which player wants to enable
 	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
 	 */
-	public void enablePermanentEffect(int choice, Player player) {try {
-		enableEffect(choice, permanentEffects, player);
-	} catch(ArithmeticException e) {
+	public void enablePermanentEffect(int choice, Player player) {
+		logger = Logger.getLogger(Card.class);
+		try {
+			enableEffect(choice, permanentEffects, player);
+		} catch(ArithmeticException e) {
 		//The chosen effect is no more applicable, try to choose another effect
 		try {
 			logger.info("The chosen effect is no more applicable, try to choose another effect");
@@ -412,6 +415,7 @@ public class Card implements Serializable{
 	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
 	 */
 	public void enableFinalEffect(int choice, Player player) {
+		logger = Logger.getLogger(Card.class);
 		try {
 			enableEffect(choice, finalEffects, player);
 		} catch(ArithmeticException e) {

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -47,6 +49,8 @@ public class CardForEachObtain extends Effect{
 	@Override
 	public void enableEffect(Player player) {
 		//For each card player has in his arraylist, he gains the "gains" packet in this object
+		
+		logger = Logger.getLogger(CardForEachObtain.class);
 		
 		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		

@@ -2,6 +2,8 @@ package it.polimi.ingsw.ps42.model.effect;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
@@ -50,6 +52,7 @@ public class CardCostBan extends Effect{
 	public void enableEffect(Player player) {
 		this.player=player;
 		int banCost=0;
+		logger = Logger.getLogger(CardCostBan.class);
 		try{
 			logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 			StaticList<Card> deck = player.getCardList(color);	

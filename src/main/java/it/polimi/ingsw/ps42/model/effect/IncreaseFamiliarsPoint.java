@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
@@ -27,6 +29,7 @@ public class IncreaseFamiliarsPoint extends Effect{
 	public void enableEffect(Player player) {
 		//Increase the value of every familiar for the current round
 		this.player=player;
+		logger = Logger.getLogger(IncreaseFamiliarsPoint.class);
 		try{
 			logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 			Familiar playerFamiliar=player.getFamiliar(FamiliarColor.ORANGE);

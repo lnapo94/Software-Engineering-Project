@@ -21,8 +21,6 @@ public class IncreaseAction extends Effect {
 	private int value;
 	private Packet discount;
 	
-	private transient Logger logger = Logger.getLogger(IncreaseAction.class);
-	
 	//Variable used to know if the effect is activated yet or not
 	private boolean yetActivated;
 	
@@ -40,6 +38,8 @@ public class IncreaseAction extends Effect {
 
 	@Override
 	public void enableEffect(Player player) {
+		logger = Logger.getLogger(IncreaseAction.class);
+		
 		if(yetActivated==false){		//If not activated yet then add the effect to the player
 			logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 			this.player=player;
@@ -50,6 +50,7 @@ public class IncreaseAction extends Effect {
 	}
 	public void activeIncrease(Action action){
 		//Increase the current action and add a discount if equals the type of the effect
+		logger = Logger.getLogger(IncreaseAction.class);
 		
 		if( checkType(action)){
 			logger.info("Effect: " + this.getTypeOfEffect() + " activated its increment");

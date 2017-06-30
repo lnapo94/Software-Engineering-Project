@@ -1,5 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
+import org.apache.log4j.Logger;
+
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -23,6 +25,7 @@ public class SetAllFamiliarsLeader extends Effect {
 
 	@Override
 	public void enableEffect(Player player) {
+		logger = Logger.getLogger(SetAllFamiliarsLeader.class);
 		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		player.getFamiliar(FamiliarColor.ORANGE).setValue(value);
 		player.getFamiliar(FamiliarColor.BLACK).setValue(value);
