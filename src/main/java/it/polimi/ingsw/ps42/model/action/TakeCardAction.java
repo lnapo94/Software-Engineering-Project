@@ -149,6 +149,7 @@ public class TakeCardAction extends Action{
 			} catch (FamiliarInWrongPosition e) {
 				logger.debug("familiar can't be positioned here");
 				logger.info(e);
+				familiar.setPosition(null);
 				player.restoreResource();
 				return Response.FAILURE;
 			}
@@ -170,6 +171,8 @@ public class TakeCardAction extends Action{
 					logger.info(e);
 					if(position.getBonus() != null)
 						position.resetBonus(player);
+					if(familiar != null)
+						familiar.setPosition(null);
 					player.synchResource();
 					position.removeFamiliar();
 					return Response.LOW_LEVEL;
@@ -202,6 +205,8 @@ public class TakeCardAction extends Action{
 			position.resetBonus(player);
 		if(isAnotherFamiliar())
 			player.increaseResource(moneyMalus);
+		if(familiar != null)
+			familiar.setPosition(null);
 		player.synchResource();
 		position.removeFamiliar();
 	}

@@ -78,6 +78,7 @@ public class BonusBarRequestDialog extends JDialog{
 		
 		//Set the listener
 		this.getContentPane().addKeyListener(new KeyboardListener());
+		this.addKeyListener(new KeyboardListener());
 		confirm.addActionListener(new ConfirmAction());
 	}
 	

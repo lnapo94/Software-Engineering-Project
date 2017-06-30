@@ -203,7 +203,7 @@ public class Card implements Serializable{
 			if(effectivelyCosts.size() == 1) {
 				if(checkPlayerCanPay(effectivelyCosts.get(0), player, discount)) {
 					decreaseDiscount(player, discount);
-					payCard(player, 0, discount);
+					payCard(player, costs.indexOf(effectivelyCosts.get(0)), discount);
 				}
 				else {
 					decreaseDiscount(player, discount);
