@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps42.model.effect;
 
 
+
 import org.apache.log4j.Logger;
 
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
@@ -26,7 +27,6 @@ public class Obtain extends Effect{
 	public Obtain(Packet costs, Packet gains, CouncilObtain councilObtain) {
 		
 		super(EffectType.OBTAIN);
-		logger = Logger.getLogger(Obtain.class);
 		this.costs=costs;
 		this.gains=gains;
 		this.councilObtain = councilObtain;
@@ -50,7 +50,7 @@ public class Obtain extends Effect{
 		 * in the player. The increase/decrease are done in the secondary 
 		 * HashMap of player resources
 		 */
-		
+		logger = Logger.getLogger(Obtain.class);
 		this.player=player;
 		try {
 			logger.info("Effect: " + this.getTypeOfEffect() + " activated");

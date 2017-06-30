@@ -79,7 +79,7 @@ public class Card implements Serializable{
 			int level, List<Packet> costs, List<Effect> immediateEffects, List<Packet> requirements,
 			List<Effect> permanentEffect, List<Effect> finalEffects){
 		//Construct the card
-		
+		this();
 		this.name = name;
 		this.description = description;
 		this.color = color;
