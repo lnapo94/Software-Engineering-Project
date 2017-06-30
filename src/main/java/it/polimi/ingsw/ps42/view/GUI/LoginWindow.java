@@ -78,9 +78,6 @@ public class LoginWindow extends JDialog{
 		this.add(userInput);
 		this.userInput.setEditable(true);
 		
-		this.setVisible(true);
-		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		
 		this.confirm.setText("Confirm");
 		this.confirm.setFont(font);
 		
@@ -104,6 +101,11 @@ public class LoginWindow extends JDialog{
 		this.getContentPane().addKeyListener(new KeyboardListener());
 		
 		userInput.addMouseListener(new MouseEvent());
+	}
+	
+	public void run() {
+		this.setVisible(true);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 	
 	private void controlInput() {

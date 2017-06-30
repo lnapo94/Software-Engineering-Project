@@ -167,7 +167,6 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 		scanner.close();
 		
 		client.addView(view);
-		view.askNewPlayerID();
 	}
 	
 }
