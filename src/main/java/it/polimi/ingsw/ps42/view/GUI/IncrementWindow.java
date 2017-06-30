@@ -69,8 +69,10 @@ public class IncrementWindow extends JDialog{
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			//Nothing to do
-		}
+			if(e.getKeyCode() == KeyEvent.VK_ENTER){
+				trySendMove();
+				close();
+			}		}
 		
 	}
 	
@@ -141,7 +143,7 @@ public class IncrementWindow extends JDialog{
 	}
 	
 	private void cancelMove(){
-		this.view.cancelMove();
+		this.view.cancelMove(type, position);
 		this.dispose();
 	}
 	
