@@ -917,7 +917,7 @@ public class GameLogic implements Observer {
     	try {
 			Player player = searchPlayer(request.getPlayerID());
 			
-			if(player == currentPlayer && playersWithRequest.contains(player)) {
+			if(player.getPlayerID().equals(currentPlayer.getPlayerID()) && playersWithRequest.contains(player)) {
 				
 				if(request.getChoice() < request.showChoice().size()) {
 					//If there is an action, add the request to the player
