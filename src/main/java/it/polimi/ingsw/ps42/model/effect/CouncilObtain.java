@@ -7,9 +7,12 @@ import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 
-
+/**
+ * Create a request for the gamelogic to obtain the resources from the council privileges
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CouncilObtain extends Effect {
-	//Create a request for the gamelogic to obtain the resources from the council privileges
 	
 	/**
 	 * 
@@ -18,10 +21,19 @@ public class CouncilObtain extends Effect {
 	private int quantity;
 	private List<Obtain> possibleConversion;
 	
+	/**
+	 * Empty constructor of this class
+	 */
 	public CouncilObtain() {
 		super();
 	}
 
+	/**
+	 * The constructor of this effect
+	 * 
+	 * @param quantity				How many council obtains to give to the player
+	 * @param possibleConversion	The possible conversion list of the council obtain
+	 */
 	public CouncilObtain(int quantity,List<Obtain> possibleConversion ) {
 		super(EffectType.COUNCIL_OBTAIN);
 		this.possibleConversion=possibleConversion;
@@ -29,6 +41,9 @@ public class CouncilObtain extends Effect {
 		
 	}
 
+	/**
+	 * Method used to enable this effect
+	 */
 	@Override
 	public void enableEffect(Player player) {
 		
@@ -40,6 +55,9 @@ public class CouncilObtain extends Effect {
 		
 	}
 
+	/**
+	 * Method used to print this effect in the Client
+	 */
 	@Override
 	public String print() {
 		String stringToShow = new String("Possible conversion: \n");
@@ -51,6 +69,9 @@ public class CouncilObtain extends Effect {
 		return stringToShow;
 	}
 	
+	/**
+	 * Method to clone this effect to send it in a secure way to the Client
+	 */
 	@Override
 	public CouncilObtain clone() {
 		List<Obtain> cloneConversion = new ArrayList<>();

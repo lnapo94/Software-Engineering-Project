@@ -13,9 +13,13 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ *	At the end of the match, the gamelogic calculate the cost of woods and stones of the indicated cards
+ *  and remove victory points from the player resources
+ *  @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CardCostBan extends Effect{
-	//At the end of the match, the gamelogic calculate the cost of woods and stones of the indicated cards
-	//and remove victory points from the player resources
 	
 	/**
 	 * 
@@ -23,15 +27,25 @@ public class CardCostBan extends Effect{
 	private static final long serialVersionUID = 7122058016852083837L;
 	private CardColor color;
 	
+	/**
+	 * Empty constructor of this class
+	 */
 	public CardCostBan() {
 		super();
 	}
 
+	/**
+	 * Constructor for this class
+	 * @param color		The color of which cards are counted by this ban
+	 */
 	public CardCostBan(CardColor color) {
 		super(EffectType.YELLOW_COST_BAN); //TO-DO:discutere sul nome effetto e controllo sul colore
 		this.color=color;
 	}
 
+	/**
+	 * Method used to enable this effect
+	 */
 	@Override
 	public void enableEffect(Player player) {
 		this.player=player;
@@ -60,8 +74,13 @@ public class CardCostBan extends Effect{
 		}
 	}
 	
+	/**
+	 * Defines the single cost of a single card in terms of Woods and Stones
+	 * @param cost		The cost of this ban
+	 * @return			The quantity of the cost
+	 */
 	private int defineCost (Packet cost){
-		//Defines the single cost of a single card in terms of Woods and Stones
+		
 		List<Unit> tempUnit = cost.getPacket();
 		int quantity=0;
 		for (Unit singleUnit : tempUnit) {
@@ -72,12 +91,18 @@ public class CardCostBan extends Effect{
 		return quantity;
 		
 	}
-
+	
+	/**
+	 * Method used to print this effect in the Client
+	 */
 	@Override
 	public String print() {		
 		return getTypeOfEffect().toString() + ": Applied to " + this.color.toString() + " cards";
 	}
 	
+	/**
+	 * Method to clone this effect to send it in a secure way to the Client
+	 */
 	@Override
 	public CardCostBan clone() {
 		CardColor cloneColor = this.color;

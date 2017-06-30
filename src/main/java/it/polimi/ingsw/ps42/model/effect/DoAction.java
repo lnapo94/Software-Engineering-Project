@@ -6,10 +6,14 @@ import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
+/**
+ * Allow player to do another action
+ * This creates an ActionPrototype, that will be consumed by the GameLogic
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class DoAction extends Effect{
-	//Allow player to do another action
-	//This creates an ActionPrototype, that will be consumed by the GameLogic
-	
+
 	/**
 	 * 
 	 */
@@ -19,10 +23,21 @@ public class DoAction extends Effect{
 	private Packet discount;
 	private Obtain obtainEffect;
 
+	/**
+	 * Empty constructor of this class
+	 */
 	public DoAction() {
 		super();
 	}
 	
+	/**
+	 * The constructor of this effect
+	 * 
+	 * @param type				The type of the bonus action
+	 * @param actionLevel		The level of the action
+	 * @param discount			A possible discount of the action
+	 * @param obtainEffect		A possible obtain effect for the action
+	 */
 	public DoAction(ActionType type, int actionLevel, Packet discount, Obtain obtainEffect) {
 		super(EffectType.DO_ACTION);
 		this.type=type;
@@ -31,6 +46,9 @@ public class DoAction extends Effect{
 		this.obtainEffect = obtainEffect;
 	}
 
+	/**
+	 * Method used to enable this effect
+	 */
 	@Override
 	public void enableEffect(Player player) {
 		this.player=player;
@@ -42,6 +60,9 @@ public class DoAction extends Effect{
 			obtainEffect.enableEffect(player);
 	}
 
+	/**
+	 * Method used to print this effect in the Client
+	 */
 	@Override
 	public String print() {
 		return "Player can do a bonus Action: \n" + "ActionType: " + this.type.toString() + "\n" +
@@ -50,6 +71,9 @@ public class DoAction extends Effect{
 				"and player also has: " + this.obtainEffect.print();
 	}
 	
+	/**
+	 * Method to clone this effect to send it in a secure way to the Client
+	 */
 	@Override
 	public DoAction clone() {
 		Packet cloneDiscount = null;
