@@ -13,29 +13,60 @@ import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.MarketPosition;
 
+/**
+ * Class that represents a market action
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class MarketAction extends Action {
 	
 	private StaticList<MarketPosition> tablePosition;
 	private int positionInTableList;
 	
+	/**
+	 * Constructor for a normal action
+	 * @param type								The type of the action
+	 * @param familiar							The familiar the player wants to move
+	 * @param tablePosition						The StaticList of market position in table
+	 * @param positionInTableList				The exact index of the chosen position
+	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
+	 */
 	public MarketAction(ActionType type, Familiar familiar, StaticList<MarketPosition> tablePosition, int positionInTableList) throws NotEnoughResourcesException{
-		//Constructor for normal action
+
 		super(type, familiar);
 		this.tablePosition = tablePosition;
 		this.positionInTableList = positionInTableList;
 	}
 	
+	/**
+	 * Constructor for bonus action 
+	 * @param type								The type of the action
+	 * @param player							The interested player
+	 * @param tablePosition						The StaticList of market position in table
+	 * @param positionInTableList				The exact index of the chosen position
+	 * @param actionIncrement					The increment of this bonus action
+	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
+	 */
 	public MarketAction(ActionType type, Player player, StaticList<MarketPosition> tablePosition, int positionInTableList, int actionIncrement) throws NotEnoughResourcesException{
-		//Constructor for bonus action 
+
 		super(type, player, 1, actionIncrement);
 		this.tablePosition = tablePosition;
 		this.positionInTableList = positionInTableList;
 	}
 	
+	/**
+	 * Method used to verify if the player can do this action
+	 * 
+	 * @return		True if the position has a lower value than the action value, otherwise False
+	 */
 	private boolean checkActionValue(){
 		return actionValue >= tablePosition.get(positionInTableList).getLevel();
 	}
 	
+	/**
+	 * Method used to control the action
+	 */
 	@Override
 	public Response checkAction() {
 		
@@ -66,10 +97,18 @@ public class MarketAction extends Action {
 		return Response.CANNOT_PLAY;
 	}	
 
+	/**
+	 * Method used to check if the position is free and if the player cannot positioning everywhere
+	 * 
+	 * @return	True is the position is free or if the player can position everywhere, otherwise False
+	 */
 	private boolean isFree(){
 		return this.tablePosition.get(positionInTableList).isEmpty() || player.canPositioningEverywhere(); 
 	}
 	
+	/**
+	 * Method used to apply the action
+	 */
 	@Override
 	public void doAction() throws FamiliarInWrongPosition {
 		if( familiar != null ){			

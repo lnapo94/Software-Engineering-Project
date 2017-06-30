@@ -862,10 +862,14 @@ public class GameLogic implements Observer {
             timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS * 1000);
             timerTable.put(currentPlayer, timer);
     	}
-    	else if(currentAction != null)
+    	else if(currentAction != null) {
+    		currentPlayer.synchResource();
     		doAction();
-    	else if(currentRound != 6)
+    	}
+    	else if(currentRound != 6) {
+    		currentPlayer.synchResource();
     		finishAction();
+    	}
     	else
     		calculateWinner();
     }

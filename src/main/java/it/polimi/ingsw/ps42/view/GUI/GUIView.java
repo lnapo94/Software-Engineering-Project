@@ -105,6 +105,7 @@ public class GUIView extends View implements TableInterface{
 		mainFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.getContentPane().setLayout(null);
+		mainFrame.setTitle("Lorenzo il Magnifico");
 		//Add a JLayeredPane
 		JLayeredPane mainLayeredPane = new JLayeredPane();
 		mainLayeredPane.setBounds(5, 5, mainFrame.getWidth(), mainFrame.getHeight());

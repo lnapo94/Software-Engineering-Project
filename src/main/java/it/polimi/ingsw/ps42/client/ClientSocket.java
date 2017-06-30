@@ -175,22 +175,29 @@ public class ClientSocket extends Observable implements Observer{
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		
 		String host = "localhost"; 
-
-		Scanner scanner = new Scanner(System.in);
-		
 		ClientSocket client = new ClientSocket(host);
-		System.out.println("Which Client do you want? [G : GUI], [C : CLI]");
-		String input = scanner.nextLine();
+		
+		Scanner scanner = new Scanner(System.in);
+		String input;	
+		
 		View view = null;
+
 		
-		input = input.toUpperCase();
-		
-		if(input.equals("G")) {
-			view = new GUIView();
-		} else if (input.equals("C")){
-			view = new TerminalView();
-		}
+		do {
+			System.out.println("Which Client do you want? [G : GUI], [C : CLI]");
+			
+			input = scanner.nextLine();
+			input = input.toUpperCase();
+			
+			if(input.equals("G"))
+				view = new GUIView();
+			
+			if(input.equals("C"))
+				view = new TerminalView();
+			
+		} while ((!input.equals("G") && !input.equals("C")) || view == null);
 		 
+		scanner.close();
 		client.addView(view);
 		view.askNewPlayerID();
 		client.startReading();

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.ps42.model.effect;
 
-import org.apache.log4j.Logger;
-
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 

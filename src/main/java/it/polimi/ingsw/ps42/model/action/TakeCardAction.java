@@ -23,6 +23,12 @@ import it.polimi.ingsw.ps42.model.position.TowerPosition;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * Class that represent the action to take a card from a tower, both for "normal" actions
+ * and "bonus" actions
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class TakeCardAction extends Action{
 	
 	private StaticList<TowerPosition> tablePosition;
@@ -31,12 +37,31 @@ public class TakeCardAction extends Action{
 	//Logger
 	private transient Logger logger = Logger.getLogger(TakeCardAction.class);
 
+	/**
+	 * Constructor for a normal action
+	 * @param type								The type of the action
+	 * @param familiar							The familiar the player wants to move
+	 * @param tablePosition						The StaticList of market position in table
+	 * @param positionInTableList				The exact index of the chosen position
+	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
+	 */
 	public TakeCardAction(ActionType type, Familiar familiar, StaticList<TowerPosition> tablePosition, int positionInTableList) throws NotEnoughResourcesException{
 		//Constructor for normal action
 		super(type, familiar);
 		this.tablePosition = tablePosition;
 		this.positionInTableList = positionInTableList;
 	}
+	
+	/**
+	 * Constructor for bonus action 
+	 * @param type								The type of the action
+	 * @param player							The interested player
+	 * @param tablePosition						The StaticList of market position in table
+	 * @param positionInTableList				The exact index of the chosen position
+	 * @param actionValue						The value of this bonus action
+	 * @param actionIncrement					The increment of this bonus action
+	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
+	 */
 	public TakeCardAction(ActionType type, Player player, StaticList<TowerPosition> tablePosition, 
 			int positionInTableList, int actionValue, int actionIncrement) throws NotEnoughResourcesException{
 		//Constructor for bonus action
@@ -45,6 +70,10 @@ public class TakeCardAction extends Action{
 		this.positionInTableList = positionInTableList;
 	}
 	
+	/**
+	 * Method used to check if this action can be applied. If the card as more cost, this method
+	 * create a PayRequest
+	 */
 	@Override
 	public Response checkAction() {
 		//Initial checks for the takeCard action, valid for both normal and bonus action
@@ -160,6 +189,9 @@ public class TakeCardAction extends Action{
 		return Response.SUCCESS;
 	}
 	
+	/**
+	 * Method used to undo a TakeCardAction
+	 */
 	public void rollBackAction() {
 		//Called when player doesn't answer to gameLogic
 		TowerPosition position = tablePosition.get(positionInTableList);
@@ -174,6 +206,9 @@ public class TakeCardAction extends Action{
 		position.removeFamiliar();
 	}
 
+	/**
+	 * Method used to apply the action. If there were some PayRequest, apply it
+	 */
 	@Override
 	public void doAction() {
 		/*	Method used to apply an Action
@@ -213,7 +248,11 @@ public class TakeCardAction extends Action{
 		notifyObservers(cardUpdate);
 	}
 
-	
+	/**
+	 * Private method used to check the familiar of the player, because the player
+	 * can position only one of his familiars in the tower, apart the neutral familiar
+	 * @return	True if player can position his familiar in the specified position, otherwise False
+	 */
 	private boolean checkMyFamiliar() {
 		for(TowerPosition tower : tablePosition) {
 			if(tower.getFamiliar().getPlayer() == player) {
@@ -224,6 +263,10 @@ public class TakeCardAction extends Action{
 		return true;
 	}
 	
+	/**
+	 * Method used to verify if the tower is occupied yet
+	 * @return True if there is at least another familiar in tower (Not of the current player), otherwise False
+	 */
 	private boolean isAnotherFamiliar() {
 		for(TowerPosition tower : tablePosition) {
 			if(!tower.isEmpty() && tower.getFamiliar().getPlayer() != player) {

@@ -12,6 +12,11 @@ import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.CouncilPosition;
 
+/**
+ * Class used to do a Council Action
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CouncilAction extends Action {
 
 	//Private Variables, the game logic must ask to the table the first free council position
@@ -20,21 +25,44 @@ public class CouncilAction extends Action {
 	//Logger
 	private transient Logger logger = Logger.getLogger(CouncilAction.class);
 
+	/**
+	 * Constructor for normal action called by the action creator
+	 * @param type							The type of the action
+	 * @param familiar						The familiar the player wants to move
+	 * @param tablePosition					The position took from the table
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 */
 	public CouncilAction(ActionType type, Familiar familiar, CouncilPosition tablePosition) throws NotEnoughResourcesException{
-		//Constructor for normal action
+		
 		super(type, familiar);
 		this.tablePosition = tablePosition;
 	}
 	
+	/**
+	 * Constructor for a bonus action
+	 * @param type							The type of the action
+	 * @param player						The interested player
+	 * @param tablePosition					The position took from the table
+	 * @param actionIncrement				The increment the player wants
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 */
 	public CouncilAction(ActionType type, Player player, CouncilPosition tablePosition, int actionIncrement) throws NotEnoughResourcesException{
-		//Constructor for bonus action
 		super(type, player, 1, actionIncrement);
 		this.tablePosition = tablePosition;
 	}
 	
+	/**
+	 * Private method to check if the action value is at least the position value
+	 * 
+	 * @return	True if the player can positioning his familiar here, otherwise False
+	 */
 	private boolean checkActionValue(){
 		return actionValue >= tablePosition.getLevel();
 	}
+	
+	/**
+	 * Method used to control the action
+	 */
 	@Override
 	public Response checkAction() {
 		
@@ -56,6 +84,9 @@ public class CouncilAction extends Action {
 		else return Response.CANNOT_PLAY;
 	}
 
+	/**
+	 * Method used to apply the action
+	 */
 	@Override
 	public void doAction() {
 		if(familiar == null)

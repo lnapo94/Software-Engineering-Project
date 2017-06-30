@@ -7,10 +7,24 @@ import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * Factory class to parse a PlayerMove to create the correct action
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ActionCreator {
-	//Factory of Action, gives methods to build different kind of Action
 	Action action;
 	
+	/**
+	 * The Constructor called to create the correct action
+	 * 
+	 * @param player							The player who wants to do the action
+	 * @param table								The table for the current match
+	 * @param playerMove						The move of the player
+	 * @param actionValue						The value of the action
+	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
+	 */
 	public ActionCreator(Player player, Table table, PlayerMove playerMove, int actionValue) throws NotEnoughResourcesException{
 		//Create the static variable for the action
 		ActionType type = playerMove.getActionType();
@@ -82,6 +96,10 @@ public class ActionCreator {
 		}
 	}
 	
+	/**
+	 * Simple method which returns the just created action
+	 * @return	The created action
+	 */
 	public Action getCreatedAction() {
 		return action;
 	}

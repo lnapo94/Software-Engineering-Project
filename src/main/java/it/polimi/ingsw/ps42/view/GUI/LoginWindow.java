@@ -69,6 +69,7 @@ public class LoginWindow extends JDialog{
 		this.setLocation((int)(this.parent.getWidth()*0.5), (int)(this.parent.getHeight()*0.5));
 		this.setVisible(true);
 		this.setTitle("Login");
+		this.setResizable(false);
 		
 		this.description.setFont(font);
 		this.description.setText("Enter your Username");
@@ -127,6 +128,10 @@ public class LoginWindow extends JDialog{
 			
 			if(e.getKeyCode() == KeyEvent.VK_ENTER)
 				controlInput();
+			
+			if(e.getKeyCode() == KeyEvent.ALT_DOWN_MASK)
+				if(e.getKeyCode() == KeyEvent.VK_F4)
+					closeAll();
 			
 		}
 

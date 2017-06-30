@@ -16,34 +16,43 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * Class for basic action, requires the implementation of checkAction,
+ * doAction, createRequest
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public abstract class Action extends Observable{	
-	
-	/*Class for basic action, requires the implementation of checkAction,
-	* doAction, createRequest
-	*/
 	
 	private ActionType type;
 	protected Familiar familiar;
 	protected Player player;
 	protected Packet discount;
-	protected int actionValue;
 	
-	/*	actionValue is the current value of the action. We have two possibilities for the
-	*	action: a "normal" action, in which the player move the familiar in one position
-	*	and a "bonus" action, in which the player select only a position, without positioning
-	*	any familiar. In this last case, we have an action value, taken from the card, and we
-	*	haven't a value taken from the familiar. So we need a variable to have the correct
-	*	value, to do some control, to rise a bonus action and so on...
-	*	Then we decide to use this variable also for the "normal" action with familiar, and we
-	*	set it while the action is constructed
-	*/
-	
-	/*	The increment the player wants to do is in familiar.getIncrement, the others kinds
-	 * 	of increments are stored in actionValue
+	/**
+	 * 	actionValue is the current value of the action. We have two possibilities for the
+	 *	action: a "normal" action, in which the player move the familiar in one position
+	 *	and a "bonus" action, in which the player select only a position, without positioning
+	 *	any familiar. In this last case, we have an action value, taken from the card, and we
+	 *	haven't a value taken from the familiar. So we need a variable to have the correct
+	 *	value, to do some control, to rise a bonus action and so on...
+	 *	Then we decide to use this variable also for the "normal" action with familiar, and we
+	 *	set it while the action is constructed
+	 *	
+	 *  The increment the player wants to do is in familiar.getIncrement, the others kinds
+	 *  of increments are stored in actionValue
 	 */
-	
+	protected int actionValue;
+
+	/**
+	 * Constructor for normal action, player is get from familiar
+	 * 
+	 * @param type							The type of the action
+	 * @param familiar						The familiar the player wants to move
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 */
 	public Action(ActionType type, Familiar familiar) throws NotEnoughResourcesException{
-		//Constructor for normal action, player is get from familiar
 		
 		this.type=type;
 		this.familiar=familiar;
@@ -55,8 +64,18 @@ public abstract class Action extends Observable{
 		paySlave(slaveToPay);
 		this.actionValue = familiar.getIncrement() + familiar.getValue();
 	}
+	
+	/**
+	 * Constructor for bonus action (no familiar involved, so requires the player) 
+	 * 
+	 * @param type								The type of the bonus action
+	 * @param player							The interested player
+	 * @param actionValue						The value of the bonus action
+	 * @param actionIncrement					The increment the player wants
+	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
+	 */
 	public Action(ActionType type, Player player, int actionValue, int actionIncrement) throws NotEnoughResourcesException {
-		//Constructor for bonus action (no familiar involved, so requires the player) 
+		
 		
 		this.type = type;
 		this.player = player;
@@ -67,6 +86,11 @@ public abstract class Action extends Observable{
 		this.actionValue += actionIncrement;
 	}
 	
+	/**
+	 * Private method used to pay slaves to increase an action
+	 * @param slaveToPay						The number of slave the player wants to use
+	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
+	 */
 	private void paySlave(int slaveToPay) throws NotEnoughResourcesException {
 		
 		Packet slavePacket = new Packet();
@@ -74,7 +98,11 @@ public abstract class Action extends Observable{
 		player.decreaseResource(slavePacket);
 	}
 	
-	public abstract Response checkAction();		//Does all the required checks before the action is applicated 
+	/**
+	 * Does all the required checks before the action is applicated 
+	 * @return	A response which represents the Success/Failure of the method: SUCCESS for a successful control, FAILURE for a generic problem, LOW_LEVEL if the player hasn't enough resources, CANNOT_PLAY if the player can not play this action
+	 */
+	public abstract Response checkAction();
 	
 	public abstract void doAction() throws FamiliarInWrongPosition;		//Apply the player action 
 
@@ -90,8 +118,12 @@ public abstract class Action extends Observable{
 		return true;
 	}
 	
+	/**
+	 * Control if player has some council requests
+	 * 
+	 * @return	True if the player has some council requests to satisy, otherwise False
+	 */
 	public boolean playerHasCouncilRequests() {
-		//Control if player has some council requests
 		
 		List<CouncilRequest> councilRequests = player.getCouncilRequests();
 		if(councilRequests.isEmpty())
@@ -101,6 +133,11 @@ public abstract class Action extends Observable{
 		return true;
 	}
 	
+	/**
+	 * Method used to notify the player of some changes
+	 * 
+	 * @param list		List of Generic Object to send to the player
+	 */
 	private void notifyChangesToPlayer(List<?> list) {
 		for(Object object : list) {
 			setChanged();
@@ -108,7 +145,10 @@ public abstract class Action extends Observable{
 		}
 	}
 	
-	protected void checkIncreaseEffect(){			//Checks if the player has some increase effects active and apply them
+	/**
+	 * Checks if the player has some increase effects active and apply them
+	 */
+	protected void checkIncreaseEffect(){		
 		List<IncreaseAction> playerIncreaseAction = player.getIncreaseEffect();
 		
 		for (IncreaseAction increaseAction : playerIncreaseAction) {
@@ -117,7 +157,12 @@ public abstract class Action extends Observable{
 		
 	}
 	
-	public void addDiscount(Packet discount) {		//Adds a discount at the cost of the action
+	/**
+	 * Adds a discount at the cost of the action
+	 * 
+	 * @param discount		A discount to apply to the action
+	 */
+	public void addDiscount(Packet discount) {
 		if(this.discount==null)
 			this.discount = discount;
 		else{
@@ -128,21 +173,35 @@ public abstract class Action extends Observable{
 			
 	}
 	
-	
+	/**
+	 * Getter for the type of action
+	 * @return	The type of action
+	 */
 	public ActionType getType() {
 		return type;
 	}
 	
+	/**
+	 * Getter for the value of the action
+	 * @return	The value of the action
+	 */
 	public int getActionValue() {
 		return actionValue;
 	}
 	
+	/**
+	 * Method used to add the increment chosen by the player to the action value
+	 * @param increment
+	 */
 	public void addIncrement(int increment){
 		
 		this.actionValue = this.actionValue + increment;
 	}
 	
-	//Method used in other classes to control if the player can do the action
+	/**
+	 * Method used in other classes to control if the player can do the action
+	 * @return	SUCCESS if the player can player, CANNOT_PLAY if the player can't
+	 */
 	protected Response checkBanInPlayer() {
 		if(!player.canPlay())
 			return Response.CANNOT_PLAY;
