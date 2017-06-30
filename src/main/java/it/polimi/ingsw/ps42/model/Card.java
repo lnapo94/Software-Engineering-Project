@@ -40,7 +40,7 @@ public class Card implements Serializable{
 	private CardColor color;
 	private int period;
 	private int level;
-	private Player owner;
+	private transient Player owner;
 	private List<Packet> costs;
 	private List<Packet> requirements;
 	private List<Effect> immediateEffects;
