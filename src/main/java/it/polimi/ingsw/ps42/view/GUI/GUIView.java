@@ -297,9 +297,10 @@ public class GUIView extends View implements TableInterface{
 		deltaX += (int)(positionDimension.getWidth()*1.85);
 		placeMarket(positionDimension, deltaX, deltaY, mainPane);
 		deltaX += (int)(positionDimension.getWidth()*1.75);
-		deltaY = (int)(tableImageDimension.getHeight()*0.12);
+		deltaY = (int)(tableImageDimension.getHeight()*0.11);
 		placeMarket(positionDimension, deltaX, deltaY, mainPane);
-		deltaX += (int)(positionDimension.getWidth()*1.75);
+		deltaX += (int)(positionDimension.getWidth()*1.42);
+		deltaY += (int)(tableImageDimension.getHeight()*0.085);
 		placeMarket(positionDimension, deltaX, deltaY, mainPane);
 	}
 	
@@ -308,7 +309,7 @@ public class GUIView extends View implements TableInterface{
 		JLabel position = new JLabel();
 		position.setSize(positionDimension);
 		position.setLocation(x, y);
-		position.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
+		//position.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
 		market.add(position);
 		mainPane.add(position, 0);
 	}
@@ -413,6 +414,13 @@ public class GUIView extends View implements TableInterface{
 			if( containsPoint(position, x, y) ){
 				position.setIcon(resizeImage(image, position.getSize()));
 				createNewMove( ActionType.PRODUCE, color, produce.indexOf(position));
+				return true;
+			}
+		}
+		for (JLabel position : market) {
+			if( containsPoint(position, x, y) ){
+				position.setIcon(resizeImage(image, position.getSize()));
+				createNewMove( ActionType.MARKET, color, produce.indexOf(position));
 				return true;
 			}
 		}
