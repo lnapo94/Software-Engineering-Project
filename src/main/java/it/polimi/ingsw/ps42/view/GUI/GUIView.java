@@ -154,7 +154,7 @@ public class GUIView extends View implements TableInterface{
 		
 		enableMove();
 
-		LoginWindow login = new LoginWindow(this, mainFrame, "");
+		LoginWindow login = new LoginWindow(this, "");
 
 	}
 	/**
@@ -491,7 +491,7 @@ public class GUIView extends View implements TableInterface{
 	protected void chooseLeaderCard(List<LeaderCard> leaderCardList) {
 		// Ask the Player to choose a LeaderCard from the given List
 		try {
-			LeaderCardChooseDialog dialog = new LeaderCardChooseDialog(this, mainFrame, leaderCardList);
+			LeaderCardChooseDialog dialog = new LeaderCardChooseDialog(this, leaderCardList);
 		} catch (IOException e) {
 			logger.error("Error in open the image conversion file");
 			logger.info(e);

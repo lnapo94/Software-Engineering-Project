@@ -39,9 +39,9 @@ public class LoginWindow extends JDialog{
 	private GUIView view;
 	private JFrame parent;
 	
-	public LoginWindow(GUIView view, JFrame parent, String warning) {
-		super(parent);
-		this.parent = parent;
+	public LoginWindow(GUIView view, String warning) {
+		super(view.getMainFrame());
+		this.parent = view.getMainFrame();
 		this.view = view;
 		this.warning = warning;
 		

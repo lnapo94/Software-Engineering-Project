@@ -33,10 +33,10 @@ public class LeaderCardChooseDialog extends JDialog{
 	private List<JLabel> cardContainer;
 	private ImageLoader loader;
 	
-	public LeaderCardChooseDialog(GUIView view, JFrame parent, List<LeaderCard> list) throws IOException {
-		super(parent);
+	public LeaderCardChooseDialog(GUIView view, List<LeaderCard> list) throws IOException {
+		super(view.getMainFrame());
 		this.view = view;
-		this.parent = parent;
+		this.parent = view.getMainFrame();
 		
 		loader = new ImageLoader("Resource//Configuration//imagePaths.json");
 		
