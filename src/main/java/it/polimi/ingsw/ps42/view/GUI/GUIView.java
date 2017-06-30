@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -59,10 +60,10 @@ public class GUIView extends View implements TableInterface{
 	private DraggableComponent movingFamiliar;
 	
 	//The List of CardLabels separated by Color
-	private List<CardLabel> greenTower;
-	private List<CardLabel> yellowTower;
-	private List<CardLabel> blueTower;
-	private List<CardLabel> violetTower;
+	private LinkedList<CardLabel> greenTower;
+	private LinkedList<CardLabel> yellowTower;
+	private LinkedList<CardLabel> blueTower;
+	private LinkedList<CardLabel> violetTower;
 	
 	//The List of positions where the Familiars can be placed
 	//Starting Positions 
@@ -71,10 +72,10 @@ public class GUIView extends View implements TableInterface{
 	private DraggableComponent orangeFamiliar;
 	private DraggableComponent whiteFamiliar;
 	//Tower positions
-	private List<JLabel> greenTowerForFamiliar;
-	private List<JLabel> yellowTowerForFamiliar;
-	private List<JLabel> blueTowerForFamiliar;
-	private List<JLabel> violetTowerForFamiliar;
+	private LinkedList<JLabel> greenTowerForFamiliar;
+	private LinkedList<JLabel> yellowTowerForFamiliar;
+	private LinkedList<JLabel> blueTowerForFamiliar;
+	private LinkedList<JLabel> violetTowerForFamiliar;
 	//Yield and Product Positions
 	private List<JLabel> yield;
 	private List<JLabel> produce;
@@ -172,14 +173,15 @@ public class GUIView extends View implements TableInterface{
 		
 		int deltaX = (int)(tableImageDimension.getWidth()*0.022);
 		int deltaY = (int)(tableImageDimension.getHeight()*0.03);
-		greenTower = new ArrayList<>();
-		blueTower = new ArrayList<>();
-		violetTower = new ArrayList<>();
-		yellowTower = new ArrayList<>();
+
+		greenTower = new LinkedList<>();
+		blueTower = new LinkedList<>();
+		violetTower = new LinkedList<>();
+		yellowTower = new LinkedList<>();
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			greenTower.add(card);
+			greenTower.addFirst(card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
@@ -188,7 +190,7 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			blueTower.add(card);
+			blueTower.addFirst(card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
@@ -197,7 +199,7 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			yellowTower.add(card);
+			yellowTower.addFirst(card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
@@ -206,29 +208,14 @@ public class GUIView extends View implements TableInterface{
 		
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
-			violetTower.add(card);
+			violetTower.addFirst(card);
 			mainPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
 
-		reverse(greenTower);
-		reverse(blueTower);
-		reverse(violetTower);
-		reverse(yellowTower);
 	}
 	
-	private void reverse(List<CardLabel> tower){
-		
-		CardLabel first = tower.get(0);
-		CardLabel last = tower.get(3);
-		tower.add(3, first);
-		tower.add(0, last);
-		first = tower.get(1);
-		last = tower.get(2);
-		tower.add(2, first);
-		tower.add(1, last);
-		
-	}
+
 	/**
 	 * 
 	 * @param mainPane
@@ -273,10 +260,10 @@ public class GUIView extends View implements TableInterface{
 	private void buildFamiliarMovePositions(JLayeredPane mainPane) throws IOException{
 		
 		//Build the Tower related familiarMove positions
-		greenTowerForFamiliar = new ArrayList<>();
-		yellowTowerForFamiliar = new ArrayList<>();
-		blueTowerForFamiliar = new ArrayList<>();
-		violetTowerForFamiliar = new ArrayList<>();
+		greenTowerForFamiliar = new LinkedList<>();
+		yellowTowerForFamiliar = new LinkedList<>();
+		blueTowerForFamiliar = new LinkedList<>();
+		violetTowerForFamiliar = new LinkedList<>();
 
 		int deltaX = (int)(tableImageDimension.getWidth()*0.172);
 		Dimension positionDimension = new Dimension((int)(tableImageDimension.getWidth()*0.06), (int)(tableImageDimension.getHeight()*0.05));
@@ -351,7 +338,7 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 	
-	private void placeFamiliarPosition(JLayeredPane mainPane, Dimension positionDimension, List<JLabel> tower, int rightShift) throws IOException{
+	private void placeFamiliarPosition(JLayeredPane mainPane, Dimension positionDimension, LinkedList<JLabel> tower, int rightShift) throws IOException{
 		
 		int deltaY = (int)(tableImageDimension.getHeight()*0.081);
 		for (int i=0; i<4; i++){
@@ -359,7 +346,7 @@ public class GUIView extends View implements TableInterface{
 			familiarPosition.setSize(positionDimension);
 			familiarPosition.setLocation(rightShift, deltaY);
 			//familiarPosition.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
-			tower.add(familiarPosition);
+			tower.addFirst(familiarPosition);
 			mainPane.add(familiarPosition, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.1858);
 		}
