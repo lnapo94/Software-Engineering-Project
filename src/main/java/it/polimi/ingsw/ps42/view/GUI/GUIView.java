@@ -440,7 +440,7 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	public void addPlayer(String playerID) {
 		super.addPlayer(playerID);
-		enableMove();
+		
 	}
 	
 	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position, DraggableComponent familiarMoving){
