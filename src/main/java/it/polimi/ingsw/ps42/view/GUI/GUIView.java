@@ -503,16 +503,24 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	private void enableMove(){
-		enableFamiliar(blackFamiliar, player.getFamiliar(FamiliarColor.BLACK));
-		enableFamiliar(whiteFamiliar, player.getFamiliar(FamiliarColor.WHITE));
-		enableFamiliar(orangeFamiliar, player.getFamiliar(FamiliarColor.ORANGE));
-		enableFamiliar(neutralFamiliar, player.getFamiliar(FamiliarColor.NEUTRAL));
+		enableFamiliar(blackFamiliar, player.getFamiliar(FamiliarColor.BLACK), true);
+		enableFamiliar(whiteFamiliar, player.getFamiliar(FamiliarColor.WHITE), true);
+		enableFamiliar(orangeFamiliar, player.getFamiliar(FamiliarColor.ORANGE), true);
+		enableFamiliar(neutralFamiliar, player.getFamiliar(FamiliarColor.NEUTRAL), true);
 		
 	}
 	
-	private void enableFamiliar(DraggableComponent familiarIcon, Familiar familiar){
+	public void disableMove(){
+
+		enableFamiliar(blackFamiliar, player.getFamiliar(FamiliarColor.BLACK), false);
+		enableFamiliar(whiteFamiliar, player.getFamiliar(FamiliarColor.WHITE), false);
+		enableFamiliar(orangeFamiliar, player.getFamiliar(FamiliarColor.ORANGE), false);
+		enableFamiliar(neutralFamiliar, player.getFamiliar(FamiliarColor.NEUTRAL), false);
+	}
+	
+	private void enableFamiliar(DraggableComponent familiarIcon, Familiar familiar, boolean status){
 		if(!familiar.isPositioned())
-			familiarIcon.setCanMove(true);
+			familiarIcon.setCanMove(status);
 	}
 	
 	private void restoreFamiliar(){
@@ -667,6 +675,7 @@ public class GUIView extends View implements TableInterface{
 	public void setNewMove(PlayerMove move) {
 		super.setNewMove(move);
 		this.nextMove = move;
+		disableMove();
 	}
 	
 	@Override
