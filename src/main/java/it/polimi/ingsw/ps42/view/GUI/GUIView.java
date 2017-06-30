@@ -450,9 +450,39 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 	
-	public void cancelMove(){
+	public void cancelMove(ActionType type, int position){
 		//Restore the position of the moved Familiar
+		movingFamiliar.resetFamiliar();
 		
+		switch (type) {
+		case TAKE_GREEN:
+			greenTowerForFamiliar.get(position).setIcon(null);
+			break;
+		case TAKE_YELLOW:
+			yellowTowerForFamiliar.get(position).setIcon(null);
+			break;
+		case TAKE_BLUE:
+			blueTowerForFamiliar.get(position).setIcon(null);
+			break;
+		case TAKE_VIOLET:
+			violetTowerForFamiliar.get(position).setIcon(null);
+			break;
+		case MARKET:
+			market.get(position).setIcon(null);
+			break;
+		case YIELD:
+			yield.get(position).setIcon(null);
+			break;
+		case PRODUCE:
+			produce.get(position).setIcon(null);
+			break;
+		case COUNCIL:
+			council.get(position).setIcon(null);
+			break;
+			
+		default:
+			break;
+		}
 	}
 	
 	private void enableMove(){
@@ -510,6 +540,7 @@ public class GUIView extends View implements TableInterface{
 				tower.get(i).placeCard(cardImage);
 			} catch (IOException e) {
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
+				logger.info(e);
 			}
 		}
 	}
@@ -525,6 +556,7 @@ public class GUIView extends View implements TableInterface{
 				cardContainer.addGreenCard(imageLoader.loadCardImage(card.getName()));
 			} catch (IOException e) {
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
+				logger.info(e);
 			}
 		
 	}
@@ -540,6 +572,7 @@ public class GUIView extends View implements TableInterface{
 				cardContainer.addYellowCard(imageLoader.loadCardImage(card.getName()));
 			} catch (IOException e) {
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
+				logger.info(e);
 			}
 	
 	}
@@ -555,6 +588,7 @@ public class GUIView extends View implements TableInterface{
 				cardContainer.addBlueCard(imageLoader.loadCardImage(card.getName()));
 			} catch (IOException e) {
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
+				logger.info(e);
 			}
 	}
 	
@@ -569,6 +603,7 @@ public class GUIView extends View implements TableInterface{
 				cardContainer.addVioletCard(imageLoader.loadCardImage(card.getName()));
 			} catch (IOException e) {
 				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
+				logger.info(e);
 			}
 	
 	}
@@ -601,7 +636,7 @@ public class GUIView extends View implements TableInterface{
 	protected void choosePlayerMove(ActionPrototype prototype, boolean isRetrasmission) {
 		//Enable the Player to perform a new Move, if is a retrasmission then cancel the precedent
 		if(isRetrasmission)
-			cancelMove();
+			cancelMove(nextMove.getActionType(), nextMove.getPosition());
 		if(prototype != null){
 			//Show ActionPrototype
 			
@@ -609,6 +644,12 @@ public class GUIView extends View implements TableInterface{
 		enableMove();
 	}
 
+	@Override
+	public void setNewMove(PlayerMove move) {
+		super.setNewMove(move);
+		this.nextMove = move;
+	}
+	
 	@Override
 	protected void chooseIfPayBan(int banPeriod) {
 		// Ask to the Player if he wants to pay for the current Period Ban
@@ -668,12 +709,14 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	public static void main(String[] args) {
+		Logger logger = Logger.getLogger(GUIView.class);
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					GUIView window = new GUIView();
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("Problems in GUI View creation");
+					logger.info(e);
 				}
 			}
 		});
