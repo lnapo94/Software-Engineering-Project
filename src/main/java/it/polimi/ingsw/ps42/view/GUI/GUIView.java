@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -82,6 +83,9 @@ public class GUIView extends View implements TableInterface{
 	//Council Positions
 	private List<JLabel> council;
 	private List<JLabel> market;
+	
+	//Window for Resource update
+	private ResourceWindow resourceWindow;
 	
 	//New Order 
 	private List<JLabel> newOrder;
@@ -158,6 +162,12 @@ public class GUIView extends View implements TableInterface{
 		buildFamiliarStartingPositions(mainLayeredPane);
 		
 		buildFamiliarMovePositions(mainLayeredPane);
+		
+		//Add the Resource Update Window
+		Dimension resourceWindowDimension = new Dimension((int)(rightPanelDimension.getWidth()-cardZoom.getWidth()), (int)(rightPanelDimension.getHeight() - lowTableLabel.getHeight() - containerDimension.getHeight()));
+		Point resourceWindowLocation = new Point((int)(leftPaneDimension.getWidth()+cardZoom.getWidth()), (int)lowTableLabel.getHeight());
+		resourceWindow = new ResourceWindow(resourceWindowDimension, resourceWindowLocation );
+		mainFrame.add(resourceWindow);
 		
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
@@ -458,7 +468,15 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	public void addPlayer(String playerID) {
 		super.addPlayer(playerID);
-		
+		resourceWindow.setPlayer(this.player);
+		resourceWindow.update();
+	}
+	
+	@Override
+	public void setResources(HashMap<Resource, Integer> resources, String playerID) {
+		super.setResources(resources, playerID);
+		if(hasToAnswer(playerID))
+			resourceWindow.update();
 	}
 	
 	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position, int actionValue, DraggableComponent familiarMoving){
