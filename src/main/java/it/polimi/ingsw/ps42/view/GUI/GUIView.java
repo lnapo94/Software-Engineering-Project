@@ -511,14 +511,24 @@ public class GUIView extends View implements TableInterface{
 	public void setBlackDie(int value) {
 		super.setBlackDie(value);
 		//Update the image value for the blackDice
-		//blackDice.setText(new Integer(value).toString());
+		try {
+			blackDice.setIcon(resizeImage(imageLoader.loadBlackDieImage(new Integer(value)), blackDice.getSize()));
+		} catch (IOException e) {
+			logger.error("Black Dice Image not found!");
+			logger.info(e);
+		}
 	}
 	
 	@Override
 	public void setOrangeDie(int value) {
 		super.setOrangeDie(value);
 		//Update the image value for the orangeDice
-		//orangeDice.setText(new Integer(value).toString());
+		try {
+			orangeDice.setIcon(resizeImage(imageLoader.loadOrangeDieImage(new Integer(value)), orangeDice.getSize()));
+		} catch (IOException e) {
+			logger.error("Orange Dice Image not found!");
+			logger.info(e);
+		}
 
 	}
 	
@@ -526,7 +536,12 @@ public class GUIView extends View implements TableInterface{
 	public void setWhiteDie(int value) {
 		super.setWhiteDie(value);
 		//Update the image value for the whiteDice
-		//whiteDice.setText(new Integer(value).toString());
+		try {
+			whiteDice.setIcon(resizeImage(imageLoader.loadWhiteDieImage(new Integer(value)), whiteDice.getSize()));
+		} catch (IOException e) {
+			logger.error("White Dice Image not found!");
+			logger.info(e);
+		}
 
 	}
 	
