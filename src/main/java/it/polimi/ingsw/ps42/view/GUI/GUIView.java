@@ -178,8 +178,8 @@ public class GUIView extends View implements TableInterface{
 		//Add the label for the Dice
 		buildDicePositions(mainLayeredPane, lowTableDimension);
 		
-		LoginWindow login = new LoginWindow(this, "");
-		login.run();
+		//LoginWindow login = new LoginWindow(this, "");
+		//login.run();
 
 	}
 	/**
@@ -511,14 +511,14 @@ public class GUIView extends View implements TableInterface{
 	public void setBlackDie(int value) {
 		super.setBlackDie(value);
 		//Update the image value for the blackDice
-		blackDice.setText(new Integer(value).toString());
+		//blackDice.setText(new Integer(value).toString());
 	}
 	
 	@Override
 	public void setOrangeDie(int value) {
 		super.setOrangeDie(value);
 		//Update the image value for the orangeDice
-		orangeDice.setText(new Integer(value).toString());
+		//orangeDice.setText(new Integer(value).toString());
 
 	}
 	
@@ -526,7 +526,7 @@ public class GUIView extends View implements TableInterface{
 	public void setWhiteDie(int value) {
 		super.setWhiteDie(value);
 		//Update the image value for the whiteDice
-		whiteDice.setText(new Integer(value).toString());
+		//whiteDice.setText(new Integer(value).toString());
 
 	}
 	
