@@ -22,6 +22,7 @@ import javax.swing.JLayeredPane;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
@@ -179,8 +180,11 @@ public class GUIView extends View implements TableInterface{
 		//Add the label for the Dice
 		buildDicePositions(mainLayeredPane, lowTableDimension);
 		
-		LoginWindow login = new LoginWindow(this, "");
-		login.run();
+		//Add the Ban's Labels 
+		buildBanLabel(mainLayeredPane);
+		
+		//LoginWindow login = new LoginWindow(this, "");
+		//login.run();
 
 	}
 	/**
@@ -390,6 +394,26 @@ public class GUIView extends View implements TableInterface{
 		diceLable.setLocation(location);
 		mainPane.add(diceLable, 0);
 		return diceLable;
+	}
+	
+	private void buildBanLabel(JLayeredPane mainPane) throws IOException{
+		
+		bans = new ArrayList<>();
+		int deltaX = 0;
+		Dimension banDimension = new Dimension((int)(tableImageDimension.getWidth()*0.087), (int)(tableImageDimension.getHeight()*0.13));
+		bans.add(buildSingleBanLabel(mainPane,banDimension, deltaX));
+		deltaX += (int)(tableImageDimension.getWidth() * 0.01 + banDimension.getWidth());
+		bans.add(buildSingleBanLabel(mainPane,banDimension, deltaX));
+		deltaX += (int)(tableImageDimension.getWidth() * 0.008 + banDimension.getWidth());
+		bans.add(buildSingleBanLabel(mainPane,banDimension, deltaX));
+
+	}
+	
+	private CardLabel buildSingleBanLabel(JLayeredPane mainPane, Dimension banDimension, int rightShift) throws IOException{
+		
+		CardLabel ban = new CardLabel((int)(tableImageDimension.getWidth()*0.17 + rightShift), (int)(tableImageDimension.getHeight()*0.85), banDimension, cardZoom);
+		mainPane.add(ban, 0);	
+		return ban;
 	}
 	
 	//Method used to resize the image for a JLabel ImageIcon
@@ -617,6 +641,7 @@ public class GUIView extends View implements TableInterface{
 		neutralFamiliar.resetFamiliar();
 	}
 	
+	
 	@Override
 	public void resetTable() {
 		super.resetTable();
@@ -838,6 +863,20 @@ public class GUIView extends View implements TableInterface{
 		super.setNewMove(move);
 		this.nextMove = move;
 		disableMove();
+	}
+	
+	@Override
+	public void setGameBans(BanMessage message) {
+		super.setGameBans(message);
+		try{
+			bans.get(0).placeCard(imageLoader.loadBanImage(new Integer(0), message.getIndexOfFirstBan()));
+			bans.get(1).placeCard(imageLoader.loadBanImage(new Integer(1), message.getIndexOfSecondBan()));
+			bans.get(2).placeCard(imageLoader.loadBanImage(new Integer(2), message.getIndexOfThirdBan()));
+		}
+		catch (IOException e) {
+			logger.error("Ban Image not Found!");
+			logger.info(e);
+		}
 	}
 	
 	@Override

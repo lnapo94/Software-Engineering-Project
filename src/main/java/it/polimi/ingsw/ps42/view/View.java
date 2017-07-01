@@ -8,6 +8,7 @@ import java.util.Observer;
 
 import org.apache.log4j.Logger;
 
+import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
@@ -275,19 +276,27 @@ public abstract class View extends Observable implements Observer {
 	protected abstract void askIfWantToPlay(PlayerToken moveToken);
 	
 	//SETTER FOR TABLE BANS
-	public void setFirstBan(Effect firstBan){
+	private void setFirstBan(Effect firstBan){
 		if(firstBan != null)
 			this.table.addFirstBan(firstBan);
 	}
 	
-	public void setSecondBan(Effect secondBan){
+	private void setSecondBan(Effect secondBan){
 		if(secondBan != null)
 			this.table.addSecondBan(secondBan);
 	}
 	
-	public void setThirdBan(Effect thirdBan){
+	private void setThirdBan(Effect thirdBan){
 		if(thirdBan != null)
 			this.table.addThirdBan(thirdBan);
+	}
+	
+	public void setGameBans(BanMessage message){
+		if(message != null){
+			setFirstBan(message.getFirstEffect());
+			setSecondBan(message.getSecondEffect());
+			setThirdBan(message.getThirdEffect());
+		}
 	}
 	
 	public void setBanToPlayer(String playerID, int banPeriod) throws ElementNotFoundException{

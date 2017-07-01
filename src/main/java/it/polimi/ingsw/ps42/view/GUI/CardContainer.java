@@ -37,9 +37,9 @@ public class CardContainer extends FunctionalLabel{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			//If the source has an Image then swap the entire List of Cards
-			if(e.getSource() == violetCard)
+			if(violetCard.contains(e.getSource()) )
 				swap(violetCard);
-			else if(e.getSource() == blueCard)
+			else if(blueCard.contains(e.getSource()))
 				swap(blueCard);
 		}
 
@@ -114,22 +114,7 @@ public class CardContainer extends FunctionalLabel{
 			deltaX += (int)(this.getWidth()*0.022) + cardDimension.getWidth();
 		}
 	}
-	/*
-	private void placeOverlappedCards(List<CardLabel> deck, JLayeredPane mainPane, Dimension cardDimension, CardZoom cardZoom, int downShift) {
-		
-		int deltaX = (int)(this.getWidth()*0.8);
-		int deltaY = (int)(this.getHeight()*0.02 + downShift);
-		for(int i=0; i<6; i++){
-			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom);
-			deck.add(card);
-			card.setBorder(new LineBorder(Color.BLACK,(int) (cardDimension.getWidth()*0.01)));
-			card.addMouseListener(new MouseClickListener() );
-			mainPane.add(card, 0);
-			deltaX += (int)(cardDimension.getWidth()*0.04);
-			deltaY += (int)(cardDimension.getHeight()*0.02);
-		}
-	}
-	*/
+
 	private CardLabel newFirstCard(List<CardLabel> deck, int downShift){
 				
 		int deltaX = (int)(this.getWidth()*0.8 + deck.size() * (cardDimension.getWidth()*0.04) );
@@ -159,7 +144,7 @@ public class CardContainer extends FunctionalLabel{
 		CardLabel firstFree = newFirstCard(blueCard, (int)(this.getHeight()*0.12 + cardDimension.getHeight()));
 		if(firstFree != null){
 			firstFree.placeCard(cardTaken);
-			firstFree.setBorder(new LineBorder(Color.BLACK,(int) (firstFree.getWidth()*0.01)));
+			firstFree.setBorder(new LineBorder(Color.BLACK,(int) (firstFree.getWidth()*0.02)));
 		}
 	}	
 	
@@ -167,7 +152,7 @@ public class CardContainer extends FunctionalLabel{
 		CardLabel firstFree = newFirstCard(violetCard, 0);
 		if(firstFree != null){
 			firstFree.placeCard(cardTaken);
-			firstFree.setBorder(new LineBorder(Color.BLACK,(int) (firstFree.getWidth()*0.01)));
+			firstFree.setBorder(new LineBorder(Color.BLACK,(int) (firstFree.getWidth()*0.02)));
 		}
 	}
 	
