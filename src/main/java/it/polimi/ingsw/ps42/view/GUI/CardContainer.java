@@ -29,6 +29,9 @@ public class CardContainer extends FunctionalLabel{
 	private List<CardLabel> violetCard;
 	private CardZoom cardZoom;
 	private BufferedImage image;
+	
+	private JLayeredPane mainPane;
+	private Dimension cardDimension;
 	private class MouseClickListener implements MouseListener {
 
 		@Override
@@ -66,7 +69,7 @@ public class CardContainer extends FunctionalLabel{
 		
 	}
 	
-	public CardContainer(Dimension dimension, Point location, CardZoom cardZoom, BufferedImage image, Dimension cardDimension ) {
+	public CardContainer(Dimension dimension, Point location, CardZoom cardZoom, BufferedImage image, Dimension tableCardDimension ) {
 		
 		super();
 		greenCard = new ArrayList<>();
@@ -78,7 +81,7 @@ public class CardContainer extends FunctionalLabel{
 		this.setLocation(location);
 		this.cardZoom = cardZoom;
 		
-		JLayeredPane mainPane = new JLayeredPane();
+		mainPane = new JLayeredPane();
 		mainPane.setBounds(0, 0, (int)this.getWidth(),(int) this.getHeight());
 		this.add(mainPane);
 		
@@ -87,43 +90,32 @@ public class CardContainer extends FunctionalLabel{
 		backGround.setLocation(0,0);
 		backGround.setIcon(resizeImage(image, backGround.getSize()));
 		mainPane.add(backGround, -1);
-		
-		buildCardPositions(mainPane, new Dimension((int)(cardDimension.getWidth()*1.1), (int)(cardDimension.getHeight()*1.1)));
+		this.cardDimension = new Dimension((int)(tableCardDimension.getWidth()*1.1), (int)(tableCardDimension.getHeight()*1.1));
+		buildCardPositions(mainPane, cardDimension);
 		
 	}
 	
 	private void buildCardPositions(JLayeredPane mainPane, Dimension cardDimension){
 		//Build the positions for placing the cards
-		
-		
-		try {
-			placeCardPositions(yellowCard, mainPane, cardDimension, cardZoom, 0);
-			placeCardPositions(greenCard, mainPane, cardDimension, cardZoom, (int)(this.getHeight()*0.2 + cardDimension.getHeight()));
-			placeOverlappedCards(violetCard, mainPane, cardDimension, cardZoom, 0);
-			placeOverlappedCards(blueCard, mainPane, cardDimension, cardZoom, (int)(this.getHeight()*0.12 + cardDimension.getHeight()));
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		placeCardPositions(yellowCard, mainPane, cardDimension, cardZoom, 0);
+		placeCardPositions(greenCard, mainPane, cardDimension, cardZoom, (int)(this.getHeight()*0.2 + cardDimension.getHeight()));
 	}
 	
-	private void placeCardPositions(List<CardLabel> deck, JLayeredPane mainPane, Dimension cardDimension, CardZoom cardZoom, int downShift) throws IOException{
+	private void placeCardPositions(List<CardLabel> deck, JLayeredPane mainPane, Dimension cardDimension, CardZoom cardZoom, int downShift) {
 		
 		int deltaX = (int)(this.getWidth()*0.02);
 		int deltaY = (int)(this.getHeight()*0.02 + downShift);
 		for(int i=0; i<6; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
 			deck.add(card);
-			//card.setIcon(resizeImage(ImageIO.read(CardContainer.class.getResource("/Images/Cards/FirstPeriod/Blue/1.png")), cardDimension));
 			mainPane.add(card, 0);
 			if(i == 2)
 				deltaX = (int)(deltaX * 1.03);
 			deltaX += (int)(this.getWidth()*0.022) + cardDimension.getWidth();
 		}
 	}
-	
-	private void placeOverlappedCards(List<CardLabel> deck, JLayeredPane mainPane, Dimension cardDimension, CardZoom cardZoom, int downShift) throws IOException{
+	/*
+	private void placeOverlappedCards(List<CardLabel> deck, JLayeredPane mainPane, Dimension cardDimension, CardZoom cardZoom, int downShift) {
 		
 		int deltaX = (int)(this.getWidth()*0.8);
 		int deltaY = (int)(this.getHeight()*0.02 + downShift);
@@ -131,12 +123,24 @@ public class CardContainer extends FunctionalLabel{
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom);
 			deck.add(card);
 			card.setBorder(new LineBorder(Color.BLACK,(int) (cardDimension.getWidth()*0.01)));
-			//card.setIcon(resizeImage(ImageIO.read(CardContainer.class.getResource("/Images/Cards/FirstPeriod/Blue/1.png")), cardDimension));
 			card.addMouseListener(new MouseClickListener() );
 			mainPane.add(card, 0);
 			deltaX += (int)(cardDimension.getWidth()*0.04);
 			deltaY += (int)(cardDimension.getHeight()*0.02);
 		}
+	}
+	*/
+	private CardLabel newFirstCard(List<CardLabel> deck, int downShift){
+				
+		int deltaX = (int)(this.getWidth()*0.8 + deck.size() * (cardDimension.getWidth()*0.04) );
+		int deltaY = (int)(this.getHeight()*0.02 + downShift + deck.size() * (cardDimension.getHeight()*0.02) );
+		
+		CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom);
+		deck.add(card);
+		card.setBorder(new LineBorder(Color.BLACK,(int) (cardDimension.getWidth()*0.01)));
+		card.addMouseListener(new MouseClickListener() );
+		mainPane.add(card, 0);
+		return card;
 	}
 	
 	public void addGreenCard(BufferedImage cardTaken){
@@ -152,7 +156,7 @@ public class CardContainer extends FunctionalLabel{
 	}
 	
 	public void addBlueCard(BufferedImage cardTaken){
-		CardLabel firstFree = searchFirstFree(blueCard);
+		CardLabel firstFree = newFirstCard(blueCard, (int)(this.getHeight()*0.12 + cardDimension.getHeight()));
 		if(firstFree != null){
 			firstFree.placeCard(cardTaken);
 			firstFree.setBorder(new LineBorder(Color.BLACK,(int) (firstFree.getWidth()*0.01)));
@@ -160,7 +164,7 @@ public class CardContainer extends FunctionalLabel{
 	}	
 	
 	public void addVioletCard(BufferedImage cardTaken){
-		CardLabel firstFree = searchFirstFree(violetCard);
+		CardLabel firstFree = newFirstCard(violetCard, 0);
 		if(firstFree != null){
 			firstFree.placeCard(cardTaken);
 			firstFree.setBorder(new LineBorder(Color.BLACK,(int) (firstFree.getWidth()*0.01)));
