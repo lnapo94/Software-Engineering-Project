@@ -61,7 +61,7 @@ public class PlayerMoveTimer extends TimerTask{
 		//If there is an action in gameLogic, it must be a TakeCard action,
 		//so cancel it
 		if(logic.isThereAnAction())
-			logic.rollBackTakeCardAction();
+			logic.rollBackAction();
 		
 		logic.initAction();
 		

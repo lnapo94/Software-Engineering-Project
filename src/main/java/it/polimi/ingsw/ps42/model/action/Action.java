@@ -26,6 +26,7 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 public abstract class Action extends Observable{	
 	
 	private ActionType type;
+	private int payedSlave;
 	protected Familiar familiar;
 	protected Player player;
 	protected Packet discount;
@@ -96,6 +97,14 @@ public abstract class Action extends Observable{
 		Packet slavePacket = new Packet();
 		slavePacket.addUnit(new Unit(Resource.SLAVE, slaveToPay));
 		player.decreaseResource(slavePacket);
+		this.payedSlave = slaveToPay;
+	}
+	
+	public void rollBackAction() {
+		Packet slavePacket = new Packet();
+		slavePacket.addUnit(new Unit(Resource.SLAVE, this.payedSlave));
+		player.increaseResource(slavePacket);
+		this.payedSlave = 0;
 	}
 	
 	/**

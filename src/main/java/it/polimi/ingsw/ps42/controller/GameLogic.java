@@ -15,7 +15,6 @@ import it.polimi.ingsw.ps42.message.visitorPattern.ControllerVisitor;
 import it.polimi.ingsw.ps42.model.Table;
 import it.polimi.ingsw.ps42.model.action.Action;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
-import it.polimi.ingsw.ps42.model.action.TakeCardAction;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
@@ -1018,10 +1017,9 @@ public class GameLogic implements Observer {
 	/**
 	 * Method used to rollback an action if there is a TakeCardAction
 	 */
-	public void rollBackTakeCardAction() {
-		if(currentAction != null && currentAction instanceof TakeCardAction) {
-			TakeCardAction action = (TakeCardAction) currentAction;
-			action.rollBackAction();
+	public void rollBackAction() {
+		if(currentAction != null) {
+			currentAction.rollBackAction();
 		}
 	}
 	

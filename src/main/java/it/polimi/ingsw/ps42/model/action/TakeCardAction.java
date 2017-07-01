@@ -195,7 +195,9 @@ public class TakeCardAction extends Action{
 	/**
 	 * Method used to undo a TakeCardAction
 	 */
+	@Override
 	public void rollBackAction() {
+		super.rollBackAction();
 		//Called when player doesn't answer to gameLogic
 		TowerPosition position = tablePosition.get(positionInTableList);
 		Packet moneyMalus = new Packet();
