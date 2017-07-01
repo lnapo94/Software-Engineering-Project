@@ -178,8 +178,8 @@ public class GUIView extends View implements TableInterface{
 		//Add the label for the Dice
 		buildDicePositions(mainLayeredPane, lowTableDimension);
 		
-		//LoginWindow login = new LoginWindow(this, "");
-		//login.run();
+		LoginWindow login = new LoginWindow(this, "");
+		login.run();
 
 	}
 	/**
