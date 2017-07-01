@@ -15,21 +15,24 @@ public abstract class Position {
 
 	//this is the abstract class for the position, familiar will be set by the game logic when necessary
 	
-	private final ActionType type;
+	private ActionType type;
 	private Familiar familiar;
-	private final Obtain bonus;
-	private final int malus;
-	private final int level;
+	private Obtain bonus;
+	private int malus;
+	private int level;
 	
-	private transient Logger logger = Logger.getLogger(Position.class);
+	protected transient Logger logger;
+	
+	public Position() {
+		logger = Logger.getLogger(Position.class);
+	}
 	
 	public Position(ActionType type, int level, Obtain bonus, int malus){
-		
-			this.type=type;
-			this.level=level;
-			this.bonus=bonus;
-			this.malus=malus;
-		
+		this();
+		this.type=type;
+		this.level=level;
+		this.bonus=bonus;
+		this.malus=malus;	
 	}
 	
 	public Obtain getBonus() {

@@ -16,7 +16,7 @@ public abstract class Effect implements Printable, Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 3156543073602122174L;
-	protected Player player;
+	protected transient Player player;
 	protected EffectType typeOfEffect;
 	
 	protected transient Logger logger;

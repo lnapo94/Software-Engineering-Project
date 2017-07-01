@@ -234,7 +234,7 @@ public class TakeCardAction extends Action{
 		player.synchResource();
 		try {
 			position.getCard().enableImmediateEffect();
-			if(position.getCard().getColor() == CardColor.BLUE)
+			if(position.getCard().getColor() == CardColor.BLUE || position.getCard().getColor() == CardColor.VIOLET)
 				position.getCard().enablePermanentEffect();
 		} catch (NotEnoughResourcesException e) {
 			logger.debug("Player can not pay for enable the immediate effect");

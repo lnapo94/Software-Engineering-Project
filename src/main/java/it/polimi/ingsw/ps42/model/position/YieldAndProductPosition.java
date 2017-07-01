@@ -21,8 +21,9 @@ public class YieldAndProductPosition extends Position {
 	*/
 	private List<Familiar> bonusFamiliars;
 	
-	//Logger
-	private transient Logger logger = Logger.getLogger(YieldAndProductPosition.class);
+	public YieldAndProductPosition() {
+		logger = Logger.getLogger(YieldAndProductPosition.class);
+	}
 	
 	public YieldAndProductPosition(ActionType type, int level, Obtain bonus, int malus) {
 		super(type, level, bonus, malus);

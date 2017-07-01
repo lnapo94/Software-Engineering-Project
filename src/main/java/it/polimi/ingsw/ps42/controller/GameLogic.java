@@ -119,9 +119,10 @@ public class GameLogic implements Observer {
 
     
     private Player searchInArrayList(String playerID, List<Player> list) {
-    	for(Player player : list)
-            if(player.getPlayerID().equals(playerID))
-                return player;
+    	for(Player player : list) {
+    		if(player.getPlayerID().equals(playerID))
+    			return player;
+    	}
     	return null;
     }
     
