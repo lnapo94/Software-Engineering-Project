@@ -87,6 +87,11 @@ public class GUIView extends View implements TableInterface{
 	//Window for Resource update
 	private ResourceWindow resourceWindow;
 	
+	//Labels for the Dice Values
+	private JLabel blackDice;
+	private JLabel whiteDice;
+	private JLabel orangeDice;
+	
 	//New Order 
 	private List<JLabel> newOrder;
 	//The List of Bans
@@ -145,13 +150,14 @@ public class GUIView extends View implements TableInterface{
 		
 		//Set the lowerPart of the Table
 		JLabel lowTableLabel = new JLabel();
-		lowTableLabel.setSize((int)(rightPanelDimension.getWidth()-cardZoom.getWidth()), (int)(cardZoom.getHeight()*0.70));
+		Dimension lowTableDimension = new Dimension((int)(rightPanelDimension.getWidth()-cardZoom.getWidth()), (int)(cardZoom.getHeight()*0.70));
+		lowTableLabel.setSize(lowTableDimension);
 		lowTableLabel.setLocation((int)(leftPaneDimension.getWidth()+cardZoom.getWidth()), 0);
 		lowTableLabel.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/TableDownPart.png")), lowTableLabel.getSize()));
 		mainLayeredPane.add(lowTableLabel, -1);
 		
 		//Set the Cards taken container
-		Dimension containerDimension = new Dimension((int)(rightPanelDimension.getWidth()*0.8),(int) (rightPanelDimension.getHeight()-cardZoom.getHeight()));
+		Dimension containerDimension = new Dimension((int)(rightPanelDimension.getWidth()),(int) (rightPanelDimension.getHeight()-cardZoom.getHeight()));
 		Point containerLocation = new Point((int)leftPaneDimension.getWidth(), (int)cardZoom.getHeight());
 		cardContainer = new CardContainer(containerDimension, containerLocation, cardZoom, ImageIO.read(GUIView.class.getResource("/Images/Others/cardContainer.jpg")), cardDimension);
 		mainLayeredPane.add(cardContainer, -1);
@@ -168,6 +174,9 @@ public class GUIView extends View implements TableInterface{
 		Point resourceWindowLocation = new Point((int)(leftPaneDimension.getWidth()+cardZoom.getWidth()), (int)lowTableLabel.getHeight());
 		resourceWindow = new ResourceWindow(resourceWindowDimension, resourceWindowLocation );
 		mainFrame.add(resourceWindow);
+		
+		//Add the label for the Dice
+		buildDicePositions(mainLayeredPane, lowTableDimension);
 		
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
@@ -362,6 +371,25 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 	
+	private void buildDicePositions(JLayeredPane mainPane, Dimension lowerTableDimension ) throws IOException{
+		
+		Dimension diceDimension = new Dimension((int)(lowerTableDimension.getWidth()*0.09),(int)(lowerTableDimension.getHeight()*0.21));
+		buildSingleDice(mainPane, diceDimension, lowerTableDimension, 0, blackDice);
+		int rightShift = (int)(diceDimension.getWidth()*1.29);
+		buildSingleDice(mainPane, diceDimension, lowerTableDimension, rightShift, whiteDice);
+		rightShift += (int)(diceDimension.getWidth()*1.3);
+		buildSingleDice(mainPane, diceDimension, lowerTableDimension, rightShift, orangeDice);
+	}
+	
+	private void buildSingleDice(JLayeredPane mainPane, Dimension diceDimension, Dimension lowerTableDimension, int rightShift, JLabel diceLable) throws IOException{
+		
+		Point location = new Point((int) (tableImageDimension.getWidth() + cardZoom.getWidth() + lowerTableDimension.getWidth()*0.58 + rightShift),(int) (lowerTableDimension.getHeight()*0.72));
+		diceLable = new JLabel();
+		diceLable.setSize(diceDimension);
+		diceLable.setLocation(location);
+		mainPane.add(diceLable, 0);
+	}
+	
 	//Method used to resize the image for a JLabel ImageIcon
 	private ImageIcon resizeImage(BufferedImage imageToResize, Dimension newDimension){
 		Image imageResized = null;
@@ -477,6 +505,29 @@ public class GUIView extends View implements TableInterface{
 		super.setResources(resources, playerID);
 		if(hasToAnswer(playerID))
 			resourceWindow.update();
+	}
+	
+	@Override
+	public void setBlackDie(int value) {
+		super.setBlackDie(value);
+		//Update the image value for the blackDice
+		blackDice.setText(new Integer(value).toString());
+	}
+	
+	@Override
+	public void setOrangeDie(int value) {
+		super.setOrangeDie(value);
+		//Update the image value for the orangeDice
+		orangeDice.setText(new Integer(value).toString());
+
+	}
+	
+	@Override
+	public void setWhiteDie(int value) {
+		super.setWhiteDie(value);
+		//Update the image value for the whiteDice
+		whiteDice.setText(new Integer(value).toString());
+
 	}
 	
 	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position, int actionValue, DraggableComponent familiarMoving){
