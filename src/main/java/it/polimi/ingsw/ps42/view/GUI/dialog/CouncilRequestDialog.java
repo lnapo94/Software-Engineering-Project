@@ -105,7 +105,7 @@ public class CouncilRequestDialog extends JDialog{
 	
 	public void run() {
 		this.setVisible(true);
-		this.pack();
+		this.setSize((int) (parent.getWidth() * 0.5), (int) (parent.getHeight() * 0.5));
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.setResizable(false);
 	}
