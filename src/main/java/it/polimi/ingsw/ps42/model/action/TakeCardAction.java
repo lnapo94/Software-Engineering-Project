@@ -98,7 +98,7 @@ public class TakeCardAction extends Action{
 			return Response.FAILURE;
 		}
 		
-		if(position.getFamiliar() != null && !checkMyFamiliar()) {
+		if( !checkMyFamiliar()) {
 			player.restoreResource();
 			return Response.FAILURE;
 		}
