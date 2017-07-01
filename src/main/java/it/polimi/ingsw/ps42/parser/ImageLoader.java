@@ -15,7 +15,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class ImageLoader extends Loader{
 	
-	private static final String DICE_PATH = "Resource//DiceImages//";
+	private static final String DICE_PATH = "Resource//Images//DiceImages//";
 	
 	private HashMap<String, String> cardsPath;
 	private HashMap<String, String> leaderCardsPath;

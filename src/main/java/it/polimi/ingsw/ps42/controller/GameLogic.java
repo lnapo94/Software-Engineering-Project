@@ -1015,7 +1015,7 @@ public class GameLogic implements Observer {
 	}
 	
 	/**
-	 * Method used to rollback an action if there is a TakeCardAction
+	 * Method used to rollback an action if there is a problem
 	 */
 	public void rollBackAction() {
 		if(currentAction != null) {
