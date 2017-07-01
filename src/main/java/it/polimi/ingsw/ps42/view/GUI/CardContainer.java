@@ -3,6 +3,8 @@ package it.polimi.ingsw.ps42.view.GUI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +29,42 @@ public class CardContainer extends FunctionalLabel{
 	private List<CardLabel> violetCard;
 	private CardZoom cardZoom;
 	private BufferedImage image;
+	private class MouseClickListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			//If the source has an Image then swap the entire List of Cards
+			if(e.getSource() == violetCard)
+				swap(violetCard);
+			else if(e.getSource() == blueCard)
+				swap(blueCard);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// Nothing to do
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// Nothing to do
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// Nothing to do
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// Nothing to do
+			
+		}
+		
+	}
 	
 	public CardContainer(Dimension dimension, Point location, CardZoom cardZoom, BufferedImage image, Dimension cardDimension ) {
 		
@@ -94,6 +132,7 @@ public class CardContainer extends FunctionalLabel{
 			deck.add(card);
 			card.setBorder(new LineBorder(Color.BLACK,(int) (cardDimension.getWidth()*0.01)));
 			card.setIcon(resizeImage(ImageIO.read(CardContainer.class.getResource("/Images/Cards/FirstPeriod/Blue/1.png")), cardDimension));
+			card.addMouseListener(new MouseClickListener() );
 			mainPane.add(card, 0);
 			deltaX += (int)(cardDimension.getWidth()*0.04);
 			deltaY += (int)(cardDimension.getHeight()*0.02);
@@ -134,5 +173,23 @@ public class CardContainer extends FunctionalLabel{
 				return card;
 		}
 		return null;
+	}
+	
+	private void swap(List<CardLabel> deck){
+		
+		BufferedImage imageToSwap = deck.get(0).getCardImage();
+		BufferedImage imageToSave;
+		CardLabel temp;
+		for(int i=0; i<deck.size()-1; i++){
+			temp = deck.get(i+1);
+			if(temp.getCardImage() != null){
+				imageToSave = temp.getCardImage();
+				temp.placeCard(imageToSwap);
+				imageToSwap = imageToSave;
+			}
+			
+		}
+		deck.get(0).placeCard(imageToSwap);	
+		
 	}
 }
