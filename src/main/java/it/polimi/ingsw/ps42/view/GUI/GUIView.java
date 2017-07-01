@@ -371,23 +371,24 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 	
-	private void buildDicePositions(JLayeredPane mainPane, Dimension lowerTableDimension ) throws IOException{
+	private void buildDicePositions(JLayeredPane mainPane, Dimension lowerTableDimension ) {
 		
 		Dimension diceDimension = new Dimension((int)(lowerTableDimension.getWidth()*0.09),(int)(lowerTableDimension.getHeight()*0.21));
-		buildSingleDice(mainPane, diceDimension, lowerTableDimension, 0, blackDice);
+		blackDice = buildSingleDice(mainPane, diceDimension, lowerTableDimension, 0);
 		int rightShift = (int)(diceDimension.getWidth()*1.29);
-		buildSingleDice(mainPane, diceDimension, lowerTableDimension, rightShift, whiteDice);
+		whiteDice = buildSingleDice(mainPane, diceDimension, lowerTableDimension, rightShift);
 		rightShift += (int)(diceDimension.getWidth()*1.3);
-		buildSingleDice(mainPane, diceDimension, lowerTableDimension, rightShift, orangeDice);
+		orangeDice = buildSingleDice(mainPane, diceDimension, lowerTableDimension, rightShift);
 	}
 	
-	private void buildSingleDice(JLayeredPane mainPane, Dimension diceDimension, Dimension lowerTableDimension, int rightShift, JLabel diceLable) throws IOException{
+	private JLabel buildSingleDice(JLayeredPane mainPane, Dimension diceDimension, Dimension lowerTableDimension, int rightShift) {
 		
 		Point location = new Point((int) (tableImageDimension.getWidth() + cardZoom.getWidth() + lowerTableDimension.getWidth()*0.58 + rightShift),(int) (lowerTableDimension.getHeight()*0.72));
-		diceLable = new JLabel();
+		JLabel diceLable = new JLabel();
 		diceLable.setSize(diceDimension);
 		diceLable.setLocation(location);
 		mainPane.add(diceLable, 0);
+		return diceLable;
 	}
 	
 	//Method used to resize the image for a JLabel ImageIcon
