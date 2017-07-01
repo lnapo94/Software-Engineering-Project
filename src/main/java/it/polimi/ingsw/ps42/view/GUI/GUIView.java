@@ -226,26 +226,26 @@ public class GUIView extends View implements TableInterface{
 		int deltaX = (int)(tableImageDimension.getWidth()*0.56 );
 		int deltaY = (int)(tableImageDimension.getHeight()*0.93);
 		
-		blackFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), FamiliarColor.BLACK);
+		blackFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedBlackFamiliar.png")), FamiliarColor.BLACK);
 		blackFamiliar.enableListener();
 		blackFamiliar.setTable(this);
 		mainPane.add(blackFamiliar, 0);
 		
 		int border = (int)(blackFamiliar.getWidth()*1.1); 
 		deltaX += border;
-		whiteFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), FamiliarColor.WHITE);
+		whiteFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedWhiteFamiliar.png")), FamiliarColor.WHITE);
 		whiteFamiliar.enableListener();
 		whiteFamiliar.setTable(this);
 		mainPane.add(whiteFamiliar, 0);
 		
 		deltaX += border;
-		orangeFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), FamiliarColor.ORANGE);
+		orangeFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedOrangeFamiliar.png")), FamiliarColor.ORANGE);
 		orangeFamiliar.enableListener();
 		orangeFamiliar.setTable(this);
 		mainPane.add(orangeFamiliar, 0);
 		
 		deltaX += border;
-		neutralFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), FamiliarColor.NEUTRAL);
+		neutralFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedNeutralFamiliar.png")), FamiliarColor.NEUTRAL);
 		neutralFamiliar.enableListener();
 		neutralFamiliar.setTable(this);
 		mainPane.add(neutralFamiliar, 0);
@@ -437,7 +437,7 @@ public class GUIView extends View implements TableInterface{
 			if( containsPoint(position, x, y) ){
 				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
 				actionValue = 1;
-				createNewMove( ActionType.MARKET, color, produce.indexOf(position),actionValue , familiarMoving);
+				createNewMove( ActionType.MARKET, color, market.indexOf(position),actionValue , familiarMoving);
 				return true;
 			}
 		}
@@ -445,13 +445,14 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	private boolean containsPoint(JLabel label, int x, int y){
-		
+		if(label.getIcon() == null){
+			//If the position is empty, discover if has been pointed
 			Point p = label.getLocationOnScreen();
 			if(p.getX() < x && x < p.getX()+label.getWidth()
 					&& p.getY() < y && y < p.getY() + label.getHeight())
 				return true;
-			else return false;
-	
+		}
+		return false;
 	}
 	
 	@Override
@@ -534,6 +535,80 @@ public class GUIView extends View implements TableInterface{
 	public void resetTable() {
 		super.resetTable();
 		restoreFamiliar();
+	}
+	
+	@Override
+	public void setFamiliarInBlueTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
+		super.setFamiliarInBlueTower(playerID, color, position);
+		if( !hasToAnswer(playerID)){
+			setOccupied(playerID, color, blueTowerForFamiliar.get(position));
+		}		
+	}
+	
+	@Override
+	public void setFamiliarInGreenTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
+		super.setFamiliarInGreenTower(playerID, color, position);
+		if( !hasToAnswer(playerID)){
+			setOccupied(playerID, color, greenTowerForFamiliar.get(position));
+		}		
+	}
+	
+	@Override
+	public void setFamiliarInYellowTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
+		super.setFamiliarInYellowTower(playerID, color, position);
+		if( !hasToAnswer(playerID)){
+			setOccupied(playerID, color, yellowTowerForFamiliar.get(position));
+		}		
+	}
+	
+	@Override
+	public void setFamiliarInVioletTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
+		super.setFamiliarInVioletTower(playerID, color, position);
+		if( !hasToAnswer(playerID)){
+			setOccupied(playerID, color, violetTowerForFamiliar.get(position));
+		}		
+	}
+	
+	@Override
+	public void setFamiliarInMarket(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
+		super.setFamiliarInMarket(playerID, color, position);
+		if( !hasToAnswer(playerID)){
+			setOccupied(playerID, color, market.get(position));
+		}		
+	}
+	
+	@Override
+	public void setFamiliarInYield(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
+		super.setFamiliarInYield(playerID, color, position);
+		if( !hasToAnswer(playerID)){
+			setOccupied(playerID, color, yield.get(position));
+		}		
+	}
+	
+	@Override
+	public void setFamiliarInProduce(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
+		super.setFamiliarInProduce(playerID, color, position);
+		if( !hasToAnswer(playerID)){
+			setOccupied(playerID, color, produce.get(position));
+		}		
+	}
+	
+	@Override
+	public void setFamiliarInCouncil(String playerID, FamiliarColor color) throws ElementNotFoundException {
+		super.setFamiliarInCouncil(playerID, color);
+		if( !hasToAnswer(playerID)){
+			setOccupied(playerID, color, council.get(0));
+		}		
+	}
+	
+	private void setOccupied(String playerID, FamiliarColor color, JLabel position){
+		
+		try {
+			position.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), position.getSize()));
+		} catch (IOException e) {
+			logger.error("Image for "+color.toString()+" of the player: "+playerID+" not found!");
+			logger.info(e);
+		}
 	}
 	
 	@Override

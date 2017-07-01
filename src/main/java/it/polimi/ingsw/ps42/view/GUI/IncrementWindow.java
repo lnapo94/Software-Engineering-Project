@@ -127,6 +127,11 @@ public class IncrementWindow extends JDialog{
 		JLabel fourth = new JLabel(" Familiar color: "+ familiarColor.toString());
 		fourth.setFont(font);
 		this.add(fourth);
+		
+		JLabel fifth = new JLabel(" Position value: "+ position);
+		fifth.setFont(font);
+		this.add(fifth);
+		
 		incrementLabel= new JLabel(" Increment: "+ increment);
 		incrementLabel.setFont(font);
 		this.add(incrementLabel);
