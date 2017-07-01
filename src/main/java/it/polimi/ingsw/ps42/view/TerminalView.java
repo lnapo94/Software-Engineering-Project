@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps42.view;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -8,6 +7,7 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 import it.polimi.ingsw.ps42.message.CardRequest;
+import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
@@ -18,6 +18,7 @@ import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
+import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -56,16 +57,20 @@ public class TerminalView extends View {
 	}
 
 	@Override
-	protected void chooseCouncilConversion(List<Obtain> possibleConversions, int quantity) {
-		List<Integer> choiceList = new ArrayList<>();
-		for(int i=0; i<quantity; i++){
-			System.out.println("Scegli una Conversione per il privilegio del consiglio [0-"+(possibleConversions.size()-1)+"]");
-			for (Obtain obtain : possibleConversions) {
+	protected void chooseCouncilConversion(CouncilRequest message) {
+		for(int i=0; i<message.getQuantity(); i++){
+			System.out.println("Scegli una Conversione per il privilegio del consiglio [0-"+(message.getPossibleChoice().size()-1)+"]");
+			for (Obtain obtain : message.getPossibleChoice()) {
 				System.out.println(obtain.print());
 			}			
-		choiceList.add(Integer.parseInt(scanner.nextLine()));
+			try {
+				message.addChoice((Integer.parseInt(scanner.nextLine())));
+			} catch (NumberFormatException | WrongChoiceException e) {
+				logger.error("Wrong choice in coucil request");
+				logger.info(e);
+			}
 		}
-		this.setCouncilRequestResponse(possibleConversions, choiceList, quantity);
+		this.setCouncilRequestResponse(message);
 	}
 
 	@Override

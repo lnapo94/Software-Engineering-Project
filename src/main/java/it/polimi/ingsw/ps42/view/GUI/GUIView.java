@@ -23,13 +23,13 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import it.polimi.ingsw.ps42.message.CardRequest;
+import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
-import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
@@ -43,6 +43,7 @@ import it.polimi.ingsw.ps42.view.TableInterface;
 import it.polimi.ingsw.ps42.view.View;
 import it.polimi.ingsw.ps42.view.GUI.dialog.BonusBarRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.CardRequestDialog;
+import it.polimi.ingsw.ps42.view.GUI.dialog.CouncilRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardChooseDialog;
 
 public class GUIView extends View implements TableInterface{
@@ -791,6 +792,7 @@ public class GUIView extends View implements TableInterface{
 		// Ask the Player to choose a LeaderCard from the given List
 		try {
 			LeaderCardChooseDialog dialog = new LeaderCardChooseDialog(this, leaderCardList);
+			dialog.run();
 		} catch (IOException e) {
 			logger.error("Error in open the image conversion file");
 			logger.info(e);
@@ -798,9 +800,9 @@ public class GUIView extends View implements TableInterface{
 	}
 
 	@Override
-	protected void chooseCouncilConversion(List<Obtain> possibleConversions, int quantity) {
-		// Ask the Player to choose a council conversion quantity
-
+	protected void chooseCouncilConversion(CouncilRequest message) {
+		CouncilRequestDialog dialog = new CouncilRequestDialog(this, message);
+		dialog.run();
 	}
 
 	@Override

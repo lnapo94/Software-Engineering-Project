@@ -63,6 +63,10 @@ public class BonusBarRequestDialog extends JDialog{
 			group.add(button);
 			
 			button.setText(bar.toString());
+			
+			button.addKeyListener(new KeyboardListener());
+			
+			
 			this.add(button);
 		}
 		

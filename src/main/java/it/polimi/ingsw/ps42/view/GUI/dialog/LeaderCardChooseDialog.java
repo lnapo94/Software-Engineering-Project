@@ -68,10 +68,13 @@ public class LeaderCardChooseDialog extends JDialog{
 			label.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 			i++;
 		}
+	}
+	
+	public void run() {
 		this.pack();
 		this.setResizable(false);
 		this.setVisible(true);
-	}	
+	}
 
 	private ImageIcon resizeImage(BufferedImage imageToResize, Dimension newDimension){
 		Image cardResized = null;
