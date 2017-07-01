@@ -15,9 +15,14 @@ import com.google.gson.reflect.TypeToken;
 
 public class ImageLoader extends Loader{
 	
+	private static final String DICE_PATH = "Resource//DiceImages//";
+	
 	private HashMap<String, String> cardsPath;
 	private HashMap<String, String> leaderCardsPath;
 	private HashMap<String, String> bansPath;
+	
+	//Conversion for the dice
+	private HashMap<String, String> dicePath;
 
 	public ImageLoader(String fileName) throws IOException {
 		super(fileName);
@@ -33,6 +38,10 @@ public class ImageLoader extends Loader{
 		
 		bansPath = loader();
 		if(bansPath == null)
+			throw new IOException();
+		
+		dicePath = loader();
+		if(dicePath == null)
 			throw new IOException();
 	}
 
@@ -73,6 +82,23 @@ public class ImageLoader extends Loader{
 		return loadGenericImage(bansPath, exactIndex.toString());
 	}
 	
+	public BufferedImage loadOrangeDieImage(Integer value) throws IOException {
+		return loadGenericDieImage(value, "Orange");
+	}
+	
+	public BufferedImage loadBlackDieImage(Integer value) throws IOException {
+		return loadGenericDieImage(value, "Black");
+	}
+	
+	public BufferedImage loadWhiteDieImage(Integer value) throws IOException {
+		return loadGenericDieImage(value, "White");
+	}
+	
+	private BufferedImage loadGenericDieImage(Integer value, String folderName) throws IOException {
+		String completePath = DICE_PATH + folderName + "//" + dicePath.get(value.toString());
+		return ImageIO.read(new File(completePath));
+	}
+ 	
 	public int cardsMapSize() {
 		return cardsPath.size();
 	}
@@ -85,10 +111,15 @@ public class ImageLoader extends Loader{
 		return bansPath.size();
 	}
 	
+	public int diceMapSize() {
+		return this.dicePath.size();
+	}
+	
 	public static void main(String[] args) throws IOException {
 		ImageLoader loader = new ImageLoader("Resource//Configuration//imagePaths.json");
 		System.out.println(loader.cardsMapSize());
 		System.out.println(loader.leaderCardsMapSize());
 		System.out.println(loader.bansMapSize());
+		System.out.println(loader.diceMapSize());
 	}
 }
