@@ -115,7 +115,7 @@ public class CardContainer extends FunctionalLabel{
 		for(int i=0; i<6; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
 			deck.add(card);
-			card.setIcon(resizeImage(ImageIO.read(CardContainer.class.getResource("/Images/Cards/FirstPeriod/Blue/1.png")), cardDimension));
+			//card.setIcon(resizeImage(ImageIO.read(CardContainer.class.getResource("/Images/Cards/FirstPeriod/Blue/1.png")), cardDimension));
 			mainPane.add(card, 0);
 			if(i == 2)
 				deltaX = (int)(deltaX * 1.03);
@@ -131,7 +131,7 @@ public class CardContainer extends FunctionalLabel{
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom);
 			deck.add(card);
 			card.setBorder(new LineBorder(Color.BLACK,(int) (cardDimension.getWidth()*0.01)));
-			card.setIcon(resizeImage(ImageIO.read(CardContainer.class.getResource("/Images/Cards/FirstPeriod/Blue/1.png")), cardDimension));
+			//card.setIcon(resizeImage(ImageIO.read(CardContainer.class.getResource("/Images/Cards/FirstPeriod/Blue/1.png")), cardDimension));
 			card.addMouseListener(new MouseClickListener() );
 			mainPane.add(card, 0);
 			deltaX += (int)(cardDimension.getWidth()*0.04);
