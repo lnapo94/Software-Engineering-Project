@@ -75,9 +75,7 @@ public class ViewVisitor implements Visitor {
 	public void visit(BanMessage message) {
 		
 		if(message != null){	
-			this.view.setFirstBan(message.getFirstEffect());
-			this.view.setSecondBan(message.getSecondEffect());
-			this.view.setThirdBan(message.getThirdEffect());
+			this.view.setGameBans(message);
 		}
 		
 	}
