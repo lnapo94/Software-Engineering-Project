@@ -33,6 +33,8 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 	private ServerInterface server;
 	private ServerViewInterface serverView;
 	
+	private final String host;
+	
 	private String playerID;
 	
 	
@@ -43,9 +45,10 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 	 * 
 	 * @param hostname	The IP address of the RMI Server
 	 */
-	public RMIClient(String hostname) {
+	public RMIClient(String host) {
+		this.host = host;
 		PropertyConfigurator.configure("Logger//Properties//client_log.properties");
-		String RMIhostname = "//" + hostname + "/Server";
+		String RMIhostname = "//" + host + "/Server";
 		
 		try {
 			server = (ServerInterface) Naming.lookup(RMIhostname);
@@ -136,13 +139,12 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 	/**
 	 * Method used to start the RMI client and create the correct view
 	 * 
-	 * @param args
-	 * @throws IOException 
+	 * @param host			The IP Address or the Web Address of the Server		
+	 * @throws IOException	Thrown if there is a Network Error
 	 */
-	public static void main(String[] args) throws IOException {
+	public void run() throws IOException {
 		
-		String hostname = "localhost";
-		RMIClient client = new RMIClient(hostname);
+		RMIClient client = new RMIClient(host);
 		
 		Scanner scanner = new Scanner(System.in);
 		String input;	
@@ -155,14 +157,15 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 			
 			input = scanner.nextLine();
 			input = input.toUpperCase();
-			
-			if(input.equals("G"))
-				view = new GUIView();
-			
-			if(input.equals("C"))
-				view = new TerminalView();
+		
 			
 		} while ((!input.equals("G") && !input.equals("C")) || view == null);
+		
+		if(input.equals("G"))
+			view = new GUIView();
+		
+		if(input.equals("C"))
+			view = new TerminalView();
 		
 		scanner.close();
 		

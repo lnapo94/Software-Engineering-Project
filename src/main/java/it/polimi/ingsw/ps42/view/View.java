@@ -27,7 +27,6 @@ import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.model.effect.Effect;
-import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
@@ -167,14 +166,12 @@ public abstract class View extends Observable implements Observer {
 		
 		if( hasToAnswer(message.getPlayerID())){
 			//Ask to choose a Conversion for the Council Privilege
-			chooseCouncilConversion(message.getPossibleChoice(), message.getQuantity());
+			chooseCouncilConversion(message);
 		}
 		
 	}
 	
-	public void setCouncilRequestResponse(List<Obtain> possibleConversion, List<Integer> choice, int quantity ){
-		
-		CouncilRequest message = new CouncilRequest(player.getPlayerID(), possibleConversion, quantity);
+	public void setCouncilRequestResponse(CouncilRequest message){
 		//Notify the choice to the Game Logic
 		setChanged();
 		notifyObservers(message);
@@ -261,7 +258,7 @@ public abstract class View extends Observable implements Observer {
 
 	protected abstract void chooseLeaderCard(List<LeaderCard> leaderCardList);
 	
-	protected abstract void chooseCouncilConversion(List<Obtain> possibleConversions, int quantity);
+	protected abstract void chooseCouncilConversion(CouncilRequest message);
 	
 	protected abstract void choosePlayerMove(ActionPrototype prototype, boolean isRestrasmission);
 	

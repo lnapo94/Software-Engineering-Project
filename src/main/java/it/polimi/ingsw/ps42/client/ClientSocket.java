@@ -31,6 +31,7 @@ public class ClientSocket extends Observable implements Observer{
 	private ObjectOutputStream writer;
 	private final static int PORT = 5555;
 	private boolean isConnected = false;
+	private final String host;
 	
 	//Logger
 	private transient Logger logger = Logger.getLogger(ClientSocket.class);
@@ -44,6 +45,7 @@ public class ClientSocket extends Observable implements Observer{
 	 */
 	public ClientSocket(String host) throws UnknownHostException, IOException {
 		
+		this.host = host;
 		this.socket = new Socket(host, PORT);
 		writer = new ObjectOutputStream(socket.getOutputStream());
 		writer.flush();
@@ -168,20 +170,17 @@ public class ClientSocket extends Observable implements Observer{
 	/**
 	 * Main method to start the ClientSocket Class
 	 * 
-	 * @param args
+	 * @param host						The IP Address or the Web Address of the Server
 	 * @throws UnknownHostException		Thrown if the {@code String host = "IP address"} is an Unknown IP address
 	 * @throws IOException				Thrown if there is a network problem
 	 */
-	public static void main(String[] args) throws UnknownHostException, IOException {
-		
-		String host = "localhost"; 
+	public void run() throws UnknownHostException, IOException {
+
 		ClientSocket client = new ClientSocket(host);
-		
 		Scanner scanner = new Scanner(System.in);
 		String input;	
 		
 		View view = null;
-
 		
 		do {
 			System.out.println("Which Client do you want? [G : GUI], [C : CLI]");
@@ -189,14 +188,15 @@ public class ClientSocket extends Observable implements Observer{
 			input = scanner.nextLine();
 			input = input.toUpperCase();
 			
-			if(input.equals("G"))
-				view = new GUIView();
 			
-			if(input.equals("C"))
-				view = new TerminalView();
-			
-		} while ((!input.equals("G") && !input.equals("C")) || view == null);
+		} while ((!input.equals("G") && !input.equals("C")));
 		 
+		if(input.equals("G"))
+			view = new GUIView();
+		
+		if(input.equals("C"))
+			view = new TerminalView();
+		
 		scanner.close();
 		client.addView(view);
 		client.startReading();
