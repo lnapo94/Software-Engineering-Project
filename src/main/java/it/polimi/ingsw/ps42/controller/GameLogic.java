@@ -936,6 +936,7 @@ public class GameLogic implements Observer {
 					//else apply directly the request
 					if(this.currentAction != null) {
 						player.addRequest(request);
+						doAction();
 					}
 					else {
 						request.apply(player);

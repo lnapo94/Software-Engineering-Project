@@ -51,12 +51,12 @@ public class IncreaseAction extends Effect {
 	 * Method used to enable this effect. In this case it means to insert this
 	 * effect into a variable in player. This effect will be really activated at the correct
 	 * moment. Like the Professor Oak said: There is a time and a place for everything,
-	 * but not now
+	 * but not here and not now
 	 */
 	@Override
 	public void enableEffect(Player player) {
 		//Like the Professor Oak said: There is a time and a place for everything,
-		//but not now
+		//but not here and not now
 		logger = Logger.getLogger(IncreaseAction.class);
 		
 		if(yetActivated==false){		//If not activated yet then add the effect to the player
