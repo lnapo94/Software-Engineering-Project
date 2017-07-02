@@ -168,7 +168,7 @@ public class GUIView extends View implements TableInterface{
 		
 		//Add the Ban's Labels 
 		buildBanLabel(mainLayeredPane);
-		
+
 		//Set the Cards taken container
 		Dimension containerDimension = new Dimension((int)(rightPanelDimension.getWidth()),(int) (rightPanelDimension.getHeight()-cardZoom.getHeight()));
 		Point containerLocation = new Point((int)leftPaneDimension.getWidth(), (int)cardZoom.getHeight());
@@ -258,26 +258,26 @@ public class GUIView extends View implements TableInterface{
 		blackFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedBlackFamiliar.png")), FamiliarColor.BLACK);
 		blackFamiliar.enableListener();
 		blackFamiliar.setTable(this);
-		mainPane.add(blackFamiliar, 0);
+		mainPane.add(blackFamiliar, 2);
 		
 		int border = (int)(blackFamiliar.getWidth()*1.1); 
 		deltaX += border;
 		whiteFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedWhiteFamiliar.png")), FamiliarColor.WHITE);
 		whiteFamiliar.enableListener();
 		whiteFamiliar.setTable(this);
-		mainPane.add(whiteFamiliar, 0);
+		mainPane.add(whiteFamiliar, 2);
 		
 		deltaX += border;
 		orangeFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedOrangeFamiliar.png")), FamiliarColor.ORANGE);
 		orangeFamiliar.enableListener();
 		orangeFamiliar.setTable(this);
-		mainPane.add(orangeFamiliar, 0);
+		mainPane.add(orangeFamiliar, 2);
 		
 		deltaX += border;
 		neutralFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedNeutralFamiliar.png")), FamiliarColor.NEUTRAL);
 		neutralFamiliar.enableListener();
 		neutralFamiliar.setTable(this);
-		mainPane.add(neutralFamiliar, 0);
+		mainPane.add(neutralFamiliar, 2);
 		
 	}
 	
@@ -668,6 +668,10 @@ public class GUIView extends View implements TableInterface{
 			coverMarket();
 		}
 		
+		mainLayeredPane.moveToFront(blackFamiliar);
+		mainLayeredPane.moveToFront(whiteFamiliar);
+		mainLayeredPane.moveToFront(orangeFamiliar);
+		mainLayeredPane.moveToFront(neutralFamiliar);
 	}
 	
 	private void coverMarket(){
@@ -677,14 +681,14 @@ public class GUIView extends View implements TableInterface{
 		Dimension coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.11), (int)(lowTableDimension.getHeight() * 0.35));
 		JLabel market1 = new JLabel();
 		market1.setSize(coverDimension);
-		market1.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.815), (int)(lowTableDimension.getHeight() * 0.23));
+		market1.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.815), (int)(lowTableDimension.getHeight() * 0.225));
 		try {
 			market1.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/marketCover.png")) , market1.getSize()));
 		} catch (IOException e) {
 			logger.error("Market position covered but image not found!");
 			logger.info(e);
 		}
-		mainLayeredPane.add(market1, 0);
+		mainLayeredPane.add(market1, 1);
 		
 		coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.125), (int)(lowTableDimension.getHeight() * 0.42));
 		JLabel market2 = new JLabel();
@@ -696,23 +700,23 @@ public class GUIView extends View implements TableInterface{
 			logger.error("Market position covered but image not found!");
 			logger.info(e);
 		}
-		mainLayeredPane.add(market2, 0);
+		mainLayeredPane.add(market2, 1);
 	}
 	
 	private void coverYieldAndProduct() {
 		
 		for (int i=1; i<yield.size(); i++) {
-			yield.remove(yield.size()-1).setEnabled(false);;
+			yield.remove(yield.size()-1).setEnabled(false);
 		}
 		
 		for (int i=1; i<produce.size(); i++) {
-			produce.remove(produce.size()-1).setEnabled(false);;
+			produce.remove(produce.size()-1).setEnabled(false);
 		}
 		
-		Dimension coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.268), (int)(lowTableDimension.getHeight() * 0.339));
+		Dimension coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.269), (int)(lowTableDimension.getHeight() * 0.3495));
 		JLabel product = new JLabel();
 		product.setSize(coverDimension);
-		product.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.14), (int)(lowTableDimension.getHeight() * 0.236));
+		product.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.1355), (int)(lowTableDimension.getHeight() * 0.222));
 		try {
 			product.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/yieldAndProductCover.png")) , product.getSize()));
 			product.setIgnoreRepaint(true);
@@ -721,12 +725,12 @@ public class GUIView extends View implements TableInterface{
 			logger.error("Yield and Product position covered but image not found!");
 			logger.info(e);
 		}
-		mainLayeredPane.add(product, 0);
+		mainLayeredPane.add(product, 1);
 		
-		coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.3), (int)(lowTableDimension.getHeight() * 0.38));
+		coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.3), (int)(lowTableDimension.getHeight() * 0.398));
 		JLabel yield = new JLabel();
 		yield.setSize(coverDimension);
-		yield.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.12), (int)(lowTableDimension.getHeight() * 0.6));
+		yield.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.12), (int)(lowTableDimension.getHeight() * 0.58));
 		try {
 			yield.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/yieldCover.png")) , yield.getSize()));
 			yield.setIgnoreRepaint(true);
@@ -734,7 +738,7 @@ public class GUIView extends View implements TableInterface{
 			logger.error("Yield and Product position covered but image not found!");
 			logger.info(e);
 		}
-		mainLayeredPane.add(yield, 0);
+		mainLayeredPane.add(yield, 1);
 	}
 	
 	@Override
