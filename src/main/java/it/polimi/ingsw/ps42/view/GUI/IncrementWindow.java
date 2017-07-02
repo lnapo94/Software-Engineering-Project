@@ -124,10 +124,11 @@ public class IncrementWindow extends JDialog{
 		JLabel third = new JLabel(" Action value: "+ actionValue);
 		third.setFont(font);
 		this.add(third);
-		JLabel fourth = new JLabel(" Familiar color: "+ familiarColor.toString());
-		fourth.setFont(font);
-		this.add(fourth);
-		
+		if(familiarColor != null){
+			JLabel fourth = new JLabel(" Familiar color: "+ familiarColor.toString());
+			fourth.setFont(font);
+			this.add(fourth);
+		}	
 		JLabel fifth = new JLabel(" Position value: "+ position);
 		fifth.setFont(font);
 		this.add(fifth);
@@ -161,6 +162,7 @@ public class IncrementWindow extends JDialog{
 		confirmButton.addKeyListener(new KeyboardListener());
 		deleteButton.addActionListener(new ButtonAction());
 		this.getContentPane().addKeyListener(new KeyboardListener());
+		
 		this.mainFrame.addKeyListener(new KeyboardListener());
 	}
 	
