@@ -429,9 +429,7 @@ public class Player extends Observable {
 		//This method return to the gamelogic the player's bonus action.
 		//This method also remove the ActionPrototype from the bonusAction variable
 		
-		ActionPrototype temp = bonusAction;
-		this.bonusAction = null;
-		return temp;
+		return bonusAction.clone();
 	}
 	
 	public void setBonusAction(ActionPrototype bonusAction) {
@@ -464,8 +462,11 @@ public class Player extends Observable {
 	public void askMove(){
 	//Method called by the game logic to ask a Move to the player	
 		Message playerMoveMessage;
-		if( this.bonusAction != null )
-			playerMoveMessage = new PlayerToken(this.ID, this.bonusAction.clone());
+		if( this.bonusAction != null ) {
+			ActionPrototype temp = bonusAction.clone();
+			playerMoveMessage = new PlayerToken(this.ID, temp);
+			bonusAction = null;			
+		}
 		else
 			playerMoveMessage = new PlayerToken(this.ID);
 		setChanged();
