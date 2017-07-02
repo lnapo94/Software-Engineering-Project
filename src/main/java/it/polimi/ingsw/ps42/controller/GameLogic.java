@@ -796,7 +796,7 @@ public class GameLogic implements Observer {
     		Player player = searchPlayer(playerID);
 			if(player.getPlayerID().equals(currentPlayer.getPlayerID())) {
 				
-				if(bonusAction != null && !bonusAction.checkAction(action) && !action.isBonusAction()) {
+				if(bonusAction != null && (!bonusAction.checkAction(action) || !action.isBonusAction())) {
 					PlayerToken message = new PlayerToken(currentPlayer.getPlayerID(), bonusAction);
 					//Retrasmit the message
 					player.setBonusAction(bonusAction);
@@ -806,8 +806,10 @@ public class GameLogic implements Observer {
 				else {				
 					action.paySlave();
 					//Control if there is a discount
-					if(bonusAction != null)
+					if(bonusAction != null) {
 						action.addDiscount(bonusAction.getDiscount());
+						bonusAction = null;
+					}
 					
 					Response response = action.checkAction();
 					
@@ -913,8 +915,12 @@ public class GameLogic implements Observer {
     	bonusAction = currentPlayer.getBonusAction();
     	currentPlayer.synchResource();
     	
-    	if(bonusAction != null)
+    	if(bonusAction != null) {
     		currentPlayer.askMove();
+    		Timer timer = new Timer();
+    		timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS * 1000);
+    		timerTable.put(currentPlayer, timer);
+    	}
     	else {
     		currentPlayer = null;
     		initAction();
