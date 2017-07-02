@@ -9,6 +9,12 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * Class that represents the For Each obtain, in other words, when this effect is activated, 
+ * the player obtain something for each requirements he has among his resources
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ForEachObtain extends Effect{
 	//Obtain some resources for each requirements the player has
 	
@@ -19,10 +25,19 @@ public class ForEachObtain extends Effect{
 	private Packet requirements;
 	private Packet gains;
 	
+	/**
+	 * Simple empty constructor used to initialize the logger
+	 */
 	public ForEachObtain() {
 		super();
 	}
 
+	/**
+	 * The constructor of this effect
+	 * 
+	 * @param requirements	The packet player should have to earn some resources
+	 * @param gains			The gains given to the player for each requirements
+	 */
 	public ForEachObtain(Packet requirements, Packet gains) {
 		super(EffectType.FOR_EACH_OBTAIN);
 		this.requirements=requirements;
@@ -30,6 +45,9 @@ public class ForEachObtain extends Effect{
 		
 	}
 
+	/**
+	 * Method used to apply this effect
+	 */
 	@Override
 	public void enableEffect(Player player) {
 		
@@ -52,11 +70,17 @@ public class ForEachObtain extends Effect{
 		player.increaseResource(packet);
 	}
 
+	/**
+	 * Method used to print this effect in the view
+	 */
 	@Override
 	public String print() {
 		return "Player obtains : " + this.gains.print() + " for each " + this.requirements.print() + " he has";
 	}
 
+	/**
+	 * Method used to clone this effect
+	 */
 	@Override
 	public ForEachObtain clone() {
 		Packet cloneRequirements = null;

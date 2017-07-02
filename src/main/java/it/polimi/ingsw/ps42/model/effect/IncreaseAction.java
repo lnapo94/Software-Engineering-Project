@@ -8,10 +8,11 @@ import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
+/**
+ * Create a particular effect that increments the level of an action.
+ * @author Luca Napoletano, Claudio Montanari
+ */
 public class IncreaseAction extends Effect {
-	/*Create a particular effect that increments the level of another Effect.
-	 * Be careful to distinguish the immediate from the permanent effect
-	*/
 	
 	/**
 	 * 
@@ -24,10 +25,20 @@ public class IncreaseAction extends Effect {
 	//Variable used to know if the effect is activated yet or not
 	private boolean yetActivated;
 	
+	/**
+	 * Simple empty constructor used to initialize the logger
+	 */
 	public IncreaseAction() {
 		super();
 	}
 
+	/**
+	 * The constructor of this effect
+	 * 
+	 * @param type		The type of this action to increase
+	 * @param value		The increment value
+	 * @param discount	The discount to give to the incremented action
+	 */
 	public IncreaseAction(ActionType type, int value, Packet discount) {
 		super(EffectType.INCREASE_ACTION);
 		this.type=type;
@@ -36,8 +47,16 @@ public class IncreaseAction extends Effect {
 		yetActivated=false;
 	}
 
+	/**
+	 * Method used to enable this effect. In this case it means to insert this
+	 * effect into a variable in player. This effect will be really activated at the correct
+	 * moment. Like the Professor Oak said: There is a time and a place for everything,
+	 * but not now
+	 */
 	@Override
 	public void enableEffect(Player player) {
+		//Like the Professor Oak said: There is a time and a place for everything,
+		//but not now
 		logger = Logger.getLogger(IncreaseAction.class);
 		
 		if(yetActivated==false){		//If not activated yet then add the effect to the player
@@ -48,6 +67,11 @@ public class IncreaseAction extends Effect {
 		
 		}
 	}
+	
+	/**
+	 * Method used to enable this effect at the correct time. It is called in actions
+	 * @param action
+	 */
 	public void activeIncrease(Action action){
 		//Increase the current action and add a discount if equals the type of the effect
 		logger = Logger.getLogger(IncreaseAction.class);
@@ -59,6 +83,11 @@ public class IncreaseAction extends Effect {
 		}
 	}
 
+	/**
+	 * Private method to check if the passed action is to enable by checking the type
+	 * @param action	The action to check
+	 * @return			True if the action is interested by this effect, False in other cases
+	 */
 	private boolean checkType(Action action){
 		if( type == ActionType.TAKE_ALL){
 			if( action.getType() == ActionType.TAKE_BLUE || action.getType() == ActionType.TAKE_GREEN
@@ -68,6 +97,10 @@ public class IncreaseAction extends Effect {
 		}
 		else return type == action.getType();
 	}
+	
+	/**
+	 * Method used to print this effect in the view
+	 */
 	@Override
 	public String print() {
 		return "Player can improve his " + this.type.toString() + " actions \n" +
@@ -75,6 +108,9 @@ public class IncreaseAction extends Effect {
 				"Discount: " + this.discount.print() + "\n";
 	}
 	
+	/**
+	 * Method used to copy this effect
+	 */
 	@Override
 	public IncreaseAction clone() {
 		ActionType cloneType = this.type;
