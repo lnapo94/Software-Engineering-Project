@@ -13,6 +13,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonStreamParser;
 import com.google.gson.reflect.TypeToken;
 
+import it.polimi.ingsw.ps42.model.enumeration.Resource;
+
 public class ImageLoader extends Loader{
 	
 	private static final String DICE_PATH = "Resource//Images//DiceImages//";
@@ -20,6 +22,8 @@ public class ImageLoader extends Loader{
 	private HashMap<String, String> cardsPath;
 	private HashMap<String, String> leaderCardsPath;
 	private HashMap<String, String> bansPath;
+	private HashMap<String, String> resourcePath;
+	private HashMap<String, String> bonusBarPath;
 	
 	//Conversion for the dice
 	private HashMap<String, String> dicePath;
@@ -43,6 +47,15 @@ public class ImageLoader extends Loader{
 		dicePath = loader();
 		if(dicePath == null)
 			throw new IOException();
+		
+		resourcePath = loader();
+		if(resourcePath == null)
+			throw new IOException();
+
+		bonusBarPath = loader();
+		if(bonusBarPath == null)
+			throw new IOException();
+	
 	}
 
 	@Override
@@ -99,6 +112,16 @@ public class ImageLoader extends Loader{
 		return ImageIO.read(new File(completePath));
 	}
  	
+	public BufferedImage loadResourceImage(Resource resource){
+		
+		return null;
+	}
+	
+	public BufferedImage loadBonusBarImage(Integer value){
+		
+		return null;
+	}
+	
 	public int cardsMapSize() {
 		return cardsPath.size();
 	}

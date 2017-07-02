@@ -41,13 +41,14 @@ public class ResourceWindow extends FunctionalLabel{
 		Font font = new Font("Papyrus", Font.ITALIC, (int)(dimension.getHeight()*0.14));
 		for (Resource resouce: Resource.values()) {
 			
-			JLabel label = new JLabel(" "+resouce.toString());
-			label.setFont(font);
-			/*
-			Dimension labelDimension = new Dimension((int)(dimension.getWidth()*0.13), (int)dimension.getHeight());
+			//JLabel label = new JLabel(" "+resouce.toString());
+			//label.setFont(font);
+			
+			JLabel label = new JLabel();
+			Dimension labelDimension = new Dimension((int)(dimension.getWidth()*0.13), (int)(dimension.getHeight() * 0.5));
 			label.setSize(labelDimension);
-			label.setIcon(resizeImage(ImageIO.read(ResourceWindow.class.getResource("/Images/Others/moneyIcon2.png")), label.getSize()));
-			*/
+			label.setIcon(resizeImage(ImageIO.read(ResourceWindow.class.getResource("/Images/Others/militaryPointIcon.png")), label.getSize()));
+			
 			this.add(label);
 			
 		}

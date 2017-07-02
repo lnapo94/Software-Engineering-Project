@@ -86,13 +86,22 @@ public class CardContainer extends FunctionalLabel{
 		this.add(mainPane);
 		
 		JLabel backGround = new JLabel();
+		int shift = (int) (dimension.getWidth() * 0.03);
 		backGround.setSize(new Dimension((int)(dimension.getWidth()*0.8), (int)dimension.getHeight()));
-		backGround.setLocation(0,0);
+		backGround.setLocation(shift,0);
 		backGround.setIcon(resizeImage(image, backGround.getSize()));
 		mainPane.add(backGround, -1);
 		this.cardDimension = new Dimension((int)(tableCardDimension.getWidth()*1.1), (int)(tableCardDimension.getHeight()*1.1));
 		buildCardPositions(mainPane, cardDimension);
 		
+	}
+	
+	public void addBonusBarLabel(BufferedImage image){
+		JLabel bonusBar = new JLabel();
+		bonusBar.setSize((int)(this.getSize().getWidth()*0.042), (int)(this.getSize().getHeight() ));
+		bonusBar.setLocation(0,0);
+		bonusBar.setIcon(resizeImage(image, bonusBar.getSize()));
+		this.add(bonusBar, 0);
 	}
 	
 	private void buildCardPositions(JLayeredPane mainPane, Dimension cardDimension){
@@ -103,7 +112,7 @@ public class CardContainer extends FunctionalLabel{
 	
 	private void placeCardPositions(List<CardLabel> deck, JLayeredPane mainPane, Dimension cardDimension, CardZoom cardZoom, int downShift) {
 		
-		int deltaX = (int)(this.getWidth()*0.02);
+		int deltaX = (int)(this.getWidth()*0.02 + (int) (this.getSize().getWidth() * 0.03));
 		int deltaY = (int)(this.getHeight()*0.02 + downShift);
 		for(int i=0; i<6; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
@@ -117,7 +126,7 @@ public class CardContainer extends FunctionalLabel{
 
 	private CardLabel newFirstCard(List<CardLabel> deck, int downShift){
 				
-		int deltaX = (int)(this.getWidth()*0.8 + deck.size() * (cardDimension.getWidth()*0.04) );
+		int deltaX = (int)(this.getWidth()*0.8 + this.getSize().getWidth() * 0.03 + deck.size() * (cardDimension.getWidth()*0.04) );
 		int deltaY = (int)(this.getHeight()*0.02 + downShift + deck.size() * (cardDimension.getHeight()*0.02) );
 		
 		CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom);

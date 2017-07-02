@@ -192,7 +192,7 @@ public class GUIView extends View implements TableInterface{
 
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
-
+		
 	}
 	/**
 	 * Initialize the Card Position Label
@@ -947,6 +947,12 @@ public class GUIView extends View implements TableInterface{
 	}
 
 	@Override
+	public void setBonusBarChoice(List<BonusBar> bonusBars, int choice) {
+		super.setBonusBarChoice(bonusBars, choice);
+		//cardContainer.addBonusBarLabel(imageLoader.loadBonusBarImage(choice));
+	}
+	
+	@Override
 	protected void chooseLeaderCard(List<LeaderCard> leaderCardList) {
 		// Ask the Player to choose a LeaderCard from the given List
 		try {
@@ -988,13 +994,11 @@ public class GUIView extends View implements TableInterface{
 			bonusFamiliar.enableListener();
 			bonusFamiliar.setTable(this);
 			mainLayeredPane.add(bonusFamiliar, 0);
+			bonusFamiliar.setCanMove(true);
 		} catch (IOException e) {
 			logger.error("Bonus Familiar Image not found!");
 			logger.info(e);
 		}
-		bonusFamiliar.enableListener();
-		bonusFamiliar.setTable(this);	
-		bonusFamiliar.setCanMove(true);
 	}
 	
 	@Override
