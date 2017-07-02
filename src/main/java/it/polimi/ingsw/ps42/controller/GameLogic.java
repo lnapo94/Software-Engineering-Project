@@ -831,7 +831,8 @@ public class GameLogic implements Observer {
 					}
 					else if(currentAction == null){
 						//Cancel the timer
-						timerTable.remove(player).cancel();
+						if(timerTable.containsKey(currentPlayer))
+							timerTable.remove(player).cancel();
 						
 						currentAction = action;
 						checkRequest();
@@ -914,7 +915,10 @@ public class GameLogic implements Observer {
      * Method used to control if the player has some bonus action. 
      */
     private void finishAction() {
-    	bonusAction = currentPlayer.getBonusAction();
+    	
+    	if(currentPlayer.hasBonusAction())
+    		bonusAction = currentPlayer.getBonusAction();
+    	
     	currentPlayer.synchResource();
     	
     	if(bonusAction != null) {

@@ -678,4 +678,8 @@ public class Player extends Observable {
 		notifyObservers(updateMessage);
 	}
 	
+	public boolean hasBonusAction() {
+		return this.bonusAction != null;
+	}
+	
 }

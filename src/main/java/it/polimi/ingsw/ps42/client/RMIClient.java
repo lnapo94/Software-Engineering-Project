@@ -159,7 +159,7 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 			input = input.toUpperCase();
 		
 			
-		} while ((!input.equals("G") && !input.equals("C")) || view == null);
+		} while ((!input.equals("G") && !input.equals("C")));
 		
 		if(input.equals("G"))
 			view = new GUIView();

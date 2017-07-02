@@ -65,7 +65,7 @@ public class ActionPrototype implements Serializable{
 	 */
 	public boolean checkAction(Action action){
 
-		if( checkType( action ) && action.getActionValue() <= this.level)
+		if(checkType( action ))
 			return true;
 		return false;
 	}

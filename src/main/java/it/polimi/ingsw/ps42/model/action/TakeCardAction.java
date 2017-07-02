@@ -101,11 +101,12 @@ public class TakeCardAction extends Action{
 		}
 		
 
-		if(!checkMyFamiliar()) {
-			player.restoreResource();
-			if(familiar != null)
+		if(familiar != null) {
+			if(!checkMyFamiliar()) {
+				player.restoreResource();
 				familiar.resetIncrement();
-			return Response.FAILURE;
+				return Response.FAILURE;
+			}
 		}
 		
 		actionValue = actionValue - position.getMalus();
