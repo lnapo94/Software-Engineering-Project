@@ -547,6 +547,7 @@ public class GameLogic implements Observer {
                 timerTable.put(player, timer);
 			}
 		}
+		
 	}
 	
 	/**
@@ -740,7 +741,8 @@ public class GameLogic implements Observer {
 			//Control if player has a pending request
 			if(playersWithRequest.contains(player)) {
 				
-				timerTable.remove(player).cancel();
+				if(timerTable.containsKey(player))
+					timerTable.remove(player).cancel();
 				
 				if(wantToPayBan) {
 					faithPathIncrease(player);
