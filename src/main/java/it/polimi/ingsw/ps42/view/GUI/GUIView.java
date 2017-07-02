@@ -53,6 +53,7 @@ public class GUIView extends View implements TableInterface{
 
 	//The GUI main frame, where all the others Components are placed
 	private JFrame mainFrame;
+	private JLayeredPane mainLayeredPane;
 	private Dimension tableImageDimension;
 	private Dimension lowTableDimension;
 	
@@ -130,7 +131,7 @@ public class GUIView extends View implements TableInterface{
 		mainFrame.getContentPane().setLayout(null);
 		mainFrame.setTitle("Lorenzo il Magnifico");
 		//Add a JLayeredPane
-		JLayeredPane mainLayeredPane = new JLayeredPane();
+		mainLayeredPane = new JLayeredPane();
 		mainLayeredPane.setBounds(5, 5, mainFrame.getWidth(), mainFrame.getHeight());
 		mainFrame.getContentPane().add(mainLayeredPane);
 		
@@ -672,8 +673,7 @@ public class GUIView extends View implements TableInterface{
 	private void coverMarket(){
 		
 		market.remove(2).setEnabled(false);
-		market.remove(3).setEnabled(false);
-		JLayeredPane pane = mainFrame.getLayeredPane();
+		market.remove(2).setEnabled(false);
 		Dimension coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.11), (int)(lowTableDimension.getHeight() * 0.35));
 		JLabel market1 = new JLabel();
 		market1.setSize(coverDimension);
@@ -684,7 +684,7 @@ public class GUIView extends View implements TableInterface{
 			logger.error("Market position covered but image not found!");
 			logger.info(e);
 		}
-		pane.add(market1, 1);
+		mainLayeredPane.add(market1, 0);
 		
 		coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.125), (int)(lowTableDimension.getHeight() * 0.42));
 		JLabel market2 = new JLabel();
@@ -696,20 +696,19 @@ public class GUIView extends View implements TableInterface{
 			logger.error("Market position covered but image not found!");
 			logger.info(e);
 		}
-		pane.add(market2, 1);
+		mainLayeredPane.add(market2, 0);
 	}
 	
 	private void coverYieldAndProduct() {
 		
 		for (int i=1; i<yield.size(); i++) {
-			yield.remove(i).setEnabled(false);;
+			yield.remove(yield.size()-1).setEnabled(false);;
 		}
 		
 		for (int i=1; i<produce.size(); i++) {
-			produce.remove(i).setEnabled(false);;
+			produce.remove(produce.size()-1).setEnabled(false);;
 		}
 		
-		JLayeredPane pane = mainFrame.getLayeredPane();
 		Dimension coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.268), (int)(lowTableDimension.getHeight() * 0.339));
 		JLabel product = new JLabel();
 		product.setSize(coverDimension);
@@ -722,7 +721,7 @@ public class GUIView extends View implements TableInterface{
 			logger.error("Yield and Product position covered but image not found!");
 			logger.info(e);
 		}
-		pane.add(product, 0);
+		mainLayeredPane.add(product, 0);
 		
 		coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.3), (int)(lowTableDimension.getHeight() * 0.38));
 		JLabel yield = new JLabel();
@@ -735,7 +734,7 @@ public class GUIView extends View implements TableInterface{
 			logger.error("Yield and Product position covered but image not found!");
 			logger.info(e);
 		}
-		pane.add(yield, 0);
+		mainLayeredPane.add(yield, 0);
 	}
 	
 	@Override
