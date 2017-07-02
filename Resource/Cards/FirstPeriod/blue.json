@@ -286,6 +286,7 @@
   ],
   "requirements": [],
   "immediateEffects": [],
+  "effectivelyCosts": [],
   "permanentEffects": [
     {
       "type": "YIELD",
