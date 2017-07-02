@@ -649,13 +649,14 @@ public class GUIView extends View implements TableInterface{
 	
 	@Override
 	public void createTable(List<String> playersID) {
+		int playersNumber = playersID.size();
 		super.createTable(playersID);
 		//Hide the table parts according to the number of players
-		if(playersID.size() == 2){
+		if(playersNumber == 2){
 			coverMarket();
 			coverYieldAndProduct();
 		}
-		if(playersID.size() == 3){
+		if(playersNumber == 3){
 			coverMarket();
 		}
 		
@@ -944,9 +945,9 @@ public class GUIView extends View implements TableInterface{
 	public void setGameBans(BanMessage message) {
 		super.setGameBans(message);
 		try{
-			bans.get(0).placeCard(imageLoader.loadBanImage(new Integer(0), message.getIndexOfFirstBan()));
-			bans.get(1).placeCard(imageLoader.loadBanImage(new Integer(1), message.getIndexOfSecondBan()));
-			bans.get(2).placeCard(imageLoader.loadBanImage(new Integer(2), message.getIndexOfThirdBan()));
+			bans.get(0).placeCard(imageLoader.loadBanImage(new Integer(0), new Integer(message.getIndexOfFirstBan())));
+			bans.get(1).placeCard(imageLoader.loadBanImage(new Integer(1), new Integer(message.getIndexOfSecondBan())));
+			bans.get(2).placeCard(imageLoader.loadBanImage(new Integer(2), new Integer(message.getIndexOfThirdBan())));
 		}
 		catch (IOException e) {
 			logger.error("Ban Image not Found!");
