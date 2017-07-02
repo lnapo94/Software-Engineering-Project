@@ -24,6 +24,7 @@ import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
+import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -787,8 +788,9 @@ public class GameLogic implements Observer {
      * @param playerID		The player who is playing
      */
     public synchronized void handleAction(Action action, String playerID) {
+    	
     	try {
-			Player player = searchPlayer(playerID);
+    		Player player = searchPlayer(playerID);
 			if(player.getPlayerID().equals(currentPlayer.getPlayerID())) {
 				
 				if(bonusAction != null && !bonusAction.checkAction(action)) {
@@ -798,8 +800,8 @@ public class GameLogic implements Observer {
 					message.setRetrasmission();
 					player.retrasmitMessage(message);
 				}
-				else {
-					
+				else {				
+					action.paySlave();
 					//Control if there is a discount
 					if(bonusAction != null)
 						action.addDiscount(bonusAction.getDiscount());
@@ -832,6 +834,13 @@ public class GameLogic implements Observer {
 		} catch (ElementNotFoundException e) {
 			logger.error("Unable to find the player in handleAction");
 			logger.info(e);
+		} catch (NotEnoughResourcesException e) {
+			logger.info("Player has not enough slaves to increment this action");
+			logger.info(e);
+			PlayerToken message = new PlayerToken(currentPlayer.getPlayerID(), bonusAction);
+			//Retrasmit the message
+			message.setRetrasmission();
+			currentPlayer.retrasmitMessage(message);
 		}
     }
     
@@ -961,6 +970,7 @@ public class GameLogic implements Observer {
 				player.synchResource();
 				
 				playersWithRequest.remove(player);
+				checkRequest();
 			}
 		} catch(ElementNotFoundException e) {
 			logger.error("Unable to find the player to satisfy the council requests");

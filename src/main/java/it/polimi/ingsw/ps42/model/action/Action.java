@@ -27,6 +27,9 @@ public abstract class Action extends Observable{
 	
 	private ActionType type;
 	private int payedSlave;
+	
+	private int slaveToPay;
+	
 	protected Familiar familiar;
 	protected Player player;
 	protected Packet discount;
@@ -61,8 +64,8 @@ public abstract class Action extends Observable{
 		
 		//Control if player has enough slave to increment his familiar
 		
-		int slaveToPay = familiar.getIncrement() * player.getDivisory();
-		paySlave(slaveToPay);
+		this.slaveToPay = familiar.getIncrement() * player.getDivisory();
+
 		this.actionValue = familiar.getIncrement() + familiar.getValue();
 	}
 	
@@ -83,7 +86,7 @@ public abstract class Action extends Observable{
 		this.actionValue = actionValue;
 		
 		//Check player slave resources
-		paySlave(actionIncrement);
+		this.slaveToPay = actionIncrement;
 		this.actionValue += actionIncrement;
 	}
 	
@@ -92,7 +95,7 @@ public abstract class Action extends Observable{
 	 * @param slaveToPay						The number of slave the player wants to use
 	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
 	 */
-	private void paySlave(int slaveToPay) throws NotEnoughResourcesException {
+	public void paySlave() throws NotEnoughResourcesException {
 		
 		Packet slavePacket = new Packet();
 		slavePacket.addUnit(new Unit(Resource.SLAVE, slaveToPay));

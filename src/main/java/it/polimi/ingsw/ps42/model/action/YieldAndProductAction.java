@@ -136,11 +136,11 @@ public class YieldAndProductAction extends Action {
 			//Check if the Player has already a Familiar in this zone and if the level of the Action is sufficient
 			for (YieldAndProductPosition position : tablePosition) {
 				
-				if(!position.isEmpty() && position.getFamiliar().getPlayer() == familiar.getPlayer()){
+				if(!position.isEmpty() && position.getFamiliar().getPlayer().getPlayerID().equals(familiar.getPlayer().getPlayerID())){
 					if(!position.getFamiliar().isNeutral() || !familiar.isNeutral()){
 						return false;	//There would be two familiar of the same player, none of them neutral
 					}
-					if( firstPosition.getFamiliar().getPlayer() == familiar.getPlayer())
+					if( firstPosition.getFamiliar().getPlayer().getPlayerID().equals(familiar.getPlayer().getPlayerID()))
 						return false;	//There would be three familiar of the same player
 				}
 			}
