@@ -78,6 +78,8 @@ public class GUIView extends View implements TableInterface{
 	private DraggableComponent blackFamiliar;
 	private DraggableComponent orangeFamiliar;
 	private DraggableComponent whiteFamiliar;
+	private DraggableComponent bonusFamiliar;
+	
 	//Tower positions
 	private LinkedList<JLabel> greenTowerForFamiliar;
 	private LinkedList<JLabel> yellowTowerForFamiliar;
@@ -187,7 +189,7 @@ public class GUIView extends View implements TableInterface{
 		Point resourceWindowLocation = new Point((int)(leftPaneDimension.getWidth()+cardZoom.getWidth()), (int)lowTableLabel.getHeight());
 		resourceWindow = new ResourceWindow(resourceWindowDimension, resourceWindowLocation );
 		mainFrame.add(resourceWindow);
-		
+
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
 
@@ -446,7 +448,8 @@ public class GUIView extends View implements TableInterface{
 		for (JLabel position : greenTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
 				actionValue = 1 + greenTowerForFamiliar.indexOf(position)*2;
-				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				if( color != null)
+					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
 				createNewMove(ActionType.TAKE_GREEN, color, greenTowerForFamiliar.indexOf(position), actionValue, familiarMoving);
 				return true;
 			}
@@ -454,7 +457,8 @@ public class GUIView extends View implements TableInterface{
 		for (JLabel position : yellowTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
 				actionValue = 1 + yellowTowerForFamiliar.indexOf(position)*2;
-				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				if(color != null)
+					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
 				createNewMove(ActionType.TAKE_YELLOW, color, yellowTowerForFamiliar.indexOf(position),actionValue, familiarMoving);
 				return true;
 			}
@@ -462,7 +466,8 @@ public class GUIView extends View implements TableInterface{
 		for (JLabel position : blueTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
 				actionValue = 1 + blueTowerForFamiliar.indexOf(position)*2;
-				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				if(color != null)
+					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
 				createNewMove( ActionType.TAKE_BLUE, color, blueTowerForFamiliar.indexOf(position),actionValue, familiarMoving);
 				return true;
 			}
@@ -470,14 +475,16 @@ public class GUIView extends View implements TableInterface{
 		for (JLabel position : violetTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
 				actionValue = 1 + violetTowerForFamiliar.indexOf(position)*2;
-				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				if(color != null)
+					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
 				createNewMove(ActionType.TAKE_VIOLET, color, violetTowerForFamiliar.indexOf(position),actionValue, familiarMoving);
 				return true;
 			}
 		}
 		for (JLabel position : council) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				if(color != null)
+					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
 				actionValue = 1;
 				createNewMove( ActionType.COUNCIL, color, council.indexOf(position), actionValue, familiarMoving);
 				return true;
@@ -485,7 +492,8 @@ public class GUIView extends View implements TableInterface{
 		}
 		for (JLabel position : yield) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				if(color != null)
+					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
 				if(yield.indexOf(position) == 0)
 					actionValue = 1;
 				else
@@ -496,7 +504,8 @@ public class GUIView extends View implements TableInterface{
 		}
 		for (JLabel position : produce) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				if(color != null)
+					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
 				if(yield.indexOf(position) == 0)
 					actionValue = 1;
 				else
@@ -507,7 +516,8 @@ public class GUIView extends View implements TableInterface{
 		}
 		for (JLabel position : market) {
 			if( containsPoint(position, x, y) ){
-				position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
+				if(color != null)
+					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
 				actionValue = 1;
 				createNewMove( ActionType.MARKET, color, market.indexOf(position),actionValue , familiarMoving);
 				return true;
@@ -705,11 +715,11 @@ public class GUIView extends View implements TableInterface{
 	
 	private void coverYieldAndProduct() {
 		
-		for (int i=1; i<yield.size(); i++) {
+		while(yield.size() > 1){
 			yield.remove(yield.size()-1).setEnabled(false);
 		}
 		
-		for (int i=1; i<produce.size(); i++) {
+		while(produce.size() > 1){
 			produce.remove(produce.size()-1).setEnabled(false);
 		}
 		
@@ -961,11 +971,32 @@ public class GUIView extends View implements TableInterface{
 			cancelMove(nextMove.getActionType(), nextMove.getPosition());
 		if(prototype != null){
 			//Show ActionPrototype
-			
+			buildBonusFamiliar();
 		}
-		enableMove();
+		else{
+			enableMove();
+		}
+		
 	}
 
+	private void buildBonusFamiliar(){
+		
+		int deltaX = (int)(tableImageDimension.getWidth()*0.56 + blackFamiliar.getWidth() * 1.1 * 4);
+		int deltaY = (int)(tableImageDimension.getHeight()*0.93);
+		try {
+			bonusFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), null);
+			bonusFamiliar.enableListener();
+			bonusFamiliar.setTable(this);
+			mainLayeredPane.add(bonusFamiliar, 0);
+		} catch (IOException e) {
+			logger.error("Bonus Familiar Image not found!");
+			logger.info(e);
+		}
+		bonusFamiliar.enableListener();
+		bonusFamiliar.setTable(this);	
+		bonusFamiliar.setCanMove(true);
+	}
+	
 	@Override
 	public void setNewMove(PlayerMove move) {
 		super.setNewMove(move);
