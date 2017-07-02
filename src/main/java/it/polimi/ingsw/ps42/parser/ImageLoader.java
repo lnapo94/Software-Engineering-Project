@@ -47,7 +47,7 @@ public class ImageLoader extends Loader{
 		dicePath = loader();
 		if(dicePath == null)
 			throw new IOException();
-		
+	/*	
 		resourcePath = loader();
 		if(resourcePath == null)
 			throw new IOException();
@@ -55,7 +55,7 @@ public class ImageLoader extends Loader{
 		bonusBarPath = loader();
 		if(bonusBarPath == null)
 			throw new IOException();
-	
+	*/
 	}
 
 	@Override
