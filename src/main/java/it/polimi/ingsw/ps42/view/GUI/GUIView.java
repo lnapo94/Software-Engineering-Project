@@ -183,8 +183,8 @@ public class GUIView extends View implements TableInterface{
 		//Add the Ban's Labels 
 		buildBanLabel(mainLayeredPane);
 		
-		//LoginWindow login = new LoginWindow(this, "");
-		//login.run();
+		LoginWindow login = new LoginWindow(this, "");
+		login.run();
 
 	}
 	/**
