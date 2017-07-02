@@ -102,6 +102,7 @@ public class CardContainer extends FunctionalLabel{
 		bonusBar.setLocation(0,0);
 		bonusBar.setIcon(resizeImage(image, bonusBar.getSize()));
 		this.add(bonusBar, 0);
+		this.updateUI();
 	}
 	
 	private void buildCardPositions(JLayeredPane mainPane, Dimension cardDimension){

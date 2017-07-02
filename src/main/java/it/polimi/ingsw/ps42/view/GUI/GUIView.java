@@ -948,13 +948,13 @@ public class GUIView extends View implements TableInterface{
 
 	@Override
 	public void setBonusBarChoice(List<BonusBar> bonusBars, int choice) {
-		super.setBonusBarChoice(bonusBars, choice);
 		try {
 			cardContainer.addBonusBarLabel(imageLoader.loadBonusBarImage(new Integer(choice+1)));
 		} catch (IOException e) {
 			logger.error("Image for BonusBar not found!");
 			logger.info(e);
 		}
+		super.setBonusBarChoice(bonusBars, choice);
 	}
 	
 	@Override
