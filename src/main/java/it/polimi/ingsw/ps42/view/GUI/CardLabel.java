@@ -20,7 +20,8 @@ public class CardLabel extends FunctionalLabel {
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			//Nothing to do
+			if(cardImage != null)
+				zoomLabel.showZoomedCard(cardImage);		
 		}
 		@Override
 		public void mouseEntered(MouseEvent e) {
