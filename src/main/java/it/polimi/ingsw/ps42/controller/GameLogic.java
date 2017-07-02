@@ -143,6 +143,10 @@ public class GameLogic implements Observer {
     	
     	logger.info("Timer for the player move is setted to: "+ TIMER_SECONDS);
     	
+        //Initialize the view array
+        this.view = view;
+        this.view.addObserver(this);
+    	
     	playersList = new ArrayList<>();
 
         //Construct the real players
@@ -169,6 +173,12 @@ public class GameLogic implements Observer {
         //Create the table
         table = constructTable(playersList);
 
+    	
+    	logger.info("Adding the server view as obeser/observable");
+        for(Player player : playersList)
+            player.addObserver(view);
+        table.addObserver(view);
+        
         //Load the three bans from a file
         try {
             BanLoader loader = new BanLoader("Resource//BansFile//firstPeriodBans.json");
@@ -199,15 +209,6 @@ public class GameLogic implements Observer {
 
         //Construct the visitor to parse the message
         controllerVisitor = new ControllerVisitor(this);
-
-        //Initialize the view array
-        this.view = view;
-        this.view.addObserver(this);
-
-        for(Player player : playersList)
-            player.addObserver(view);
-        table.addObserver(view);
-
 
         //Initialize the card creator
         cardsCreator = new CardsFirstPeriod();
@@ -417,6 +418,8 @@ public class GameLogic implements Observer {
     private void startMatch() {
         //Ready to start with the first round
     	isInitGame = false;
+    	for(Player player : playersList)
+    		player.synchResource();
         currentRound = 1;
         initRound();
     }

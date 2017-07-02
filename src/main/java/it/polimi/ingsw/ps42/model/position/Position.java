@@ -72,7 +72,10 @@ public abstract class Position {
 		else throw new ElementNotFoundException("Null Familiar");
 	}
 	
-	public void  removeFamiliar(){			//Have to be invoked to remove the familiar when the round ends
+	public void  removeFamiliar(){
+		//Have to be invoked to remove the familiar when the round ends
+		if(familiar != null)
+			this.familiar.resetIncrement();
 		this.familiar=null;
 	}
 	public boolean isEmpty(){			//Checks if there is a familiar in the position
