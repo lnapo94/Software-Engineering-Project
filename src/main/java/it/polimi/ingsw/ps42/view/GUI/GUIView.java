@@ -85,6 +85,7 @@ public class GUIView extends View implements TableInterface{
 	//Yield and Product Positions
 	private List<JLabel> yield;
 	private List<JLabel> produce;
+	
 	//Council Positions
 	private List<JLabel> council;
 	private List<JLabel> market;
@@ -161,6 +162,12 @@ public class GUIView extends View implements TableInterface{
 		lowTableLabel.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/TableDownPart.png")), lowTableLabel.getSize()));
 		mainLayeredPane.add(lowTableLabel, -1);
 		
+		//Add the label for the Dice
+		buildDicePositions(mainLayeredPane, lowTableDimension);
+		
+		//Add the Ban's Labels 
+		buildBanLabel(mainLayeredPane);
+		
 		//Set the Cards taken container
 		Dimension containerDimension = new Dimension((int)(rightPanelDimension.getWidth()),(int) (rightPanelDimension.getHeight()-cardZoom.getHeight()));
 		Point containerLocation = new Point((int)leftPaneDimension.getWidth(), (int)cardZoom.getHeight());
@@ -179,12 +186,6 @@ public class GUIView extends View implements TableInterface{
 		Point resourceWindowLocation = new Point((int)(leftPaneDimension.getWidth()+cardZoom.getWidth()), (int)lowTableLabel.getHeight());
 		resourceWindow = new ResourceWindow(resourceWindowDimension, resourceWindowLocation );
 		mainFrame.add(resourceWindow);
-		
-		//Add the label for the Dice
-		buildDicePositions(mainLayeredPane, lowTableDimension);
-		
-		//Add the Ban's Labels 
-		buildBanLabel(mainLayeredPane);
 		
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
@@ -415,9 +416,9 @@ public class GUIView extends View implements TableInterface{
 
 	}
 	
-	private CardLabel buildSingleBanLabel(JLayeredPane mainPane, Dimension banDimension, int rightShift, int downShitf) {
+	private CardLabel buildSingleBanLabel(JLayeredPane mainPane, Dimension banDimension, int rightShift, int downShift) {
 		
-		CardLabel ban = new CardLabel((int)(tableImageDimension.getWidth()*0.172 + rightShift), (int)(tableImageDimension.getHeight()*0.835 + downShitf), banDimension, cardZoom);
+		CardLabel ban = new CardLabel((int)(tableImageDimension.getWidth()*0.172 + rightShift), (int)(tableImageDimension.getHeight()*0.835 + downShift), banDimension, cardZoom);
 		mainPane.add(ban, 0);
 		return ban;
 	}
@@ -647,6 +648,12 @@ public class GUIView extends View implements TableInterface{
 		neutralFamiliar.resetFamiliar();
 	}
 	
+	private void resetFamiliarPositions(List<JLabel> positions){
+		for (JLabel position : positions) {
+			position.setIcon(null);
+		}
+	}
+	
 	@Override
 	public void createTable(List<String> playersID) {
 		int playersNumber = playersID.size();
@@ -664,6 +671,8 @@ public class GUIView extends View implements TableInterface{
 	
 	private void coverMarket(){
 		
+		market.remove(2).setEnabled(false);
+		market.remove(3).setEnabled(false);
 		JLayeredPane pane = mainFrame.getLayeredPane();
 		Dimension coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.11), (int)(lowTableDimension.getHeight() * 0.35));
 		JLabel market1 = new JLabel();
@@ -675,7 +684,7 @@ public class GUIView extends View implements TableInterface{
 			logger.error("Market position covered but image not found!");
 			logger.info(e);
 		}
-		pane.add(market1, 0);
+		pane.add(market1, 1);
 		
 		coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.125), (int)(lowTableDimension.getHeight() * 0.42));
 		JLabel market2 = new JLabel();
@@ -687,10 +696,18 @@ public class GUIView extends View implements TableInterface{
 			logger.error("Market position covered but image not found!");
 			logger.info(e);
 		}
-		pane.add(market2, 0);
+		pane.add(market2, 1);
 	}
 	
 	private void coverYieldAndProduct() {
+		
+		for (int i=1; i<yield.size(); i++) {
+			yield.remove(i).setEnabled(false);;
+		}
+		
+		for (int i=1; i<produce.size(); i++) {
+			produce.remove(i).setEnabled(false);;
+		}
 		
 		JLayeredPane pane = mainFrame.getLayeredPane();
 		Dimension coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.268), (int)(lowTableDimension.getHeight() * 0.339));
@@ -699,6 +716,8 @@ public class GUIView extends View implements TableInterface{
 		product.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.14), (int)(lowTableDimension.getHeight() * 0.236));
 		try {
 			product.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/yieldAndProductCover.png")) , product.getSize()));
+			product.setIgnoreRepaint(true);
+			
 		} catch (IOException e) {
 			logger.error("Yield and Product position covered but image not found!");
 			logger.info(e);
@@ -711,6 +730,7 @@ public class GUIView extends View implements TableInterface{
 		yield.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.12), (int)(lowTableDimension.getHeight() * 0.6));
 		try {
 			yield.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/yieldCover.png")) , yield.getSize()));
+			yield.setIgnoreRepaint(true);
 		} catch (IOException e) {
 			logger.error("Yield and Product position covered but image not found!");
 			logger.info(e);
@@ -722,6 +742,15 @@ public class GUIView extends View implements TableInterface{
 	public void resetTable() {
 		super.resetTable();
 		restoreFamiliar();
+		resetFamiliarPositions(blueTowerForFamiliar);
+		resetFamiliarPositions(greenTowerForFamiliar);
+		resetFamiliarPositions(violetTowerForFamiliar);
+		resetFamiliarPositions(yellowTowerForFamiliar);
+		resetFamiliarPositions(council);
+		resetFamiliarPositions(yield);
+		resetFamiliarPositions(produce);
+		resetFamiliarPositions(market);
+		
 	}
 	
 	@Override
@@ -943,7 +972,6 @@ public class GUIView extends View implements TableInterface{
 	
 	@Override
 	public void setGameBans(BanMessage message) {
-		super.setGameBans(message);
 		try{
 			bans.get(0).placeCard(imageLoader.loadBanImage(new Integer(0), new Integer(message.getIndexOfFirstBan())));
 			bans.get(1).placeCard(imageLoader.loadBanImage(new Integer(1), new Integer(message.getIndexOfSecondBan())));
@@ -953,6 +981,7 @@ public class GUIView extends View implements TableInterface{
 			logger.error("Ban Image not Found!");
 			logger.info(e);
 		}
+		super.setGameBans(message);
 	}
 	
 	@Override
