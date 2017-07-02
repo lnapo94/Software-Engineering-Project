@@ -793,7 +793,7 @@ public class GameLogic implements Observer {
     		Player player = searchPlayer(playerID);
 			if(player.getPlayerID().equals(currentPlayer.getPlayerID())) {
 				
-				if(bonusAction != null && !bonusAction.checkAction(action)) {
+				if(bonusAction != null && !bonusAction.checkAction(action) && !action.isBonusAction()) {
 					PlayerToken message = new PlayerToken(currentPlayer.getPlayerID(), bonusAction);
 					//Retrasmit the message
 					player.setBonusAction(bonusAction);

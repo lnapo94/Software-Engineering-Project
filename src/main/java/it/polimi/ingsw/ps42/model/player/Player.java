@@ -421,6 +421,7 @@ public class Player extends Observable {
 		//Copy the currentResources Hashmap in nextResources
 		//This method maybe is useless
 		copyResources(nextResources, currentResources);
+		sendResources();
 	}
 
 	

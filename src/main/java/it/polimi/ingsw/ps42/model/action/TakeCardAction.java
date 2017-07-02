@@ -95,12 +95,16 @@ public class TakeCardAction extends Action{
 		
 		if(!position.isEmpty()) {
 			player.restoreResource();
+			if(familiar != null)
+				familiar.resetIncrement();
 			return Response.FAILURE;
 		}
 		
 
 		if(!checkMyFamiliar()) {
 			player.restoreResource();
+			if(familiar != null)
+				familiar.resetIncrement();
 			return Response.FAILURE;
 		}
 		
@@ -108,11 +112,15 @@ public class TakeCardAction extends Action{
 		
 		if(position.getLevel() > actionValue) {
 			player.restoreResource();
+			if(familiar != null)
+				familiar.resetIncrement();
 			return Response.FAILURE;
 		}
 		
 		if(!position.hasCard()) {
 			player.restoreResource();
+			if(familiar != null)
+				familiar.resetIncrement();
 			return Response.FAILURE;
 		}
 		
@@ -122,17 +130,29 @@ public class TakeCardAction extends Action{
 			int greenCardsInPlayer = player.getCardList(CardColor.GREEN).size();
 			
 			//Control if player can have enough military point
-			if(militaryPointQuantity < 3 && greenCardsInPlayer == 2)
+			if(militaryPointQuantity < 3 && greenCardsInPlayer == 2) {
+				if(familiar != null)
+					familiar.resetIncrement();
 				return Response.FAILURE;
+			}
 			
-			if(militaryPointQuantity < 7 && greenCardsInPlayer == 3)
+			if(militaryPointQuantity < 7 && greenCardsInPlayer == 3) {
+				if(familiar != null)
+					familiar.resetIncrement();
 				return Response.FAILURE;
+			}
 			
-			if(militaryPointQuantity < 12 && greenCardsInPlayer == 4)
+			if(militaryPointQuantity < 12 && greenCardsInPlayer == 4) {
+				if(familiar != null)
+					familiar.resetIncrement();
 				return Response.FAILURE;
+			}
 			
-			if(militaryPointQuantity < 18 && greenCardsInPlayer == 5)
+			if(militaryPointQuantity < 18 && greenCardsInPlayer == 5) {
+				if(familiar != null)
+					familiar.resetIncrement();
 				return Response.FAILURE;
+			}
 		}
 		
 		//Fourth: if the position has a bonus, apply it to the player
@@ -141,6 +161,7 @@ public class TakeCardAction extends Action{
 			if(familiar.isPositioned()) {
 				//If familiar is positioned yet
 				player.restoreResource();
+				familiar.resetIncrement();
 				return Response.FAILURE;
 			}
 			
@@ -151,6 +172,7 @@ public class TakeCardAction extends Action{
 				logger.debug("familiar can't be positioned here");
 				logger.info(e);
 				familiar.setPosition(null);
+				familiar.resetIncrement();
 				player.restoreResource();
 				return Response.FAILURE;
 			}
@@ -172,8 +194,10 @@ public class TakeCardAction extends Action{
 					logger.info(e);
 					if(position.getBonus() != null)
 						position.resetBonus(player);
-					if(familiar != null)
+					if(familiar != null) {
 						familiar.setPosition(null);
+						familiar.resetIncrement();	
+					}
 					player.synchResource();
 					position.removeFamiliar();
 					return Response.LOW_LEVEL;
@@ -208,8 +232,11 @@ public class TakeCardAction extends Action{
 			position.resetBonus(player);
 		if(isAnotherFamiliar())
 			player.increaseResource(moneyMalus);
-		if(familiar != null)
+		if(familiar != null) {
 			familiar.setPosition(null);
+			familiar.resetPosition();
+			familiar.resetIncrement();
+		}
 		player.synchResource();
 		position.removeFamiliar();
 	}

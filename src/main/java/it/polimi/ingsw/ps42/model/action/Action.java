@@ -107,6 +107,7 @@ public abstract class Action extends Observable{
 		Packet slavePacket = new Packet();
 		slavePacket.addUnit(new Unit(Resource.SLAVE, this.payedSlave));
 		player.increaseResource(slavePacket);
+		familiar.resetIncrement();
 		this.payedSlave = 0;
 	}
 	
@@ -218,6 +219,16 @@ public abstract class Action extends Observable{
 		if(!player.canPlay())
 			return Response.CANNOT_PLAY;
 		return Response.SUCCESS;
+	}
+	
+	/**
+	 * Method used to know if the action is really a bonus action. If the player is doing a 
+	 * bonus action, he doesn't use a player
+	 * 
+	 * @return True if the familiar is null, otherwise False
+	 */
+	public boolean isBonusAction() {
+		return this.familiar == null;
 	}
 	
 }

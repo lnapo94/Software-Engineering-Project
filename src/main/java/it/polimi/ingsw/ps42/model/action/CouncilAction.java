@@ -69,19 +69,26 @@ public class CouncilAction extends Action {
 		if( player.canPlay() ){
 			if(familiar != null) {		//If is a normal action check increase effect and position malus
 				
-				if(familiar.isPositioned())
+				if(familiar.isPositioned()) {
+					familiar.resetIncrement();
 					return Response.FAILURE;
+				}
 				
 				checkIncreaseEffect();
 				addIncrement(-tablePosition.getMalus());
-				if( !checkActionValue())
+				if( !checkActionValue()) {
+					familiar.resetIncrement();
 					return Response.LOW_LEVEL;
+				}
 				else return Response.SUCCESS;
 			}
 			//If is a bonus action 
 			else return Response.SUCCESS;
 		}
-		else return Response.CANNOT_PLAY;
+		else { 
+			familiar.resetIncrement();
+			return Response.CANNOT_PLAY;
+		}
 	}
 
 	/**

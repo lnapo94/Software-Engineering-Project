@@ -63,5 +63,9 @@ public class Familiar {
 		this.position = null;
 	}
 	
+	public void resetIncrement() {
+		this.increment = 0;
+	}
+	
 
 }

@@ -87,12 +87,19 @@ public class YieldAndProductAction extends Action {
 								firstFreePosition.setFamiliar(familiar);
 								return Response.SUCCESS;
 							} catch (FamiliarInWrongPosition e) {
+								familiar.resetIncrement();
 								return Response.FAILURE;
 							}
-					else return Response.LOW_LEVEL;		//CheckAction control failed
+					else { 
+						familiar.resetIncrement();
+						return Response.LOW_LEVEL;		
+						}
 				}
-				else		//Unable to do this move due to canStay()
+				else {		
+					//Unable to do this move due to canStay()
+					familiar.resetIncrement();
 					return Response.FAILURE;
+				}
 			}
 			else{		//If is a bonus action you get the first position
 				this.firstFreePosition = firstPosition;
@@ -102,6 +109,7 @@ public class YieldAndProductAction extends Action {
 		}
 		else{
 			//The player has a ban for the current action
+			familiar.resetIncrement();
 			return Response.FAILURE;		
 		}
 	}

@@ -71,8 +71,12 @@ public class MarketAction extends Action {
 	public Response checkAction() {
 		
 		//If there isn't any existing position
-		if(tablePosition.get(positionInTableList) == null)
+		if(tablePosition.get(positionInTableList) == null) {
+			if(familiar != null)
+				familiar.resetIncrement();
 			return Response.FAILURE;
+		}
+			
 		
 		if( player.canPlay() ){				//Checks if the player has ban 
 			
@@ -84,16 +88,24 @@ public class MarketAction extends Action {
 					if(checkActionValue() )
 						//Checks if the action has a sufficient level for the position
 						return Response.SUCCESS;
-					else return Response.LOW_LEVEL;
+					else {
+						familiar.resetIncrement();
+						return Response.LOW_LEVEL;
+					}
 				}
-			else 
-				return Response.FAILURE;		//The position is occupied or the player has a market ban
+			else {
+				//The position is occupied or the player has a market ban
+				familiar.resetIncrement();
+				return Response.FAILURE;
+			}
 			}
 			else								//If is a bonus action then only check action value
 				if( checkActionValue())
 					return Response.SUCCESS;
 				else return Response.LOW_LEVEL;
 		}
+		if(familiar != null)
+			familiar.resetIncrement();
 		return Response.CANNOT_PLAY;
 	}	
 
