@@ -145,4 +145,17 @@
   "4": "4.png",
   "5": "5.png",
   "6": "6.png"
+}{
+  "Money": "Resource//Images//ResourceIcon//moneyIcon2.png",
+  "Wood": "Resource//Images//ResourceIcon//woodIcon.png",
+  "Stone": "Resource//Images//ResourceIcon//stoneIcon.png",
+  "MilitaryPoint": "Resource//Images//ResourceIcon//militaryPointIcon.png",
+  "VictoryPoint": "Resource//Images//ResourceIcon//victoryPointIcon.png",
+  "FaithPoint": "Resource//Images//ResourceIcon//faithPointIcon.png",
+  "Slave": "Resource//Images//ResourceIcon//slaveIcon.png"
+}{
+  "1": "Resource//Images//BonusBar//1.png",
+  "2": "Resource//Images//BonusBar//2.png",
+  "3": "Resource//Images//BonusBar//3.png",
+  "4": "Resource//Images//BonusBar//4.png"
 }

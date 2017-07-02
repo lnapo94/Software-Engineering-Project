@@ -187,7 +187,7 @@ public class GUIView extends View implements TableInterface{
 		//Add the Resource Update Window
 		Dimension resourceWindowDimension = new Dimension((int)(rightPanelDimension.getWidth()-cardZoom.getWidth()), (int)(rightPanelDimension.getHeight() - lowTableLabel.getHeight() - containerDimension.getHeight()));
 		Point resourceWindowLocation = new Point((int)(leftPaneDimension.getWidth()+cardZoom.getWidth()), (int)lowTableLabel.getHeight());
-		resourceWindow = new ResourceWindow(resourceWindowDimension, resourceWindowLocation );
+		resourceWindow = new ResourceWindow(resourceWindowDimension, resourceWindowLocation, imageLoader );
 		mainFrame.add(resourceWindow);
 
 		LoginWindow login = new LoginWindow(this, "");
@@ -949,7 +949,12 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	public void setBonusBarChoice(List<BonusBar> bonusBars, int choice) {
 		super.setBonusBarChoice(bonusBars, choice);
-		//cardContainer.addBonusBarLabel(imageLoader.loadBonusBarImage(choice));
+		try {
+			cardContainer.addBonusBarLabel(imageLoader.loadBonusBarImage(new Integer(choice+1)));
+		} catch (IOException e) {
+			logger.error("Image for BonusBar not found!");
+			logger.info(e);
+		}
 	}
 	
 	@Override

@@ -47,7 +47,7 @@ public class ImageLoader extends Loader{
 		dicePath = loader();
 		if(dicePath == null)
 			throw new IOException();
-	/*	
+	
 		resourcePath = loader();
 		if(resourcePath == null)
 			throw new IOException();
@@ -55,7 +55,7 @@ public class ImageLoader extends Loader{
 		bonusBarPath = loader();
 		if(bonusBarPath == null)
 			throw new IOException();
-	*/
+	
 	}
 
 	@Override
@@ -112,14 +112,13 @@ public class ImageLoader extends Loader{
 		return ImageIO.read(new File(completePath));
 	}
  	
-	public BufferedImage loadResourceImage(Resource resource){
+	public BufferedImage loadResourceImage(Resource resource) throws IOException{
 		
-		return null;
+		return ImageIO.read(new File(resourcePath.get(resource.toString())));
 	}
 	
-	public BufferedImage loadBonusBarImage(Integer value){
-		
-		return null;
+	public BufferedImage loadBonusBarImage(Integer value) throws IOException{
+		return ImageIO.read(new File(bonusBarPath.get(value.toString())));
 	}
 	
 	public int cardsMapSize() {

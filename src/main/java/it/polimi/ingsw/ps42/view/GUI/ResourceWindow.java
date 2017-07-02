@@ -19,6 +19,7 @@ import javax.swing.border.LineBorder;
 
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.player.Player;
+import it.polimi.ingsw.ps42.parser.ImageLoader;
 
 public class ResourceWindow extends FunctionalLabel{
 
@@ -30,7 +31,7 @@ public class ResourceWindow extends FunctionalLabel{
 	private Player player;
 	private HashMap<Resource, JLabel> resourceLabel;
 	
-	public ResourceWindow(Dimension dimension, Point location) throws IOException {
+	public ResourceWindow(Dimension dimension, Point location, ImageLoader loader) throws IOException {
 	
 		super();
 		this.setSize(dimension);
@@ -39,15 +40,15 @@ public class ResourceWindow extends FunctionalLabel{
 		this.resourceLabel = new HashMap<>();
 		
 		Font font = new Font("Papyrus", Font.ITALIC, (int)(dimension.getHeight()*0.14));
-		for (Resource resouce: Resource.values()) {
+		for (Resource resource: Resource.values()) {
 			
-			//JLabel label = new JLabel(" "+resouce.toString());
+			//JLabel label = new JLabel(" "+resource.toString());
 			//label.setFont(font);
 			
 			JLabel label = new JLabel();
 			Dimension labelDimension = new Dimension((int)(dimension.getWidth()*0.13), (int)(dimension.getHeight() * 0.5));
 			label.setSize(labelDimension);
-			label.setIcon(resizeImage(ImageIO.read(ResourceWindow.class.getResource("/Images/Others/militaryPointIcon.png")), label.getSize()));
+			label.setIcon(resizeImage(loader.loadResourceImage(resource), label.getSize()));
 			
 			this.add(label);
 			
