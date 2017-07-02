@@ -40,6 +40,7 @@ public abstract class Position {
 		if(bonus != null) 
 			return new Obtain(bonus.getCosts(), bonus.getGains(), bonus.getCouncilObtain());
 		
+		logger = Logger.getLogger(Position.class);
 		logger.info("Position has not a bonus");
 		return null;
 	}
@@ -100,6 +101,7 @@ public abstract class Position {
 		try {
 			player.decreaseResource(packet);
 		} catch (NotEnoughResourcesException e) {
+			logger = Logger.getLogger(Position.class);
 			logger.error("Error in reset bonus...");
 			logger.info(e);
 		}

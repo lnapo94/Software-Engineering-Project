@@ -78,7 +78,7 @@ public class ImageLoader extends Loader{
 	public BufferedImage loadBanImage(Integer period, Integer index) throws IOException {
 		final int OFFSET = 7;
 		
-		Integer exactIndex = index + period * OFFSET;
+		Integer exactIndex = 1 + index + period * OFFSET;
 		return loadGenericImage(bansPath, exactIndex.toString());
 	}
 	
