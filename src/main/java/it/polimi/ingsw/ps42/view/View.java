@@ -213,8 +213,7 @@ public abstract class View extends Observable implements Observer {
 	public void setPayBanResponse(boolean wantToPay, int banNumber){
 
 		BanRequest message = new BanRequest(player.getPlayerID(),banNumber);
-		if(wantToPay)
-			message.wantPayForBan();
+		message.setWantPayForBan(wantToPay);
 		//Notify the choice to the Game Logic
 		setChanged();
 		notifyObservers(message);

@@ -46,6 +46,15 @@ public class BanRequest extends Message {
 	}
 
 	/**
+	 * Setter for the Player choice, true if the Player wants to pay for the current Ban
+	 * 
+	 * @param wantPayForBan
+	 */
+	public void setWantPayForBan(boolean wantPayForBan) {
+		this.wantPayForBan = wantPayForBan;
+	}
+	
+	/**
 	 * Method used to visit this message
 	 */
 	@Override
