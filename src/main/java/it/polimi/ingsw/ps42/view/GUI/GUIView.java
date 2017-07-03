@@ -52,6 +52,7 @@ import it.polimi.ingsw.ps42.view.GUI.dialog.BonusBarRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.CardRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.CouncilRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardChooseDialog;
+import it.polimi.ingsw.ps42.view.GUI.dialog.PayBanDialog;
 
 public class GUIView extends View implements TableInterface{
 
@@ -202,6 +203,7 @@ public class GUIView extends View implements TableInterface{
 		
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
+
 	}
 	/**
 	 * Initialize the Card Position Label
@@ -352,7 +354,6 @@ public class GUIView extends View implements TableInterface{
 		JLabel position = new JLabel();
 		position.setSize(positionDimension);
 		position.setLocation(x, y);
-		//position.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
 		market.add(position);
 		mainPane.add(position, 0);
 	}
@@ -363,7 +364,6 @@ public class GUIView extends View implements TableInterface{
 		JLabel position = new JLabel();
 		position.setSize(positionDimension);
 		position.setLocation(deltaX, deltaY);
-		//position.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
 		yieldAndProduct.add(position);
 		mainPane.add(position, 0);
 		deltaX += positionDimension.getWidth();
@@ -372,7 +372,6 @@ public class GUIView extends View implements TableInterface{
 			JLabel tempPosition = new JLabel();
 			tempPosition.setSize(positionDimension);
 			tempPosition.setLocation(deltaX, deltaY);
-			//tempPosition.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
 			yieldAndProduct.add(tempPosition);
 			mainPane.add(tempPosition, 0);
 		}
@@ -385,7 +384,6 @@ public class GUIView extends View implements TableInterface{
 			JLabel familiarPosition = new JLabel();
 			familiarPosition.setSize(positionDimension);
 			familiarPosition.setLocation(rightShift, deltaY);
-			//familiarPosition.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
 			tower.addFirst(familiarPosition);
 			mainPane.add(familiarPosition, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.1858);
@@ -1016,6 +1014,8 @@ public class GUIView extends View implements TableInterface{
 				setEmptyMove();
 				disableSkipButton();
 				disableMove();
+				if(bonusFamiliar != null)
+					bonusFamiliar.setEnabled(false);
 			}
 		});
 		disableSkipButton();
@@ -1052,6 +1052,9 @@ public class GUIView extends View implements TableInterface{
 		super.setNewMove(move);
 		this.nextMove = move;
 		disableMove();
+		disableSkipButton();
+		if(bonusFamiliar != null)
+			bonusFamiliar.setEnabled(false);;
 	}
 	
 	@Override
@@ -1072,6 +1075,9 @@ public class GUIView extends View implements TableInterface{
 	protected void chooseIfPayBan(int banPeriod) {
 		// Ask to the Player if he wants to pay for the current Period Ban
 		
+		Dimension banWindowDimension = new Dimension((int)(mainFrame.getWidth()*0.5),(int)(mainFrame.getHeight()*0.25) );
+		Point banWindowLocation = new Point((int)(tableImageDimension.getWidth()*0.5),(int)(tableImageDimension.getHeight()*0.5) );
+		new PayBanDialog(this, banWindowDimension ,banWindowLocation, bans.get(banPeriod).getCardImage(), banPeriod );
 		
 	}
 
