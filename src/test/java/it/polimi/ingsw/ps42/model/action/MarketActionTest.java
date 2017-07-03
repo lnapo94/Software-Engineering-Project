@@ -123,9 +123,9 @@ public class MarketActionTest {
 		tempFamiliar.setIncrement(7);
 		try {
 			action = new MarketAction(ActionType.MARKET, tempFamiliar, tablePosition, 1);
-			assertTrue(false);
-		} catch (NotEnoughResourcesException e) {
 			assertTrue(true);
+		} catch (NotEnoughResourcesException e) {
+			assertTrue(false);
 
 		}
 	}
@@ -280,13 +280,13 @@ public class MarketActionTest {
 		setupFamiliarIncrementAction();
 		assertEquals(Response.SUCCESS, marketActionIncremented.checkAction() );
 		player.synchResource();
-		assertEquals(2, player.getResource(Resource.SLAVE));
+		assertEquals(5, player.getResource(Resource.SLAVE));
 		assertEquals(0, player.getResource(Resource.MONEY));
 		try {
 			//Do the action and check the position bonus income (4 money)
 			marketActionIncremented.doAction();
 			assertEquals( 4, player.getResource(Resource.MONEY));
-			assertEquals(2, player.getResource(Resource.SLAVE));
+			assertEquals(5, player.getResource(Resource.SLAVE));
 		} catch (FamiliarInWrongPosition e1) {
 			e1.printStackTrace();
 		}

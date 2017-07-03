@@ -37,6 +37,8 @@ public class TableTest {
 		assertTrue(Response.SUCCESS == action.checkAction());
 		action.doAction();
 		assertTrue(p1.getCouncilRequests().size() == 1);
+		
+		table.resetTable();
 	}
 
 }

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps42.view.GUI;
 
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;

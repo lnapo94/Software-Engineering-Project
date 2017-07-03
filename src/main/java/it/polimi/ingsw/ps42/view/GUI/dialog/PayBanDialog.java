@@ -22,6 +22,11 @@ import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
 public class PayBanDialog extends JDialog{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 278687938788809639L;
+	
 	private JButton confirm;
 	private JButton cancel;
 	private View view;

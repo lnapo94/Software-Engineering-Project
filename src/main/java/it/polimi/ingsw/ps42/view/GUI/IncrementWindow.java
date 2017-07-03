@@ -1,17 +1,12 @@
 package it.polimi.ingsw.ps42.view.GUI;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -28,6 +23,11 @@ import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 
 public class IncrementWindow extends JDialog{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7959414300010255228L;
+	
 	private GUIView view;
 	private JFrame mainFrame;
 	private JSlider slider;

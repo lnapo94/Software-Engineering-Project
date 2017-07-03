@@ -174,14 +174,14 @@ public class CouncilActionTest {
 			setupBonusAction();
 			assertEquals(Response.SUCCESS, action.checkAction());
 			player.synchResource();
-			assertEquals(2, player.getResource(Resource.SLAVE));
+			assertEquals(3, player.getResource(Resource.SLAVE));
 			action.doAction();
 			CouncilRequest request = player.getCouncilRequests().get(0);
 			assertEquals(1,request.getQuantity());
 			request.addChoice(1);
 			request.apply(player);
 			player.synchResource();
-			assertEquals(2, player.getResource(Resource.SLAVE));
+			assertEquals(3, player.getResource(Resource.SLAVE));
 			assertEquals(0, player.getResource(Resource.STONE));			
 			assertEquals(2, player.getResource(Resource.WOOD));			
 
@@ -219,7 +219,7 @@ public class CouncilActionTest {
 			setupIncrementedAction();
 			assertEquals(Response.SUCCESS, action.checkAction());
 			player.synchResource();
-			assertEquals( 2, player.getResource(Resource.SLAVE));
+			assertEquals( 3, player.getResource(Resource.SLAVE));
 			assertEquals( 0, player.getResource(Resource.MILITARYPOINT));
 			action.doAction();
 			assertEquals(2, player.getResource(Resource.MILITARYPOINT));
