@@ -97,7 +97,7 @@ public class GUIView extends View implements TableInterface{
 	private List<JLabel> produce;
 	
 	//Council Positions
-	private List<JLabel> council;
+	private PositionContainer council;
 	private List<JLabel> market;
 	
 	//Window for Resource update
@@ -202,7 +202,8 @@ public class GUIView extends View implements TableInterface{
 
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
-		
+
+	
 	}
 	/**
 	 * Initialize the Card Position Label
@@ -317,13 +318,10 @@ public class GUIView extends View implements TableInterface{
 		placeFamiliarPosition(mainPane, positionDimension, violetTowerForFamiliar, deltaX);		
 		
 		//Build the Council related familiarMove positions
-		council = new ArrayList<>();
-		JLabel firstCouncil = new JLabel();
-		firstCouncil.setSize(positionDimension);
-		firstCouncil.setLocation((int)(tableImageDimension.getWidth()*0.7), (int)(tableImageDimension.getHeight()*0.8));
-		//firstCouncil.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), positionDimension));
-		council.add(firstCouncil);
-		mainPane.add(firstCouncil, 0);
+		Dimension positionContainerDimension = new Dimension((int)(tableImageDimension.getWidth()*0.3), (int)(tableImageDimension.getHeight()*0.11));
+		Point positionContainerLocation = new Point((int)(tableImageDimension.getWidth()*0.52), (int)(tableImageDimension.getHeight()*0.76));
+		council = new PositionContainer(positionContainerDimension, positionContainerLocation, new Dimension((int)(tableImageDimension.getWidth()*0.06), (int)(tableImageDimension.getHeight()*0.05)));
+		mainPane.add(council, 0);
 		
 		//Build the Market, Yield and Product familiarMove positions
 		yield = new ArrayList<>();
@@ -487,7 +485,15 @@ public class GUIView extends View implements TableInterface{
 				return true;
 			}
 		}
-		for (JLabel position : council) {
+		if(containsPoint(council, x, y)){
+			if(color != null)
+				council.placeFamiliar(familiarMoving.getImage());
+			actionValue = 1;
+			createNewMove( ActionType.COUNCIL, color, council.getLastIndex(), actionValue, familiarMoving);
+			return true;
+		}
+		
+		/*for (JLabel position : council) {
 			if( containsPoint(position, x, y) ){
 				if(color != null)
 					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
@@ -496,6 +502,7 @@ public class GUIView extends View implements TableInterface{
 				return true;
 			}
 		}
+		*/
 		for (JLabel position : yield) {
 			if( containsPoint(position, x, y) ){
 				if(color != null)
@@ -629,7 +636,7 @@ public class GUIView extends View implements TableInterface{
 			produce.get(position).setIcon(null);
 			break;
 		case COUNCIL:
-			council.get(position).setIcon(null);
+			council.resetLastFamiliar();
 			break;
 			
 		default:
@@ -765,7 +772,7 @@ public class GUIView extends View implements TableInterface{
 		resetFamiliarPositions(greenTowerForFamiliar);
 		resetFamiliarPositions(violetTowerForFamiliar);
 		resetFamiliarPositions(yellowTowerForFamiliar);
-		resetFamiliarPositions(council);
+		council.resetPosition();
 		resetFamiliarPositions(yield);
 		resetFamiliarPositions(produce);
 		resetFamiliarPositions(market);
@@ -832,7 +839,12 @@ public class GUIView extends View implements TableInterface{
 	public void setFamiliarInCouncil(String playerID, FamiliarColor color) throws ElementNotFoundException {
 		super.setFamiliarInCouncil(playerID, color);
 		if( !hasToAnswer(playerID)){
-			setOccupied(playerID, color, council.get(0));
+			try{
+				council.placeFamiliar(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+			} catch (IOException e) {
+				logger.error("Image for "+color.toString()+" of the player: "+playerID+" not found!");
+				logger.info(e);
+			}
 		}		
 	}
 	
