@@ -73,6 +73,7 @@ public class PositionContainer extends FunctionalLabel{
 		familiarPlacedImages = new ArrayList<>();
 		this.setLayout(new GridLayout(2, 4));
 		dimensionToUse = labelPreferredSize;
+		updateUI();
 	}
 	
 	public void resetLastFamiliar(){
@@ -80,6 +81,7 @@ public class PositionContainer extends FunctionalLabel{
 		toRemove.setIcon(null);
 		this.remove(toRemove);
 		familiarPlacedImages.remove(familiarPlacedImages.size()-1);
+		updateUI();
 	}
 	
 	public int getLastIndex(){
