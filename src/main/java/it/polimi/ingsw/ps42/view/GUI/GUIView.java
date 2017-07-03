@@ -3,10 +3,13 @@ package it.polimi.ingsw.ps42.view.GUI;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -62,6 +66,9 @@ public class GUIView extends View implements TableInterface{
 	
 	//The Container for all the cards taken
 	private CardContainer cardContainer;
+	
+	//The JButton used to skip a move
+	private JButton skipMove;
 	
 	//The Image of the familiar currently moving
 	private DraggableComponent movingFamiliar;
@@ -189,10 +196,12 @@ public class GUIView extends View implements TableInterface{
 		Point resourceWindowLocation = new Point((int)(leftPaneDimension.getWidth()+cardZoom.getWidth()), (int)lowTableLabel.getHeight());
 		resourceWindow = new ResourceWindow(resourceWindowDimension, resourceWindowLocation, imageLoader );
 		mainFrame.add(resourceWindow);
-
+		
+		//Build the JButton to skip a move
+		buildSkipMoveButton();
+		
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
-		
 	}
 	/**
 	 * Initialize the Card Position Label
@@ -949,7 +958,7 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	public void setBonusBarChoice(List<BonusBar> bonusBars, int choice) {
 		try {
-			cardContainer.addBonusBarLabel(imageLoader.loadBonusBarImage(new Integer(choice+1)));
+			cardContainer.addBonusBarLabel(imageLoader.loadBonusBarImage(bonusBars.get(choice).getName()));
 		} catch (IOException e) {
 			logger.error("Image for BonusBar not found!");
 			logger.info(e);
@@ -978,6 +987,9 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void choosePlayerMove(ActionPrototype prototype, boolean isRetrasmission) {
 		//Enable the Player to perform a new Move, if is a retrasmission then cancel the precedent
+		
+		enableSkipButton();
+		
 		if(isRetrasmission && nextMove != null)
 			cancelMove(nextMove.getActionType(), nextMove.getPosition());
 		if(prototype != null){
@@ -989,7 +1001,36 @@ public class GUIView extends View implements TableInterface{
 		}
 		
 	}
-
+	
+	private void buildSkipMoveButton(){
+		skipMove = new JButton("Skip Move");
+		skipMove.setLocation((int)(tableImageDimension.getWidth() * 0.01), (int)(tableImageDimension.getHeight() * 0.91));
+		skipMove.setSize((int)(tableImageDimension.getWidth() * 0.15), (int)(tableImageDimension.getHeight() * 0.05));
+		skipMove.setFont(new Font("Papyrus", Font.ITALIC, (int)(skipMove.getHeight()*0.4)));
+		mainLayeredPane.add(skipMove, 0);
+		skipMove.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Send to the GameLogic an emptyMove
+				setEmptyMove();
+				disableSkipButton();
+				disableMove();
+			}
+		});
+		disableSkipButton();
+	}
+	
+	private void enableSkipButton(){
+		skipMove.setEnabled(true);
+		skipMove.setVisible(true);
+	}
+	
+	private void disableSkipButton(){
+		skipMove.setEnabled(false);
+		skipMove.setVisible(false);	
+	}
+	
 	private void buildBonusFamiliar(){
 		
 		int deltaX = (int)(tableImageDimension.getWidth()*0.56 + blackFamiliar.getWidth() * 1.1 * 4);

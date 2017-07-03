@@ -117,8 +117,8 @@ public class ImageLoader extends Loader{
 		return ImageIO.read(new File(resourcePath.get(resource.toString())));
 	}
 	
-	public BufferedImage loadBonusBarImage(Integer value) throws IOException{
-		return ImageIO.read(new File(bonusBarPath.get(value.toString())));
+	public BufferedImage loadBonusBarImage(String name) throws IOException{
+		return ImageIO.read(new File(bonusBarPath.get(name)));
 	}
 	
 	public int cardsMapSize() {

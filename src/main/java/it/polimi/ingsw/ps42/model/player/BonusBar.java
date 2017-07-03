@@ -20,20 +20,20 @@ public class BonusBar implements Serializable{
 	private Player player;
 	private final Effect productBonus;
 	private final Effect yieldBonus;
+	private final String name;
 	
 	private boolean hasBeenInitialized=false;
 	
-	public BonusBar(Effect productBonus, Effect yieldBonus) {
+	public BonusBar(Effect productBonus, Effect yieldBonus, String name) {
 		//Advanced BonusBar for advanced game. Loaded from file
-		//TO-DO: Check this code when implementing advanced mode
 		this.productBonus = productBonus;
 		this.yieldBonus = yieldBonus;
-
+		this.name = name;
 	}
 	
 	public BonusBar() {
 		//Simple BonusBar for the game. Is the same for all the player 
-
+		this.name = "default";
 		//Build the default yield Bonus
 		HashMap<Resource, Integer> yieldBonus=new HashMap<>();
 		yieldBonus.put(Resource.SLAVE,1);
@@ -76,9 +76,13 @@ public class BonusBar implements Serializable{
 		else throw new NullPointerException("The bonus bar do not has a player! Set the player before applying the bonus");
 	}
 
+	public String getName() {
+		return name;
+	}
+	
 	@Override
 	public BonusBar clone() {
-		return new BonusBar(productBonus.clone(), yieldBonus.clone());
+		return new BonusBar(productBonus.clone(), yieldBonus.clone(), name);
 	}
 	
 	@Override
