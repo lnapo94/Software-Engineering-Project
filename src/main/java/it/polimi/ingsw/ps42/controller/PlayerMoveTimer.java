@@ -63,6 +63,8 @@ public class PlayerMoveTimer extends TimerTask{
 		if(logic.isThereAnAction())
 			logic.rollBackAction();
 		
+		logic.removeBonusAction();
+		
 		logic.initAction();
 		
 		if(isBanRequest) {

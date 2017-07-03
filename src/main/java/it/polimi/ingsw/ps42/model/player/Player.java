@@ -364,6 +364,7 @@ public class Player extends Observable {
 	
 	public void askIfPayTheBan( int banPeriodNumber){
 		//Method to be called from the game logic when a player 
+		banPeriodNumber = (banPeriodNumber / 2) - 1;
 		
 		BanRequest message = new BanRequest( this.getPlayerID(), banPeriodNumber);
 		setChanged();

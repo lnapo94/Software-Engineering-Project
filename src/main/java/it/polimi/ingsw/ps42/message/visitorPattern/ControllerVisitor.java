@@ -261,8 +261,10 @@ public class ControllerVisitor implements Visitor {
 	public void visit(EmptyMove message) {
 
 		try {
-			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID())))
+			if(gameLogic.isConnected(gameLogic.searchPlayer(message.getPlayerID()))) {
 				gameLogic.initAction();
+				gameLogic.removeBonusAction();
+			}
 		} catch (ElementNotFoundException e) {
 			logger.fatal("Player not found in gameLogic");
 			logger.info(e);
@@ -274,6 +276,7 @@ public class ControllerVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(CancelCardRequest message) {
+		gameLogic.removeBonusAction();
 		gameLogic.cancelRequest(message);
 	}
 

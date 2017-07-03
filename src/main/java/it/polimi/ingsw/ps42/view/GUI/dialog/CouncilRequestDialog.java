@@ -65,7 +65,7 @@ public class CouncilRequestDialog extends JDialog{
 		group = new ButtonGroup();
 		
 		//Set the general layout
-		this.setLayout(new GridLayout(1, possibilities.size() + 2));
+		this.setLayout(new GridLayout(possibilities.size() + 2, 1));
 		
 		JLabel label = new JLabel("Select one of this possibilities");
 		label.setFont(font);
@@ -105,9 +105,8 @@ public class CouncilRequestDialog extends JDialog{
 	
 	public void run() {
 		this.setVisible(true);
-		this.setSize((int) (parent.getWidth() * 0.5), (int) (parent.getHeight() * 0.5));
+		this.setSize((int) (parent.getWidth() * 0.3), (int) (parent.getHeight() * 0.7));
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		this.setResizable(false);
 	}
 	
 	private int controlRequest() {

@@ -608,8 +608,10 @@ public class GameLogic implements Observer {
 		
 		List<String> ranking = new ArrayList<>();
 		
-		for(Player player : playersList)
-			ranking.add(player.getPlayerID());
+		for(int i = 0; i < playersList.size(); i++) {
+			String playerID = playersList.get(playersList.size() - 1 - i).getPlayerID();
+			ranking.add(playerID);
+		}
 		
 		WinnerMessage message = new WinnerMessage(ranking.get(0), ranking);
 		
@@ -1102,6 +1104,11 @@ public class GameLogic implements Observer {
 			logger.fatal("Error in cancelRequest, player not found");
 			logger.info(e);
 		}
+	}
+	
+	public void removeBonusAction() {
+		if(bonusAction != null)
+			bonusAction = null;
 	}
 
 	/**

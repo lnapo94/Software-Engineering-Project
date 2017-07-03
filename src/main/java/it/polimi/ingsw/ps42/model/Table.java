@@ -499,7 +499,8 @@ public class Table extends Observable{
 	private List<Player> getNewOrder(){
 		//Return the new order of the player
 		List<Player> temp = new ArrayList<>();
-		for(CouncilPosition position : council) {
+		for(int i = 0; i < council.size(); i++) {
+			CouncilPosition position = council.get(0);
 			temp.add(position.getFamiliar().getPlayer());
 			council.remove(position);
 			//Remove also the familiar
