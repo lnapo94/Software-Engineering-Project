@@ -39,8 +39,9 @@ public class BonusBarBuilder extends Builder{
 		Obtain productBonus = askObtain();
 		System.out.println("NUOVO BONUS PER AZIONE RACCOLTO");
 		Obtain yieldBonus = askObtain();
-		
-		BonusBar bonusBar = new BonusBar(productBonus, yieldBonus);
+		System.out.println("Nome bonusBar? ");
+		String name = scanner.nextLine();
+		BonusBar bonusBar = new BonusBar(productBonus, yieldBonus, name );
 		String parse = gson.toJson(bonusBar);
 		buffer.append(parse);
 		

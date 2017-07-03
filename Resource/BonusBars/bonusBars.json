@@ -1,5 +1,6 @@
 {
   "player": null,
+  "name": "0",
   "productBonus": {
     "costs": null,
     "gains": {
@@ -45,6 +46,7 @@
   "hasBeenInitialized": false
 }{
   "player": null,
+  "name": "1",
   "productBonus": {
     "costs": null,
     "gains": {
@@ -90,6 +92,7 @@
   "hasBeenInitialized": false
 }{
   "player": null,
+  "name": "2",
   "productBonus": {
     "costs": null,
     "gains": {
@@ -135,6 +138,7 @@
   "hasBeenInitialized": false
 }{
   "player": null,
+  "name": "3",
   "productBonus": {
     "costs": null,
     "gains": {
