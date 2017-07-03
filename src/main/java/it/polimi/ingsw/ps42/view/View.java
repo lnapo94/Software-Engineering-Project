@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
+import it.polimi.ingsw.ps42.message.CancelCardRequest;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.EmptyMove;
@@ -489,6 +490,11 @@ public abstract class View extends Observable implements Observer {
 	
 	public void resetTable() {
 		table.resetTable();
+	}
+	
+	public void sendCancelRequest(CancelCardRequest message) {
+		setChanged();
+		notifyObservers(message);
 	}
 	
 	protected abstract void showResult(List<String> finalChart);

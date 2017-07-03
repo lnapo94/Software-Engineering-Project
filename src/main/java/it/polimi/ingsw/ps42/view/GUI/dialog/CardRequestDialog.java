@@ -18,7 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import it.polimi.ingsw.ps42.message.CancelCardRequest;
 import it.polimi.ingsw.ps42.message.CardRequest;
+import it.polimi.ingsw.ps42.message.PayRequest;
 import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
@@ -39,6 +41,7 @@ public class CardRequestDialog extends JDialog{
 	private ButtonGroup group;
 	
 	private JButton confirm;
+	private JButton cancel;
 	
 	
 	public CardRequestDialog(GUIView view, CardRequest message) {
@@ -77,11 +80,16 @@ public class CardRequestDialog extends JDialog{
 		
 		//Add a button to a pane and add all to the dialog
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new GridLayout(1, 2));
+		buttonPanel.setLayout(new GridLayout(1, 3));
 		buttonPanel.add(Box.createHorizontalStrut((int)(this.getWidth() / 2)));
+		
 		confirm = new JButton("Confirm");
 		confirm.setFont(font);
 		buttonPanel.add(confirm);
+		
+		cancel = new JButton("Cancel");
+		cancel.setFont(font);
+		buttonPanel.add(cancel);
 		
 		this.add(buttonPanel);
 		
@@ -89,6 +97,10 @@ public class CardRequestDialog extends JDialog{
 		this.getContentPane().addKeyListener(new KeyboardListener());
 		this.addKeyListener(new KeyboardListener());
 		confirm.addActionListener(new ConfirmAction());
+		cancel.addActionListener(new CancelAction());
+		
+		if(message instanceof PayRequest)
+			cancel.setEnabled(false);
 	}
 	
 	public void run() {
@@ -120,6 +132,16 @@ public class CardRequestDialog extends JDialog{
 				view.setCardRequestResponse(message, index);
 				close();
 			}
+		}
+		
+	}
+	
+	private class CancelAction implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			view.sendCancelRequest(new CancelCardRequest(view.getViewPlayerID(), true));
+			close();
 		}
 		
 	}

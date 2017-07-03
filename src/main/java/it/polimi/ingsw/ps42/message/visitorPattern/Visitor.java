@@ -4,6 +4,7 @@ import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
+import it.polimi.ingsw.ps42.message.CancelCardRequest;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CardUpdateMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
@@ -44,5 +45,6 @@ public interface Visitor {
 	public void visit(BanRequest message);
 	public void visit(LeaderFamiliarRequest message);
 	public void visit(EmptyMove message);
+	public void visit(CancelCardRequest message);
 	public void visit(WinnerMessage message);
 }

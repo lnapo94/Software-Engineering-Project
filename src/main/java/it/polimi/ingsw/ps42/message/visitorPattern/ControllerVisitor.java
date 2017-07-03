@@ -8,6 +8,7 @@ import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
+import it.polimi.ingsw.ps42.message.CancelCardRequest;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CardUpdateMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
@@ -266,6 +267,14 @@ public class ControllerVisitor implements Visitor {
 			logger.fatal("Player not found in gameLogic");
 			logger.info(e);
 		}
+	}
+
+	/**
+	 * Method used to do not enable an effect
+	 */
+	@Override
+	public void visit(CancelCardRequest message) {
+		gameLogic.cancelRequest(message);
 	}
 
 	/** 

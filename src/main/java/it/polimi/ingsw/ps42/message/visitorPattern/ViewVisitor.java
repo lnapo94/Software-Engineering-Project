@@ -7,6 +7,7 @@ import it.polimi.ingsw.ps42.message.BanMessage;
 import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
+import it.polimi.ingsw.ps42.message.CancelCardRequest;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CardUpdateMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
@@ -348,6 +349,14 @@ public class ViewVisitor implements Visitor {
 			view.handleResult(message);
 		}
 		
+	}
+
+	/**
+	 * No things to do since this message is only sent to the Game Logic
+	 */
+	@Override
+	public void visit(CancelCardRequest message) {
+
 	}
 
 

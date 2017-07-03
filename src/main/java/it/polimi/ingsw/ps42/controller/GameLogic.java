@@ -4,6 +4,7 @@ package it.polimi.ingsw.ps42.controller;
 import it.polimi.ingsw.ps42.controller.cardCreator.CardsCreator;
 import it.polimi.ingsw.ps42.controller.cardCreator.CardsFirstPeriod;
 import it.polimi.ingsw.ps42.message.BanUpdateMessage;
+import it.polimi.ingsw.ps42.message.CancelCardRequest;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
@@ -1075,6 +1076,32 @@ public class GameLogic implements Observer {
 	 */
 	public boolean isConnected(Player player) {
 		return this.playersList.contains(player);
+	}
+	
+	/**
+	 * Method used to cancel a request, in this way the player doesn't enable the effect
+	 * 
+	 * @param message	The message arrived in GameLogic from the player
+	 */
+	public void cancelRequest(CancelCardRequest message) {
+		try {
+			Player player = searchPlayer(message.getPlayerID());
+			
+			if(player == currentPlayer && playersWithRequest.contains(player)) {
+				if(currentAction == null) {
+					playersWithRequest.remove(player);
+					checkRequest();
+				} else {
+					removePlayerFromPendingRequest(player);
+					rollBackAction();
+					initAction();
+				}
+			}
+			
+		} catch (ElementNotFoundException e) {
+			logger.fatal("Error in cancelRequest, player not found");
+			logger.info(e);
+		}
 	}
 
 	/**
