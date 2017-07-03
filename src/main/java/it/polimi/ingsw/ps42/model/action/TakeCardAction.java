@@ -291,7 +291,7 @@ public class TakeCardAction extends Action{
 	 */
 	private boolean checkMyFamiliar() {
 		for(TowerPosition tower : tablePosition) {
-			if(!tower.isEmpty() && tower.getFamiliar().getPlayer().getPlayerID().equals(player.getPlayerID())) {
+			if(!tower.isEmpty() && tower.getFamiliar().getPlayer().getPlayerID().equals(player.getPlayerID()) && tower.getFamiliar().getColor() != FamiliarColor.NEUTRAL) {
 				if(familiar.getColor() != FamiliarColor.NEUTRAL)
 					return false;
 			}

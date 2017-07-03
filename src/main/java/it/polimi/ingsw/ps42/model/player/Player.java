@@ -234,7 +234,7 @@ public class Player extends Observable {
 				
 				//Check if player has a ban, in that case enable it
 				for(Effect ban : bans) {
-					if(ban != null && ban.getTypeOfEffect() == EffectType.OBTAIN_BAN) {
+					if(ban != null && ban.getTypeOfEffect() == EffectType.OBTAIN_BAN && tempResource != null) {
 						ObtainBan obtainBan = (ObtainBan) ban;
 						obtainBan.setResource(tempResource);
 						obtainBan.enableEffect(this);
