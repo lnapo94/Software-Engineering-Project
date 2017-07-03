@@ -56,7 +56,7 @@ public class PayBanDialog extends JDialog{
 		this.setLocation(location);
 		BorderLayout layout = new BorderLayout(); 
 		this.setLayout(layout);
-		Font font = new Font("Papyrus", Font.ITALIC, (int)(dimension.getHeight()*0.07));
+		Font font = new Font("Papyrus", Font.ITALIC, (int)(dimension.getWidth()*0.025));
 
 		//Add the description JLabel
 		JLabel description = new JLabel();

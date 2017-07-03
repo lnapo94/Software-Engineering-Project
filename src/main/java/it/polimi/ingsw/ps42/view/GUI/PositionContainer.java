@@ -25,11 +25,16 @@ public class PositionContainer extends FunctionalLabel{
 	public void placeFamiliar(BufferedImage familiarImage){
 		if(familiarPlaced.size() == 8)
 			resizeLayout();
+		buildFamiliarLabel(familiarImage);
+			
+	}
+	
+	private void buildFamiliarLabel(BufferedImage familiarImage){
 		JLabel familiarLabel = new JLabel();
 		familiarLabel.setSize(labelPreferredSize);
+		familiarLabel.setIcon(resizeImage(familiarImage, familiarLabel.getSize()));
 		familiarPlaced.add(familiarLabel);
 		this.add(familiarLabel);
-			
 	}
 	
 	private void resizeLayout(){

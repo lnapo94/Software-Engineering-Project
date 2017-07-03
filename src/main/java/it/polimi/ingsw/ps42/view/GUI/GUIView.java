@@ -199,10 +199,10 @@ public class GUIView extends View implements TableInterface{
 		
 		//Build the JButton to skip a move
 		buildSkipMoveButton();
-		
+
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
-
+		
 	}
 	/**
 	 * Initialize the Card Position Label
@@ -1003,7 +1003,7 @@ public class GUIView extends View implements TableInterface{
 		skipMove = new JButton("Skip Move");
 		skipMove.setLocation((int)(tableImageDimension.getWidth() * 0.01), (int)(tableImageDimension.getHeight() * 0.91));
 		skipMove.setSize((int)(tableImageDimension.getWidth() * 0.15), (int)(tableImageDimension.getHeight() * 0.05));
-		skipMove.setFont(new Font("Papyrus", Font.ITALIC, (int)(skipMove.getHeight()*0.4)));
+		skipMove.setFont(new Font("Papyrus", Font.ITALIC, (int)(skipMove.getWidth()*0.16)));
 		mainLayeredPane.add(skipMove, 0);
 		skipMove.addActionListener(new ActionListener() {
 			
@@ -1013,8 +1013,11 @@ public class GUIView extends View implements TableInterface{
 				setEmptyMove();
 				disableSkipButton();
 				disableMove();
-				if(bonusFamiliar != null)
+				if(bonusFamiliar != null){
+					bonusFamiliar.setIcon(null);
 					bonusFamiliar.setEnabled(false);
+					mainLayeredPane.remove(bonusFamiliar);
+				}
 			}
 		});
 		disableSkipButton();
@@ -1052,8 +1055,11 @@ public class GUIView extends View implements TableInterface{
 		this.nextMove = move;
 		disableMove();
 		disableSkipButton();
-		if(bonusFamiliar != null)
-			bonusFamiliar.setEnabled(false);;
+		if(bonusFamiliar != null){
+			bonusFamiliar.setIcon(null);
+			bonusFamiliar.setEnabled(false);
+			mainLayeredPane.remove(blackFamiliar);
+		}
 	}
 	
 	@Override
@@ -1073,9 +1079,9 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void chooseIfPayBan(int banPeriod) {
 		// Ask to the Player if he wants to pay for the current Period Ban
-		
-		Dimension banWindowDimension = new Dimension((int)(mainFrame.getWidth()*0.5),(int)(mainFrame.getHeight()*0.25) );
-		Point banWindowLocation = new Point((int)(tableImageDimension.getWidth()*0.5),(int)(tableImageDimension.getHeight()*0.5) );
+
+		Dimension banWindowDimension = new Dimension((int)(mainFrame.getWidth()*0.7),(int)(mainFrame.getHeight()*0.48) );
+		Point banWindowLocation = new Point((int)(tableImageDimension.getWidth()*0.4),(int)(tableImageDimension.getHeight()*0.4) );
 		new PayBanDialog(this, banWindowDimension ,banWindowLocation, bans.get(banPeriod).getCardImage(), banPeriod );
 		
 	}
