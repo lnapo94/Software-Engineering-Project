@@ -139,7 +139,7 @@ public class IncrementWindow extends JDialog{
 		
 		
 		//Set the increment component for the Action
-		slider = new JSlider(0, maxIncrement, (int)(maxIncrement/2));
+		slider = new JSlider(0, maxIncrement, 0);
 		slider.setPaintTicks(true);
 		slider.setPaintLabels(true);
 		slider.setFont(font);

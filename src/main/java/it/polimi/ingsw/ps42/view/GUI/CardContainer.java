@@ -41,6 +41,7 @@ public class CardContainer extends FunctionalLabel{
 				swap(violetCard);
 			else if(blueCard.contains(e.getSource()))
 				swap(blueCard);
+			
 		}
 
 		@Override
@@ -188,7 +189,7 @@ public class CardContainer extends FunctionalLabel{
 			}
 			
 		}
-		deck.get(0).placeCard(imageToSwap);	
-		
+		deck.get(0).placeCard(imageToSwap);
+		cardZoom.showZoomedCard(deck.get(deck.size()-1).getCardImage());
 	}
 }
