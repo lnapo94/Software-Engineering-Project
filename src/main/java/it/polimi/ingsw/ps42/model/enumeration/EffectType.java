@@ -1,7 +1,12 @@
 package it.polimi.ingsw.ps42.model.enumeration;
 
+/**
+ * Class that represents all the possibles effects available in our implementation
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public enum EffectType {
-	//Type of effect used in "normal" cards and ban cards
 	
 	OBTAIN("Obtain"), OBTAIN_BAN("Obtain_Ban"), DO_ACTION("Do_Action"), INCREASE_ACTION("Increase_Action"), 
 	FOR_EACH_OBTAIN("For_Each_Obtain"), CARD_FOR_EACH_OBTAIN("Card_For_Each_Obtain"), COUNCIL_OBTAIN("Council_Obtain"), 
@@ -14,9 +19,20 @@ public enum EffectType {
 	
 	private final String message;
 	
+	/**
+	 * Private method used to set a message in the Enum Object
+	 * @param message		The message to set to the Enum Object
+	 */
 	private EffectType(String message) {
 		this.message = message;
 	}
+	
+	/**
+	 * Method used to cast a String into an Enum Object
+	 * 
+	 * @param effectType		The effect that represents the Enum Object
+	 * @return					The real Enum Object
+	 */
 	public static EffectType parseInput(String effectType){
 		return Enum.valueOf(EffectType.class, effectType.toUpperCase());
 	}

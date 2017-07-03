@@ -9,6 +9,13 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * ObtainBan Class. This effect is the classical obtain presents in bans cards. For example:
+ * 		Earn one less money every time the player earns money...
+ * This effect is taken from file, so it can be customizable
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ObtainBan extends Effect{
 	
 	/**
@@ -18,19 +25,30 @@ public class ObtainBan extends Effect{
 	private Packet costs;
 	private Resource resource;
 	
+	/**
+	 * Simple constructor to enable the logger
+	 */
 	public ObtainBan() {
 		super();
 	}
 	
+	/**
+	 * Construct of this effect
+	 * 
+	 * @param costs 	Packet that represent the costs of this effect. This costs will be applied
+	 * 					each time the player earns the specify requirement
+	 */
 	public ObtainBan(Packet costs) {
 		super(EffectType.OBTAIN_BAN);
 		this.costs = costs;
 	}
 
+	/**
+	 * Enable the ObtainBan effect, hence decrease player's resource if
+	 * he gains an exactly resource
+	 */
 	@Override
 	public void enableEffect(Player player) {
-		//Enable the ObtainBan effect, hence decrease player's resource if
-		//he gains an exactly resource
 		logger = Logger.getLogger(ObtainBan.class);
 		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		for(Unit cost : costs)
@@ -51,16 +69,26 @@ public class ObtainBan extends Effect{
 		}
 	}
 	
+	/**
+	 * Method used to set the incremented resource in player to check with this effect
+	 * @param resource		The incremented resource to check
+	 */
 	public void setResource(Resource resource) {
 		//Used to set the Resource for a control
 		this.resource = resource;
 	}
 	
+	/**
+	 * Method used to clone this effect
+	 */
 	@Override
 	public ObtainBan clone() {
 		return new ObtainBan(costs.clone());
 	}
 	
+	/**
+	 * Method used to print this effect in the view
+	 */
 	@Override
 	public String print() {
 		String stringToShow = new String();
