@@ -1160,6 +1160,10 @@ public class GUIView extends View implements TableInterface{
 		return mainFrame;
 	}
 	
+	public Player getPlayer() {
+		return this.player;
+	}
+	
 	public static void main(String[] args) {
 		Logger logger = Logger.getLogger(GUIView.class);
 		EventQueue.invokeLater(new Runnable() {
