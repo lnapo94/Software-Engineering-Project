@@ -1,13 +1,17 @@
 package it.polimi.ingsw.ps42.view.GUI.dialog;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -17,6 +21,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.apache.log4j.Logger;
 
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.parser.ImageLoader;
@@ -32,72 +38,103 @@ public class LeaderCardShowDialog extends JDialog {
 	private GUIView view;
 	private JFrame parent;
 	
-	private List<JLabel> cardsContainer;
-	private ImageLoader loader;
+	//Player's leader cards list
+	private List<LeaderCard> leaderCardList;
+	private List<LeaderCard> activatedList;
+	private List<LeaderCard> totalCardList;
 	
-	private List<LeaderCard> playersLeaderCards;
-	private List<LeaderCard> activatedLeaderCardsList;
+	private List<JLabel> cardLabels;
+	private List<JLabel> activatedCardLabel;
+	private List<JLabel> totalLabels;
 	
-	private JButton discard;
 	private JButton enable;
 	private JButton cancel;
+	private JButton discard;
+	
+	private ImageLoader loader;
+	
+	private int index = -1;
+	
+	private transient Logger logger = Logger.getLogger(LeaderCardShowDialog.class);
 	
 	public LeaderCardShowDialog(GUIView view) throws IOException {
 		super(view.getMainFrame());
+		//Set the variables
 		this.view = view;
 		this.parent = view.getMainFrame();
 		
+		//Set the player's lists
+		this.leaderCardList = view.getPlayer().getLeaderCardList();
+		this.activatedList = view.getPlayer().getActivatedLeaderCard();
+		
+		//TotalCards list
+		this.totalCardList = new ArrayList<>();
+		this.totalCardList.addAll(activatedList);
+		this.totalCardList.addAll(leaderCardList);
+		
+		//Create the cardLabels list
+		cardLabels = new ArrayList<>();
+		activatedCardLabel = new ArrayList<>();
+		
+		//Total label list
+		totalLabels = new ArrayList<>();
+		
+		//Create the loader
 		loader = new ImageLoader("Resource//Configuration//imagePaths.json");
 		
-		playersLeaderCards = view.getPlayer().getLeaderCardList();
-		activatedLeaderCardsList = view.getPlayer().getActivatedLeaderCard();
+		//Set the main layout
+		this.setLayout(new GridLayout(1, leaderCardList.size() + activatedList.size() + 1));
 		
-		int cardsToShow = playersLeaderCards.size() + activatedLeaderCardsList.size();
-
-		this.setLayout(new GridLayout(2, 1));
+		//Show the activated leader cards before
+		loadImage(totalCardList, this.getContentPane());
 		
-		JPanel cardPanel = new JPanel(new GridLayout(1, cardsToShow));
-		
-		createLabel(activatedLeaderCardsList, cardPanel);
-		createLabel(playersLeaderCards, cardPanel);
-		
-		this.add(cardPanel);
-		
-		enable = new JButton("Confirm");
-		cancel = new JButton("Cancel");
-		discard = new JButton("Discard");
-		
+		//Add the buttons to the layout
 		JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
 		
+		enable = new JButton("Enable");
+		discard = new JButton("Discard");
+		cancel = new JButton("Cancel");
+		
+		enable.addActionListener(new EnableAction());
+		discard.addActionListener(new DiscardAction());
+		cancel.addActionListener(new CancelAction());
+		
 		buttonPanel.add(enable);
-		buttonPanel.add(cancel);
 		buttonPanel.add(discard);
+		buttonPanel.add(cancel);
 		
 		this.add(buttonPanel);
 	}
 	
 	public void run() {
 		this.pack();
-		this.setResizable(false);
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setVisible(true);
+		this.setResizable(false);
 	}
 	
-	private void createLabel(List<LeaderCard> list, JPanel cardPanel) throws IOException {
-		for(int i = 0; i < list.size(); i++) {
+	private void loadImage(List<LeaderCard> list, Container container) throws IOException {
+		for(int i = 0; i < totalCardList.size(); i++) {
 			JLabel label = new JLabel();
-			cardsContainer.add(label);
-			cardPanel.add(label);
+		
+			totalLabels.add(label);
 			BufferedImage image = loader.loadLeaderCardImage(list.get(i).getName());
 			
 			label.setSize((int) (parent.getHeight() * 0.30), (int) (parent.getWidth() * 0.25));
-			
-			label.addMouseListener(new MyMouseListener());
-			
-			label.setIcon(resizeImage(image,new Dimension(label.getWidth(), label.getHeight())));
 			label.setToolTipText(list.get(i).getName());
 			
+			label.setIcon(resizeImage(image,new Dimension(label.getWidth(), label.getHeight())));
 			label.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+			
+			if(activatedList.contains(list.get(i).getName())) {
+				label.setBorder(BorderFactory.createLineBorder(Color.GREEN, 5));
+				activatedCardLabel.add(label);
+			} else {
+				cardLabels.add(label);
+			}
+			
+			label.addMouseListener(new CardsMouseListener(label));
+			container.add(label);
+			label.setVisible(true);
 		}
 	}
 	
@@ -114,38 +151,91 @@ public class LeaderCardShowDialog extends JDialog {
 		return new ImageIcon(cardResized);
 	}
 	
-	private class MyMouseListener implements MouseListener {
+	private void close() {
+		this.dispose();
+	}
+	
+	private class EnableAction implements ActionListener {
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
+		public void actionPerformed(ActionEvent arg0) {
+			if(index != -1) {
+				view.sendLeaderCardUpdate(totalCardList.get(index));
+				close();
+			}
 		}
+		
+	}
+	
+	private class DiscardAction implements ActionListener {
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
+		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			
 		}
 		
 	}
+	
+	private class CancelAction implements ActionListener {
 
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			close();			
+		}
+		
+	}
+	
+	private class CardsMouseListener implements MouseListener {
+		
+		private JLabel label;
+		
+		public CardsMouseListener(JLabel label) {
+			this.label = label;
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			label.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 10));
+			
+			for(JLabel otherLabel : cardLabels) {
+				if(otherLabel != label) {
+					if(activatedCardLabel.contains(otherLabel)) {
+						otherLabel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 5));
+					} else {
+						otherLabel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+					}
+				}
+			}
+			
+			index = totalLabels.indexOf(label);
+			logger.info("Index in leader card show dialog: " + index);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 }
