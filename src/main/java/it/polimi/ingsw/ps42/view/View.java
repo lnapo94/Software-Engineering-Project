@@ -99,6 +99,14 @@ public abstract class View extends Observable implements Observer {
 		return player.getPlayerID().equals(playerID);
 	}
 	
+	protected int indexOfOtherPlayer(String playerID) throws ElementNotFoundException{
+		for(int i=0; i<otherPlayers.size(); i++){
+			if(otherPlayers.get(i).getPlayerID().equals(playerID))
+				return i;
+		}
+		throw new ElementNotFoundException("Player in View not Found");
+	}
+	
 	public void askBonusBar(BonusBarMessage message) {
 		
 		if( hasToAnswer(message.getPlayerID())){

@@ -33,19 +33,19 @@ public class DraggableComponent extends FunctionalLabel {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			//Nothing to do
 			
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			//Nothing to do
 			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			//Nothing to do
 			
 		}
 
@@ -90,7 +90,7 @@ public class DraggableComponent extends FunctionalLabel {
 
 		@Override
 		public void mouseMoved(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			//Nothing to do
 			
 		}
 		

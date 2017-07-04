@@ -158,4 +158,10 @@
   "1": "Resource//Images//BonusBar//1.png",
   "2": "Resource//Images//BonusBar//2.png",
   "3": "Resource//Images//BonusBar//3.png"
+}{
+  "Black": "Resource//Images//FamiliarIcon//Black",
+  "Orange": "Resource//Images//FamiliarIcon//Orange",
+  "White": "Resource//Images//FamiliarIcon//White",
+  "Neutral": "Resource//Images//FamiliarIcon//Neutral",
+  "BonusFamiliar": "Resource//Images//FamiliarIcon//BonusFamiliar.png"
 }

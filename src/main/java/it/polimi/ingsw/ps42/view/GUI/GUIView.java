@@ -278,26 +278,26 @@ public class GUIView extends View implements TableInterface{
 		int deltaX = (int)(tableImageDimension.getWidth()*0.56 );
 		int deltaY = (int)(tableImageDimension.getHeight()*0.93);
 		
-		blackFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedBlackFamiliar.png")), FamiliarColor.BLACK);
+		blackFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), imageLoader.loadFamiliarImage( 0, FamiliarColor.BLACK), FamiliarColor.BLACK);
 		blackFamiliar.enableListener();
 		blackFamiliar.setTable(this);
 		mainPane.add(blackFamiliar, 2);
 		
 		int border = (int)(blackFamiliar.getWidth()*1.1); 
 		deltaX += border;
-		whiteFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedWhiteFamiliar.png")), FamiliarColor.WHITE);
+		whiteFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), imageLoader.loadFamiliarImage( 0, FamiliarColor.WHITE), FamiliarColor.WHITE);
 		whiteFamiliar.enableListener();
 		whiteFamiliar.setTable(this);
 		mainPane.add(whiteFamiliar, 2);
 		
 		deltaX += border;
-		orangeFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedOrangeFamiliar.png")), FamiliarColor.ORANGE);
+		orangeFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), imageLoader.loadFamiliarImage(0, FamiliarColor.ORANGE), FamiliarColor.ORANGE);
 		orangeFamiliar.enableListener();
 		orangeFamiliar.setTable(this);
 		mainPane.add(orangeFamiliar, 2);
 		
 		deltaX += border;
-		neutralFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/RedNeutralFamiliar.png")), FamiliarColor.NEUTRAL);
+		neutralFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), imageLoader.loadFamiliarImage(0, FamiliarColor.NEUTRAL), FamiliarColor.NEUTRAL);
 		neutralFamiliar.enableListener();
 		neutralFamiliar.setTable(this);
 		mainPane.add(neutralFamiliar, 2);
@@ -841,7 +841,7 @@ public class GUIView extends View implements TableInterface{
 				setOccupied(playerID, color, firstYield);
 			else
 				try {
-					secondYield.placeFamiliar(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+					secondYield.placeFamiliar(imageLoader.loadFamiliarImage(this.indexOfOtherPlayer(playerID)+1, color));
 					mainLayeredPane.updateUI();
 					logger.debug("Placing familiar in second position");
 				} catch (IOException e) {
@@ -859,7 +859,7 @@ public class GUIView extends View implements TableInterface{
 				setOccupied(playerID, color, firstProduce);
 			else
 				try {
-					secondProduce.placeFamiliar(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+					secondProduce.placeFamiliar(imageLoader.loadFamiliarImage(this.indexOfOtherPlayer(playerID)+1, color));
 					mainLayeredPane.updateUI();
 					logger.debug("Placing familiar in second position");
 				} catch (IOException e) {
@@ -874,7 +874,7 @@ public class GUIView extends View implements TableInterface{
 		super.setFamiliarInCouncil(playerID, color);
 		if( !hasToAnswer(playerID)){
 			try{
-				council.placeFamiliar(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+				council.placeFamiliar(imageLoader.loadFamiliarImage(this.indexOfOtherPlayer(playerID)+1, color));
 			} catch (IOException e) {
 				logger.error("Image for "+color.toString()+" of the player: "+playerID+" not found!");
 				logger.info(e);
@@ -885,11 +885,16 @@ public class GUIView extends View implements TableInterface{
 	private void setOccupied(String playerID, FamiliarColor color, JLabel position){
 		
 		try {
-			position.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), position.getSize()));
-		} catch (IOException e) {
+			position.setIcon(resizeImage(imageLoader.loadFamiliarImage(this.indexOfOtherPlayer(playerID)+1, color), position.getSize()));
+		}
+		catch (IOException e) {
 			logger.error("Image for "+color.toString()+" of the player: "+playerID+" not found!");
 			logger.info(e);
 		}
+		catch (ElementNotFoundException e) {
+			logger.error(playerID+" not found in arrayList!");
+			logger.info(e);		
+			}
 	}
 	
 	@Override
@@ -1117,7 +1122,7 @@ public class GUIView extends View implements TableInterface{
 		int deltaX = (int)(tableImageDimension.getWidth()*0.56 + blackFamiliar.getWidth() * 1.1 * 4);
 		int deltaY = (int)(tableImageDimension.getHeight()*0.93);
 		try {
-			bonusFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")), null);
+			bonusFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), imageLoader.loadBonusFamiliarImage(), null);
 			bonusFamiliar.enableListener();
 			bonusFamiliar.setTable(this);
 			mainLayeredPane.add(bonusFamiliar, 0);

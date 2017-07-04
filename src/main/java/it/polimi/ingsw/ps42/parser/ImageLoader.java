@@ -13,6 +13,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonStreamParser;
 import com.google.gson.reflect.TypeToken;
 
+import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 
 public class ImageLoader extends Loader{
@@ -24,6 +25,7 @@ public class ImageLoader extends Loader{
 	private HashMap<String, String> bansPath;
 	private HashMap<String, String> resourcePath;
 	private HashMap<String, String> bonusBarPath;
+	private HashMap<String, String> familiarPath;
 	
 	//Conversion for the dice
 	private HashMap<String, String> dicePath;
@@ -56,6 +58,9 @@ public class ImageLoader extends Loader{
 		if(bonusBarPath == null)
 			throw new IOException();
 	
+		familiarPath = loader();
+		if(familiarPath == null)
+			throw new IOException();
 	}
 
 	@Override
@@ -119,6 +124,14 @@ public class ImageLoader extends Loader{
 	
 	public BufferedImage loadBonusBarImage(String name) throws IOException{
 		return ImageIO.read(new File(bonusBarPath.get(name)));
+	}
+	
+	public BufferedImage loadFamiliarImage(Integer playerNumber, FamiliarColor familiarColor) throws IOException{
+		return ImageIO.read(new File(familiarPath.get(familiarColor.toString()) + "//" + playerNumber.toString() + ".png"));
+	}
+	
+	public BufferedImage loadBonusFamiliarImage() throws IOException{
+		return ImageIO.read(new File(familiarPath.get("BonusFamiliar")));
 	}
 	
 	public int cardsMapSize() {
