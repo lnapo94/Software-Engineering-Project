@@ -13,8 +13,11 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 
 public abstract class Position {
 
-	//this is the abstract class for the position, familiar will be set by the game logic when necessary
 	
+	/**
+	 * This is the abstract class for the position, familiar will be set by the game logic when necessary.
+	 * A Position has a Type that represent the kind of
+	 */
 	private ActionType type;
 	private Familiar familiar;
 	private Obtain bonus;

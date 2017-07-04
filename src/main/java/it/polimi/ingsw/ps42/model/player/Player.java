@@ -553,6 +553,7 @@ public class Player extends Observable {
 	}
 	//TODO carte leader
 	public void setLeaderCard(LeaderCard card) {
+		card.setOwner(this);
 		this.leaderCardsList.add(card);
 	}
 	
@@ -589,14 +590,18 @@ public class Player extends Observable {
 		notifyObservers(request);
 	}
 	
+	public void setActivatedLeaderCard(LeaderCard card) {
+		leaderCardsList.remove(card);
+		activatedLeaderCard.add(card);
+	}
+	
 	public void enableLeaderCard(LeaderCard chosenCard) {
 		//Enable the leader card if the player has it in his list of leader card
 		
-		while(!leaderCardsList.isEmpty()) {
+		for(int i = 0; i < leaderCardsList.size(); i++) {
 			LeaderCard card = leaderCardsList.get(0);
-			if(card.getName() == chosenCard.getName() && card.canEnableCard()) {
-				leaderCardsList.remove(leaderCardsList.indexOf(card));
-				activatedLeaderCard.add(card);
+			if(card.getName().equals(chosenCard.getName()) && card.canEnableCard()) {
+				setActivatedLeaderCard(card);
 				
 				if(card.getOnceARoundEffect() != null)
 					card.enableOnceARoundEffect();
