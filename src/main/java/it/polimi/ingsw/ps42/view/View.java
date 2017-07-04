@@ -16,6 +16,7 @@ import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.EmptyMove;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
+import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.LoginMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerMove;
@@ -471,6 +472,12 @@ public abstract class View extends Observable implements Observer {
 		
 		Player player = searchPlayer(playerID);
 		player.enableLeaderCard(card);
+	}
+	
+	public void sendLeaderCardUpdate(LeaderCard card) {
+		LeaderCardUpdateMessage message = new LeaderCardUpdateMessage(player.getPlayerID(), card);
+		setChanged();
+		notifyObservers(message);
 	}
 	
 	//Methods to handle the game initialization and end
