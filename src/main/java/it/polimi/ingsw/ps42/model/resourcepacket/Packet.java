@@ -13,16 +13,26 @@ import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializable {
 	
 	/**
+	 * This class is a container of Units and is used as the basic Resource reference in all the Game
 	 * 
+	 * @author Luca Napoletano, Claudio Montanari
 	 */
 	private static final long serialVersionUID = 4208699031549844006L;
 	private List<Unit> list;
 	
+	/**
+	 * Default Constructor, builds an empty Packet
+	 */
 	public	Packet()
 	{	//Builder of an empty packet
 		list = new ArrayList<>() ;
 	}
 	
+	/**
+	 * Special Constructor, builds a Packet starting from a Map
+	 * 
+	 * @param resource is a Map where key is Resource type and value is Resource quantity
+	 */
 	public Packet(Map<Resource, Integer> resource)
 	{	//Packet builder from a Map, used in BonusBar for e.g.
 		this();
@@ -33,11 +43,21 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 		});
 	}
 	
+	/**
+	 * Getter method used to return the list of unit that belongs to the Packet
+	 * 
+	 * @return The list of Unit that belongs to the Packet
+	 */
 	public List<Unit> getPacket() { 
 		return this.list;
 		
 	}
 	
+	/**
+	 * Method used to sum a Unit to the current Packet of Resources
+	 * 
+	 * @param unit, the Unit to sum to the Packet
+	 */
 	public void addUnit(Unit unit) {
 		int pos;
 		try {
@@ -52,6 +72,12 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 		}
 	}
 	
+	/**
+	 * Method used to confront two Packets, return true if current Packet contains all the Resources of the passed Packet
+	 * 
+	 * @param packet, the Packet that is used to make the confront
+	 * @return true if the Packet contains at least all the Resources of the Packet passed
+	 */
 	public boolean isGreater(Packet packet){
 		//Checks if the packet has almost all the resources of the packet passed
 		if(packet!=null){
@@ -74,6 +100,14 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 		return true;		//this mean the packet passed is either empty or every units is less/equal than the units of the instance
 		
 	}
+	
+	/**
+	 * Private method used to search a unit in a Packet, used as support to add and confront operations
+	 * 
+	 * @param resource, the Resource unit to search in the Packet
+	 * @return the index of the unit passed if that exist otherwise throws an Exception
+	 * @throws ElementNotFoundException if the Resource passed is not contained in the Packet
+	 */
 	private int search(Resource resource) throws ElementNotFoundException{
 		for (Unit unit : list) {
 			if(unit.getResource()==resource)
@@ -83,11 +117,23 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 		throw new ElementNotFoundException("Method search in packet, no unit present in list");
 	}
 	
+	/**
+	 * Method used to remove a unit to the current Packet if is contained in it
+	 * 
+	 * @param unit, the Unit to subtract
+	 * @throws ElementNotFoundException if the Packet does not contains the Unit passed
+	 */
 	public void removeUnit(Unit unit) throws ElementNotFoundException {
 		int index = search(unit.getResource());
 		this.list.remove(index);
 	}
 	
+	/**
+	 * Method used to subtract a Unit to the Packet, if the quantity of that unit is not sufficient then the quantity is
+	 * automatically set to zero
+	 *  
+	 * @param unitToSubtract, the Unit that will be subtracted to the Packet
+	 */
 	public void subtractUnit(Unit unitToSubtract) {
 		//Subtract a unit from the packet, if the result quantity goes under 0
 		//the quantity is set to zero automatically

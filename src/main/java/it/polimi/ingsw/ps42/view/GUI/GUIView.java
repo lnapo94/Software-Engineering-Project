@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.view.GUI;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -22,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -1085,6 +1087,15 @@ public class GUIView extends View implements TableInterface{
 			logger.info(e);
 		}
 		super.setGameBans(message);
+	}
+	
+	@Override
+	public void setBanToPlayer(String playerID, int banPeriod) throws ElementNotFoundException {
+		super.setBanToPlayer(playerID, banPeriod);
+		logger.debug("Setting the ban to the current player");
+		if(hasToAnswer(playerID)){
+			bans.get(banPeriod).setBorder(new LineBorder(Color.RED, (int)(tableImageDimension.getWidth()*0.007)));
+		}
 	}
 	
 	@Override
