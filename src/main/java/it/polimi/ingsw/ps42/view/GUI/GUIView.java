@@ -1095,6 +1095,7 @@ public class GUIView extends View implements TableInterface{
 		logger.debug("Setting the ban to the current player");
 		if(hasToAnswer(playerID)){
 			bans.get(banPeriod).setBorder(new LineBorder(Color.RED, (int)(tableImageDimension.getWidth()*0.007)));
+			mainLayeredPane.updateUI();
 		}
 	}
 	

@@ -54,9 +54,20 @@ public class CouncilObtain extends Effect {
 		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		
 		this.player=player;
-		CouncilRequest request=new CouncilRequest(player.getPlayerID(), possibleConversion, quantity);
+		CouncilRequest request=new CouncilRequest(player.getPlayerID(), clonePossibleEffect(possibleConversion), quantity);
 		player.addCouncilRequests(request);
 		
+	}
+	
+	private List<Obtain> clonePossibleEffect(List<Obtain> list) {
+		List<Obtain> temp = new ArrayList<>();
+		
+		if(list != null) {
+			for(Obtain effect : list)
+				temp.add(effect);
+		}
+		
+		return temp;
 	}
 
 	/**
