@@ -52,6 +52,7 @@ import it.polimi.ingsw.ps42.view.GUI.dialog.BonusBarRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.CardRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.CouncilRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardChooseDialog;
+import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardShowDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.PayBanDialog;
 
 public class GUIView extends View implements TableInterface{
@@ -1074,16 +1075,30 @@ public class GUIView extends View implements TableInterface{
 		leaderCardButton.setSize(skipMove.getSize());
 		leaderCardButton.setFont(new Font("Papyrus", Font.ITALIC, (int)(leaderCardButton.getWidth()*0.13)));
 		mainLayeredPane.add(leaderCardButton, 0);
-		leaderCardButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Show the Leader Cards Window
-				LeaderCardShowDialog leaderCardsDialog = new LeaderCardShowDialog(this);
-				leaderCardsDialog.run();
-			}
-		});
+		leaderCardButton.addActionListener(new MyActionLister(this));
 				
+		
+	}
+	
+	private class MyActionLister implements ActionListener {
+
+		private GUIView view;
+		
+		public MyActionLister(GUIView view) {
+			this.view = view;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			try {
+				LeaderCardShowDialog dialog = new LeaderCardShowDialog(view);
+				dialog.run();
+			} catch (IOException e1) {
+				logger.error("Error in loading the leader cards imager");
+				logger.info(e1);
+			}
+		}
 		
 	}
 	
