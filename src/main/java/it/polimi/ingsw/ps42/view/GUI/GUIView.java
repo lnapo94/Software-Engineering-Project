@@ -71,6 +71,9 @@ public class GUIView extends View implements TableInterface{
 	//The JButton used to skip a move
 	private JButton skipMove;
 	
+	//JButton used to show the LeaderCardShowDialog
+	private JButton leaderCardButton;
+	
 	//The Image of the familiar currently moving
 	private DraggableComponent movingFamiliar;
 	
@@ -202,7 +205,10 @@ public class GUIView extends View implements TableInterface{
 		
 		//Build the JButton to skip a move
 		buildSkipMoveButton();
-
+		
+		//Build the JButton for the LeaderCards
+		buildLeaderCardsButton();
+		
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
 
@@ -1060,6 +1066,25 @@ public class GUIView extends View implements TableInterface{
 			}
 		});
 		disableSkipButton();
+	}
+	
+	private void buildLeaderCardsButton(){
+		leaderCardButton = new JButton("Leader Cards");
+		leaderCardButton.setLocation((int)(tableImageDimension.getWidth() * 0.01), (int)(tableImageDimension.getHeight() * 0.84));
+		leaderCardButton.setSize(skipMove.getSize());
+		leaderCardButton.setFont(new Font("Papyrus", Font.ITALIC, (int)(leaderCardButton.getWidth()*0.13)));
+		mainLayeredPane.add(leaderCardButton, 0);
+		leaderCardButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Show the Leader Cards Window
+				LeaderCardShowDialog leaderCardsDialog = new LeaderCardShowDialog(this);
+				leaderCardsDialog.run();
+			}
+		});
+				
+		
 	}
 	
 	private void enableSkipButton(){
