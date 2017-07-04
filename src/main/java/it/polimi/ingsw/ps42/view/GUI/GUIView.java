@@ -94,8 +94,10 @@ public class GUIView extends View implements TableInterface{
 	private LinkedList<JLabel> blueTowerForFamiliar;
 	private LinkedList<JLabel> violetTowerForFamiliar;
 	//Yield and Product Positions
-	private List<JLabel> yield;
-	private List<JLabel> produce;
+	private JLabel firstYield;
+	private PositionContainer secondYield;
+	private JLabel firstProduce;
+	private PositionContainer secondProduce;
 	
 	//Council Positions
 	private PositionContainer council;
@@ -319,20 +321,27 @@ public class GUIView extends View implements TableInterface{
 		placeFamiliarPosition(mainPane, positionDimension, violetTowerForFamiliar, deltaX);		
 		
 		//Build the Council related familiarMove positions
-		Dimension positionContainerDimension = new Dimension((int)(tableImageDimension.getWidth()*0.3), (int)(tableImageDimension.getHeight()*0.11));
+		Dimension positionContainerDimension = new Dimension((int)(tableImageDimension.getWidth()*0.3), (int)(tableImageDimension.getHeight()*0.12));
 		Point positionContainerLocation = new Point((int)(tableImageDimension.getWidth()*0.52), (int)(tableImageDimension.getHeight()*0.76));
 		council = new PositionContainer(positionContainerDimension, positionContainerLocation, new Dimension((int)(tableImageDimension.getWidth()*0.06), (int)(tableImageDimension.getHeight()*0.05)));
 		mainPane.add(council, 0);
 		
 		//Build the Market, Yield and Product familiarMove positions
-		yield = new ArrayList<>();
-		produce = new ArrayList<>();
 		market = new ArrayList<>();
 
 		int deltaY = (int)(tableImageDimension.getHeight()*0.11);
-		placeYieldAndProductPosition(mainPane, positionDimension, produce, deltaY);
+		firstProduce = placeYieldAndProductPosition(mainPane, positionDimension, firstProduce, deltaY);
+		//Build the second Position
+		deltaX = (int)(tableImageDimension.getWidth() + cardZoom.getWidth() + lowTableDimension.getWidth()*0.14);
+		Dimension secondPositionDimension = new Dimension((int)(tableImageDimension.getWidth()*0.25), (int)(tableImageDimension.getHeight()*0.1));
+		secondProduce = new PositionContainer(secondPositionDimension, new Point(deltaX, (int)(deltaY*0.75)), positionDimension);
+		mainPane.add(secondProduce, 0);
+		
 		deltaY += (int)(tableImageDimension.getHeight()*0.145);
-		placeYieldAndProductPosition(mainPane, positionDimension, yield, deltaY);
+		firstYield = placeYieldAndProductPosition(mainPane, positionDimension, firstYield, deltaY);
+		//Build the second Position
+		secondYield = new PositionContainer(secondPositionDimension, new Point(deltaX, (int)(deltaY * 0.9)), positionDimension);
+		mainPane.add(secondYield, 0);
 		
 		deltaX = (int)(tableImageDimension.getWidth()*1.615 + cardZoom.getWidth() );
 		deltaY = (int)(tableImageDimension.getHeight()*0.08);
@@ -348,7 +357,7 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	private void placeMarket(Dimension positionDimension, int x, int y, JLayeredPane mainPane) throws IOException{
-
+		
 		JLabel position = new JLabel();
 		position.setSize(positionDimension);
 		position.setLocation(x, y);
@@ -356,23 +365,16 @@ public class GUIView extends View implements TableInterface{
 		mainPane.add(position, 0);
 	}
 	
-	private void placeYieldAndProductPosition(JLayeredPane mainPane, Dimension positionDimension, List<JLabel> yieldAndProduct, int deltaY) throws IOException{
+	private JLabel placeYieldAndProductPosition(JLayeredPane mainPane, Dimension positionDimension, JLabel firstPosition, int deltaY) throws IOException{
 		
+		//Build the first position
 		int deltaX = (int)(tableImageDimension.getWidth()*1.03 + cardZoom.getWidth() );
-		JLabel position = new JLabel();
-		position.setSize(positionDimension);
-		position.setLocation(deltaX, deltaY);
-		yieldAndProduct.add(position);
-		mainPane.add(position, 0);
+		firstPosition = new JLabel();
+		firstPosition.setSize(positionDimension);
+		firstPosition.setLocation(deltaX, deltaY);
+		mainPane.add(firstPosition, 0);
 		deltaX += positionDimension.getWidth();
-		for(int i=0; i<2; i++){
-			deltaX += positionDimension.getWidth()*1.4;
-			JLabel tempPosition = new JLabel();
-			tempPosition.setSize(positionDimension);
-			tempPosition.setLocation(deltaX, deltaY);
-			yieldAndProduct.add(tempPosition);
-			mainPane.add(tempPosition, 0);
-		}
+		return firstPosition;
 	}
 	
 	private void placeFamiliarPosition(JLayeredPane mainPane, Dimension positionDimension, LinkedList<JLabel> tower, int rightShift) throws IOException{
@@ -494,40 +496,38 @@ public class GUIView extends View implements TableInterface{
 			return true;
 		}
 		
-		/*for (JLabel position : council) {
-			if( containsPoint(position, x, y) ){
-				if(color != null)
-					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
-				actionValue = 1;
-				createNewMove( ActionType.COUNCIL, color, council.indexOf(position), actionValue, familiarMoving);
-				return true;
-			}
+		if(containsPoint(firstProduce, x, y)){
+			if(color != null)
+				firstProduce.setIcon(resizeImage(familiarMoving.getImage(), firstProduce.getSize()));
+			actionValue = 1;
+			createNewMove(ActionType.PRODUCE, color, 0, actionValue, familiarMoving);
+			return true;
 		}
-		*/
-		for (JLabel position : yield) {
-			if( containsPoint(position, x, y) ){
-				if(color != null)
-					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
-				if(yield.indexOf(position) == 0)
-					actionValue = 1;
-				else
-					actionValue = -3;
-				createNewMove( ActionType.YIELD, color, yield.indexOf(position), actionValue, familiarMoving);
-				return true;
-			}
+		
+		if(containsPoint(secondProduce, x, y) && firstProduce.getIcon() != null){
+			if(color != null)
+				secondProduce.placeFamiliar(familiarMoving.getImage());
+			actionValue = -3;
+			createNewMove(ActionType.PRODUCE, color, (secondProduce.getLastIndex()+1), actionValue, familiarMoving);
+			return true;
 		}
-		for (JLabel position : produce) {
-			if( containsPoint(position, x, y) ){
-				if(color != null)
-					position.setIcon(resizeImage(familiarMoving.getImage(), position.getSize()));
-				if(yield.indexOf(position) == 0)
-					actionValue = 1;
-				else
-					actionValue = -3;
-				createNewMove( ActionType.PRODUCE, color, produce.indexOf(position),actionValue , familiarMoving);
-				return true;
-			}
+
+		if(containsPoint(firstYield, x, y)){
+			if(color != null)
+				firstYield.setIcon(resizeImage(familiarMoving.getImage(), firstYield.getSize()));
+			actionValue = 1;
+			createNewMove(ActionType.YIELD, color, 0, actionValue, familiarMoving);
+			return true;
 		}
+		
+		if(containsPoint(secondYield, x, y) && firstYield.getIcon() != null){
+			if(color != null)
+				secondYield.placeFamiliar(familiarMoving.getImage());
+			actionValue = -3;
+			createNewMove(ActionType.YIELD, color, (secondYield.getLastIndex()+1), actionValue, familiarMoving);
+			return true;
+		}
+		
 		for (JLabel position : market) {
 			if( containsPoint(position, x, y) ){
 				if(color != null)
@@ -631,10 +631,16 @@ public class GUIView extends View implements TableInterface{
 			market.get(position).setIcon(null);
 			break;
 		case YIELD:
-			yield.get(position).setIcon(null);
+			if(secondYield.isEmpty())
+				firstYield.setIcon(null);
+			else
+				secondYield.resetLastFamiliar();
 			break;
 		case PRODUCE:
-			produce.get(position).setIcon(null);
+			if(secondProduce.isEmpty())
+				firstProduce.setIcon(null);
+			else 
+				secondProduce.resetLastFamiliar();
 			break;
 		case COUNCIL:
 			council.resetLastFamiliar();
@@ -728,14 +734,12 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	private void coverYieldAndProduct() {
-		
-		while(yield.size() > 1){
-			yield.remove(yield.size()-1).setEnabled(false);
-		}
-		
-		while(produce.size() > 1){
-			produce.remove(produce.size()-1).setEnabled(false);
-		}
+	
+		secondYield.setEnabled(false);
+		mainLayeredPane.remove(secondYield);
+		secondProduce.setEnabled(false);
+		mainLayeredPane.remove(secondProduce);
+		mainLayeredPane.updateUI();
 		
 		Dimension coverDimension = new Dimension((int)(lowTableDimension.getWidth() * 0.269), (int)(lowTableDimension.getHeight() * 0.3495));
 		JLabel product = new JLabel();
@@ -774,8 +778,10 @@ public class GUIView extends View implements TableInterface{
 		resetFamiliarPositions(violetTowerForFamiliar);
 		resetFamiliarPositions(yellowTowerForFamiliar);
 		council.resetPosition();
-		resetFamiliarPositions(yield);
-		resetFamiliarPositions(produce);
+		firstYield.setIcon(null);
+		secondYield.resetPosition();
+		firstProduce.setIcon(null);
+		secondProduce.resetPosition();
 		resetFamiliarPositions(market);
 		
 	}
@@ -824,7 +830,17 @@ public class GUIView extends View implements TableInterface{
 	public void setFamiliarInYield(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
 		super.setFamiliarInYield(playerID, color, position);
 		if( !hasToAnswer(playerID)){
-			setOccupied(playerID, color, yield.get(position));
+			if( firstYield.getIcon() == null )
+				setOccupied(playerID, color, firstYield);
+			else
+				try {
+					secondYield.placeFamiliar(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+					mainLayeredPane.updateUI();
+					logger.debug("Placing familiar in second position");
+				} catch (IOException e) {
+					logger.error("Image for the Familiar not found!");
+					logger.info(e);
+				}
 		}		
 	}
 	
@@ -832,7 +848,17 @@ public class GUIView extends View implements TableInterface{
 	public void setFamiliarInProduce(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
 		super.setFamiliarInProduce(playerID, color, position);
 		if( !hasToAnswer(playerID)){
-			setOccupied(playerID, color, produce.get(position));
+			if( firstProduce.getIcon() == null )
+				setOccupied(playerID, color, firstProduce);
+			else
+				try {
+					secondProduce.placeFamiliar(ImageIO.read(GUIView.class.getResource("/Images/Others/BluFamiliareNero.png")));
+					mainLayeredPane.updateUI();
+					logger.debug("Placing familiar in second position");
+				} catch (IOException e) {
+					logger.error("Image for the Familiar not found!");
+					logger.info(e);
+				}		
 		}		
 	}
 	
