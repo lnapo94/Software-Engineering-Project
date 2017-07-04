@@ -361,6 +361,8 @@ public class GUIView extends View implements TableInterface{
 		deltaX += (int)(positionDimension.getWidth()*1.42);
 		deltaY += (int)(tableImageDimension.getHeight()*0.085);
 		placeMarket(positionDimension, deltaX, deltaY, mainPane);
+		
+		mainLayeredPane.updateUI();
 	}
 	
 	private void placeMarket(Dimension positionDimension, int x, int y, JLayeredPane mainPane) throws IOException{
@@ -511,7 +513,7 @@ public class GUIView extends View implements TableInterface{
 			return true;
 		}
 		
-		if(containsPoint(secondProduce, x, y) && firstProduce.getIcon() != null){
+		if( secondProduce.isActivated() && containsPoint(secondProduce, x, y) && firstProduce.getIcon() != null){
 			if(color != null)
 				secondProduce.placeFamiliar(familiarMoving.getImage());
 			actionValue = -3;
@@ -527,7 +529,7 @@ public class GUIView extends View implements TableInterface{
 			return true;
 		}
 		
-		if(containsPoint(secondYield, x, y) && firstYield.getIcon() != null){
+		if( secondYield.isActivated() && containsPoint(secondYield, x, y) && firstYield.getIcon() != null){
 			if(color != null)
 				secondYield.placeFamiliar(familiarMoving.getImage());
 			actionValue = -3;
@@ -638,13 +640,13 @@ public class GUIView extends View implements TableInterface{
 			market.get(position).setIcon(null);
 			break;
 		case YIELD:
-			if(secondYield.isEmpty())
+			if( !secondYield.isActivated() || secondYield.isEmpty())
 				firstYield.setIcon(null);
-			else
+			else 
 				secondYield.resetLastFamiliar();
 			break;
 		case PRODUCE:
-			if(secondProduce.isEmpty())
+			if(!secondProduce.isActivated() || secondProduce.isEmpty())
 				firstProduce.setIcon(null);
 			else 
 				secondProduce.resetLastFamiliar();
@@ -741,9 +743,11 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	private void coverYieldAndProduct() {
-	
+		
+		secondYield.disableContainer();
 		secondYield.setEnabled(false);
 		mainLayeredPane.remove(secondYield);
+		secondProduce.disableContainer();
 		secondProduce.setEnabled(false);
 		mainLayeredPane.remove(secondProduce);
 		mainLayeredPane.updateUI();
@@ -786,9 +790,11 @@ public class GUIView extends View implements TableInterface{
 		resetFamiliarPositions(yellowTowerForFamiliar);
 		council.resetPosition();
 		firstYield.setIcon(null);
-		secondYield.resetPosition();
+		if(secondYield.isActivated())
+			secondYield.resetPosition();
 		firstProduce.setIcon(null);
-		secondProduce.resetPosition();
+		if(secondProduce.isActivated())
+			secondProduce.resetPosition();
 		resetFamiliarPositions(market);
 		
 	}
@@ -839,7 +845,7 @@ public class GUIView extends View implements TableInterface{
 		if( !hasToAnswer(playerID)){
 			if( firstYield.getIcon() == null )
 				setOccupied(playerID, color, firstYield);
-			else
+			else if( secondYield.isActivated() )
 				try {
 					secondYield.placeFamiliar(imageLoader.loadFamiliarImage(this.indexOfOtherPlayer(playerID)+1, color));
 					mainLayeredPane.updateUI();
@@ -857,7 +863,7 @@ public class GUIView extends View implements TableInterface{
 		if( !hasToAnswer(playerID)){
 			if( firstProduce.getIcon() == null )
 				setOccupied(playerID, color, firstProduce);
-			else
+			else if(secondProduce.isActivated())
 				try {
 					secondProduce.placeFamiliar(imageLoader.loadFamiliarImage(this.indexOfOtherPlayer(playerID)+1, color));
 					mainLayeredPane.updateUI();

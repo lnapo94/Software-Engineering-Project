@@ -20,9 +20,11 @@ public class PositionContainer extends FunctionalLabel{
 	private Dimension labelPreferredSize;
 	private Dimension reducedDimension;
 	private Dimension dimensionToUse;
+	private boolean activated;
 	
 	public PositionContainer(Dimension dimension, Point location, Dimension labelPreferredSize) {
 		super();
+		this.activated = true;
 		this.labelPreferredSize = labelPreferredSize;
 		this.setSize(dimension);
 		this.setLocation(location);
@@ -90,5 +92,13 @@ public class PositionContainer extends FunctionalLabel{
 	
 	public boolean isEmpty(){
 		return familiarPlaced.isEmpty();
+	}
+	
+	public void disableContainer(){
+		this.activated = false;
+	}
+	
+	public boolean isActivated(){
+		return activated;
 	}
 }
