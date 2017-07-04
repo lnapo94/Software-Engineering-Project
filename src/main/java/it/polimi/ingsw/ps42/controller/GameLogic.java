@@ -1068,6 +1068,8 @@ public class GameLogic implements Observer {
 	public void removePlayerFromPendingRequest(Player player) {
 		while(playersWithRequest.contains(player))
 			playersWithRequest.remove(player);
+		if(timerTable.containsKey(player))
+			timerTable.remove(player).cancel();
 	}
 	
 	/**
@@ -1145,6 +1147,24 @@ public class GameLogic implements Observer {
 					
 					while(actionOrder.contains(player))
 						actionOrder.remove(player);
+					
+					if(playersList.size() == 1) {
+						rollBackAction();
+						removePlayerFromPendingRequest(playersList.get(0));
+						
+						while(actionOrder.contains(playersList.get(0)))
+							actionOrder.remove(playersList.get(0));
+						
+						
+						
+						roundOrder.remove(playersList.get(0));
+						
+						//Notify that the last player wins
+						List<String> result = new ArrayList<>();
+						result.add(playersList.get(0).getPlayerID());
+						WinnerMessage winnerMessage = new WinnerMessage(playersList.get(0).getPlayerID(), result);
+						playersList.get(0).notifyRanking(winnerMessage);
+					}
 				}
 			} catch (ElementNotFoundException e) {
 				logger.fatal("Unable to find the player in the GameLogic");
