@@ -72,6 +72,9 @@ public class YieldAndProductPosition extends Position {
 	}
 	public void removeBonusFamiliars(){			//Removes all the bonus familiar from the position
 		
+		for (Familiar familiar : bonusFamiliars) {
+			familiar.resetIncrement();
+		}
 		this.bonusFamiliars=new ArrayList<>();
 	}
 	

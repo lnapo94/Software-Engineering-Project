@@ -931,7 +931,7 @@ public class GUIView extends View implements TableInterface{
 				cardImage = imageLoader.loadCardImage(cards.get(i).getName());
 				tower.get(i).placeCard(cardImage);
 			} catch (IOException e) {
-				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured");
+				logger.error("Image not Found! Probably a wrong name is given or the loader has been misconfigured "+ cards.get(i).getName());
 				logger.info(e);
 			}
 		}

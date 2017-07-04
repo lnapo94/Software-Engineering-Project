@@ -56,6 +56,9 @@ public class MarketPosition extends Position {
 	}
 	public void removeBonusFamiliars(){
 		
+		for (Familiar familiar : bonusFamiliars) {
+			familiar.resetIncrement();
+		}
 		this.bonusFamiliars=new ArrayList<>();
 	}
 
