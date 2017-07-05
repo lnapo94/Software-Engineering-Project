@@ -65,7 +65,7 @@ public class DraggableComponent extends FunctionalLabel {
 					setLocation(initialX, initialY);
 				}
 				else{
-					if(table.handleEvent(event.getXOnScreen(), event.getYOnScreen(), source , getFamiliarColor() )){
+					if(table.handleEvent(event.getXOnScreen(), event.getYOnScreen(), source)){
 						setIcon(null);
 					}
 					else 

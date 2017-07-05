@@ -457,10 +457,11 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	@Override
-	public boolean handleEvent(int x, int y, DraggableComponent familiarMoving, FamiliarColor color) {
+	public boolean handleEvent(int x, int y, DraggableComponent familiarMoving) {
 	
 		//For each position check if contains the point (x,y), if so change the imageIcon
 		int actionValue = 0;
+		FamiliarColor color = familiarMoving.getFamiliarColor();
 		for (JLabel position : greenTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
 				actionValue = 1 + greenTowerForFamiliar.indexOf(position)*2;
