@@ -23,11 +23,18 @@ We have implemented the GUI for the Client to play at this game
 ### How to Use our Distributed Application?
 Our application is divided in two main part, Server and Client. First, you must start the server. To do it, you should go to the server package (it.polimi.ingsw.ps42.server) and then start the Server.java
 
-After that, you can start the client, and to do that you should have to go to the client package (it.polimi.ingsw.ps42.client) and start the ClientSocket.java
+After that, you can start the client. You should go to the client package (it.polimi.ingsw.ps42.client) and start the Client.java.
+Now you can choose from 2 type of connection: RMI or Socket, to choose the RMI connection type "R", to choose the Socket connection type "S". Then you can choose from 2 type of user experience, the GUI interface or the CLI interface. We recommend you to use the GUI, and to do that type "G", but if you prefer an old-style user interface, you can choose the CLI typing "C" in the console. 
+
+After all this operation, a client should be connected to the server, now you have to wait at least a second client to play this game.
+When a second player will be connected to your same game, then a timer will start, and after 30 seconds (by default) the match will start with the players that are currently in that match.
 
 The timers to wait the start of a match or to wait the player move is setted to 30 seconds, to change that you can go in Resource/Configuration/timers.json
 
 Furthermore you can configure a lot of thing with our Game, such as cards effects, bans effects, resources, positions bonuses/maluses, the bonus bars effects to give to the player and so on...
 Finally, we have used a logger to know everything in our application. We decided to use log4j, and, if you want, you can configure this logger easily, you should go in Logger/Properties/ to see all the configuration. At the moment, we have setted 3 kind of configuration, one for the client, one for the server and one for the test units. All this log file are stores Logger/ directory.
+
+### Do you want to know more about us and our implementation?
+Please, if you want to know more about us and about our implementation, check out our [Wiki](https://github.com/lnapo94/Software-Engineering-Project/wiki) on GitHub. In our wiki you can find a more interested description of our project, and also you can find some picture that explain the _UML_ of all the entire project
 
 **Enjoy our _Lorenzo il Magnifico_ application**
