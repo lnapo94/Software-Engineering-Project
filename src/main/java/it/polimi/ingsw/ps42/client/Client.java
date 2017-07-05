@@ -4,12 +4,21 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+
 public class Client {
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		Scanner scanner = new Scanner(System.in);
 		String userInput;
-		String host = "10.10.10.177";
+		String host;
+		
+		do {
+			System.out.println("Insert the Server IP/WEB Address: ");
+			
+			userInput = scanner.nextLine();
+		} while (userInput.equals(""));
+		
+		host = userInput;
 		
 		do {
 			System.out.println("Which kind of connection do you like? [Socket : S], [Remote Method Invocation (RMI) : R]");
