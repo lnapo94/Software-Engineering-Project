@@ -23,6 +23,15 @@ import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
 
+/**
+ * Class that represents a single match. It is used to implements a Model-View-Controller
+ * pattern in the server, even if there is a network between the real view and the server.
+ * This class manage both Remote Method Invocation (RMI) and Socket connections, and it is used to
+ * hide the complexity of the network management from the Controller and Model
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ServerView extends Observable implements Observer, ServerViewInterface{
 	
 	private static int serverViewIndex = 0;
@@ -36,6 +45,10 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	//Logger
 	private transient Logger logger = Logger.getLogger(ServerView.class);
 	
+	/**
+	 * Constructor of the ServerView. All ServerView uses a static index to know the correct
+	 * ServerView to pass to RMI connections
+	 */
 	public ServerView() {
 		serverViewIndex++;
 		
@@ -52,10 +65,22 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 		}
 	}
 	
+	/**
+	 * Method used to get the ID of the current ServerView for RMI connections
+	 * @return	The ID of the ServerView
+	 */
 	public String getID() {
 		return "ServerView" + serverViewIndex;
 	}
 	
+	/**
+	 * Method used to add a player to this ServerView. This method also re-add a disconnected player
+	 * if he is in this match
+	 * 
+	 * @param connection					The Connection class that represents a Socket connection
+	 * @param playerID						The player's ID to connect to this ServerView
+	 * @throws ElementNotFoundException		Thrown if the player isn't found in the current view. It is necessary to reconnect the correct player
+	 */
 	public void addConnection(Connection connection, String playerID) throws ElementNotFoundException{
 		
 		//Add a Socket Client to the game
@@ -72,12 +97,24 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 			connect(connection, playerID);
 	}
 	
+	/**
+	 * Method used to add a connection like observer of this ServerView and to registry the connection in the Map
+	 * @param connection		The connection to add to this ServerView
+	 * @param playerID			The ID used to know who is the correct player associated to the connection
+	 */
 	private void connect(Connection connection, String playerID){
 		
 		connection.addObserver(this);
 		connections.put(playerID, connection);
 	}
 	
+	/**
+	 * Private method used to search a disconnected player in this ServerView
+	 * 
+	 * @param playerID						The player's ID to search
+	 * @return								The index of the player if it is found
+	 * @throws ElementNotFoundException		Thrown if the player isn't found
+	 */
 	private int search(String playerID) throws ElementNotFoundException{
 		
 		for (String player: disconnectedPlayers) {
@@ -87,6 +124,12 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 		throw new ElementNotFoundException("Player not present");
 	}
 	
+	/**
+	 * Method used to know if a player was connected to this ServerView before
+	 * 
+	 * @param playerID		The player's ID to search
+	 * @return				True if the disconnected players list contains the specify ID, False otherwise
+	 */
 	public boolean wasConnected(String playerID){
 		//Return if the playerID passed is in use by an active Player
 		for (String player: disconnectedPlayers) {
@@ -97,15 +140,31 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 		return false;
 	}
 	
+	/**
+	 * Method used to know if the ID isn't used yet
+	 * @param playerID	The ID to check
+	 * @return			True if the ID isn't used before, otherwise False 
+	 */
 	public boolean nameNotUsed(String playerID){
 		
 		return !connections.containsKey(playerID) && !RMIConnections.containsKey(playerID);
 	}
 	
+	/**
+	 * Method used to know how many players are in this ServerView
+	 * @return		The current number of player in this ServerView
+	 */
 	public int getNumberOfPlayers(){
 		return connections.size() + RMIConnections.size();
 	}
 	
+	/**
+	 * Method used to run the ServerView class and start a match
+	 * 
+	 * @throws NotEnoughPlayersException		Thrown if there isn't enough players in this ServerView (current players < 2)
+	 * @throws GameLogicError					Thrown if there is a problem with the GameLogic
+	 * @throws IOException						Thrown if there is a network error
+	 */
 	public void run() throws NotEnoughPlayersException, GameLogicError, IOException{
 		
 		logger.info("ServerView is now running...");
@@ -125,6 +184,9 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 		gameLogic.loadGame();
 	}
 	
+	/**
+	 * Private method used to send to the client the list of players that are playing in this match
+	 */
 	private void sendPlayersList() {
 		List<String> playerIDList = new ArrayList<>();
 		connections.forEach((playerID, connection)->{
@@ -137,6 +199,9 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 		sendAll(message);
 	}
 	
+	/**
+	 * Method used when this ServerView received a message from the GameLogic to send to the Client and vice-versa
+	 */
 	@Override
 	public void update(Observable sender, Object messageToSend) {
 		
@@ -160,6 +225,10 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 		}
 	}
 	
+	/**
+	 * Method used to send a message to all the connected players
+	 * @param message	The GenericMessage to send to the Client
+	 */
 	private void sendAll(GenericMessage message){
 		
 		//Send to Socket Client
@@ -197,12 +266,19 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 		}
 	}
 	
+	/**
+	 * Method used to delete a connection and add this player ID to the disconnected players list
+	 * @param playerID	The player's ID to disconnect from this ServerVIew
+	 */
 	public void deleteConnection(String playerID) {
 		disconnectedPlayers.add(playerID);
 		Connection connection = connections.remove(playerID);
 		connection.deleteObserver(this);
 	}
 
+	/**
+	 * Method used to connect a RMI Client to this ServerView
+	 */
 	@Override
 	public void connectToServerView(ClientInterface client, String playerID) throws RemoteException {
 		//Add a Socket Client to the game
@@ -227,11 +303,17 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 			RMIConnections.put(playerID, client);
 	}
 
+	/**
+	 * Method used to disconnect a RMI Client from this ServerView
+	 */
 	@Override
 	public void disconnectClient(String playerID) throws RemoteException {
 		disconnectedPlayers.add(playerID);
 	}
 
+	/**
+	 * Method used to send a message to this ServerView
+	 */
 	@Override
 	public void sendMessage(Message message) throws RemoteException {
 		logger.info("new msg for the game logic from:" +message.getPlayerID());

@@ -26,6 +26,12 @@ import it.polimi.ingsw.ps42.parser.TimerLoader;
 import it.polimi.ingsw.ps42.server.match.Connection;
 import it.polimi.ingsw.ps42.server.match.ServerView;
 
+/**
+ * The Server of the game. It contains and handles all the matches, with 2 different connection
+ * technologies: Remote Method Invocation (RMI) and Socket
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class Server extends UnicastRemoteObject implements ServerInterface{
 
 	/**
@@ -56,6 +62,11 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	
 	private Timer timer;
 	
+	/**
+	 * The constructor of the Server
+	 * @throws IOException	Thrown if there is a network error, such as the chosen port is already used or
+	 * 						the server is already exported in the Naming of RMI
+	 */
 	public Server() throws IOException {
 		super();
 		
@@ -86,6 +97,18 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		}
 	}
 	
+	/**
+	 * Method used to add a player to the waiting view. If the waiting view doesn't exist, the Server
+	 * creates a new Match, represents by the ServerView class.
+	 * If the player is trying to reconnect to his match, this method control his user name and add
+	 * he to the correct ServerView
+	 * 
+	 * @param playerID						The user name to add to the view	
+	 * @param socket						The socket with the client connection
+	 * @param reader						The reader object to read from the socket
+	 * @param writer						The writer object to write on the socket
+	 * @throws ElementNotFoundException		Thrown if there is a problem with the current waiting view
+	 */
 	public synchronized void addPlayer(String playerID, Socket socket, ObjectInputStream reader, ObjectOutputStream writer) throws ElementNotFoundException {
 		//Add a player to a match
 		try {
@@ -127,14 +150,27 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		}
 	}
 	
+	/**
+	 * Method used to know if the chosen user name is already used
+	 * @param playerID		The user name to check
+	 * @return				True is the user name is already used, otherwise False
+	 */
 	public synchronized boolean existAnotherPlayer(String playerID) {
 		return playerTable.containsKey(playerID);
 	}
 	
+	/**
+	 * Method used to know if the user name was connected to a ServerView yet
+	 * @param playerID		The user name to check
+	 * @return				True if the player used connected, otherwise False
+	 */
 	public synchronized boolean playerWasPlaying(String playerID) {
 		return playerTable.get(playerID).wasConnected(playerID);
 	}
 	
+	/**
+	 * Method used to initialize and run the server
+	 */
 	public void run() {
 		try {
 			logger.info("Server is now running");
@@ -152,7 +188,9 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		}
 	}
 	
-	//Method used in timer
+	/**
+	 * Method used to start a match and cancel the corresponding timer
+	 */
 	public synchronized void startMatch() {
 		try {
 			if(waitingView != null) {
@@ -167,6 +205,11 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 
 	}
 
+	/**
+	 * Method used in a RMI Client to connect to the Server and send to it his user name. If
+	 * the player was already connect, and this is a reconnection, the server add this client
+	 * to the correct match
+	 */
 	@Override
 	public void sendLoginMessage(ClientInterface client, LoginMessage loginMessage) throws RemoteException {
 		
@@ -207,7 +250,11 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		logger.info("RMI Player added");
 	}
 	
-	
+	/**
+	 * Main method used to start the server
+	 * @param args
+	 * @throws IOException	Thrown if there is a network error with the server
+	 */
 	public static void main(String[] args) throws IOException {
 		Server server = new Server();		
 		server.run();

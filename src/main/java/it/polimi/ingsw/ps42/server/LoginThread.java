@@ -10,6 +10,13 @@ import org.apache.log4j.Logger;
 import it.polimi.ingsw.ps42.message.LoginMessage;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 
+/**
+ * Class used to handle the first part of the connection with a client. This class represents a
+ * thread that it wait a user name before adding a client to the waiting match
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class LoginThread implements Runnable{
 	
 	//Variables used to control and add the player
@@ -23,6 +30,12 @@ public class LoginThread implements Runnable{
 	//Logger
 	private transient Logger logger = Logger.getLogger(LoginThread.class);
 	
+	/**
+	 * Constructor for the Login Thread. This class need to know the socket on which the client
+	 * communicates and the server
+	 * @param server		A reference to the Server
+	 * @param socket		The socket on which the client sends messages
+	 */
 	public LoginThread(Server server, Socket socket) {
 		this.server = server;
 		this.socket = socket;
@@ -42,6 +55,9 @@ public class LoginThread implements Runnable{
 		}
 	}
 	
+	/**
+	 * Private method used to close the socket when there is a network error 
+	 */
 	private void socketClose() {
 		try {
 			this.socket.close();
@@ -70,6 +86,9 @@ public class LoginThread implements Runnable{
 		return true;
 	}
 	
+	/**
+	 * Method used to start the LoginThread to wait the client answer
+	 */
 	@Override
 	public void run() {
 		//Wait for a client user name and control it

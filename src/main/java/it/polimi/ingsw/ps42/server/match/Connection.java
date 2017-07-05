@@ -11,6 +11,13 @@ import org.apache.log4j.Logger;
 import it.polimi.ingsw.ps42.message.GenericMessage;
 import it.polimi.ingsw.ps42.message.Message;
 
+/**
+ * Class used to manage a connection with a socket client. This class implements Runnable
+ * because each connection requires a thread to be managed well
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class Connection extends Observable implements Runnable{
 
 	private Socket socket;
@@ -22,6 +29,14 @@ public class Connection extends Observable implements Runnable{
 	//Logger
 	private transient Logger logger = Logger.getLogger(Connection.class);
 	
+	/**
+	 * Constructor for the Connection thread
+	 * 
+	 * @param playerID		The ID chosen by the player
+	 * @param socket		The socket of the connection between Server and Client
+	 * @param reader		The reader object to read from the socket
+	 * @param writer		The writer object to write on the socket
+	 */
 	public Connection(String playerID, Socket socket, ObjectInputStream reader, ObjectOutputStream writer) {
 			this.socket = socket;
 			this.reader = reader;
@@ -30,6 +45,9 @@ public class Connection extends Observable implements Runnable{
 			this.playerID = playerID;
 	}
 
+	/**
+	 * Method used to run the connection 
+	 */
 	@Override
 	public void run() {
 
@@ -52,12 +70,19 @@ public class Connection extends Observable implements Runnable{
 		
 	}
 	
+	/**
+	 * Method used to control if the connection is still active
+	 * @return	True if the connection is active, otherwise False
+	 */
 	private boolean isActive(){
 		if(socket.isInputShutdown() || socket.isOutputShutdown())
 			active = false;
 		return active;
 	}
 	
+	/**
+	 * Method used to close the connection
+	 */
 	private void close(){
 		setChanged();
 		notifyObservers(this.playerID);
@@ -65,6 +90,9 @@ public class Connection extends Observable implements Runnable{
 		logger.info("Cancel the client");
 	}
 	
+	/**
+	 * Synchronized method used to close the socket
+	 */
 	private synchronized void closeConnection(){
 		
 		try {
@@ -77,6 +105,11 @@ public class Connection extends Observable implements Runnable{
 		
 	}
 	
+	/**
+	 * Method used to send a GenericMessage from the Server to the Client
+	 * @param message			The GenericMessage to send to the client
+	 * @throws IOException		Thrown if there is a network error
+	 */
 	public void send(GenericMessage message) throws IOException{
 		
 		try {
