@@ -39,7 +39,7 @@ public class CanPositioningEverywhereLeader extends Effect {
 	 */
 	@Override
 	public Effect clone() {
-		return this;
+		return new CanPositioningEverywhereLeader();
 	}
 
 	/**

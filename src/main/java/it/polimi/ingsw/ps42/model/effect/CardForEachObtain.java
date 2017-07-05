@@ -50,7 +50,7 @@ public class CardForEachObtain extends Effect{
 	public void enableEffect(Player player) {
 		//For each card player has in his arraylist, he gains the "gains" packet in this object
 		
-		logger = Logger.getLogger(CardForEachObtain.class);
+		logger = Logger.getLogger(CardForEachObtainTest.class);
 		
 		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		
