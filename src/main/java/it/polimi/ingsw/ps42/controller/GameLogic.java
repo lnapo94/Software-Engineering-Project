@@ -95,6 +95,9 @@ public class GameLogic implements Observer {
     private List<Player> disconnectedPlayers;
     private List<Player> toReconnectPlayers;
     
+    //Variable to know if the player is answer to some leader request
+    private boolean isAnswerPendingCouncilRequest;
+    
     //Logger
     private transient Logger logger = Logger.getLogger(GameLogic.class);
 
@@ -456,8 +459,8 @@ public class GameLogic implements Observer {
             //Enable once a round effect of leader cards
             for(LeaderCard card : player.getActivatedLeaderCard())
                 card.enableOnceARoundEffect();
-
-            //Control for some request
+            
+            //Control for some leader request
             playersWithRequest.add(player);
             checkOtherPlayerLeaderRequest(player);
         }
@@ -676,14 +679,10 @@ public class GameLogic implements Observer {
     	if(!actionOrder.isEmpty()) {
     		currentPlayer = actionOrder.remove(0);
     		
-    		//DEBUG
-    		logger.debug("Player: " + currentPlayer.getPlayerID() + " is playing...");
-    		currentPlayer.askMove();
+    		//Control for some pending request
+    		isAnswerPendingCouncilRequest = true;
+    		checkRequest();
     		
-            //Set the timer
-            Timer timer = new Timer();
-            timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS * 1000);
-            timerTable.put(currentPlayer, timer);
     	}
     	else {
     		if(currentRound == 2) {
@@ -710,6 +709,17 @@ public class GameLogic implements Observer {
     		else
     			restartRound();
     	}
+    }
+    
+    private void askMoveToPlayer() {
+		//DEBUG
+		logger.debug("Player: " + currentPlayer.getPlayerID() + " is playing...");
+		currentPlayer.askMove();
+		
+        //Set the timer
+        Timer timer = new Timer();
+        timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS * 1000);
+        timerTable.put(currentPlayer, timer);
     }
     
     /**
@@ -889,6 +899,10 @@ public class GameLogic implements Observer {
             Timer timer = new Timer();
             timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS * 1000);
             timerTable.put(currentPlayer, timer);
+    	}
+    	else if(isAnswerPendingCouncilRequest == true) {
+    		isAnswerPendingCouncilRequest = false;
+    		askMoveToPlayer();
     	}
     	else if(currentAction != null) {
     		currentPlayer.synchResource();
@@ -1112,9 +1126,22 @@ public class GameLogic implements Observer {
 		}
 	}
 	
+	/**
+	 * Method used to remove the current bonus action, used in the timer when it expired
+	 */
 	public void removeBonusAction() {
 		if(bonusAction != null)
 			bonusAction = null;
+	}
+	
+	public void discardLeaderCard(String playerID, LeaderCard card) {
+		try {
+			Player player = searchPlayer(playerID);
+			player.discardLeaderCard(card);
+		} catch (ElementNotFoundException e) {
+			logger.fatal("Unable to find the player in game logic");
+			logger.info(e);
+		}
 	}
 
 	/**

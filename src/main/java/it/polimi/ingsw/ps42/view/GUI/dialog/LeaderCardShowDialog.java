@@ -125,7 +125,7 @@ public class LeaderCardShowDialog extends JDialog {
 			label.setIcon(resizeImage(image,new Dimension(label.getWidth(), label.getHeight())));
 			label.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 			
-			if(activatedList.contains(list.get(i).getName())) {
+			if(activatedList.contains(list.get(i))) {
 				label.setBorder(BorderFactory.createLineBorder(Color.GREEN, 5));
 				activatedCardLabel.add(label);
 			} else {
@@ -159,7 +159,7 @@ public class LeaderCardShowDialog extends JDialog {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if(index != -1) {
+			if(index != -1 && !activatedList.contains(totalCardList.get(index))) {
 				view.sendLeaderCardUpdate(totalCardList.get(index));
 				close();
 			}
@@ -171,8 +171,10 @@ public class LeaderCardShowDialog extends JDialog {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			
+			if(index != -1 && !activatedList.contains(totalCardList.get(index))) {
+				view.sendDiscardRequest(totalCardList.get(index));
+				close();
+			}
 		}
 		
 	}
@@ -198,7 +200,7 @@ public class LeaderCardShowDialog extends JDialog {
 		public void mouseClicked(MouseEvent arg0) {
 			label.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 10));
 			
-			for(JLabel otherLabel : cardLabels) {
+			for(JLabel otherLabel : totalLabels) {
 				if(otherLabel != label) {
 					if(activatedCardLabel.contains(otherLabel)) {
 						otherLabel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 5));

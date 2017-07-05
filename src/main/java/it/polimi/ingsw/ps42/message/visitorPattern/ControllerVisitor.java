@@ -14,6 +14,7 @@ import it.polimi.ingsw.ps42.message.CardUpdateMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.DiceMessage;
+import it.polimi.ingsw.ps42.message.DiscardLeaderCard;
 import it.polimi.ingsw.ps42.message.EmptyMove;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
@@ -286,6 +287,14 @@ public class ControllerVisitor implements Visitor {
 	@Override
 	public void visit(WinnerMessage message) {
 		
+	}
+
+	/**
+	 * Call a method in the controller to discard the chosen leader card
+	 */
+	@Override
+	public void visit(DiscardLeaderCard message) {
+		gameLogic.discardLeaderCard(message.getPlayerID(), message.getCard());
 	}
 
 

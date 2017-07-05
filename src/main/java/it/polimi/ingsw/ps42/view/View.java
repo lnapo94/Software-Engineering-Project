@@ -14,6 +14,7 @@ import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CancelCardRequest;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
+import it.polimi.ingsw.ps42.message.DiscardLeaderCard;
 import it.polimi.ingsw.ps42.message.EmptyMove;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
@@ -484,6 +485,26 @@ public abstract class View extends Observable implements Observer {
 	
 	public void sendLeaderCardUpdate(LeaderCard card) {
 		LeaderCardUpdateMessage message = new LeaderCardUpdateMessage(player.getPlayerID(), card);
+		setChanged();
+		notifyObservers(message);
+	}
+	
+	public void discardLeaderCard(String playerID, LeaderCard cardToDiscard) {
+		if(hasToAnswer(playerID)) {
+			List<LeaderCard> playerList = player.getLeaderCardList();
+			for(int i = 0; i < playerList.size(); i++) {
+				LeaderCard card = playerList.get(i);
+				
+				if(card.getName().equals(cardToDiscard.getName())) {
+					playerList.remove(card);
+					i = i - 1;
+				}
+			}
+		}
+	}
+	
+	public void sendDiscardRequest(LeaderCard cardToDiscard) {
+		DiscardLeaderCard message = new DiscardLeaderCard(getViewPlayerID(), cardToDiscard);
 		setChanged();
 		notifyObservers(message);
 	}

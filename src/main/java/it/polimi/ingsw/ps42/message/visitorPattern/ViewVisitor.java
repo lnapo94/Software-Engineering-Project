@@ -13,6 +13,7 @@ import it.polimi.ingsw.ps42.message.CardUpdateMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.DiceMessage;
+import it.polimi.ingsw.ps42.message.DiscardLeaderCard;
 import it.polimi.ingsw.ps42.message.EmptyMove;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
@@ -357,6 +358,14 @@ public class ViewVisitor implements Visitor {
 	@Override
 	public void visit(CancelCardRequest message) {
 
+	}
+
+	/**
+	 * Call a view method to discard a leader card
+	 */
+	@Override
+	public void visit(DiscardLeaderCard message) {
+		view.discardLeaderCard(message.getPlayerID(), message.getCard());
 	}
 
 

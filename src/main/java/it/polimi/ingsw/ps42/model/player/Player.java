@@ -11,6 +11,7 @@ import it.polimi.ingsw.ps42.message.BanRequest;
 import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
+import it.polimi.ingsw.ps42.message.DiscardLeaderCard;
 import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.Message;
@@ -822,8 +823,23 @@ public class Player extends Observable {
 				if(card.getPermanentEffect() != null)
 					card.enablePermanentEffect();
 				
+				synchResource();
+				
 				//Create the message
 				LeaderCardUpdateMessage message = new LeaderCardUpdateMessage(this.getPlayerID(), chosenCard);
+				setChanged();
+				notifyObservers(message);
+			}
+		}
+	}
+	
+	public void discardLeaderCard(LeaderCard chosenCard) {
+		for(int i = 0; i < leaderCardsList.size(); i++) {
+			LeaderCard card = leaderCardsList.get(i);
+			if(card.getName().equals(chosenCard.getName())) {
+				card.discard();
+				
+				DiscardLeaderCard message = new DiscardLeaderCard(this.getPlayerID(), card.clone());
 				setChanged();
 				notifyObservers(message);
 			}
