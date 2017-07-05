@@ -12,13 +12,27 @@ import it.polimi.ingsw.ps42.model.position.Position;
 import it.polimi.ingsw.ps42.model.position.TowerPosition;
 import it.polimi.ingsw.ps42.model.position.YieldAndProductPosition;
 
+/**
+ * Class for Loading Position of the Game from json File
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class PositionLoader extends Loader {
 	
+	/**
+	 * Constructor for the loader from the path to the json File
+	 * @param fileName the path to the json File of Positions
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	public PositionLoader( String fileName) throws IOException {
 		
 		super(fileName);
 	}
 	
+	/**
+	 * Method used to personalize the gson loader
+	 */
 	protected void initGson(){
 		
 		GsonBuilder builder = new GsonBuilder().registerTypeAdapter(Position.class, new Serializer());
@@ -39,6 +53,10 @@ public class PositionLoader extends Loader {
 		return null;
 	}
 	
+	/**
+	 * Getter for the YieldAndProduct position loader from File
+	 * @return the YieldAndProduct position read from File
+	 */
 	public YieldAndProductPosition getNextYieldAndProductPosition(){
 		
 		if( parser.hasNext()){
@@ -51,6 +69,11 @@ public class PositionLoader extends Loader {
 		return null;
 	}
 	
+
+	/**
+	 * Getter for the Market position loader from File
+	 * @return the Market position read from File
+	 */
 	public MarketPosition getNextMarketPosition(){
 		
 		if( parser.hasNext()){
@@ -63,6 +86,11 @@ public class PositionLoader extends Loader {
 		return null;
 	}
 	
+
+	/**
+	 * Getter for the council position loader from File
+	 * @return the Council position read from File
+	 */
 	public CouncilPosition getNextCouncilPosition(){
 		
 		if( parser.hasNext()){

@@ -12,10 +12,21 @@ import com.google.gson.JsonStreamParser;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 
+/**
+ * Loader for the Leader Cards from json file
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class LeaderCardLoader extends Loader{
 
 	private List<LeaderCard> deck;
 	
+	/**
+	 * Constructor for the LeaderCard loader given the path to the json file of cards
+	 * @param fileName the path to the json file
+	 * @throws IOException  if any problem in File opening occurs
+	 */
 	public LeaderCardLoader( String fileName) throws IOException{
 	
 		super(fileName);
@@ -31,6 +42,9 @@ public class LeaderCardLoader extends Loader{
 			}
 	}
 	
+	/**
+	 * Private method used to personalize Gson loader, Adapter for HashMap  and Effect class is used
+	 */
 	@Override
 	protected void initGson() {
 		
@@ -40,6 +54,10 @@ public class LeaderCardLoader extends Loader{
 		
 	}
 	
+	/**
+	 * Getter for the List of Leader Cards loaded from file
+	 * @return the List of LeaderCard loaded
+	 */
 	public List<LeaderCard> getLeaderCards(){
 		
 		int index;

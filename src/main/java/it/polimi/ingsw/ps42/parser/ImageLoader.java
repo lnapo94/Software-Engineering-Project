@@ -144,36 +144,88 @@ public class ImageLoader extends Loader{
 		return loadGenericImage(bansPath, exactIndex.toString());
 	}
 	
+	/**
+	 * Load the Image of the Orange Dice Face by the Integer value passed
+	 * @param value the number on the Dice
+	 * @return the BufferedImage of the face of the Orange dice
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	public BufferedImage loadOrangeDieImage(Integer value) throws IOException {
 		return loadGenericDieImage(value, "Orange");
 	}
 	
+
+	/**
+	 * Load the Image of the Black Dice Face by the Integer value passed
+	 * @param value the number on the Dice
+	 * @return the BufferedImage of the face of the Black dice
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	public BufferedImage loadBlackDieImage(Integer value) throws IOException {
 		return loadGenericDieImage(value, "Black");
 	}
 	
+
+	/**
+	 * Load the Image of the White Dice Face by the Integer value passed
+	 * @param value the number on the Dice
+	 * @return the BufferedImage of the face of the White dice
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	public BufferedImage loadWhiteDieImage(Integer value) throws IOException {
 		return loadGenericDieImage(value, "White");
 	}
 	
+
+	/**
+	 * Private method used to load the Image of a generic dice Face by the Integer value passed
+	 * @param value the number on the Dice
+	 * @return the BufferedImage of the face of the dice
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	private BufferedImage loadGenericDieImage(Integer value, String folderName) throws IOException {
 		String completePath = DICE_PATH + folderName + "//" + dicePath.get(value.toString());
 		return ImageIO.read(new File(completePath));
 	}
  	
+
+	/**
+	 * Load the Image of the Resource passed
+	 * @param resource the Resource type to load
+	 * @return the BufferedImage of the face of the Resource
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	public BufferedImage loadResourceImage(Resource resource) throws IOException{
 		
 		return ImageIO.read(new File(resourcePath.get(resource.toString())));
 	}
 	
+	/**
+	 * Load the BonusBar Image from its name
+	 * @param name the name of the BonusBar
+	 * @return the BufferedImage of the BonusBar
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	public BufferedImage loadBonusBarImage(String name) throws IOException{
 		return ImageIO.read(new File(bonusBarPath.get(name)));
 	}
 	
+	/**
+	 * Load the Familiar Image for a generic player by its color and number in the game list
+	 * @param playerNumber the number of the Player for the game
+	 * @param familiarColor the color of the Familiar to load
+	 * @return the BufferedImage of the familiar wanted
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	public BufferedImage loadFamiliarImage(Integer playerNumber, FamiliarColor familiarColor) throws IOException{
 		return ImageIO.read(new File(familiarPath.get(familiarColor.toString()) + "//" + playerNumber.toString() + ".png"));
 	}
 	
+	/**
+	 * Load the Bonus Familiar Image for a generic player
+	 * @return the BufferedImage of the Bonus Familiar
+	 * @throws IOException if any problem in File opening occurs 
+	 */
 	public BufferedImage loadBonusFamiliarImage() throws IOException{
 		return ImageIO.read(new File(familiarPath.get("BonusFamiliar")));
 	}

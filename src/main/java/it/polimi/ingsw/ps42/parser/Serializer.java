@@ -10,14 +10,20 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+/**Class for Serialize/Deserialize operations that resolve problems with 
+ * Abstract classes putting the exact type of the class in the serialization process
+ * and extracting that type in the deserialization phase
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ */
 public class Serializer implements JsonSerializer<Object>, JsonDeserializer<Object> {
-	/*Class for Serialize/Deserialize operations that resolve problems with 
-	 * Abstract classes putting the exact type of the class in the serialization process
-	 * and extracting that type in the deserialization phase
-	 */
 	
 	private static final String CLASS_KEY="CLASS_META_KEY";	
 
+
+	/**
+	 * Method used to specify what to do in the deserialization phase
+	 */
 	@Override
 	public Object deserialize(JsonElement el, Type type, JsonDeserializationContext context) throws JsonParseException {
 		
@@ -32,6 +38,10 @@ public class Serializer implements JsonSerializer<Object>, JsonDeserializer<Obje
 		}	
 	}
 	
+
+	/**
+	 * Method used to specify what to do in the serialization phase
+	 */
 	@Override
 	public JsonElement serialize(Object obj, Type type, JsonSerializationContext context) {
 		
