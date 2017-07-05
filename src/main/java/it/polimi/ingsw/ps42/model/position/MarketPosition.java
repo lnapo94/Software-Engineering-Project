@@ -10,25 +10,42 @@ import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 
+
+/**Implementation of the Market position, gives to the
+ * player a certain amount of resources or a council privilege 
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+*/
+
 public class MarketPosition extends Position {
-	
-	/*Implementation of the Market position, gives to the
-	 * player a certain amount of resources or a council privilege 
-	*/
 	
 	private CouncilObtain councilBonus;
 	private List<Familiar> bonusFamiliars;
 
+	/**
+	 * Constructor for the Market Position
+	 * @param level the Position level
+	 * @param bonus the position Bonus
+	 * @param malus the position malus
+	 * @param councilBonus the position Council Obtain bonus
+	 */
 	public MarketPosition( int level, Obtain bonus, int malus, CouncilObtain councilBonus) {
 		super( ActionType.MARKET, level, bonus, malus);
 		bonusFamiliars=new ArrayList<>();
 		this.councilBonus = councilBonus;
 	}
 	
+	/**
+	 * Getter for the Bonus Familiar List
+	 * @return the List of Bonus Familiar
+	 */
 	public List<Familiar> getBonusFamiliar() {
 		return bonusFamiliars;
 	}
 	
+	/**
+	 * Setter for the Familiar, checks if the Familiar need to be placed in the bonus List and enable the Council bonus
+	 */
 	@Override
 	public void setFamiliar(Familiar familiar) throws FamiliarInWrongPosition {
 		if(this.isEmpty())
@@ -41,11 +58,20 @@ public class MarketPosition extends Position {
 		applyCouncilBonus(familiar.getPlayer());
 	}
 	
+	/**
+	 * Method used to apply the Position Council Bonus
+	 * @param player the Player that receive the Bonus
+	 */
 	public void applyCouncilBonus( Player player){
 		if(councilBonus != null)
 			councilBonus.enableEffect(player);
 	}
 	
+	/**
+	 * Private method used to set the Bonus Familiar
+	 * @param familiar the Familiar to set in the Position
+	 * @throws FamiliarInWrongPosition, if the Familiar does not satisfy the Position pre-requisites
+	 */
 	private void addBonusFamiliar(Familiar familiar) throws FamiliarInWrongPosition {
 		if(super.canStay(familiar)){
 			this.bonusFamiliars.add(familiar);
@@ -54,6 +80,10 @@ public class MarketPosition extends Position {
 		}
 		else throw new FamiliarInWrongPosition("The bonus Familiar does not satisfy the position pre-requirements");
 	}
+	
+	/**
+	 * Method used to remove the Bonus FAmiliar, also reset their increment
+	 */
 	public void removeBonusFamiliars(){
 		
 		for (Familiar familiar : bonusFamiliars) {

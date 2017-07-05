@@ -10,13 +10,14 @@ import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 
+
+/**
+ * This class is a container of Units and is used as the basic Resource reference in all the Game
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ */
 public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializable {
 	
-	/**
-	 * This class is a container of Units and is used as the basic Resource reference in all the Game
-	 * 
-	 * @author Luca Napoletano, Claudio Montanari
-	 */
 	private static final long serialVersionUID = 4208699031549844006L;
 	private List<Unit> list;
 	
@@ -56,7 +57,7 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 	/**
 	 * Method used to sum a Unit to the current Packet of Resources
 	 * 
-	 * @param unit, the Unit to sum to the Packet
+	 * @param unit the Unit to sum to the Packet
 	 */
 	public void addUnit(Unit unit) {
 		int pos;
@@ -75,7 +76,7 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 	/**
 	 * Method used to confront two Packets, return true if current Packet contains all the Resources of the passed Packet
 	 * 
-	 * @param packet, the Packet that is used to make the confront
+	 * @param packet the Packet that is used to make the confront
 	 * @return true if the Packet contains at least all the Resources of the Packet passed
 	 */
 	public boolean isGreater(Packet packet){
@@ -104,7 +105,7 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 	/**
 	 * Private method used to search a unit in a Packet, used as support to add and confront operations
 	 * 
-	 * @param resource, the Resource unit to search in the Packet
+	 * @param resource the Resource unit to search in the Packet
 	 * @return the index of the unit passed if that exist otherwise throws an Exception
 	 * @throws ElementNotFoundException if the Resource passed is not contained in the Packet
 	 */
@@ -120,7 +121,7 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 	/**
 	 * Method used to remove a unit to the current Packet if is contained in it
 	 * 
-	 * @param unit, the Unit to subtract
+	 * @param unit the Unit to subtract
 	 * @throws ElementNotFoundException if the Packet does not contains the Unit passed
 	 */
 	public void removeUnit(Unit unit) throws ElementNotFoundException {
@@ -132,7 +133,7 @@ public class Packet implements Iterable<Unit>, Printable, Cloneable, Serializabl
 	 * Method used to subtract a Unit to the Packet, if the quantity of that unit is not sufficient then the quantity is
 	 * automatically set to zero
 	 *  
-	 * @param unitToSubtract, the Unit that will be subtracted to the Packet
+	 * @param unitToSubtract the Unit that will be subtracted to the Packet
 	 */
 	public void subtractUnit(Unit unitToSubtract) {
 		//Subtract a unit from the packet, if the result quantity goes under 0

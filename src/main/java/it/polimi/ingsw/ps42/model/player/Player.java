@@ -599,9 +599,10 @@ public class Player extends Observable {
 		//Enable the leader card if the player has it in his list of leader card
 		
 		for(int i = 0; i < leaderCardsList.size(); i++) {
-			LeaderCard card = leaderCardsList.get(0);
+			LeaderCard card = leaderCardsList.get(i);
 			if(card.getName().equals(chosenCard.getName()) && card.canEnableCard()) {
 				setActivatedLeaderCard(card);
+				i = i - 1;
 				
 				if(card.getOnceARoundEffect() != null)
 					card.enableOnceARoundEffect();
