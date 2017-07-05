@@ -398,13 +398,26 @@ public class MarketActionTest {
 			e.printStackTrace();
 		}
 		
-		//Double Action in the same position
+		//Double Action in the same position 
 		try {
 			setupDoubleFamiliarAction();
 			assertEquals(Response.SUCCESS, marketAction.checkAction());
+			player.synchResource();
+			marketAction.doAction();
+			player.synchResource();
+			assertEquals(4, player.getResource(Resource.MONEY));
+			assertEquals(player.getFamiliar(FamiliarColor.WHITE), tablePosition.get(0).getBonusFamiliar().get(0));
+			
+			//Reset the Familiar from their position and increment
+			tablePosition.get(0).removeBonusFamiliars();
+			tablePosition.get(0).removeFamiliar();
+			
+			assertEquals(0, player.getFamiliar(FamiliarColor.WHITE).getIncrement());
+			assertEquals(0, player.getFamiliar(FamiliarColor.BLACK).getIncrement());
 		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {
 			e.printStackTrace();
 		}
+		
 		
 	}
 

@@ -77,7 +77,7 @@ public class YieldAndProductActionTest {
 			fail();
 		}
 	}
-	
+	 
 	@Test
 	public void test2() {
 		//In this test yellow cards are activated

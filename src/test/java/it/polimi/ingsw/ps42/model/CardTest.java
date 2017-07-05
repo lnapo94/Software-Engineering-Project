@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -56,7 +57,10 @@ public class CardTest {
 	private Card firstCard;
 	private Card secondCard;
 	private Card thirdCard;
-
+	private Card cloneCard;
+	
+	private Logger logger = Logger.getLogger(CardTest.class);
+	
 	@BeforeClass
 	public static void classSetUp() {
 		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
@@ -188,6 +192,8 @@ public class CardTest {
 		firstCard = new Card("First", "Something", CardColor.YELLOW, 2, 4, costs, immediateEffects, requirements, null, null);
 		secondCard = new Card("First", "Something", CardColor.YELLOW, 2, 4, costs, immediateEffects, requirements, null, null);
 		thirdCard = new Card("First", "Something", CardColor.YELLOW, 2, 4, costs, immediateEffects, null, null, null);
+		
+		cloneCard = firstCard.clone();
 	}
 
 	@Test
@@ -333,6 +339,29 @@ public class CardTest {
 			fail();
 		} catch (NotEnoughResourcesException e) {
 			assertTrue(true);
+		}
+	}
+	
+	@Test
+	public void test4(){
+		//Check the Clone and Show card methods
+		logger.debug(cloneCard.showCard());
+		
+		assertEquals(firstCard.getColor(), cloneCard.getColor());
+		assertEquals(firstCard.getDescription(), cloneCard.getDescription());
+		assertEquals(firstCard.getLevel(), cloneCard.getLevel());
+		assertEquals(firstCard.getName(), cloneCard.getName());
+		assertEquals(firstCard.getPeriod(), cloneCard.getPeriod());
+		
+		int i=0, j=0;
+		for (Packet cost : firstCard.getCosts()) {
+			j=0;
+			for (Unit unit : cost.getPacket()) {
+				assertEquals(cloneCard.getCosts().get(i).getPacket().get(j).getQuantity() , unit.getQuantity());
+				assertEquals(cloneCard.getCosts().get(i).getPacket().get(j).getResource() , unit.getResource());
+				j++;
+			}
+			i++;
 		}
 	}
 	

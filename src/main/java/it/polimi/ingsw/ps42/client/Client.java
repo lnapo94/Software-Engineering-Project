@@ -9,7 +9,7 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		Scanner scanner = new Scanner(System.in);
 		String userInput;
-		String host = "localhost";
+		String host = "10.10.10.177";
 		
 		do {
 			System.out.println("Which kind of connection do you like? [Socket : S], [Remote Method Invocation (RMI) : R]");
