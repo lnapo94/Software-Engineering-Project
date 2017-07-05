@@ -37,9 +37,13 @@ public class TakeCardTest {
 	private Action takeCardAction;
 	private StaticList<TowerPosition> tower;
 	
+	private static Logger logger;
+	
 	@BeforeClass
 	public static void classSetUp() {
 		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+
+		logger = Logger.getLogger(TakeCardTest.class);
 	}
 
 	@Before
@@ -174,8 +178,7 @@ public class TakeCardTest {
 	public void negativeTest1() {
 		//Method used to test when the player cannot play
 		
-		Logger logger = Logger.getLogger(TakeCardTest.class);
-		Player p2 = new Player("P2");
+		p2 = new Player("P2");
 		p2.setCanPlay(false);
 		
 		try {
@@ -186,6 +189,48 @@ public class TakeCardTest {
 			logger.info(e);
 			fail();
 		}
+	}
+	
+	@Test
+	public void negativeTest2() {
+		//Method used to test if the player cannot do an action because his familiar value is too low
+		
+		p2 = new Player("P2");
+		
+		try {
+			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p2.getFamiliar(FamiliarColor.ORANGE), tower, 0);
+			assertTrue(Response.FAILURE == takeCardAction.checkAction());
+		} catch (NotEnoughResourcesException e) {
+			logger.error("Player can not pay the card");
+			logger.info(e);
+		}
+
+	}
+	
+	@Test
+	public void negativeTest3() {
+		//Player p1 tries to take a green card when he hasn't enough military points
+		
+		//Create a green card to add 2 times to the player
+		Card uselessCard = new Card("Useless Card", "", CardColor.GREEN, 1, 1, null, null, null, null, null);
+		
+		p1.addCard(uselessCard);
+		p1.addCard(uselessCard);
+		
+		//Control how many cards the player has
+		assertEquals(2, p1.getCardList(CardColor.GREEN).size());
+		
+		try {
+			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 0);
+			assertTrue(Response.FAILURE == takeCardAction.checkAction());
+		} catch (NotEnoughResourcesException e) {
+			logger.error("Player can not pay the card");
+			logger.info(e);
+		}
+		
+		//Try to rollback the action
+		takeCardAction.rollBackAction();
+		
 	}
 	
 }

@@ -18,8 +18,8 @@ import it.polimi.ingsw.ps42.model.player.Player;
 
 public class LeaderCardTest {
 
-	LeaderCard requirementsCard;
-	Player enableEffectPlayer;
+	private LeaderCard requirementsCard;
+	private Player enableEffectPlayer;
 	
 	@BeforeClass
 	public static void classSetUp() {
