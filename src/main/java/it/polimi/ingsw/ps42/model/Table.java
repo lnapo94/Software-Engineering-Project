@@ -533,7 +533,7 @@ public class Table extends Observable{
 	 * 
 	 * @param value		The value to set to the die
 	 */
-	public void setOrangeDie(int value){
+	private void setOrangeDie(int value){
 		this.orangeDie = value;
 		for (Player player : players) {
 			player.setFamiliarValue(FamiliarColor.ORANGE, value);
@@ -545,7 +545,7 @@ public class Table extends Observable{
 	 * 
 	 * @param value		The value to set to the die
 	 */
-	public void setBlackDie(int value){
+	private void setBlackDie(int value){
 		this.blackDie = value;
 		for (Player player : players) {
 			player.setFamiliarValue(FamiliarColor.BLACK, value);
@@ -557,7 +557,7 @@ public class Table extends Observable{
 	 * 
 	 * @param value		The value to set to the die
 	 */
-	public void setWhiteDie(int value){
+	private void setWhiteDie(int value){
 		this.whiteDie = value;
 		for (Player player : players) {
 			player.setFamiliarValue(FamiliarColor.WHITE, value);

@@ -140,7 +140,7 @@ public class TakeCardTest {
 		} catch (FamiliarInWrongPosition | NotEnoughResourcesException e) {
 		System.out.println("ERROR");
 		}
-		
+		 
 		Response checker = takeCardAction.checkAction();
 		assertEquals(checker , Response.SUCCESS);
 		List<CardRequest> requests = p1.getRequests();
