@@ -9,6 +9,13 @@ import java.util.HashMap;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.effect.Obtain;
 
+/**
+ * Class that represents the bonus bars the player can have. This bonus bars give to the player
+ * a bonus when he does a product or an yield action
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class BonusBar implements Serializable{
 	/**
 	 * 
@@ -24,16 +31,23 @@ public class BonusBar implements Serializable{
 	
 	private boolean hasBeenInitialized=false;
 	
+	/**
+	 * Constructor of the bonus bar
+	 * @param productBonus		The effect to enable when the player does a product action
+	 * @param yieldBonus		The effect to enable when the player does a yield action
+	 * @param name				The name of the bonus bar to load it from a file
+	 */
 	public BonusBar(Effect productBonus, Effect yieldBonus, String name) {
-		//Advanced BonusBar for advanced game. Loaded from file
 		this.productBonus = productBonus;
 		this.yieldBonus = yieldBonus;
 		this.name = name;
 	}
 	
+	/**
+	 * Simple BonusBar for the game. Is the same for all the player 
+	 */
 	public BonusBar() {
-		//Simple BonusBar for the game. Is the same for all the player 
-		this.name = "default";
+				this.name = "default";
 		//Build the default yield Bonus
 		HashMap<Resource, Integer> yieldBonus=new HashMap<>();
 		yieldBonus.put(Resource.SLAVE,1);
@@ -52,6 +66,10 @@ public class BonusBar implements Serializable{
 		this.productBonus=new Obtain(productCostPacket, productBonusPacket, null);
 	}
 	
+	/**
+	 * Method used to set the player to the bonus bar
+	 * @param player	The player to set to the bonus bar
+	 */
 	public void setPlayer(Player player) {		//Method to set the player, the set-up must be performed only once
 		if(!hasBeenInitialized){
 			this.player = player;
@@ -60,6 +78,10 @@ public class BonusBar implements Serializable{
 		
 	}
 	
+	/**
+	 * Method used to enable the yield bonuses
+	 * @throws NullPointerException		Thrown if the bonus bar doesn't have a setted player
+	 */
 	public void yieldBonus() throws NullPointerException {
 		//Apply the yield bonus when the player goes to the yield position 
 		if(player!=null){
@@ -68,6 +90,10 @@ public class BonusBar implements Serializable{
 		else throw new NullPointerException("The bonus bar do not has a player! Set the player before applying the bonus");
 	}
 	
+	/**
+	 * Method used to enable the product bonuses
+	 * @throws NullPointerException		Thrown if the bonus bar doesn't have a setted player
+	 */
 	public void productBonus() throws NullPointerException {
 		//Apply the product bonus when the player goes to the product position
 		if(player!=null){
@@ -76,15 +102,25 @@ public class BonusBar implements Serializable{
 		else throw new NullPointerException("The bonus bar do not has a player! Set the player before applying the bonus");
 	}
 
+	/**
+	 * Getter for the name of the bonus bar
+	 * @return	The name of this bonus bar
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Method used to copy this bonus bar
+	 */
 	@Override
 	public BonusBar clone() {
 		return new BonusBar(productBonus.clone(), yieldBonus.clone(), name);
 	}
 	
+	/**
+	 * Method used to print this bonus bar
+	 */
 	@Override
 	public String toString() {
 		return "Produce Bonus: " + this.productBonus.print() + "\n" +

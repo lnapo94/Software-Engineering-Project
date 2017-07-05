@@ -36,14 +36,10 @@ import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
-/*TO-DO:
- * 1: controllare la posizione bonus per player nei controlli, e aggiungere var di stato
- * 2: agg var di stato per evitare moneyMalus più controlli in action
- * 3: agg var di stato per il set dei familiari a 5 più controlli in player
- * 4: gestire gli increase familiar effect come array list in player
- * 5: agg var di stato per il raddoppio sui bonus ricevuti da eff imm delle carte
- * 6: agg var di stato per requisito pti militari
- *  
+/**
+ * Class that represents the model of the Player in our implementation
+ * @author Luca Napoletano, Claudio Montanari
+ *
  */
 public class Player extends Observable {
 	//This class represents the model of the Player
@@ -108,8 +104,10 @@ public class Player extends Observable {
 	//Logger
 	private transient Logger logger = Logger.getLogger(Player.class);
 	
-	
-	
+	/**
+	 * Method used to construct a player from a string, used to identify him
+	 * @param ID		The string used to identify the player
+	 */
 	public Player(String ID) {
 		//Construct the Player
 		this.ID = ID;
@@ -161,10 +159,18 @@ public class Player extends Observable {
 		this.bans = new ArrayList<>();
 	}
 	
+	/**
+	 * Getter for the player ID
+	 * @return		A string that represents the ID of this player
+	 */
 	public String getPlayerID() {
 		return this.ID;
 	}
 	
+	/**
+	 * Method used to set the chosen bonus bar
+	 * @param bonusBar		The bonus bar to set to the player
+	 */
 	public void setBonusBar(BonusBar bonusBar) {
 		//Set the bonusBar from gamelogic to the player
 		//Then set the player variable in bonusBar
@@ -172,6 +178,11 @@ public class Player extends Observable {
 		this.bonusBar.setPlayer(this);
 	}
 	
+	/**
+	 * Method used to get the familiar given the FamiliarColor
+	 * @param color		The FamiliarColor of the chosen familiar
+	 * @return			A reference to the chosen familiar
+	 */
 	public Familiar getFamiliar(FamiliarColor color) {
 		//Returns the selected familiar
 		//If color isn't correct, throw an exception
@@ -188,6 +199,11 @@ public class Player extends Observable {
 		throw new WrongColorException("Error in player.getFamiliar(color): maybe the passed color is wrong");
 	}
 	
+	/**
+	 * Method used to set the value of the familiar given the color
+	 * @param color		The FamiliarColor of the chosen familiar
+	 * @param value		The value to set to the familiar
+	 */
 	public void setFamiliarValue(FamiliarColor color, int value) {
 		try {
 			getFamiliar(color).setValue(value);
@@ -197,10 +213,20 @@ public class Player extends Observable {
 		}
 	}
 	
+	/**
+	 * Method used to get the increment of the familiar given the familiar color
+	 * @param color						The FamiliarColor of the chosen familiar
+	 * @return							The value of the chosen familiar
+	 * @throws WrongColorException		Thrown if the color isn't a FamiliarColor
+	 */
 	public int getFamiliarValue(FamiliarColor color) throws WrongColorException {
 		return getFamiliar(color).getValue();
 	}
 	
+	/**
+	 * Method used to add a card to the player
+	 * @param card	The card to add to the player
+	 */
 	public void addCard(Card card) {
 		StaticList<Card> temp;
 		try {
@@ -212,6 +238,10 @@ public class Player extends Observable {
 		}
 	}
 	
+	/**
+	 * Method used to increment the resources of the player
+	 * @param packet	The packet that contains the resources to increase
+	 */
 	public void increaseResource(Packet packet) {
 		
 		if(packet != null) {
@@ -244,6 +274,11 @@ public class Player extends Observable {
 		}
 	}
 	
+	/**
+	 * Method used to decrease the resources of this player
+	 * @param packet						The Packet with the resources to decrease
+	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources (The calculated value goes under 0)
+	 */
 	public void decreaseResource(Packet packet) throws NotEnoughResourcesException {
 		
 		if(packet != null) {
@@ -274,10 +309,17 @@ public class Player extends Observable {
 		}
 	}
 	
+	/**
+	 * Method used to add an ObtainBan or a Increase Familiars ban to the player
+	 * @param ban		The ban to add to the player
+	 */
 	public void setBan(Effect ban) {
 		this.bans.add(ban);
 	}
 	
+	/**
+	 * Method used to enable the familiar ban
+	 */
 	public void familiarBan() {
 		for(Effect ban : bans) {
 			if(ban != null && ban.getTypeOfEffect() == EffectType.INCREASE_FAMILIARS)
@@ -285,30 +327,46 @@ public class Player extends Observable {
 		}
 	}
 	
+	/**
+	 * Method used to set to 0 the specify resource
+	 * 
+	 * @param resource		The resource to set to 0
+	 */
 	public void setToZero(Resource resource) {
-		//Set a player resource to zero. This method is used in ObtainBan in case
-		//the decrease resource goes under zero
 		nextResources.put(resource, 0);
 	}
 	
+	/**
+	 * Method used to get a value of a resource
+	 * @param resource		The interested resource
+	 * @return				The quantity the player has of the specify resource
+	 */
 	public int getResource(Resource resource) {
-		//This method return the quantity of the indicated resource
 		return currentResources.get(resource);
 	}
 	
+	/**
+	 * Method used in view to set an entire resources HashMap to the player
+	 * @param resources
+	 */
 	public void setCurrentResources(HashMap<Resource, Integer> resources) {
 		this.currentResources = resources;
 	}
 	
+	/**
+	 * Add an IncreaseAction effect to the player's arraylist
+	 * necessary in gamelogic to increase an action correctly 
+	 * @param effect	The increase effect to add to the player
+	 */
 	public void addIncreaseEffect(IncreaseAction effect) {
-		//Add an IncreaseAction effect to the player's arraylist
-		//necessary in gamelogic to increase an action correctly 
-		
 		increaseEffect.add(effect);
 	}
 	
+	/**
+	 * Apply the bonus bar effect
+	 * @param type		The type of the action done by the player to enable the correct bonuses
+	 */
 	public void enableBonus(ActionType type) {
-		//Apply the bonus bar effect
 		if(type == ActionType.PRODUCE) {
 			bonusBar.productBonus();
 		}
@@ -317,53 +375,103 @@ public class Player extends Observable {
 		}
 	}
 	
+	/**
+	 * Method used to get the list of increase effect of this player
+	 * @return
+	 */
 	public List<IncreaseAction> getIncreaseEffect() {
 		return increaseEffect;
 	}
 	
+	/**
+	 * Method used to know if the player can play the first action
+	 * @return
+	 */
 	public boolean canPlay() {
 		return canPlay;
 	}
 	
+	/**
+	 * Method used to know if the player can position himself in the market
+	 * @return	True if the player can stay in market, otherwise False
+	 */
 	public boolean canStayInMarket() {
 		return canStayInMarket;
 	}
 	
+	/**
+	 * Method used to know if the player can take bonuses from tower positions
+	 * @return	True if the player can take bonuses from tower, otherwise False
+	 */
 	public boolean canTakeBonusFromTower() {
 		return enableBonusInTower;
 	}
 	
+	/**
+	 * Method used to set the can play variable
+	 * @param value		The boolean value to set to the canPlay variable
+	 */
 	public void setCanPlay(boolean value) {
-		//Set the canPlay variable
 		canPlay = value;
 	}
 	
+	/**
+	 * Method used by the GameLogic to enable every round the no first action ban, if the
+	 * player has that ban
+	 */
+	public void enableCanPlayBan() {
+		if(bans != null) {
+			for(Effect ban : bans) {
+				if(ban.getTypeOfEffect() == EffectType.NO_FIRST_ACTION_BAN)
+					ban.enableEffect(this);
+			}
+		}
+	}
+	
+	/**
+	 * Method used to enable the No Market Ban if the player has that ban
+	 */
 	public void setNoMarketBan() {
-		//Enable the no market ban
 		canStayInMarket = false;
 	}
 	
+	/**
+	 * Method used to enable the No Bonus in Tower Ban if the player has that ban
+	 */
 	public void disableBonusInTower() {
-		//Apply the no bonus in tower ban
 		enableBonusInTower = false;
 	}
 	
+	/**
+	 * Method used to set the divisory of the slaves to pay to increment an action of one point
+	 * @param divisory	The divisory to set
+	 */
 	public void setDivisory(int divisory) {
 		this.divisory = divisory;
 	}
 	
+	/**
+	 * Method used to know the divisory of the current player
+	 * @return	The value of the divisory
+	 */
 	public int getDivisory() {
 		return this.divisory;
 	}
  	
+	/**
+	 * Method to be called from the game logic when a new ban is set to the player
+	 * @param message	The ban message to send
+	 */
 	public void notifyNewBan(Message message){
-		//Method to be called from the game logic when a new ban is set to the player
 		setChanged();
 		notifyObservers(message);
 	}
 	
+	/**
+	 * Method to be called from the game logic when a player 
+	 * @param banPeriodNumber	The period of the ban to send to the player
+	 */
 	public void askIfPayTheBan( int banPeriodNumber){
-		//Method to be called from the game logic when a player 
 		banPeriodNumber = (banPeriodNumber / 2) - 1;
 		
 		BanRequest message = new BanRequest( this.getPlayerID(), banPeriodNumber);
@@ -371,6 +479,11 @@ public class Player extends Observable {
 		notifyObservers(message);
 	}
 	
+	/**
+	 * Method used to get the player's card list given the CardColor
+	 * @param color	The color of the interested deck of cards
+	 * @return		The StaticList with the player's card
+	 */
 	public StaticList<Card> getCardList(CardColor color) {
 		//Return the correct cardlist
 		if(color == CardColor.GREEN)
@@ -385,54 +498,76 @@ public class Player extends Observable {
 		
 	}
 	
+	/**
+	 * Get all the request in player, but this method remove all the requests in the player's list
+	 * from the player
+	 * @return	A List of CardRequest of the current player
+	 */
 	public List<CardRequest> getRequests() {
-		//Get all the request in player, but this method remove all the requests arraylist
-		//from the player
-		
 		List<CardRequest> temp = this.requests;
 		this.requests = new ArrayList<>();
 		return temp;
 	}
 	
+	/**
+	 * Get all the council request in player, but this method remove all the council requests
+	 * in the player's list
+	 * @return	A List of CouncilRequest of the current player
+	 */
 	public List<CouncilRequest> getCouncilRequests() {
 		List<CouncilRequest> temp = this.councilRequests;
 		this.councilRequests = new ArrayList<>();
 		return temp;
 	}
 	
+	/**
+	 * Method used to add a council request to the player
+	 * 
+	 * @param councilRequest	The generated council request to add to the player
+	 */
 	public void addCouncilRequests(CouncilRequest councilRequest) {
 		councilRequests.add(councilRequest);
 	}
 	
+	/**
+	 * Method used to add a request to the player
+	 * 
+	 * @param request	The generated request to add to the player
+	 */
 	public void addRequest(CardRequest request) {
-		//Add a single request in arraylist
 		requests.add(request);
 	}
-	
+	/** 
+	 * After the GameLogic control for the effects in the cards, this method 
+	 * upload the correct values of the resources HashMap
+	 * Notify the View with a ResourceUpdate Message
+	 */
 	public void synchResource() {
-		//After the gamelogic control for the effects in the cards, this method 
-		//upload the correct values of the resources HashMap
-		//Notify the View with a ResourceUpdate Message
 		copyResources(currentResources, nextResources);
 		sendResources();
 	}
 	
+	/**
+	 * Can be used when a control goes wrong
+	 * Copy the currentResources Hashmap in nextResources
+	 */
 	public void restoreResource() {
-		//Can be used when a control goes wrong
-		//Copy the currentResources Hashmap in nextResources
-		//This method maybe is useless
 		copyResources(nextResources, currentResources);
 		sendResources();
 	}
 
-	
-	public ActionPrototype getBonusAction() {
-		//This method return to the gamelogic the player's bonus action.
-		//This method also remove the ActionPrototype from the bonusAction variable
-		
+	/**
+	 * This method return to the gamelogic the player's bonus action.
+	 * @return
+	 */
+	public ActionPrototype getBonusAction() {		
 		return bonusAction.clone();
 	}
 	
+	/**
+	 * Method used to set a bonus action in player. Player can have only one bonus action 
+	 * @param bonusAction to add to the player
+	 */
 	public void setBonusAction(ActionPrototype bonusAction) {
 		if(this.bonusAction != null) {
 			throw new IsNotEmptyException("bonus Action isn't empty, ERROR");
@@ -442,6 +577,10 @@ public class Player extends Observable {
 	
 	//Private Methods only for the Player class
 	
+	/**
+	 * Method used to initialize a map with the correct resources
+	 * @param map	The map to initialize
+	 */
 	private void initializeResources(HashMap<Resource, Integer> map) {
 		//This method initialize a HashMap with all the type of Resources
 		map.put(Resource.FAITHPOINT, 0);
@@ -453,6 +592,11 @@ public class Player extends Observable {
 		map.put(Resource.WOOD, 0);
 	}
 	
+	/**
+	 * Method used to copy an HashMap<Resource, Integer> into another one
+	 * @param destination		The HashMap where the source will be copied
+	 * @param source			The HashMap to copy
+	 */
 	private void copyResources(HashMap<Resource, Integer> destination, HashMap<Resource, Integer> source) {
 		//Copy the source HashMap in the destination HashMap
 		source.forEach((resource, quantity) -> {
@@ -460,8 +604,10 @@ public class Player extends Observable {
 		});
 	}
 	
+	/**
+	 * Method called by the game logic to ask a Move to the player
+	 */
 	public void askMove(){
-	//Method called by the game logic to ask a Move to the player	
 		Message playerMoveMessage;
 		if( this.bonusAction != null ) {
 			ActionPrototype temp = bonusAction.clone();
@@ -475,62 +621,83 @@ public class Player extends Observable {
 		
 	}
 	
+	/**
+	 * Method used to know if the player has a request or a council request
+	 * @return		True if the player has a request, otherwise False
+	 */
 	public boolean hasRequestToAnswer() {
 		return (!requests.isEmpty() || !councilRequests.isEmpty()); 
 	}
 	
-	public void askRequest( List<CardRequest> requests){
-	//Method called by the game logic to ask a response to a generic Request
-		
-		for (CardRequest cardRequest : requests) {
-			setChanged();
-			notifyObservers(cardRequest);
-		}
-	}
-	
+	/**
+	 * Method used to send only one request to the player
+	 * @param request	The request to send to the player
+	 */
 	public void askRequest(CardRequest request) {
 		setChanged();
 		notifyObservers(request);
 	}
 	
+	/**
+	 * Method used to get and remove only one request each time
+	 * @return	The first cardRequest present in player
+	 */
 	public CardRequest removeRequest() {
 		return this.requests.remove(0);
 	}
 	
+	/**
+	 * Control if the player requests list is empty
+	 * @return	True if the player has some requests, otherwise False
+	 */
 	public boolean isRequestsEmpty() {
 		return this.requests.isEmpty();
 	}
 	
+	/**
+	 * Method used to remove all the requests
+	 */
 	public void removeAllRequests() {
 		this.requests = new ArrayList<>();
 	}
-	
-	public void askCouncilRequest( List<CouncilRequest> requests){
-	//Method called by the game logic to ask a response to a Council Request
-			
-		for (CouncilRequest councilRequest : requests) {
-			setChanged();
-			notifyObservers(councilRequest);
-		}
-	}
-	
+
+	/**
+	 * Control if the player council requests list is empty
+	 * @return	True if the player has some council requests, otherwise False
+	 */
 	public boolean isCouncilRequestsEmpty() {
 		return this.councilRequests.isEmpty();
 	}
 	
+	/**
+	 * Method used to send only one council request to the player
+	 * @param request	The council request to send to the player
+	 */
 	public void askCouncilRequest(CouncilRequest request) {
 		setChanged();
 		notifyObservers(request);
 	}
 	
+	/**
+	 * Method used to get and remove the one council request
+	 * @return	The first council request in the player's list
+	 */
 	public CouncilRequest removeCouncilRequest() {
 		return this.councilRequests.remove(0);
 	}
 	
+	/**
+	 * Method used to remove all the council requests in player
+	 */
 	public void removeAllCouncilRequests() {
 		this.councilRequests = new ArrayList<>();
 	}
 	
+	/**
+	 * Method used to retrasmit a message from the GameLogic
+	 * @param message		The message to retrasmit. It will be sent only if the 
+	 * 						retrasmission variable is setted up.
+	 */
 	public void retrasmitMessage(Message message) {
 		//Called in case of error in message control flow
 		if(message.isRetrasmission()) {
@@ -539,8 +706,11 @@ public class Player extends Observable {
 		}
 	}
 	
+	/**
+	 * Called by gamelogic to ask to the player which bonusBar he wants
+	 * @param bonusBars	The available List of bonus bar to send to the player
+	 */
 	public void askChooseBonusBar(List<BonusBar> bonusBars) {
-		//Called by gamelogic to ask to the player which bonusBar he wants
 		List<BonusBar> toThePlayer = new ArrayList<>();
 		for(BonusBar bonusBar : bonusBars)
 			toThePlayer.add(bonusBar.clone());
@@ -551,46 +721,84 @@ public class Player extends Observable {
 		setChanged();
 		notifyObservers(message);
 	}
-	//TODO carte leader
+
+	/**
+	 * Method used to set one leader card to the player
+	 * @param card	The leader card to set
+	 */
 	public void setLeaderCard(LeaderCard card) {
 		this.leaderCardsList.add(card);
 	}
 	
+	/**
+	 * Method used to get the list of available leader cards in player
+	 * @return	The list of leader cards don't activated
+	 */
 	public List<LeaderCard> getLeaderCardList() {
 		return this.leaderCardsList;
 	}
 	
+	/**
+	 * Method used to get the list of activated leader cards in Player
+	 * @return	The list of activated leader cards
+	 */
 	public List<LeaderCard> getActivatedLeaderCard() {
 		return this.activatedLeaderCard;
 	}
 	
+	/**
+	 * Method used to add a leader request to the player
+	 * @param request	The request to add to the player
+	 */
 	public void addLeaderRequest(LeaderRequest request) {
 		this.leaderRequests.add(request);
 	}
 	
+	/**
+	 * Method used to get all the player's leader requests 
+	 * @return
+	 */
 	public List<LeaderRequest> getLeaderRequests() {
 		return this.leaderRequests;
 	}
 	
+	/**
+	 * Method used to get and remove one leader request
+	 * @return	The first leader request in the player's list
+	 */
 	public LeaderRequest removeLeaderRequest() {
 		return leaderRequests.remove(0);
 	}
 	
+	/**
+	 * Method used to know if the leader requests list is empty
+	 * @return	True if the leader requests list is empty, otherwise False
+	 */
 	public boolean isLeaderRequestEmpty() {
 		return leaderRequests.isEmpty();
 	}
 	
+	/**
+	 * Method used to remove all the leader requests in player
+	 */
 	public void removeAllLeaderRequests() {
 		this.leaderRequests = new ArrayList<>();
 	}
 	
+	/**
+	 * Method used to notify the client of a leader request
+	 * @param request	The leader request to send to the client
+	 */
 	public void askLeaderRequest(LeaderRequest request) {
 		setChanged();
 		notifyObservers(request);
 	}
 	
+	/**
+	 * Enable the leader card if the player has it in his list of leader card
+	 * @param chosenCard	The chosen card to enable
+	 */
 	public void enableLeaderCard(LeaderCard chosenCard) {
-		//Enable the leader card if the player has it in his list of leader card
 		
 		while(!leaderCardsList.isEmpty()) {
 			LeaderCard card = leaderCardsList.get(0);
@@ -613,38 +821,72 @@ public class Player extends Observable {
 	}
 	
 	//Leader card state variables
+	
+	/**
+	 * Method used to enable the can positioning everywhere effect
+	 */
 	public void setCanPositioningEverywhere() {
 		this.canPositioningEverywhere = true;
 	}
 	
+	/**
+	 * Method used to know if the can positioning everywhere effect is activated
+	 * @return	True if the effect is activated, otherwise False
+	 */
 	public boolean canPositioningEverywhere() {
 		return this.canPositioningEverywhere;
 	}
 	
+	/**
+	 * Method used to enable the no military requirements effect
+	 */
 	public void setMilitaryRequirements() {
 		this.noMilitaryRequirements = true;
 	}
 	
+	/**
+	 * Method used to know if the no military requirements effect is activated
+	 * @return	True if the effect is activated, otherwise False
+	 */
 	public boolean hasNoMilitaryRequirements() {
 		return this.noMilitaryRequirements;
 	}
 	
+	/**
+	 * Method used to enable the no money malus effect
+	 */
 	public void setNoMoneyMalus() {
 		this.noMoneyMalus = true;
 	}
 	
+	/**
+	 * Method used to know if the no money malus effect is activated
+	 * @return	True if the effect is activated, otherwise False
+	 */
 	public boolean hasNoMoneyBonus() {
 		return this.noMoneyMalus;
 	}
 	
+	/**
+	 * Method used to enable the five more victory points effect
+	 */
 	public void setFiveMoreVictoryPoint() {
 		this.fiveMoreVictoryPoints = true;
 	}
 	
+	/**
+	 * Method used to know if the more victory point effect is activated
+	 * @return	True if the effect is activated, otherwise False
+	 */
 	public boolean hasMoreVictoryPoint() {
 		return this.fiveMoreVictoryPoints;
 	}
 	
+	/**
+	 * Method used to send a list of leader requests to the client
+	 * 
+	 * @param requests 	The list of leader requests to send to the client
+	 */
 	public void askLeaderRequest( List<LeaderRequest> requests){
 		//Method called by the game logic to ask a response to a Leader Request
 				
@@ -654,6 +896,10 @@ public class Player extends Observable {
 			}
 		}
 	
+	/**
+	 * Method used to send to the client the available leader cards from which he can choose
+	 * @param cards	The list of LeaderCard to send to the client
+	 */
 	public void askChooseLeaderCard(List<LeaderCard> cards) {
 		List<LeaderCard> temporary = new ArrayList<>();
 		
@@ -666,11 +912,19 @@ public class Player extends Observable {
 		notifyObservers(message);
 	}
 	
+	/**
+	 * Method used to send to the player the message with the ranking of the players
+	 * @param message	The WinnerMessage to send to the client
+	 */
 	public void notifyRanking(WinnerMessage message) {
 		setChanged();
 		notifyObservers(message);
 	}
 	
+	/**
+	 * Method used to send the Current Resources HashMap to the client.
+	 * The HashMap is a copy of the real Current Resources HashMap in the player
+	 */
 	public void sendResources() {
 		HashMap<Resource, Integer> resourcesCopy = new HashMap<>();
 		copyResources(resourcesCopy, currentResources);
@@ -679,6 +933,10 @@ public class Player extends Observable {
 		notifyObservers(updateMessage);
 	}
 	
+	/**
+	 * Method used to know if the player has a bonus action
+	 * @return	True if the player has a bonus action, otherwise False
+	 */
 	public boolean hasBonusAction() {
 		return this.bonusAction != null;
 	}
