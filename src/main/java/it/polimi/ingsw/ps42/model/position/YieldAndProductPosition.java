@@ -13,28 +13,43 @@ import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 
+/**Implementation for both the Yield and Product position since 
+ * they do the same job but on different type of cards:
+ * they allow the player to do a Yield/Product action
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+*/
 public class YieldAndProductPosition extends Position {
 	
-	/*Implementation for both the Yield and Product position since 
-	 * they do the same job but on different type of cards:
-	 * they allow the player to do a Yield/Product action
-	*/
 	private List<Familiar> bonusFamiliars;
 	
+	/**
+	 * Default Constructor used to set the Position logger
+	 */
 	public YieldAndProductPosition() {
 		logger = Logger.getLogger(YieldAndProductPosition.class);
 	}
 	
+	/**
+	 * Constructor for a Yield or Product Position
+	 * @param type the type of Position
+	 * @param level the level of the Position
+	 * @param bonus the Bonus of the Position
+	 * @param malus the malus of the Position
+	 */
 	public YieldAndProductPosition(ActionType type, int level, Obtain bonus, int malus) {
 		super(type, level, bonus, malus);
 		bonusFamiliars = new ArrayList<>();
 	}
 	
-	
-	public void enableCards(StaticList<Card> cards, int actionValue){		//Enables the permanent effect of all the cards in the arrayList
+	/**
+	 * Method used to enable the permanent effect of all the cards in the StaticList passed 
+	 * @param cards the StaticList of Cards that have to be activated
+	 * @param actionValue the value of the action performed on the Position
+	 */
+	public void enableCards(StaticList<Card> cards, int actionValue){		
 		if(cards!=null ){
 			for (Card card : cards) { 
-				//Controllo su valore azione poichè passo solo carte del giocatore e il valore dell'azione
 				if(card.getLevel()<= actionValue){
 					try {
 						card.enablePermanentEffect();
@@ -47,6 +62,9 @@ public class YieldAndProductPosition extends Position {
 		}
 	}
 	
+	/**
+	 * Setter for the Position Familiar, checks if requires the Familiar to be placed in a bonus position
+	 */
 	@Override
 	public void setFamiliar(Familiar familiar) throws FamiliarInWrongPosition {
 	
@@ -59,7 +77,12 @@ public class YieldAndProductPosition extends Position {
 		}
 	}
 	
-	public void addBonusFamiliar(Familiar familiar) throws FamiliarInWrongPosition {		//Adds a bonus Familiar in the position, requires a Leader Card activation
+	/**
+	 * Setter for the bonus Familiar, adds a bonus Familiar in the position, requires a Leader Card activation
+	 * @param familiar the Familiar that have to be set
+	 * @throws FamiliarInWrongPosition if the bonus Familiar does not satisfy the position pre-requirements
+	 */
+	public void addBonusFamiliar(Familiar familiar) throws FamiliarInWrongPosition {		
 		if(canStay(familiar)){
 			this.bonusFamiliars.add(familiar);
 			this.applyPositionEffect(familiar);
@@ -67,10 +90,18 @@ public class YieldAndProductPosition extends Position {
 		else throw new FamiliarInWrongPosition("The bonus Familiar does not satisfy the position pre-requirements");
 	}
 	
-	public List<Familiar> getBonusFamiliar() {			//Returns all the bonus Familiar in the position
+	/**
+	 * Getter for the List of all the bonus Familiar in the position
+	 * @return the List of bonus Familiar
+	 */
+	public List<Familiar> getBonusFamiliar() {			
 		return bonusFamiliars;
 	}
-	public void removeBonusFamiliars(){			//Removes all the bonus familiar from the position
+	
+	/**
+	 * Removes all the bonus familiar from the position
+	 */
+	public void removeBonusFamiliars(){			
 		
 		for (Familiar familiar : bonusFamiliars) {
 			familiar.resetIncrement();
@@ -78,6 +109,9 @@ public class YieldAndProductPosition extends Position {
 		this.bonusFamiliars=new ArrayList<>();
 	}
 	
+	/**
+	 * Clone method for the Position, also Clone all the internal Attributes
+	 */
 	@Override
 	public YieldAndProductPosition clone() {
 		return new YieldAndProductPosition(getType(), getLevel(), getBonus(), getMalus());

@@ -16,6 +16,12 @@ import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 
+/**
+ * Loader for all the imager used by the GUI 
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ImageLoader extends Loader{
 	
 	private static final String DICE_PATH = "Resource//Images//DiceImages//";
@@ -30,6 +36,11 @@ public class ImageLoader extends Loader{
 	//Conversion for the dice
 	private HashMap<String, String> dicePath;
 
+	/**
+	 * Basic Constructor for the ImageLoader starting from a file of Path to images
+	 * @param fileName the File of all the path to images to load later
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	public ImageLoader(String fileName) throws IOException {
 		super(fileName);
 		
@@ -63,12 +74,19 @@ public class ImageLoader extends Loader{
 			throw new IOException();
 	}
 
+	/**
+	 * Private method used to personalize the Gson loader
+	 */
 	@Override
 	protected void initGson() {
 		gson = new Gson();
 		parser = new JsonStreamParser(buffer);
 	}
 	
+	/**
+	 * Private method used to load an HashMap from file
+	 * @return the next HashMap in the File
+	 */
 	private HashMap<String, String> loader() {
 		if(parser.hasNext()) {
 			JsonElement element = parser.next();
@@ -81,18 +99,44 @@ public class ImageLoader extends Loader{
 		return null;
 	}
 	
+	/**
+	 * Private Loader for a generic image 
+	 * @param map the HashMap of paths
+	 * @param cardName the name of the Card to load
+	 * @return the BufferedImage of the equivalent Card
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	private BufferedImage loadGenericImage(HashMap<String, String> map, String cardName) throws IOException {
 		return ImageIO.read(new File(map.get(cardName)));
 	}
 	
+	/**
+	 * Load a Card Image from its name
+	 * @param cardName the name of the Card to load
+	 * @return the BufferedImage of the Card passed
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	public BufferedImage loadCardImage(String cardName) throws IOException {
 		return loadGenericImage(cardsPath, cardName);
 	}
 	
+	/**
+	 * Load a LeaderCard Image from its name
+	 * @param leaderCardName the name of the Card to load
+	 * @return the BufferedImage of the LeaderCard passed
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	public BufferedImage loadLeaderCardImage(String leaderCardName) throws IOException {
 		return loadGenericImage(leaderCardsPath, leaderCardName);
 	}
 	
+	/**
+	 * Load the image of a Ban from its index and Period
+	 * @param period the Ban period
+	 * @param index the Ban index
+	 * @return the BufferedImage of the Ban
+	 * @throws IOException if any problem in File opening occurs
+	 */
 	public BufferedImage loadBanImage(Integer period, Integer index) throws IOException {
 		final int OFFSET = 7;
 		

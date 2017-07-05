@@ -31,7 +31,7 @@ public class LeaderCard implements Serializable{
 	final private CouncilObtain effect;
 	
 	//The owner
-	private Player owner;
+	private transient Player owner;
 	
 	//Effects of leader card
 	final private Effect onceARoundEffect;
