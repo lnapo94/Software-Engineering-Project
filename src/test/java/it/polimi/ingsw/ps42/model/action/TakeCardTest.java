@@ -1,10 +1,12 @@
 package it.polimi.ingsw.ps42.model.action;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -31,8 +33,9 @@ import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 public class TakeCardTest {
 	
 	private Player p1;
-	Action takeCardAction;
-	StaticList<TowerPosition> tower;
+	private Player p2;
+	private Action takeCardAction;
+	private StaticList<TowerPosition> tower;
 	
 	@BeforeClass
 	public static void classSetUp() {
@@ -164,6 +167,24 @@ public class TakeCardTest {
 			assertEquals(3, p1.getResource(Resource.MONEY));
 		} catch (FamiliarInWrongPosition e) {
 			System.out.println("ERROR");
+		}
+	}
+	
+	@Test
+	public void negativeTest1() {
+		//Method used to test when the player cannot play
+		
+		Logger logger = Logger.getLogger(TakeCardTest.class);
+		Player p2 = new Player("P2");
+		p2.setCanPlay(false);
+		
+		try {
+			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p2.getFamiliar(FamiliarColor.ORANGE), tower, 0);
+			assertTrue(Response.CANNOT_PLAY == takeCardAction.checkAction());
+		} catch (NotEnoughResourcesException e) {
+			logger.error("Player can not pay the card");
+			logger.info(e);
+			fail();
 		}
 	}
 	
