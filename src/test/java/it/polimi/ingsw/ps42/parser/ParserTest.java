@@ -106,7 +106,7 @@ public class ParserTest {
 		assertTrue(positionLoader.getNextCouncilPosition() != null );
 		positionLoader.setFileName("Resource//Position//MarketPosition//marketPosition.json");
 		assertTrue(positionLoader.getNextMarketPosition() != null );
-		positionLoader.setFileName("Resource//Position//towerPosition//blueTowerPosition.json");
+		positionLoader.setFileName("Resource//Position//TowerPosition//blueTowerPosition.json");
 		assertTrue(positionLoader.getNextTowerPosition() != null );
 		positionLoader.setFileName("Resource//Position//YieldAndProductPosition//firstPosition.json");
 		assertTrue(positionLoader.getNextYieldAndProductPosition() != null );
