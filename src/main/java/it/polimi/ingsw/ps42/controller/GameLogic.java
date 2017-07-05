@@ -462,6 +462,10 @@ public class GameLogic implements Observer {
             checkOtherPlayerLeaderRequest(player);
         }
         
+        //Enable the No First Action ban for all the player if they have got it
+        for(Player player : playersList)
+        	player.enableCanPlayBan();
+        
         if(playersWithRequest.isEmpty()) {
             initAction();
         }

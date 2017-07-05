@@ -9,6 +9,11 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * Class used to represents the particular leader requirements
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class LeaderRequirements implements Serializable, Printable{
 	
 	/**
@@ -25,11 +30,22 @@ public class LeaderRequirements implements Serializable, Printable{
 	//Used in case the leader card has some cards requirements
 	private HashMap<CardColor, Integer> cardRequirements;
 	
+	/**
+	 * Constructor of leader requirements
+	 * @param resourceRequirements	Packet that represents the resource requirements of the leader card
+	 * @param cardRequirements		An HashMap that represents the cards requirements of the leader card
+	 */
 	public LeaderRequirements(Packet resourceRequirements, HashMap<CardColor, Integer> cardRequirements) {
 		this.resourceRequirements = resourceRequirements;
 		this.cardRequirements = cardRequirements;
 	}
 	
+	/**
+	 * Method used to verify if the player satisfy the requirements
+	 * 
+	 * @param owner		The card's owner
+	 * @return			True if the requirements are satisfied, otherwise False
+	 */
 	public boolean satisfyRequirement(Player owner) {
 		//Check if it is possible to enable the leader card by the control
 		//of this requirements
@@ -70,6 +86,9 @@ public class LeaderRequirements implements Serializable, Printable{
 		return checker;
 	}
 	
+	/**
+	 * Method used to clone the leader requirements of the card
+	 */
 	@Override
 	public LeaderRequirements clone() {
 		Packet tempResourceRequirements = null;
@@ -86,6 +105,9 @@ public class LeaderRequirements implements Serializable, Printable{
 		return new LeaderRequirements(tempResourceRequirements, tempCardRequirements);
 	}
 	
+	/**
+	 * Method used to print this requirements
+	 */
 	@Override
 	public String print() {
 		return "Card Requirements: " + this.cardRequirements.toString() + "\n" +
