@@ -54,28 +54,30 @@ public class LeaderRequirements implements Serializable, Printable{
 		//If color == all, i control all the player cards
 		//If this requirement is in the HashMap, then I control only this requirement
 		//because is the most important
-		if(cardRequirements.get(CardColor.ALL) != null && cardRequirements.get(CardColor.ALL) > 0) {
-			//Control all the cards, if one of the decks in player satisfies
-			//the requirements, then all the cards requirements are satisfied
-			int allCardRequirement = cardRequirements.get(CardColor.ALL);
-			
-			if(owner.getCardList(CardColor.GREEN).size() >= allCardRequirement)
-				return true;
-			if(owner.getCardList(CardColor.YELLOW).size() >= allCardRequirement)
-				return true;
-			if(owner.getCardList(CardColor.BLUE).size() >= allCardRequirement)
-				return true;
-			if(owner.getCardList(CardColor.VIOLET).size() >= allCardRequirement)
-				return true;
-			return false;
-		}
-		
-		//Lambda expression used to control all the cards requirements
-		cardRequirements.forEach((color, cardRequirement) -> {
-			if(owner.getCardList(color).size() < cardRequirement) {
-				checker = false;
+		if(cardRequirements != null) {
+			if(cardRequirements.get(CardColor.ALL) != null && cardRequirements.get(CardColor.ALL) > 0) {
+				//Control all the cards, if one of the decks in player satisfies
+				//the requirements, then all the cards requirements are satisfied
+				int allCardRequirement = cardRequirements.get(CardColor.ALL);
+				
+				if(owner.getCardList(CardColor.GREEN).size() >= allCardRequirement)
+					return true;
+				if(owner.getCardList(CardColor.YELLOW).size() >= allCardRequirement)
+					return true;
+				if(owner.getCardList(CardColor.BLUE).size() >= allCardRequirement)
+					return true;
+				if(owner.getCardList(CardColor.VIOLET).size() >= allCardRequirement)
+					return true;
+				return false;
 			}
-		});
+			
+			//Lambda expression used to control all the cards requirements
+			cardRequirements.forEach((color, cardRequirement) -> {
+				if(owner.getCardList(color).size() < cardRequirement) {
+					checker = false;
+				}
+			});
+		}
 		
 		if(resourceRequirements != null)
 			for(Unit unit : resourceRequirements) {
