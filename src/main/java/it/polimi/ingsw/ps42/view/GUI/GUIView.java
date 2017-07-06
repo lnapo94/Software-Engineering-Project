@@ -1149,7 +1149,8 @@ public class GUIView extends View implements TableInterface{
 		if(bonusFamiliar != null){
 			bonusFamiliar.setIcon(null);
 			bonusFamiliar.setEnabled(false);
-			mainLayeredPane.remove(blackFamiliar);
+			mainLayeredPane.remove(bonusFamiliar);
+			mainLayeredPane.updateUI();
 		}
 	}
 	
