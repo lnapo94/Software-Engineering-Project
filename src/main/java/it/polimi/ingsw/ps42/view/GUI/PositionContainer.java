@@ -87,11 +87,12 @@ public class PositionContainer extends FunctionalLabel{
 	}
 	
 	public int getLastIndex(){
+		//if (familiarPlaced.size() != 0 )
 		return (familiarPlaced.size()-1);
 	}
 	
 	public boolean isEmpty(){
-		return familiarPlaced.isEmpty();
+		return familiarPlaced.isEmpty(); 
 	}
 	
 	public void disableContainer(){
