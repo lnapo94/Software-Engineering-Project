@@ -1,7 +1,7 @@
 {
   "ban": {
     "type": "TAKE_GREEN",
-    "value": 4,
+    "value": -4,
     "discount": null,
     "yetActivated": false,
     "player": null,
@@ -11,7 +11,7 @@
 }{
   "ban": {
     "type": "TAKE_YELLOW",
-    "value": 4,
+    "value": -4,
     "discount": null,
     "yetActivated": false,
     "player": null,
@@ -21,7 +21,7 @@
 }{
   "ban": {
     "type": "TAKE_BLUE",
-    "value": 4,
+    "value": -4,
     "discount": null,
     "yetActivated": false,
     "player": null,
@@ -31,7 +31,7 @@
 }{
   "ban": {
     "type": "TAKE_VIOLET",
-    "value": 4,
+    "value": -4,
     "discount": null,
     "yetActivated": false,
     "player": null,

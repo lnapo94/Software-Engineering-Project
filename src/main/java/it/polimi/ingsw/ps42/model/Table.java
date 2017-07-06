@@ -507,6 +507,7 @@ public class Table extends Observable{
 			//Remove also the familiar
 			position.removeFamiliar();
 		}
+		council = new ArrayList<>();
 		return temp;
 	}
 

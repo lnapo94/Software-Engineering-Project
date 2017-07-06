@@ -835,12 +835,15 @@ public class GameLogic implements Observer {
 						//Cancel the timer
 						timerTable.remove(player).cancel();
 						
+						action.removeIncrement();
+						
 						//If player can't play, end his action, and move he to the end of actionOrder array
 						player.setCanPlay(true);
 						actionOrder.remove(actionOrder.indexOf(player));
 						actionOrder.add(player);
 					}
 					else if(response == Response.FAILURE || response == Response.LOW_LEVEL) {
+						action.removeIncrement();
 						PlayerToken message;
 						if(bonusAction != null) 
 							message = new PlayerToken(player.getPlayerID(), bonusAction.clone());
