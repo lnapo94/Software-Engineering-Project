@@ -827,7 +827,6 @@ public class GameLogic implements Observer {
 					//Control if there is a discount
 					if(bonusAction != null) {
 						action.addDiscount(bonusAction.getDiscount());
-						bonusAction = null;
 					}
 					
 					Response response = action.checkAction();
@@ -842,11 +841,17 @@ public class GameLogic implements Observer {
 						actionOrder.add(player);
 					}
 					else if(response == Response.FAILURE || response == Response.LOW_LEVEL) {
-						PlayerToken message = new PlayerToken(player.getPlayerID());
+						PlayerToken message;
+						if(bonusAction != null) 
+							message = new PlayerToken(player.getPlayerID(), bonusAction.clone());
+						else
+							message = new PlayerToken(player.getPlayerID());
 						message.setRetrasmission();
 						player.retrasmitMessage(message);
 					}
 					else if(currentAction == null){
+						//Cancel the bonus action if there was one in GameLogic
+						bonusAction = null;
 						//Cancel the timer
 						if(timerTable.containsKey(currentPlayer))
 							timerTable.remove(player).cancel();
