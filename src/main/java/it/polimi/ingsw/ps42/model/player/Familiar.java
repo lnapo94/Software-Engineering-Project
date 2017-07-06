@@ -58,6 +58,16 @@ public class Familiar {
 	}
 	
 	/**
+	 * Method used to enable an increase familiar effect
+	 * @param 	The value used to increment the familiar
+	 */
+	public void enableFamiliarEffect(int value) {
+		this.value = this.value + value;
+		if(this.value < 0)
+			this.value = 0;
+	}
+	
+	/**
 	 * Getter for the value of this familiar
 	 * @return	The value of this familiar
 	 */

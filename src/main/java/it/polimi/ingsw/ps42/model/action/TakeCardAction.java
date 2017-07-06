@@ -229,7 +229,7 @@ public class TakeCardAction extends Action{
 		Packet moneyMalus = new Packet();
 		moneyMalus.addUnit(new Unit(Resource.MONEY, 3));
 		
-		if(position.getBonus() != null)
+		if(position.getBonus() != null && familiar != null)
 			position.resetBonus(player);
 		if(isAnotherFamiliar())
 			player.increaseResource(moneyMalus);

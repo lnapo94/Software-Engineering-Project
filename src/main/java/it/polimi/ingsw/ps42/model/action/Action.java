@@ -107,7 +107,8 @@ public abstract class Action extends Observable{
 		Packet slavePacket = new Packet();
 		slavePacket.addUnit(new Unit(Resource.SLAVE, this.payedSlave));
 		player.increaseResource(slavePacket);
-		familiar.resetIncrement();
+		if(familiar != null)
+			familiar.resetIncrement();
 		this.payedSlave = 0;
 	}
 	
