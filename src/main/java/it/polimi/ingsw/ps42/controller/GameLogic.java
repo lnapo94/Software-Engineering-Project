@@ -704,6 +704,7 @@ public class GameLogic implements Observer {
     			}
     		}
     		else if(currentRound == 6) {
+    			currentRound++;
     			endMatch();
     		}
     		else
@@ -912,7 +913,7 @@ public class GameLogic implements Observer {
     		currentPlayer.synchResource();
     		doAction();
     	}
-    	else if(currentRound != 6) {
+    	else if(currentRound < 7) {
     		currentPlayer.synchResource();
     		finishAction();
     	}
