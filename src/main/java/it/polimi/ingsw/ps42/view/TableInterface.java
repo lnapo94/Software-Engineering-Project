@@ -1,7 +1,5 @@
 package it.polimi.ingsw.ps42.view;
 
-
-import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.view.GUI.DraggableComponent;
 
 /**

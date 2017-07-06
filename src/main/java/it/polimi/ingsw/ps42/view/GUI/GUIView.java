@@ -11,6 +11,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -158,7 +159,7 @@ public class GUIView extends View implements TableInterface{
 		JLabel tableLabel = new JLabel();
 		tableLabel.setSize(new Dimension((int)leftPaneDimension.getWidth(), (int)leftPaneDimension.getHeight()));
 		tableLabel.setLocation(0, 0);
-		ImageIcon tableIcon = resizeImage(ImageIO.read(GUIView.class.getResource("/Images/TableUpperPart.png")), tableLabel.getSize());
+		ImageIcon tableIcon = resizeImage(ImageIO.read(new File("Resource//Images//TableUpperPart.png")), tableLabel.getSize());
 		tableLabel.setIcon(tableIcon);
 		mainLayeredPane.add(tableLabel, -1);
 		//Set the Card and Table Dimension from the TableIcon and build all the CardPositions
@@ -166,7 +167,7 @@ public class GUIView extends View implements TableInterface{
 		Dimension cardDimension = new Dimension((int)(tableIcon.getIconWidth()*0.13), (int)(tableIcon.getIconHeight()*0.17));
 
 		//Set the CardZoom Panel
-		BufferedImage cardBack = ImageIO.read(GUIView.class.getResource("/Images/LeaderCards/back.jpg"));
+		BufferedImage cardBack = ImageIO.read(new File("Resource//Images//LeaderCards//back.jpg"));
 		cardZoom = new CardZoom(cardBack, new Dimension((int)(cardDimension.getWidth()*3), (int)(cardDimension.getHeight()*3)));
 		cardZoom.setLocation((int)leftPaneDimension.getWidth(),0);
 		mainLayeredPane.add(cardZoom);
@@ -176,7 +177,7 @@ public class GUIView extends View implements TableInterface{
 		lowTableDimension = new Dimension((int)(rightPanelDimension.getWidth()-cardZoom.getWidth()), (int)(cardZoom.getHeight()*0.70));
 		lowTableLabel.setSize(lowTableDimension);
 		lowTableLabel.setLocation((int)(leftPaneDimension.getWidth()+cardZoom.getWidth()), 0);
-		lowTableLabel.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/TableDownPart.png")), lowTableLabel.getSize()));
+		lowTableLabel.setIcon(resizeImage(ImageIO.read(new File("Resource//Images//TableDownPart.png")), lowTableLabel.getSize()));
 		mainLayeredPane.add(lowTableLabel, -1);
 		
 		//Add the label for the Dice
@@ -188,7 +189,7 @@ public class GUIView extends View implements TableInterface{
 		//Set the Cards taken container
 		Dimension containerDimension = new Dimension((int)(rightPanelDimension.getWidth()),(int) (rightPanelDimension.getHeight()-cardZoom.getHeight()));
 		Point containerLocation = new Point((int)leftPaneDimension.getWidth(), (int)cardZoom.getHeight());
-		cardContainer = new CardContainer(containerDimension, containerLocation, cardZoom, ImageIO.read(GUIView.class.getResource("/Images/Others/cardContainer.jpg")), cardDimension);
+		cardContainer = new CardContainer(containerDimension, containerLocation, cardZoom, ImageIO.read(new File("Resource//Images//Others//cardContainer.jpg")), cardDimension);
 		mainLayeredPane.add(cardContainer, -1);
 		
 		//Build the main Familiar positions
@@ -722,7 +723,7 @@ public class GUIView extends View implements TableInterface{
 		market1.setSize(coverDimension);
 		market1.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.815), (int)(lowTableDimension.getHeight() * 0.225));
 		try {
-			market1.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/marketCover.png")) , market1.getSize()));
+			market1.setIcon(resizeImage(ImageIO.read(new File("Resource//Images//Others//marketCover.png")) , market1.getSize()));
 		} catch (IOException e) {
 			logger.error("Market position covered but image not found!");
 			logger.info(e);
@@ -734,7 +735,7 @@ public class GUIView extends View implements TableInterface{
 		market2.setSize(coverDimension);
 		market2.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.8955), (int)(lowTableDimension.getHeight() * 0.42));
 		try {
-			market2.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/marketCover2.png")) , market2.getSize()));
+			market2.setIcon(resizeImage(ImageIO.read(new File("Resource//Images//Others//marketCover2.png")) , market2.getSize()));
 		} catch (IOException e) {
 			logger.error("Market position covered but image not found!");
 			logger.info(e);
@@ -757,7 +758,7 @@ public class GUIView extends View implements TableInterface{
 		product.setSize(coverDimension);
 		product.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.1355), (int)(lowTableDimension.getHeight() * 0.222));
 		try {
-			product.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/yieldAndProductCover.png")) , product.getSize()));
+			product.setIcon(resizeImage(ImageIO.read(new File("Resource//Images//Others//yieldAndProductCover.png")) , product.getSize()));
 			product.setIgnoreRepaint(true);
 			
 		} catch (IOException e) {
@@ -771,7 +772,7 @@ public class GUIView extends View implements TableInterface{
 		yield.setSize(coverDimension);
 		yield.setLocation((int)(tableImageDimension.getWidth() + cardZoom.getSize().getWidth() + lowTableDimension.getWidth() * 0.12), (int)(lowTableDimension.getHeight() * 0.58));
 		try {
-			yield.setIcon(resizeImage(ImageIO.read(GUIView.class.getResource("/Images/Others/yieldCover.png")) , yield.getSize()));
+			yield.setIcon(resizeImage(ImageIO.read(new File("Resource//Images//Others//yieldCover.png")) , yield.getSize()));
 			yield.setIgnoreRepaint(true);
 		} catch (IOException e) {
 			logger.error("Yield and Product position covered but image not found!");
