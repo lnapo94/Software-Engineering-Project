@@ -116,7 +116,7 @@ public class IncrementWindow extends JDialog{
 		Font font = new Font("Papyrus", Font.ITALIC, (int)(dimension.getHeight()*0.08));
 		//Set the Resume TextArea
 		JLabel first = new JLabel(" Your current move:");
-		first.setFont(font);
+		first.setFont(font); 
 		this.add(first);
 		JLabel second = new JLabel(" Action type: "+ type.toString());
 		second.setFont(font);

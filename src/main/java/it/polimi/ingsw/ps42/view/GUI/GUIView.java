@@ -498,9 +498,8 @@ public class GUIView extends View implements TableInterface{
 				return true;
 			}
 		}
-		if(containsPoint(council, x, y)){
-			if(color != null)
-				council.placeFamiliar(familiarMoving.getImage());
+		if(containsPoint(council, x, y) && color != null){
+			council.placeFamiliar(familiarMoving.getImage());
 			actionValue = 1;
 			createNewMove( ActionType.COUNCIL, color, council.getLastIndex(), actionValue, familiarMoving);
 			return true;
@@ -514,9 +513,8 @@ public class GUIView extends View implements TableInterface{
 			return true;
 		}
 		
-		if( secondProduce.isActivated() && containsPoint(secondProduce, x, y) && firstProduce.getIcon() != null){
-			if(color != null)
-				secondProduce.placeFamiliar(familiarMoving.getImage());
+		if( secondProduce.isActivated() && containsPoint(secondProduce, x, y) && firstProduce.getIcon() != null && color != null){
+			secondProduce.placeFamiliar(familiarMoving.getImage());
 			actionValue = -3;
 			createNewMove(ActionType.PRODUCE, color, (secondProduce.getLastIndex()+1), actionValue, familiarMoving);
 			return true;
@@ -530,9 +528,8 @@ public class GUIView extends View implements TableInterface{
 			return true;
 		}
 		
-		if( secondYield.isActivated() && containsPoint(secondYield, x, y) && firstYield.getIcon() != null){
-			if(color != null)
-				secondYield.placeFamiliar(familiarMoving.getImage());
+		if( secondYield.isActivated() && containsPoint(secondYield, x, y) && firstYield.getIcon() != null && color != null){
+			secondYield.placeFamiliar(familiarMoving.getImage());
 			actionValue = -3;
 			createNewMove(ActionType.YIELD, color, (secondYield.getLastIndex()+1), actionValue, familiarMoving);
 			return true;
@@ -623,41 +620,43 @@ public class GUIView extends View implements TableInterface{
 	public void cancelMove(ActionType type, int position){
 		//Restore the position of the moved Familiar
 		movingFamiliar.resetFamiliar();
-		
-		switch (type) {
-		case TAKE_GREEN:
-			greenTowerForFamiliar.get(position).setIcon(null);
-			break;
-		case TAKE_YELLOW:
-			yellowTowerForFamiliar.get(position).setIcon(null);
-			break;
-		case TAKE_BLUE:
-			blueTowerForFamiliar.get(position).setIcon(null);
-			break;
-		case TAKE_VIOLET:
-			violetTowerForFamiliar.get(position).setIcon(null);
-			break;
-		case MARKET:
-			market.get(position).setIcon(null);
-			break;
-		case YIELD:
-			if( !secondYield.isActivated() || secondYield.isEmpty())
-				firstYield.setIcon(null);
-			else 
-				secondYield.resetLastFamiliar();
-			break;
-		case PRODUCE:
-			if(!secondProduce.isActivated() || secondProduce.isEmpty())
-				firstProduce.setIcon(null);
-			else 
-				secondProduce.resetLastFamiliar();
-			break;
-		case COUNCIL:
-			council.resetLastFamiliar();
-			break;
-			
-		default:
-			break;
+		if(movingFamiliar.getFamiliarColor() != null){
+			switch (type) {
+			case TAKE_GREEN:
+				greenTowerForFamiliar.get(position).setIcon(null);
+				break;
+			case TAKE_YELLOW:
+				yellowTowerForFamiliar.get(position).setIcon(null);
+				break;
+			case TAKE_BLUE:
+				blueTowerForFamiliar.get(position).setIcon(null);
+				break;
+			case TAKE_VIOLET:
+				violetTowerForFamiliar.get(position).setIcon(null);
+				break;
+			case MARKET:
+				market.get(position).setIcon(null);
+				break;
+			case YIELD:
+				if( !secondYield.isActivated() || secondYield.isEmpty())
+					firstYield.setIcon(null);
+				else 
+					secondYield.resetLastFamiliar();
+				break;
+			case PRODUCE:
+				if(!secondProduce.isActivated() || secondProduce.isEmpty()) 
+					firstProduce.setIcon(null);
+				else 
+					secondProduce.resetLastFamiliar();
+				break;
+			case COUNCIL:
+				council.resetLastFamiliar();
+				break;
+				
+			default:
+				break;
+			}
+
 		}
 	}
 	
