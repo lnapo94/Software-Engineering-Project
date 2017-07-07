@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -46,6 +48,7 @@ import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.parser.ImageLoader;
+import it.polimi.ingsw.ps42.parser.TimerLoader;
 import it.polimi.ingsw.ps42.view.TableInterface;
 import it.polimi.ingsw.ps42.view.View;
 import it.polimi.ingsw.ps42.view.GUI.dialog.BonusBarRequestDialog;
@@ -54,6 +57,7 @@ import it.polimi.ingsw.ps42.view.GUI.dialog.CouncilRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardChooseDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardShowDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.PayBanDialog;
+import it.polimi.ingsw.ps42.view.GUI.dialog.ResultWindow;
 
 public class GUIView extends View implements TableInterface{
 
@@ -123,6 +127,12 @@ public class GUIView extends View implements TableInterface{
 	private PlayerMove nextMove;
 	//The Loader for all the images of the game
 	private ImageLoader imageLoader;
+	
+	//The loader for the game timers
+	private TimerLoader timerLoader;
+	private final long MOVE_SECONDS;
+	private TimerLabel timerLable;
+	
 	//GUI Logger
 	private Logger logger = Logger.getLogger(GUIView.class);
 	
@@ -131,6 +141,8 @@ public class GUIView extends View implements TableInterface{
 		super();
 		PropertyConfigurator.configure("Logger//Properties//client_log.properties");
 		imageLoader = new ImageLoader("Resource//Configuration//imagePaths.json");
+		timerLoader = new TimerLoader("Resource//Configuration//timers.json");
+		MOVE_SECONDS = timerLoader.getPlayerMoveTimer() ;
 		initialize();
 		mainFrame.setVisible(true);
 		
@@ -210,9 +222,12 @@ public class GUIView extends View implements TableInterface{
 		//Build the JButton for the LeaderCards
 		buildLeaderCardsButton();
 		
+		//Build the timerLable
+		buildTimerLable();
+		
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
-
+		
 	
 	}
 	/**
@@ -668,7 +683,7 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 	
-	public void disableMove(){
+	public void disableFamiliarMove(){
 
 		enableFamiliar(blackFamiliar, player.getFamiliar(FamiliarColor.BLACK), false);
 		enableFamiliar(whiteFamiliar, player.getFamiliar(FamiliarColor.WHITE), false);
@@ -1068,13 +1083,7 @@ public class GUIView extends View implements TableInterface{
 			public void actionPerformed(ActionEvent e) {
 				//Send to the GameLogic an emptyMove
 				setEmptyMove();
-				disableSkipButton();
 				disableMove();
-				if(bonusFamiliar != null){
-					bonusFamiliar.setIcon(null);
-					bonusFamiliar.setEnabled(false);
-					mainLayeredPane.remove(bonusFamiliar);
-				}
 			}
 		});
 		disableSkipButton();
@@ -1089,6 +1098,15 @@ public class GUIView extends View implements TableInterface{
 		leaderCardButton.addActionListener(new MyActionLister(this));
 				
 		
+	}
+	
+	private void buildTimerLable(){
+
+		Dimension timerDimension = new Dimension((int)(tableImageDimension.getWidth() * 0.15), (int)(tableImageDimension.getHeight() * 0.07));
+		Point timerLocation = new Point((int)(tableImageDimension.getWidth() * 0.01), (int)(tableImageDimension.getHeight() * 0.77));
+		timerLable = new TimerLabel(this, timerDimension, timerLocation, MOVE_SECONDS);
+		timerLable.setVisible(true);
+		mainLayeredPane.add( timerLable, 0);
 	}
 	
 	private class MyActionLister implements ActionListener {
@@ -1142,15 +1160,8 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	public void setNewMove(PlayerMove move) {
 		super.setNewMove(move);
-		this.nextMove = move;
 		disableMove();
-		disableSkipButton();
-		if(bonusFamiliar != null){
-			bonusFamiliar.setIcon(null);
-			bonusFamiliar.setEnabled(false);
-			mainLayeredPane.remove(bonusFamiliar);
-			mainLayeredPane.updateUI();
-		}
+		this.nextMove = move;
 	}
 	
 	@Override
@@ -1220,17 +1231,54 @@ public class GUIView extends View implements TableInterface{
 	}
 
 	@Override
+	public void askPlayerMove(PlayerToken message) {
+		super.askPlayerMove(message);
+		if(!hasToAnswer(message.getPlayerID()))
+			timerLable.showPlayerPlaying(message.getPlayerID());
+	}
+	
+	@Override
 	protected void askIfWantToPlay(PlayerToken moveToken) {
-		//Ask to the Player if he wants to perform a new Action 
+		//Ask to the Player if he wants to perform a new Action and start the Timer
+	/*	Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				disableMove();
+				}				
+		}, MOVE_SECONDS * 1000);
+		*/
+		timerLable.startTimer();
 		
 		//If so ask a new PlayerMove
 		this.choosePlayerMove(moveToken.getActionPrototype(), moveToken.isRetrasmission());
 		
 	}
 
+	public void disableMove( ){
+		
+		nextMove = null;
+		disableFamiliarMove();
+		disableSkipButton();
+		if(bonusFamiliar != null){
+			bonusFamiliar.setIcon(null);
+			bonusFamiliar.setEnabled(false);
+			mainLayeredPane.remove(bonusFamiliar);
+			mainLayeredPane.updateUI();
+		}
+		timerLable.resetTimer();
+	}
+		
+	/**
+	 * Open a window to show the game final result
+	 */
 	@Override
 	protected void showResult(List<String> finalChart) {
-		// TODO Auto-generated method stub
+
+		Dimension resultWindowDimension = new Dimension((int)(mainFrame.getWidth()*0.7),(int)(mainFrame.getHeight()*0.48) );
+		Point resultWindowLocation = new Point((int)(tableImageDimension.getWidth()*0.4),(int)(tableImageDimension.getHeight()*0.4) );
+		new ResultWindow(this, finalChart, resultWindowDimension, resultWindowLocation );
 		
 	}
 	
