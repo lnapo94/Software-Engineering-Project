@@ -734,17 +734,26 @@ public class Table extends Observable{
 		player.sendResources();
 		ReconnectMessage message = new ReconnectMessage(player.getPlayerID());
 		
-		message.setFirstBan(firstBan, indexOfFirstBan);
-		message.setSecondBan(secondBan, indexOfSecondBan);
-		message.setThirdBan(thirdBan, indexOfThirdBan);
+		message.setFirstBan(firstBan.clone(), indexOfFirstBan);
+		message.setSecondBan(secondBan.clone(), indexOfSecondBan);
+		message.setThirdBan(thirdBan.clone(), indexOfThirdBan);
 		
-		message.setGreen(player.getCardList(CardColor.GREEN));
-		message.setYellow(player.getCardList(CardColor.YELLOW));
-		message.setBlue(player.getCardList(CardColor.BLUE));
-		message.setViolet(player.getCardList(CardColor.VIOLET));
+		message.setGreen(copyCardList(player.getCardList(CardColor.GREEN)));
+		message.setYellow(copyCardList(player.getCardList(CardColor.YELLOW)));
+		message.setBlue(copyCardList(player.getCardList(CardColor.BLUE)));
+		message.setViolet(copyCardList(player.getCardList(CardColor.VIOLET)));
 		
 		setChanged();
 		notifyObservers(message);
+	}
+	
+	private StaticList<Card> copyCardList(StaticList<Card> source) {
+		StaticList<Card> tempList = new StaticList<>(source.getMaxSize());
+		
+		for(Card card : source)
+			tempList.add(card.clone());
+		
+		return tempList;
 	}
 	
 	/**

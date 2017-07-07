@@ -625,6 +625,8 @@ public class GameLogic implements Observer {
 		
 		for(Player player : playersList)
 			player.notifyRanking(message);
+		
+		table.finish();
 	}
 	
 	/**
@@ -672,7 +674,7 @@ public class GameLogic implements Observer {
 	 * the players have done their actions, restart the round, but also control the ban
 	 * if necessary
 	 */
-    public synchronized void initAction() {
+    public void initAction() {
     	if(currentPlayer != null && timerTable.containsKey(currentPlayer))
     		timerTable.remove(currentPlayer).cancel();
     		
@@ -728,7 +730,7 @@ public class GameLogic implements Observer {
      * @param player		The player whose victory points are to increase
      * @throws IOException	Thrown if there isn't the file in the specified path
      */
-    private synchronized void faithPathIncrease(Player player) throws IOException {
+    private void faithPathIncrease(Player player) throws IOException {
     	FaithPathLoader loader = new FaithPathLoader("Resource//Configuration//faithPointPathConfiguration.json");
 		Packet victoryPoint = new Packet();
 		victoryPoint.addUnit(loader.conversion(player.getResource(Resource.FAITHPOINT)));
@@ -885,7 +887,7 @@ public class GameLogic implements Observer {
      * 2) if it's the sixth round, finish the match
      * 3) else the match is finished, so calculate the winner
      */
-    private synchronized void checkRequest() {
+    private void checkRequest() {
     	
     	if(timerTable.containsKey(currentPlayer))
     		timerTable.remove(currentPlayer).cancel();
@@ -1187,6 +1189,9 @@ public class GameLogic implements Observer {
 					while(actionOrder.contains(player))
 						actionOrder.remove(player);
 					
+					if(timerTable.containsKey(player))
+						timerTable.remove(player).cancel();
+					
 					if(playersList.size() == 1) {
 						rollBackAction();
 						removePlayerFromPendingRequest(playersList.get(0));
@@ -1203,6 +1208,10 @@ public class GameLogic implements Observer {
 						result.add(playersList.get(0).getPlayerID());
 						WinnerMessage winnerMessage = new WinnerMessage(playersList.get(0).getPlayerID(), result);
 						playersList.get(0).notifyRanking(winnerMessage);
+						
+						if(timerTable.containsKey(playersList.get(0)))
+							timerTable.remove(playersList.get(0)).cancel();
+						
 						table.finish();
 					}
 				}
