@@ -252,6 +252,7 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 				logger.info("Unable to notify the RMI client, disconnect it");
 				logger.info(e);
 				try {
+					setChanged();
 					notifyObservers(playerID);
 					disconnectClient(playerID);
 				} catch (RemoteException e1) {
