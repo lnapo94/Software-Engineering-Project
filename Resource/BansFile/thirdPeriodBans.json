@@ -96,7 +96,7 @@
       "list": [
         {
           "resource": "VICTORYPOINT",
-          "quantity": 1
+          "quantity": -1
         }
       ]
     },
