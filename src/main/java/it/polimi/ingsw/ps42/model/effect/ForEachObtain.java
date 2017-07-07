@@ -63,7 +63,7 @@ public class ForEachObtain extends Effect{
 			quantity=player.getResource(unit1.getResource());	//ottengo da giocatore la quantità della risorsa richiesta 
 			quantity=quantity/unit1.getQuantity();				//divido questa quantità per quella richiesta 
 			for (Unit unit2 : gains) {
-				quantityToObtain=quantity*unit2.getQuantity();		//la quantità finale da ottenere va moltiplicata per la quantità in gains
+				quantityToObtain = quantity*unit2.getQuantity();		//la quantità finale da ottenere va moltiplicata per la quantità in gains
 				packet.addUnit(new Unit(unit2.getResource(), quantityToObtain));	
 			}
 		}

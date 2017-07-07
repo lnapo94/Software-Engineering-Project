@@ -499,13 +499,16 @@ public class Table extends Observable{
 	private List<Player> getNewOrder(){
 		//Return the new order of the player
 		List<Player> temp = new ArrayList<>();
-		for(int i = 0; i < council.size(); i++) {
+		int councilSize = council.size();
+		for(int i = 0; i < councilSize; i++) {
 			CouncilPosition position = council.get(0);
-			if(!temp.contains(position.getFamiliar().getPlayer()))
-				temp.add(position.getFamiliar().getPlayer());
-			council.remove(position);
-			//Remove also the familiar
-			position.removeFamiliar();
+			if(position != null){
+				if(position != null && !temp.contains(position.getFamiliar().getPlayer()))
+					temp.add(position.getFamiliar().getPlayer());
+				council.remove(position);
+				//Remove also the familiar
+				position.removeFamiliar();
+			}
 		}
 		council = new ArrayList<>();
 		return temp;
@@ -710,8 +713,15 @@ public class Table extends Observable{
 	 * @return	Create a new council position, add it to the council list in table and finally return it
 	 */
 	public CouncilPosition getFreeCouncilPosition() {
-		CouncilPosition councilPosition = councilCopy.clone();
-		council.add(councilPosition);
+		CouncilPosition councilPosition = null;
+		
+		if(council.size() == 0 || !council.get(council.size()-1).isEmpty()){
+			councilPosition = councilCopy.clone();
+			council.add(councilPosition);
+		}
+		else
+			councilPosition = council.get(council.size()-1);
+		
 		return councilPosition;
 	}
 

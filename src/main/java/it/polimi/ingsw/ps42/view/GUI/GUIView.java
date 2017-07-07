@@ -1190,11 +1190,11 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void chooseIfPayBan(int banPeriod) {
 		// Ask to the Player if he wants to pay for the current Period Ban
-
-		Dimension banWindowDimension = new Dimension((int)(mainFrame.getWidth()*0.7),(int)(mainFrame.getHeight()*0.48) );
-		Point banWindowLocation = new Point((int)(tableImageDimension.getWidth()*0.4),(int)(tableImageDimension.getHeight()*0.4) );
-		new PayBanDialog(this, banWindowDimension ,banWindowLocation, bans.get(banPeriod).getCardImage(), banPeriod );
-		
+		if(bans.get(banPeriod) != null){
+			Dimension banWindowDimension = new Dimension((int)(mainFrame.getWidth()*0.7),(int)(mainFrame.getHeight()*0.48) );
+			Point banWindowLocation = new Point((int)(tableImageDimension.getWidth()*0.4),(int)(tableImageDimension.getHeight()*0.4) );
+			new PayBanDialog(this, banWindowDimension ,banWindowLocation, bans.get(banPeriod).getCardImage(), banPeriod );
+		}
 	}
 
 	@Override
