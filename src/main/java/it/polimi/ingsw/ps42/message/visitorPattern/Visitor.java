@@ -17,6 +17,7 @@ import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
+import it.polimi.ingsw.ps42.message.ReconnectMessage;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 import it.polimi.ingsw.ps42.message.WinnerMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
@@ -48,5 +49,6 @@ public interface Visitor {
 	public void visit(LeaderFamiliarRequest message);
 	public void visit(EmptyMove message);
 	public void visit(CancelCardRequest message);
+	public void visit(ReconnectMessage message);
 	public void visit(WinnerMessage message);
 }

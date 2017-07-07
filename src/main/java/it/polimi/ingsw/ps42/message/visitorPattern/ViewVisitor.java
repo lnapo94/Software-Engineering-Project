@@ -20,6 +20,7 @@ import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
+import it.polimi.ingsw.ps42.message.ReconnectMessage;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 import it.polimi.ingsw.ps42.message.WinnerMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
@@ -366,6 +367,12 @@ public class ViewVisitor implements Visitor {
 	@Override
 	public void visit(DiscardLeaderCard message) {
 		view.discardLeaderCard(message.getPlayerID(), message.getCard());
+	}
+
+	@Override
+	public void visit(ReconnectMessage message) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

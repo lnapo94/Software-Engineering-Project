@@ -13,6 +13,7 @@ import it.polimi.ingsw.ps42.message.BonusBarMessage;
 import it.polimi.ingsw.ps42.message.CardsMessage;
 import it.polimi.ingsw.ps42.message.DiceMessage;
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.message.ReconnectMessage;
 import it.polimi.ingsw.ps42.model.effect.Effect;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
@@ -713,6 +714,27 @@ public class Table extends Observable{
 		CouncilPosition councilPosition = councilCopy.clone();
 		council.add(councilPosition);
 		return councilPosition;
+	}
+	
+	/**
+	 * Method used to send to a reconnecting player all his stuffs
+	 * @param player
+	 */
+	public void reconnectPlayer(Player player) {
+		player.sendResources();
+		ReconnectMessage message = new ReconnectMessage(player.getPlayerID());
+		
+		message.setFirstBan(firstBan, indexOfFirstBan);
+		message.setSecondBan(secondBan, indexOfSecondBan);
+		message.setThirdBan(thirdBan, indexOfThirdBan);
+		
+		message.setGreen(player.getCardList(CardColor.GREEN));
+		message.setYellow(player.getCardList(CardColor.YELLOW));
+		message.setBlue(player.getCardList(CardColor.BLUE));
+		message.setViolet(player.getCardList(CardColor.VIOLET));
+		
+		setChanged();
+		notifyObservers(message);
 	}
 
 }

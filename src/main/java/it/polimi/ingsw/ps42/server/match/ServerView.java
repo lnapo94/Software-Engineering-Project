@@ -69,7 +69,7 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	 * Method used to get the ID of the current ServerView for RMI connections
 	 * @return	The ID of the ServerView
 	 */
-	public String getID() {
+	public synchronized String getID() {
 		return "ServerView" + serverViewIndex;
 	}
 	
@@ -81,7 +81,7 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	 * @param playerID						The player's ID to connect to this ServerView
 	 * @throws ElementNotFoundException		Thrown if the player isn't found in the current view. It is necessary to reconnect the correct player
 	 */
-	public void addConnection(Connection connection, String playerID) throws ElementNotFoundException{
+	public synchronized void addConnection(Connection connection, String playerID) throws ElementNotFoundException{
 		
 		//Add a Socket Client to the game
 		if(wasConnected(playerID)){
@@ -130,7 +130,7 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	 * @param playerID		The player's ID to search
 	 * @return				True if the disconnected players list contains the specify ID, False otherwise
 	 */
-	public boolean wasConnected(String playerID){
+	public synchronized boolean wasConnected(String playerID){
 		//Return if the playerID passed is in use by an active Player
 		for (String player: disconnectedPlayers) {
 			if(player.equals(playerID))
@@ -145,7 +145,7 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	 * @param playerID	The ID to check
 	 * @return			True if the ID isn't used before, otherwise False 
 	 */
-	public boolean nameNotUsed(String playerID){
+	public synchronized boolean nameNotUsed(String playerID){
 		
 		return !connections.containsKey(playerID) && !RMIConnections.containsKey(playerID);
 	}
@@ -154,7 +154,7 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	 * Method used to know how many players are in this ServerView
 	 * @return		The current number of player in this ServerView
 	 */
-	public int getNumberOfPlayers(){
+	public synchronized int getNumberOfPlayers(){
 		return connections.size() + RMIConnections.size();
 	}
 	
@@ -203,7 +203,7 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	 * Method used when this ServerView received a message from the GameLogic to send to the Client and vice-versa
 	 */
 	@Override
-	public void update(Observable sender, Object messageToSend) {
+	public synchronized void update(Observable sender, Object messageToSend) {
 		
 		if( messageToSend instanceof Message){
 			Message message= (Message) messageToSend;
@@ -272,7 +272,7 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	 * Method used to delete a connection and add this player ID to the disconnected players list
 	 * @param playerID	The player's ID to disconnect from this ServerVIew
 	 */
-	public void deleteConnection(String playerID) {
+	public synchronized void deleteConnection(String playerID) {
 		disconnectedPlayers.add(playerID);
 		Connection connection = connections.remove(playerID);
 		connection.deleteObserver(this);

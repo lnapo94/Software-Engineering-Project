@@ -21,6 +21,7 @@ import it.polimi.ingsw.ps42.message.LeaderCardMessage;
 import it.polimi.ingsw.ps42.message.LeaderCardUpdateMessage;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
+import it.polimi.ingsw.ps42.message.ReconnectMessage;
 import it.polimi.ingsw.ps42.message.ResourceUpdateMessage;
 import it.polimi.ingsw.ps42.message.WinnerMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
@@ -295,6 +296,14 @@ public class ControllerVisitor implements Visitor {
 	@Override
 	public void visit(DiscardLeaderCard message) {
 		gameLogic.discardLeaderCard(message.getPlayerID(), message.getCard());
+	}
+
+	/** 
+	 * Nothing to do (this message is only received by the View)
+	 */
+	@Override
+	public void visit(ReconnectMessage message) {
+		
 	}
 
 

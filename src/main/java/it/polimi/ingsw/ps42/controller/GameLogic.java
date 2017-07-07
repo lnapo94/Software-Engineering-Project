@@ -640,7 +640,7 @@ public class GameLogic implements Observer {
 			playersList.add(player);
 			roundOrder.add(player);
 			
-			player.sendResources();
+			table.reconnectPlayer(player);
 			toReconnectPlayers.remove(player);
 		}
 		
@@ -913,15 +913,15 @@ public class GameLogic implements Observer {
     		isAnswerPendingCouncilRequest = false;
     		askMoveToPlayer();
     	}
-    	else if(currentAction != null) {
+    	else if(currentAction != null && playersWithRequest.isEmpty()) {
     		currentPlayer.synchResource();
     		doAction();
     	}
-    	else if(currentRound < 7) {
+    	else if(currentRound < 7 && playersWithRequest.isEmpty()) {
     		currentPlayer.synchResource();
     		finishAction();
     	}
-    	else
+    	else if(playersWithRequest.isEmpty())
     		calculateWinner();
     }
     
@@ -967,7 +967,7 @@ public class GameLogic implements Observer {
      * 
      * @param request	The request send to the player 
      */
-    public void handleRequest(CardRequest request) {
+    public synchronized void handleRequest(CardRequest request) {
     	try {
 			Player player = searchPlayer(request.getPlayerID());
 			
@@ -1004,7 +1004,7 @@ public class GameLogic implements Observer {
      * 
      * @param councilRequest	The request send to the player
      */
-	public void handleCouncilRequest(CouncilRequest councilRequest){
+	public synchronized void handleCouncilRequest(CouncilRequest councilRequest){
 		/* Method called by the Visitor to set a council request response to a Player:
 		 * if something wrong retransmit the message, else add the request to the player council request
 		 */
@@ -1028,7 +1028,7 @@ public class GameLogic implements Observer {
 	 * Return the current table, used by the controller visitor to create the action
 	 * @return	The reference to the current table
 	 */
-	public Table getTable() {
+	public synchronized Table getTable() {
 		return this.table;
 	}
 	
@@ -1038,7 +1038,7 @@ public class GameLogic implements Observer {
 	 * @return	The value of the current bonus action, if there is one bonus action
 	 * 			else 0
 	 */
-	public int getBonusActionValue() {
+	public synchronized int getBonusActionValue() {
 		if(this.bonusAction != null)
 			return this.bonusAction.getLevel();
 		return 0;
@@ -1049,7 +1049,7 @@ public class GameLogic implements Observer {
 	 * @param searchPlayer	Player who answers to the request
 	 * @param card			The card to enable
 	 */
-	public void HandleLeaderUpdate(Player searchPlayer, LeaderCard card) {
+	public synchronized void HandleLeaderUpdate(Player searchPlayer, LeaderCard card) {
 		searchPlayer.enableLeaderCard(card);
 		checkOtherPlayerLeaderRequest(searchPlayer);
 	}
@@ -1058,7 +1058,7 @@ public class GameLogic implements Observer {
 	 * 
 	 * @return Reference to the current player
 	 */
-	public Player getCurrentPlayer() {
+	public synchronized Player getCurrentPlayer() {
 		return this.currentPlayer;
 	}
 	
@@ -1066,14 +1066,14 @@ public class GameLogic implements Observer {
 	 * 
 	 * @return	True if there is an action incompleted, false in other cases
 	 */
-	public boolean isThereAnAction() {
+	public synchronized boolean isThereAnAction() {
 		return this.currentAction != null;
 	}
 	
 	/**
 	 * Method used to rollback an action if there is a problem
 	 */
-	public void rollBackAction() {
+	public synchronized void rollBackAction() {
 		if(currentAction != null) {
 			currentAction.rollBackAction();
 		}
@@ -1083,7 +1083,7 @@ public class GameLogic implements Observer {
 	 * 
 	 * @return The current ROund
 	 */
-	public int getCurrentRound() {
+	public synchronized int getCurrentRound() {
 		return this.currentRound;
 	}
 	
@@ -1092,7 +1092,7 @@ public class GameLogic implements Observer {
 	 * 
 	 * @param player	The player to remove
 	 */
-	public void removePlayerFromPendingRequest(Player player) {
+	public synchronized void removePlayerFromPendingRequest(Player player) {
 		while(playersWithRequest.contains(player))
 			playersWithRequest.remove(player);
 		if(timerTable.containsKey(player))
@@ -1105,7 +1105,7 @@ public class GameLogic implements Observer {
 	 * @param player	The player to control
 	 * @return			True if he is connected, False if he isn't connected
 	 */
-	public boolean isConnected(Player player) {
+	public synchronized boolean isConnected(Player player) {
 		return this.playersList.contains(player);
 	}
 	
@@ -1114,7 +1114,7 @@ public class GameLogic implements Observer {
 	 * 
 	 * @param message	The message arrived in GameLogic from the player
 	 */
-	public void cancelRequest(CancelCardRequest message) {
+	public synchronized void cancelRequest(CancelCardRequest message) {
 		try {
 			Player player = searchPlayer(message.getPlayerID());
 			
@@ -1138,12 +1138,12 @@ public class GameLogic implements Observer {
 	/**
 	 * Method used to remove the current bonus action, used in the timer when it expired
 	 */
-	public void removeBonusAction() {
+	public synchronized void removeBonusAction() {
 		if(bonusAction != null)
 			bonusAction = null;
 	}
 	
-	public void discardLeaderCard(String playerID, LeaderCard card) {
+	public synchronized void discardLeaderCard(String playerID, LeaderCard card) {
 		try {
 			Player player = searchPlayer(playerID);
 			player.discardLeaderCard(card);
@@ -1159,7 +1159,7 @@ public class GameLogic implements Observer {
 	 * or a reconnection of one player, so handle it
 	 */
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public synchronized void update(Observable arg0, Object arg1) {
 		Message message;
 		if(arg1 instanceof Message) {
 			message = (Message) arg1;
