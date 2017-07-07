@@ -877,7 +877,8 @@ public abstract class View extends Observable implements Observer {
 		}
 		else if(newMessage instanceof PlayersListMessage){
 			PlayersListMessage message = (PlayersListMessage) newMessage;
-			createTable(message.getPlayerList());
+			if(this.table == null)
+				createTable(message.getPlayerList());
 		}
 	}
 
