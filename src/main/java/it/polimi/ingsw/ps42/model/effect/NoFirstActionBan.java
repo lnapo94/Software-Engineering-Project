@@ -17,6 +17,8 @@ public class NoFirstActionBan extends Effect {
 	 */
 	private static final long serialVersionUID = -4347788955119043485L;
 	
+	private boolean yetSetted = false;
+	
 	/**
 	 * Simple constructor of this effect
 	 */
@@ -33,6 +35,10 @@ public class NoFirstActionBan extends Effect {
 		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
 		this.player=player;
 		player.setCanPlay(false);
+		if(yetSetted == false) {
+			this.player.setBan(this);
+			yetSetted = true;
+		}
 	}
 
 	/**

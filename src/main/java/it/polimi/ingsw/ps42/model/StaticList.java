@@ -122,6 +122,10 @@ public class StaticList<E> implements Iterable<E>, Serializable{
 		//Return true if the array is full
 		return list.size() == MAX_SIZE;
 	}
+	
+	public int getMaxSize() {
+		return this.MAX_SIZE;
+	}
 
 	/**
 	 * The iterator of the StaticList, necessary to implement a For-Each Statement
