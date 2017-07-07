@@ -318,7 +318,7 @@ public class GameLogic implements Observer {
      * Method used by visitor to set the bonusbar to the player
      * @param choice    Used to select the correct bonus bar
      */
-    public void setBonusBar(int choice, String playerID) {
+    public synchronized void setBonusBar(int choice, String playerID) {
         if(playerID.equals(currentPlayer.getPlayerID())) {
         	
         	//Stop the timer
@@ -379,7 +379,7 @@ public class GameLogic implements Observer {
      * @param choice		Index of which card the player wants
      * @param playerID		The player who chosen that card
      */
-    public void setLeaderCard(int choice, String playerID) {
+    public synchronized void setLeaderCard(int choice, String playerID) {
         try {
             Player player = searchPlayer(playerID);
             
@@ -438,7 +438,6 @@ public class GameLogic implements Observer {
     	logger.info("Start the round number: " + getCurrentRound());
     	
         table.throwDice(new Random());
-
     	
         //Place the cards in the towers
         table.placeGreenTower(cardsCreator.getNextGreenCards());
@@ -466,9 +465,11 @@ public class GameLogic implements Observer {
         }
         
         //Enable the No First Action ban for all the player if they have got it
-        for(Player player : playersList)
+        //Enable also the dice ban in case the players have got it
+        for(Player player : playersList) {
         	player.enableCanPlayBan();
-        
+        	player.familiarBan();
+        }
         if(playersWithRequest.isEmpty()) {
             initAction();
         }
@@ -498,7 +499,7 @@ public class GameLogic implements Observer {
      *  
      * @param request	The message taken from the client
      */
-    public void handleLeaderFamiliarRequest(LeaderFamiliarRequest request) {
+    public synchronized void handleLeaderFamiliarRequest(LeaderFamiliarRequest request) {
     	//Method used to manage the leader familiar request
     	try {
 			Player player = searchPlayer(request.getPlayerID());
@@ -672,7 +673,7 @@ public class GameLogic implements Observer {
 	 * the players have done their actions, restart the round, but also control the ban
 	 * if necessary
 	 */
-    public void initAction() {
+    public synchronized void initAction() {
     	if(currentPlayer != null && timerTable.containsKey(currentPlayer))
     		timerTable.remove(currentPlayer).cancel();
     		
@@ -728,7 +729,7 @@ public class GameLogic implements Observer {
      * @param player		The player whose victory points are to increase
      * @throws IOException	Thrown if there isn't the file in the specified path
      */
-    private void faithPathIncrease(Player player) throws IOException {
+    private synchronized void faithPathIncrease(Player player) throws IOException {
     	FaithPathLoader loader = new FaithPathLoader("Resource//Configuration//faithPointPathConfiguration.json");
 		Packet victoryPoint = new Packet();
 		victoryPoint.addUnit(loader.conversion(player.getResource(Resource.FAITHPOINT)));
@@ -752,7 +753,7 @@ public class GameLogic implements Observer {
      * @param index				The period of the ban
      * @param wantToPayBan		Variable used to know if the player wants to pay or not
      */
-    public void handleBan(String playerID, int index, boolean wantToPayBan) {
+    public synchronized void handleBan(String playerID, int index, boolean wantToPayBan) {
     	try {
 			Player player = searchPlayer(playerID);
 			
@@ -885,7 +886,7 @@ public class GameLogic implements Observer {
      * 2) if it's the sixth round, finish the match
      * 3) else the match is finished, so calculate the winner
      */
-    private void checkRequest() {
+    private synchronized void checkRequest() {
     	
     	if(timerTable.containsKey(currentPlayer))
     		timerTable.remove(currentPlayer).cancel();

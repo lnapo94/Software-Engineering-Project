@@ -79,8 +79,10 @@ public class TakeCardAction extends Action{
 		//Initial checks for the takeCard action, valid for both normal and bonus action
 		
 		//First: Check if the player can play
-		if(!player.canPlay())
+		if(!player.canPlay()) {
+			super.rollBackAction();
 			return Response.CANNOT_PLAY;
+		}
 		
 		//Second: Active the IncreaseEffect in player, control the ban of the tower bonus position
 		checkIncreaseEffect();
@@ -97,6 +99,7 @@ public class TakeCardAction extends Action{
 			player.restoreResource();
 			if(familiar != null)
 				familiar.resetIncrement();
+			super.rollBackAction();
 			return Response.FAILURE;
 		}
 		
@@ -105,6 +108,7 @@ public class TakeCardAction extends Action{
 			if(!checkMyFamiliar()) {
 				player.restoreResource();
 				familiar.resetIncrement();
+				super.rollBackAction();
 				return Response.FAILURE;
 			}
 		}
@@ -115,6 +119,7 @@ public class TakeCardAction extends Action{
 			player.restoreResource();
 			if(familiar != null)
 				familiar.resetIncrement();
+			super.rollBackAction();
 			return Response.FAILURE;
 		}
 		
@@ -122,6 +127,7 @@ public class TakeCardAction extends Action{
 			player.restoreResource();
 			if(familiar != null)
 				familiar.resetIncrement();
+			super.rollBackAction();
 			return Response.FAILURE;
 		}
 		
@@ -134,24 +140,28 @@ public class TakeCardAction extends Action{
 			if(militaryPointQuantity < 3 && greenCardsInPlayer == 2) {
 				if(familiar != null)
 					familiar.resetIncrement();
+				super.rollBackAction();
 				return Response.FAILURE;
 			}
 			
 			if(militaryPointQuantity < 7 && greenCardsInPlayer == 3) {
 				if(familiar != null)
 					familiar.resetIncrement();
+				super.rollBackAction();
 				return Response.FAILURE;
 			}
 			
 			if(militaryPointQuantity < 12 && greenCardsInPlayer == 4) {
 				if(familiar != null)
 					familiar.resetIncrement();
+				super.rollBackAction();
 				return Response.FAILURE;
 			}
 			
 			if(militaryPointQuantity < 18 && greenCardsInPlayer == 5) {
 				if(familiar != null)
 					familiar.resetIncrement();
+				super.rollBackAction();
 				return Response.FAILURE;
 			}
 		}
@@ -163,6 +173,7 @@ public class TakeCardAction extends Action{
 				//If familiar is positioned yet
 				player.restoreResource();
 				familiar.resetIncrement();
+				super.rollBackAction();
 				return Response.FAILURE;
 			}
 			

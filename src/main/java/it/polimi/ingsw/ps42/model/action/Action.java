@@ -103,6 +103,10 @@ public abstract class Action extends Observable{
 		this.payedSlave = slaveToPay;
 	}
 	
+	/**
+	 * Method used to roll back an action when there is a problem with an Action, such as
+	 * the player can't play or the player can't afford a card cost
+	 */
 	public void rollBackAction() {
 		Packet slavePacket = new Packet();
 		slavePacket.addUnit(new Unit(Resource.SLAVE, this.payedSlave));
@@ -111,6 +115,10 @@ public abstract class Action extends Observable{
 		this.payedSlave = 0;
 	}
 	
+	/**
+	 * Method used to remove the familiar increment when there is a problem with this action, in other
+	 * words when the action response is FAILURE or CANNOT_PLAY
+	 */
 	public void removeIncrement() {
 		if(familiar != null)
 			familiar.resetIncrement();
