@@ -736,5 +736,12 @@ public class Table extends Observable{
 		setChanged();
 		notifyObservers(message);
 	}
-
+	
+	/**
+	 * Finish the match and notify the serverview
+	 */
+	public void finish() {
+		setChanged();
+		notifyObservers("END_OF_MATCH");
+	}
 }

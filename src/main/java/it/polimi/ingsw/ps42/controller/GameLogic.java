@@ -574,7 +574,7 @@ public class GameLogic implements Observer {
 				player.notifyNewBan(message);
 			}
 		}
-		
+		playersWithRequest = new ArrayList<>();
 		checkRequest();
 	}
 	
@@ -625,7 +625,6 @@ public class GameLogic implements Observer {
 		
 		for(Player player : playersList)
 			player.notifyRanking(message);
-		
 	}
 	
 	/**
@@ -1204,6 +1203,7 @@ public class GameLogic implements Observer {
 						result.add(playersList.get(0).getPlayerID());
 						WinnerMessage winnerMessage = new WinnerMessage(playersList.get(0).getPlayerID(), result);
 						playersList.get(0).notifyRanking(winnerMessage);
+						table.finish();
 					}
 				}
 			} catch (ElementNotFoundException e) {

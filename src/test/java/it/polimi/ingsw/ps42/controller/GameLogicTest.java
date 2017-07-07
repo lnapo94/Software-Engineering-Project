@@ -9,6 +9,7 @@ import org.junit.Test;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
+import it.polimi.ingsw.ps42.server.Server;
 import it.polimi.ingsw.ps42.server.match.ServerView;
 import it.polimi.ingsw.ps42.view.TerminalView;
 
@@ -41,7 +42,7 @@ public class GameLogicTest {
 		
 		view1.createTable(players1View);
 		view2.createTable(players2View);
-		ServerView serverView = new ServerView();
+		ServerView serverView = new ServerView(new Server());
 		logic = new GameLogic(players, serverView);
 		logic.loadGame();
 	}

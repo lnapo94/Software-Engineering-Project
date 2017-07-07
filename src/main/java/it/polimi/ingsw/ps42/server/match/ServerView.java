@@ -22,6 +22,7 @@ import it.polimi.ingsw.ps42.message.PlayersListMessage;
 import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.exception.GameLogicError;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughPlayersException;
+import it.polimi.ingsw.ps42.server.Server;
 
 /**
  * Class that represents a single match. It is used to implements a Model-View-Controller
@@ -36,6 +37,8 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	
 	private static int serverViewIndex = 0;
 	
+	private Server server;
+	
 	private Map<String, Connection> connections;
 	private List<String> disconnectedPlayers;
 	
@@ -49,8 +52,10 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	 * Constructor of the ServerView. All ServerView uses a static index to know the correct
 	 * ServerView to pass to RMI connections
 	 */
-	public ServerView() {
+	public ServerView(Server server) {
 		serverViewIndex++;
+		
+		this.server = server;
 		
 		connections = new HashMap<>();
 		disconnectedPlayers = new ArrayList<>();
@@ -219,9 +224,14 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 			}
 		}
 		else if(messageToSend instanceof String) {
-			deleteConnection((String) messageToSend);
-			setChanged();
-			notifyObservers(messageToSend);
+			String stringToSend = (String) messageToSend;
+			if(stringToSend.equals("END_OF_MATCH")) {
+				server.removeMatch(this);
+			} else {
+				deleteConnection((String) messageToSend);
+				setChanged();
+				notifyObservers(messageToSend);
+			}
 		}
 	}
 	

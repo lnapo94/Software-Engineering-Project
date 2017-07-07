@@ -9,7 +9,9 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -130,7 +132,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		else {
 			//If there isn't a waiting match, create it
 			if(waitingView == null) 
-				waitingView = new ServerView();
+				waitingView = new ServerView(this);
 			
 			//Add a connection to the waiting view
 			waitingView.addConnection(connection, playerID);
@@ -230,7 +232,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		else {
 			//If there isn't a waiting match, create it
 			if(waitingView == null) 
-				waitingView = new ServerView();
+				waitingView = new ServerView(this);
 			
 			//Add a connection to the waiting view
 			client.notifyServerView(waitingView.getID());
@@ -248,6 +250,22 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 			}
 		}
 		logger.info("RMI Player added");
+	}
+	
+	/**
+	 * Method used to remove an ended match
+	 * @param view	The ServerView associated to the ended match. This ServerView will be removed from the Server
+	 */
+	public synchronized void removeMatch(ServerView view) {
+		List<String> playerIDToRemove = new ArrayList<>();
+		playerTable.forEach( (playerID, serverView)-> {
+			if(serverView == view)
+				playerIDToRemove.add(playerID);
+		});
+		
+		for(String ID : playerIDToRemove) {
+			playerTable.remove(ID, view);
+		}
 	}
 	
 	/**
