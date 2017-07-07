@@ -4,9 +4,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
@@ -29,6 +31,7 @@ public class ResourceWindow extends FunctionalLabel{
 		this.setSize(dimension);
 		this.setLocation(location);
 		this.setLayout(new GridLayout(2, 7));
+		this.setIcon(resizeImage(ImageIO.read(new File("Resource//Images//Others//pergamena.png")), this.getSize()));
 		this.resourceLabel = new HashMap<>();
 		
 		for (Resource resource: Resource.values()) {

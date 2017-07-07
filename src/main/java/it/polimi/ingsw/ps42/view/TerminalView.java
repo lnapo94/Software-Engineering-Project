@@ -10,6 +10,7 @@ import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
+import it.polimi.ingsw.ps42.message.ReconnectMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
@@ -224,6 +225,12 @@ public class TerminalView extends View {
 		}
 		else
 			this.setEmptyMove();
+	}
+
+	@Override
+	protected void reconnect(ReconnectMessage message) {
+		// Reconnect the Player, so restore his cards and ban
+		
 	}
 
 }

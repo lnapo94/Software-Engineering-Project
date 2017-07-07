@@ -369,10 +369,13 @@ public class ViewVisitor implements Visitor {
 		view.discardLeaderCard(message.getPlayerID(), message.getCard());
 	}
 
+	/**
+	 * Reconnect the disconnected player and restore its previous state (cards, leader cards, bans..)
+	 */
 	@Override
 	public void visit(ReconnectMessage message) {
-		// TODO Auto-generated method stub
-		
+		if(message != null)
+			view.handleReconnect(message);
 	}
 
 
