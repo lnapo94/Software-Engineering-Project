@@ -23,6 +23,7 @@ import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
 import it.polimi.ingsw.ps42.message.PlayersListMessage;
+import it.polimi.ingsw.ps42.message.ReconnectMessage;
 import it.polimi.ingsw.ps42.message.WinnerMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.message.visitorPattern.ViewVisitor;
@@ -833,8 +834,8 @@ public abstract class View extends Observable implements Observer {
 	 * @param message the message with the final chart of the Game
 	 */
 	public void handleResult(WinnerMessage message){
-		
-		showResult(message.getResult());
+		if(hasToAnswer(message.getPlayerID()))
+			showResult(message.getResult());
 	}
 	
 	/**
@@ -853,6 +854,20 @@ public abstract class View extends Observable implements Observer {
 		setChanged();
 		notifyObservers(message);
 	}
+	
+	/**
+	 * Method to handle the disconnection of the Player, allows the Player to restore his previous state
+	 * @param message the message with all the information about the Player State
+	 */
+	public void handleReconnect(ReconnectMessage message ){
+		
+		if(hasToAnswer(message.getPlayerID())){
+			reconnect(message);
+			
+		}
+	}
+	
+	protected abstract void reconnect(ReconnectMessage message);
 	
 	/**
 	 * Method that should show the final result of the Game given the final chart

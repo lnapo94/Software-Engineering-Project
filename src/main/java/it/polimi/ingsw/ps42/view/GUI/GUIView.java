@@ -34,6 +34,7 @@ import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.message.PlayerToken;
+import it.polimi.ingsw.ps42.message.ReconnectMessage;
 import it.polimi.ingsw.ps42.message.leaderRequest.LeaderFamiliarRequest;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
@@ -223,7 +224,7 @@ public class GUIView extends View implements TableInterface{
 		
 		//Build the timerLable
 		buildTimerLable();
-		
+				
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
 		
@@ -1230,6 +1231,42 @@ public class GUIView extends View implements TableInterface{
 	}
 
 	@Override
+	protected void reconnect(ReconnectMessage message) {
+		//Restore the Player cards
+		try{	
+			for (Card card : message.getBlue()) {
+				cardContainer.addBlueCard(imageLoader.loadCardImage(card.getName()));
+			}
+			for (Card card : message.getYellow()) {
+				cardContainer.addYellowCard(imageLoader.loadCardImage(card.getName()));
+			}
+			for (Card card : message.getViolet()) {
+				cardContainer.addVioletCard(imageLoader.loadCardImage(card.getName()));
+			}
+			for (Card card : message.getGreen()) {
+				cardContainer.addGreenCard(imageLoader.loadCardImage(card.getName()));
+			}
+		}
+		catch (IOException e) {
+			logger.error("Image of Card not found");
+			logger.info(e);
+		}
+		
+		//Restore the Player  ban
+		try{
+			bans.get(0).placeCard(imageLoader.loadBanImage(new Integer(0), new Integer(message.getFirstBanIndex())));
+			bans.get(1).placeCard(imageLoader.loadBanImage(new Integer(1), new Integer(message.getSecondBanIndex())));
+			bans.get(2).placeCard(imageLoader.loadBanImage(new Integer(2), new Integer(message.getThirdBanIndex())));
+		}
+		catch (IOException e) {
+			logger.error("Ban Image not Found!");
+			logger.info(e);
+		}
+		
+		
+	}
+	
+	@Override
 	public void askPlayerMove(PlayerToken message) {
 		super.askPlayerMove(message);
 		if(!hasToAnswer(message.getPlayerID()))
@@ -1239,15 +1276,6 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void askIfWantToPlay(PlayerToken moveToken) {
 		//Ask to the Player if he wants to perform a new Action and start the Timer
-	/*	Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			
-			@Override
-			public void run() {
-				disableMove();
-				}				
-		}, MOVE_SECONDS * 1000);
-		*/
 		timerLable.startTimer();
 		
 		//If so ask a new PlayerMove
@@ -1274,7 +1302,7 @@ public class GUIView extends View implements TableInterface{
 	 */
 	@Override
 	protected void showResult(List<String> finalChart) {
-
+		
 		Dimension resultWindowDimension = new Dimension((int)(mainFrame.getWidth()*0.7),(int)(mainFrame.getHeight()*0.48) );
 		Point resultWindowLocation = new Point((int)(tableImageDimension.getWidth()*0.4),(int)(tableImageDimension.getHeight()*0.4) );
 		new ResultWindow(this, finalChart, resultWindowDimension, resultWindowLocation );
