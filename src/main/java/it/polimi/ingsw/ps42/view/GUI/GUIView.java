@@ -476,6 +476,7 @@ public class GUIView extends View implements TableInterface{
 	
 		//For each position check if contains the point (x,y), if so change the imageIcon
 		int actionValue = 0;
+		this.movingFamiliar = familiarMoving;
 		FamiliarColor color = familiarMoving.getFamiliarColor();
 		for (JLabel position : greenTowerForFamiliar) {
 			if( containsPoint(position, x, y) ){
@@ -559,11 +560,12 @@ public class GUIView extends View implements TableInterface{
 				return true;
 			}
 		}
+		this.movingFamiliar = null;
 		return false;
 	}
 	
 	private boolean containsPoint(JLabel label, int x, int y){
-		if(label.getIcon() == null || player.canPositioningEverywhere()){
+		if(label.getIcon() == null || player.canPositioningEverywhere() || movingFamiliar.getFamiliarColor() == null){
 			//If the position is empty, discover if has been pointed
 			Point p = label.getLocationOnScreen();
 			if(p.getX() < x && x < p.getX()+label.getWidth()
@@ -634,44 +636,45 @@ public class GUIView extends View implements TableInterface{
 	
 	public void cancelMove(ActionType type, int position){
 		//Restore the position of the moved Familiar
-		movingFamiliar.resetFamiliar();
-		if(movingFamiliar.getFamiliarColor() != null){
-			switch (type) {
-			case TAKE_GREEN:
-				greenTowerForFamiliar.get(position).setIcon(null);
-				break;
-			case TAKE_YELLOW:
-				yellowTowerForFamiliar.get(position).setIcon(null);
-				break;
-			case TAKE_BLUE:
-				blueTowerForFamiliar.get(position).setIcon(null);
-				break;
-			case TAKE_VIOLET:
-				violetTowerForFamiliar.get(position).setIcon(null);
-				break;
-			case MARKET:
-				market.get(position).setIcon(null);
-				break;
-			case YIELD:
-				if( !secondYield.isActivated() || secondYield.isEmpty())
-					firstYield.setIcon(null);
-				else 
-					secondYield.resetLastFamiliar();
-				break;
-			case PRODUCE:
-				if(!secondProduce.isActivated() || secondProduce.isEmpty()) 
-					firstProduce.setIcon(null);
-				else 
-					secondProduce.resetLastFamiliar();
-				break;
-			case COUNCIL:
-				council.resetLastFamiliar();
-				break;
-				
-			default:
-				break;
+		if(movingFamiliar != null){
+			movingFamiliar.resetFamiliar();
+			if(movingFamiliar.getFamiliarColor() != null){
+				switch (type) {
+				case TAKE_GREEN:
+					greenTowerForFamiliar.get(position).setIcon(null);
+					break;
+				case TAKE_YELLOW:
+					yellowTowerForFamiliar.get(position).setIcon(null);
+					break;
+				case TAKE_BLUE:
+					blueTowerForFamiliar.get(position).setIcon(null);
+					break;
+				case TAKE_VIOLET:
+					violetTowerForFamiliar.get(position).setIcon(null);
+					break;
+				case MARKET:
+					market.get(position).setIcon(null);
+					break;
+				case YIELD:
+					if( !secondYield.isActivated() || secondYield.isEmpty())
+						firstYield.setIcon(null);
+					else 
+						secondYield.resetLastFamiliar();
+					break;
+				case PRODUCE:
+					if(!secondProduce.isActivated() || secondProduce.isEmpty()) 
+						firstProduce.setIcon(null);
+					else 
+						secondProduce.resetLastFamiliar();
+					break;
+				case COUNCIL:
+					council.resetLastFamiliar();
+					break;
+					
+				default:
+					break;
+				}
 			}
-
 		}
 	}
 	
