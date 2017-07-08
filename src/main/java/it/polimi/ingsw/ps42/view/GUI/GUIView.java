@@ -561,7 +561,7 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	private boolean containsPoint(JLabel label, int x, int y){
-		if(label.getIcon() == null){
+		if(label.getIcon() == null || player.canPositioningEverywhere()){
 			//If the position is empty, discover if has been pointed
 			Point p = label.getLocationOnScreen();
 			if(p.getX() < x && x < p.getX()+label.getWidth()
