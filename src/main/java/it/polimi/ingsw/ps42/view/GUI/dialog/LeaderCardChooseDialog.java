@@ -71,6 +71,7 @@ public class LeaderCardChooseDialog extends JDialog{
 	}
 	
 	public void run() {
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.pack();
 		this.setResizable(false);
 		this.setVisible(true);
