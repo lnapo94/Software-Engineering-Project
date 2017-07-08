@@ -61,6 +61,11 @@ import it.polimi.ingsw.ps42.view.GUI.dialog.PayBanDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.ResultWindow;
 import it.polimi.ingsw.ps42.view.GUI.dialog.ShowBonusAction;
 
+/**
+ * Class that represents all the Graphical User Interface component of our implementation
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class GUIView extends View implements TableInterface{
 
 	//The GUI main frame, where all the others Components are placed
@@ -136,6 +141,10 @@ public class GUIView extends View implements TableInterface{
 	//GUI Logger
 	private Logger logger = Logger.getLogger(GUIView.class);
 	
+	/**
+	 * Constructor of the GUI Interface
+	 * @throws IOException		Thrown if some files cannot be opened
+	 */
 	public GUIView() throws IOException {
 		
 		super();
@@ -148,6 +157,10 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 	
+	/**
+	 * Private method used to initialize the main frame with the correct screen proportions
+	 * @throws IOException	Thrown if some image file cannot be opened
+	 */
 	private void initialize() throws IOException{
 		
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -234,7 +247,7 @@ public class GUIView extends View implements TableInterface{
 	 * Initialize the Card Position Label
 	 * @param cardDimension Dimension of the card that will be placed
 	 * @param mainPane Pane where the Card will be placed
-	 * @throws IOException 
+	 * @throws IOException 	Thrown if some file cannot be opened
 	 */
 	private void buildCardPosition(Dimension cardDimension, JLayeredPane mainPane) throws IOException{
 		
@@ -284,9 +297,9 @@ public class GUIView extends View implements TableInterface{
 	
 
 	/**
-	 * 
-	 * @param mainPane
-	 * @throws IOException
+	 * Method used to construct the familiars' starting position on the screen
+	 * @param mainPane		The LayeredPane where position the label
+	 * @throws IOException	Thrown if some picture cannot be opened
 	 */
 	private void buildFamiliarStartingPositions(JLayeredPane mainPane) throws IOException{
 		
@@ -320,9 +333,9 @@ public class GUIView extends View implements TableInterface{
 	}
 	
 	/**
-	 * 
-	 * @param mainPane
-	 * @throws IOException 
+	 * Method used to build all the possible labels where a familiar can be positioned
+	 * @param mainPane			The LayeredPane where position the label
+	 * @throws IOException 		Thrown if some file cannot be opened
 	 */
 	private void buildFamiliarMovePositions(JLayeredPane mainPane) throws IOException{
 		
@@ -380,7 +393,14 @@ public class GUIView extends View implements TableInterface{
 		mainLayeredPane.updateUI();
 	}
 	
-	private void placeMarket(Dimension positionDimension, int x, int y, JLayeredPane mainPane) throws IOException{
+	/**
+	 * Method used to create all the single positions of the market
+	 * @param positionDimension		The dimesions of the position 
+	 * @param x						The X of the screen where position the label
+	 * @param y						The Y of the screen where position the label
+	 * @param mainPane				The LayeredPane where position the label
+	 */
+	private void placeMarket(Dimension positionDimension, int x, int y, JLayeredPane mainPane) {
 		
 		JLabel position = new JLabel();
 		position.setSize(positionDimension);
@@ -389,7 +409,15 @@ public class GUIView extends View implements TableInterface{
 		mainPane.add(position, 0);
 	}
 	
-	private JLabel placeYieldAndProductPosition(JLayeredPane mainPane, Dimension positionDimension, JLabel firstPosition, int deltaY) throws IOException{
+	/**
+	 * Method used to create all the single positions of the yield and the product
+	 * @param mainPane				The LayeredPane where position the label
+	 * @param positionDimension		The dimesions of the position 
+	 * @param firstPosition			The label of the first position
+	 * @param deltaY				Used to set the correct delta between yield and product on the screen
+	 * @return						The label with the correct dimension to place the familiars
+	 */
+	private JLabel placeYieldAndProductPosition(JLayeredPane mainPane, Dimension positionDimension, JLabel firstPosition, int deltaY) {
 		
 		//Build the first position
 		int deltaX = (int)(tableImageDimension.getWidth()*1.03 + cardZoom.getWidth() );
@@ -401,7 +429,14 @@ public class GUIView extends View implements TableInterface{
 		return firstPosition;
 	}
 	
-	private void placeFamiliarPosition(JLayeredPane mainPane, Dimension positionDimension, LinkedList<JLabel> tower, int rightShift) throws IOException{
+	/**
+	 * Method used to create all the 4 towers positions
+	 * @param mainPane				The LayeredPane where position the label
+	 * @param positionDimension		The dimesions of the position 
+	 * @param tower					The list used to contain all the tower labels
+	 * @param rightShift			The parameter to set the horizontal gap between the towers
+	 */
+	private void placeFamiliarPosition(JLayeredPane mainPane, Dimension positionDimension, LinkedList<JLabel> tower, int rightShift) {
 		
 		int deltaY = (int)(tableImageDimension.getHeight()*0.081);
 		for (int i=0; i<4; i++){
@@ -414,6 +449,11 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 	
+	/**
+	 * Method used to create the dice positions on the screen
+	 * @param mainPane				The LayeredPane where position the label
+	 * @param lowerTableDimension	The dimension of the lower part of table on the screen to use the correct proportions
+	 */
 	private void buildDicePositions(JLayeredPane mainPane, Dimension lowerTableDimension ) {
 		
 		Dimension diceDimension = new Dimension((int)(lowerTableDimension.getWidth()*0.09),(int)(lowerTableDimension.getHeight()*0.21));
@@ -424,6 +464,14 @@ public class GUIView extends View implements TableInterface{
 		orangeDice = buildSingleDice(mainPane, diceDimension, lowerTableDimension, rightShift);
 	}
 	
+	/**
+	 * Method used to build the single label for the die
+	 * @param mainPane					The LayeredPane where position the label
+	 * @param diceDimension				The die dimension
+	 * @param lowerTableDimension		The dimension of the lower part of table on the screen to use the correct proportions
+	 * @param rightShift				The distance between one die and another one on the screen
+	 * @return							The label with the image of the correct die
+	 */
 	private JLabel buildSingleDice(JLayeredPane mainPane, Dimension diceDimension, Dimension lowerTableDimension, int rightShift) {
 		
 		Point location = new Point((int) (tableImageDimension.getWidth() + cardZoom.getWidth() + lowerTableDimension.getWidth()*0.58 + rightShift),(int) (lowerTableDimension.getHeight()*0.72));
@@ -434,6 +482,10 @@ public class GUIView extends View implements TableInterface{
 		return diceLable;
 	}
 	
+	/**
+	 * Method used to build all the ban labels
+	 * @param mainPane		The LayeredPane where position the label
+	 */
 	private void buildBanLabel(JLayeredPane mainPane) {
 		
 		bans = new ArrayList<>();
@@ -450,6 +502,14 @@ public class GUIView extends View implements TableInterface{
 
 	}
 	
+	/**
+	 * Method used to build a single ban label
+	 * @param mainPane			The LayeredPane where position the label
+	 * @param banDimension		The dimesion of the ban
+	 * @param rightShift		The horizontal gap between two bans on the screen
+	 * @param downShift			The vertical gap between the bans
+	 * @return					The CardLabel with the image of the ban
+	 */
 	private CardLabel buildSingleBanLabel(JLayeredPane mainPane, Dimension banDimension, int rightShift, int downShift) {
 		
 		CardLabel ban = new CardLabel((int)(tableImageDimension.getWidth()*0.172 + rightShift), (int)(tableImageDimension.getHeight()*0.835 + downShift), banDimension, cardZoom);
