@@ -93,16 +93,20 @@ public class MarketAction extends Action {
 						return Response.LOW_LEVEL;
 					}
 				}
-			else {
-				//The position is occupied or the player has a market ban
-				familiar.resetIncrement();
-				return Response.FAILURE;
-			}
+				else {
+					//The position is occupied or the player has a market ban
+					familiar.resetIncrement();
+					return Response.FAILURE;
+				}
+					
 			}
 			else								//If is a bonus action then only check action value
 				if( checkActionValue())
 					return Response.SUCCESS;
-				else return Response.LOW_LEVEL;
+				else {
+					
+					return Response.LOW_LEVEL;
+				}
 		}
 		if(familiar != null)
 			familiar.resetIncrement();

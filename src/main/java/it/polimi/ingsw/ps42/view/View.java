@@ -775,6 +775,7 @@ public abstract class View extends Observable implements Observer {
 		
 		Player player = searchPlayer(playerID);
 		player.enableLeaderCard(card);
+		
 	}
 	
 	/**
