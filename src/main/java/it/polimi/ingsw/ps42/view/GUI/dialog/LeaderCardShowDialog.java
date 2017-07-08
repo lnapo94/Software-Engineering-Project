@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps42.view.GUI.dialog;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -91,9 +92,18 @@ public class LeaderCardShowDialog extends JDialog {
 		//Add the buttons to the layout
 		JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
 		
+		//Set the font
+		Dimension dimension = new Dimension((int)(this.parent.getWidth()*0.3),(int)(this.parent.getHeight()*0.2));
+		Font font = new Font("Papyrus", Font.ITALIC, (int)(dimension.getHeight()*0.15));
+		
 		enable = new JButton("Enable");
+		enable.setFont(font);
+		
 		discard = new JButton("Discard");
+		discard.setFont(font);
+		
 		cancel = new JButton("Cancel");
+		cancel.setFont(font);
 		
 		enable.addActionListener(new EnableAction());
 		discard.addActionListener(new DiscardAction());

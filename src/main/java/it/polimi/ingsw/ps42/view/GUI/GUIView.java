@@ -119,8 +119,6 @@ public class GUIView extends View implements TableInterface{
 	private JLabel whiteDice;
 	private JLabel orangeDice;
 	
-	//New Order 
-	private List<JLabel> newOrder;
 	//The List of Bans
 	private List<CardLabel> bans;
 	//The player next move

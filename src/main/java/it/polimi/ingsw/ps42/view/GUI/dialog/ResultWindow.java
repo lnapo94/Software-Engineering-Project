@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps42.view.GUI.dialog;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -25,7 +24,6 @@ public class ResultWindow extends JDialog{
 	private static final long serialVersionUID = 8184158263384479430L;
 	private GUIView view;
 	private JFrame parent;
-	private List<String> finalChart;
 	
 	
 	private class EndGameListener implements WindowListener{
@@ -75,8 +73,7 @@ public class ResultWindow extends JDialog{
 		
 		super(view.getMainFrame());
 		this.view = view;
-		this.parent = view.getMainFrame();
-		this.finalChart = finalChart;
+		this.parent = this.view.getMainFrame();
 		//Set up the JDialog size and location 
 		this.setSize(dimension);
 		this.setLocation(location);

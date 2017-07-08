@@ -30,7 +30,6 @@ import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.enumeration.EffectType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
-import it.polimi.ingsw.ps42.model.exception.IsNotEmptyException;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.exception.WrongColorException;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
@@ -561,8 +560,10 @@ public class Player extends Observable {
 	 * This method return to the gamelogic the player's bonus action.
 	 * @return
 	 */
-	public ActionPrototype getBonusAction() {		
-		return bonusAction.get(0).clone();
+	public ActionPrototype getBonusAction() {	
+		if(!this.bonusAction.isEmpty())
+			return bonusAction.get(0).clone();
+		return null;
 	}
 	
 	/**
@@ -570,9 +571,6 @@ public class Player extends Observable {
 	 * @param bonusAction to add to the player
 	 */
 	public void setBonusAction(ActionPrototype bonusAction) {
-		if(this.bonusAction != null) {
-			throw new IsNotEmptyException("bonus Action isn't empty, ERROR");
-		}
 		this.bonusAction.add(bonusAction);
 	}
 	

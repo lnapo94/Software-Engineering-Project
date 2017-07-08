@@ -87,6 +87,7 @@ public class CouncilRequestDialog extends JDialog{
 		buttonPanel.add(Box.createHorizontalStrut(this.getWidth()/2));
 		
 		confirm = new JButton("Confirm");
+		confirm.setFont(font);
 		buttonPanel.add(confirm);
 		
 		this.add(buttonPanel);

@@ -26,7 +26,6 @@ public class CardContainer extends FunctionalLabel{
 	private List<CardLabel> blueCard;
 	private List<CardLabel> violetCard;
 	private CardZoom cardZoom;
-	private BufferedImage image;
 	
 	private JLayeredPane mainPane;
 	private Dimension cardDimension;
@@ -75,7 +74,6 @@ public class CardContainer extends FunctionalLabel{
 		yellowCard = new ArrayList<>();
 		blueCard = new ArrayList<>();
 		violetCard = new ArrayList<>();
-		this.image = image;		
 		this.setSize(dimension);
 		this.setLocation(location);
 		this.cardZoom = cardZoom;
