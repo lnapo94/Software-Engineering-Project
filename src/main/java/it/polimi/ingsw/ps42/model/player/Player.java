@@ -78,7 +78,7 @@ public class Player extends Observable {
 	private List<IncreaseAction> increaseEffect;
 	
 	
-	private ActionPrototype bonusAction;
+	private List<ActionPrototype> bonusAction;
 	private BonusBar bonusBar;
 	
 	//State variable of the player
@@ -138,7 +138,7 @@ public class Player extends Observable {
 		leaderRequests = new ArrayList<>();
 		
 		//Set the Player bonusAction to null (required by gamelogic)
-		bonusAction = null;
+		bonusAction = new ArrayList<>();
 		
 		//Set Player's state variable
 		canStayInMarket = true;
@@ -562,18 +562,18 @@ public class Player extends Observable {
 	 * @return
 	 */
 	public ActionPrototype getBonusAction() {		
-		return bonusAction.clone();
+		return bonusAction.get(0).clone();
 	}
 	
 	/**
-	 * Method used to set a bonus action in player. Player can have only one bonus action 
+	 * Method used to set a bonus action in player.
 	 * @param bonusAction to add to the player
 	 */
 	public void setBonusAction(ActionPrototype bonusAction) {
 		if(this.bonusAction != null) {
 			throw new IsNotEmptyException("bonus Action isn't empty, ERROR");
 		}
-		this.bonusAction = bonusAction;
+		this.bonusAction.add(bonusAction);
 	}
 	
 	//Private Methods only for the Player class
@@ -610,10 +610,9 @@ public class Player extends Observable {
 	 */
 	public void askMove(){
 		Message playerMoveMessage;
-		if( this.bonusAction != null ) {
-			ActionPrototype temp = bonusAction.clone();
-			playerMoveMessage = new PlayerToken(this.ID, temp);
-			bonusAction = null;			
+		if( this.bonusAction != null && !this.bonusAction.isEmpty()) {
+			ActionPrototype temp = bonusAction.remove(0).clone();
+			playerMoveMessage = new PlayerToken(this.ID, temp);		
 		}
 		else
 			playerMoveMessage = new PlayerToken(this.ID);
