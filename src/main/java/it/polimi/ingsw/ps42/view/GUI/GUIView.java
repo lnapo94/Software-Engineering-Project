@@ -1132,6 +1132,7 @@ public class GUIView extends View implements TableInterface{
 		else{
 			enableMove();
 		}
+		mainLayeredPane.updateUI();
 		
 	}
 	
@@ -1334,18 +1335,19 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	public void askPlayerMove(PlayerToken message) {
 		super.askPlayerMove(message);
-		if(!hasToAnswer(message.getPlayerID()))
+		if(!hasToAnswer(message.getPlayerID())){
+			disableMove();
 			timerLable.showPlayerPlaying(message.getPlayerID());
+			mainLayeredPane.updateUI();
+		}
 	}
 	
 	@Override
 	protected void askIfWantToPlay(PlayerToken moveToken) {
 		//Ask to the Player if he wants to perform a new Action and start the Timer
-		timerLable.startTimer();
-		
-		//If so ask a new PlayerMove
 		this.choosePlayerMove(moveToken.getActionPrototype(), moveToken.isRetrasmission());
-		
+		timerLable.startTimer();
+
 	}
 
 	public void disableMove( ){

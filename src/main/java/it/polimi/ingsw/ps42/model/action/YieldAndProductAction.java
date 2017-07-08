@@ -121,7 +121,7 @@ public class YieldAndProductAction extends Action {
 	 */
 	private boolean canStay(){
 		
-		if( firstPosition.isEmpty())
+		if( firstPosition.isEmpty() || player.canPositioningEverywhere())
 			if(actionValue < firstPosition.getLevel()) 	
 				//The first Position requires at least an Action of level 1 (no neutral familiar without increment)
 				return false;

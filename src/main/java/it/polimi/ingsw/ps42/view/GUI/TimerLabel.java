@@ -20,6 +20,7 @@ public class TimerLabel extends JLabel{
 	
 	private GUIView view;
 	private Timer timer;
+	private boolean status;
 	
 	private class TimerLableTask extends TimerTask{
 
@@ -45,6 +46,7 @@ public class TimerLabel extends JLabel{
 	public TimerLabel(GUIView view, Dimension dimension, Point location, long secondsToWait) {
 		super();
 		this.view = view;
+		this.status = false;
 		this.setSize(dimension);
 		this.setLocation(location);
 		Font font = new Font("Papyrus", Font.ITALIC, (int)(dimension.getWidth()*0.2));
@@ -64,6 +66,7 @@ public class TimerLabel extends JLabel{
 		updatedSeconds = seconds;
 		timer = new Timer();
 		timer.schedule(new TimerLableTask(), 1000);
+		this.status = true;
 	}
 	
 	
@@ -78,14 +81,19 @@ public class TimerLabel extends JLabel{
 	}
 		
 	private void updateLabel(){
+		if(status){
+			timer.cancel();
+			this.setText("  " + updatedMinutes + " : " + updatedSeconds);
+			timer = new Timer();
+			timer.schedule(new TimerLableTask(), 1000);
+		}
 		
-		this.setText("  " + updatedMinutes + " : " + updatedSeconds);
-		timer = new Timer();
-		timer.schedule(new TimerLableTask(), 1000);
 	}
-	
+		
 	public void resetTimer(){
-		timer.cancel();
+		if(timer != null)
+			timer.cancel();
+		this.status = false;
 		this.setText("");
 	}
 

@@ -82,12 +82,11 @@ public class YieldAndProductPosition extends Position {
 	 * @param familiar the Familiar that have to be set
 	 * @throws FamiliarInWrongPosition if the bonus Familiar does not satisfy the position pre-requirements
 	 */
-	public void addBonusFamiliar(Familiar familiar) throws FamiliarInWrongPosition {		
-		if(canStay(familiar)){
+	public void addBonusFamiliar(Familiar familiar) {		
+		if( familiar != null){
 			this.bonusFamiliars.add(familiar);
 			this.applyPositionEffect(familiar);
 		}
-		else throw new FamiliarInWrongPosition("The bonus Familiar does not satisfy the position pre-requirements");
 	}
 	
 	/**

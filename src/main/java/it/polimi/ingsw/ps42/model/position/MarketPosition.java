@@ -73,16 +73,15 @@ public class MarketPosition extends Position {
 	 * @throws FamiliarInWrongPosition, if the Familiar does not satisfy the Position pre-requisites
 	 */
 	private void addBonusFamiliar(Familiar familiar) throws FamiliarInWrongPosition {
-		if(super.canStay(familiar)){
+		if(familiar != null){
 			this.bonusFamiliars.add(familiar);
 			applyPositionEffect(familiar);
 			applyCouncilBonus(familiar.getPlayer());
 		}
-		else throw new FamiliarInWrongPosition("The bonus Familiar does not satisfy the position pre-requirements");
 	}
 	
 	/**
-	 * Method used to remove the Bonus FAmiliar, also reset their increment
+	 * Method used to remove the Bonus Familiar, also reset their increment
 	 */
 	public void removeBonusFamiliars(){
 		
