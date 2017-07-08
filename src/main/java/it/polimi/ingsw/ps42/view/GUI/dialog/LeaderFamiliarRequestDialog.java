@@ -32,7 +32,6 @@ public class LeaderFamiliarRequestDialog extends JDialog{
 	private JRadioButton orange;
 	private JRadioButton black;
 	private JRadioButton white;
-	private JRadioButton neutral;
 	
 	private JButton confirm;
 	
@@ -50,7 +49,7 @@ public class LeaderFamiliarRequestDialog extends JDialog{
 		Dimension dimension = new Dimension((int)(this.parent.getWidth()*0.3),(int)(this.parent.getHeight()*0.2));
 		Font font = new Font("Papyrus", Font.ITALIC, (int)(dimension.getHeight()*0.15));
 		
-		this.setLayout(new GridLayout(6, 1));
+		this.setLayout(new GridLayout(5, 1));
 		
 		//Initialize the group
 		this.group = new ButtonGroup();
@@ -68,10 +67,6 @@ public class LeaderFamiliarRequestDialog extends JDialog{
 		black.setFont(font);
 		group.add(black);
 		
-		neutral = new JRadioButton("Neutral");
-		neutral.setFont(font);
-		group.add(neutral);
-		
 		JLabel text = new JLabel("Select the familiar you want to increase");
 		text.setFont(font);
 		
@@ -83,7 +78,6 @@ public class LeaderFamiliarRequestDialog extends JDialog{
 		this.add(orange);
 		this.add(black);
 		this.add(white);
-		this.add(neutral);
 		
 		//Create a Panel for the button
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
@@ -110,10 +104,6 @@ public class LeaderFamiliarRequestDialog extends JDialog{
 		}
 		if(white.isSelected()) {
 			view.setLeaderFamiliarRequestResponse(FamiliarColor.WHITE, this.message);
-			close();
-		}
-		if(neutral.isSelected()) {
-			view.setLeaderFamiliarRequestResponse(FamiliarColor.NEUTRAL, this.message);
 			close();
 		}
 	}

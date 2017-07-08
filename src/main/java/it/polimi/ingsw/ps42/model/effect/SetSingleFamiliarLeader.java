@@ -44,7 +44,7 @@ public class SetSingleFamiliarLeader extends Effect{
 	public void enableEffect(Player player) {
 		logger = Logger.getLogger(SetSingleFamiliarLeader.class);
 		logger.info("Effect: " + this.getTypeOfEffect() + " activated");
-		if(this.color != null)
+		if(this.color != null && this.color != FamiliarColor.NEUTRAL)
 			player.getFamiliar(color).setValue(value);
 	}
 	
