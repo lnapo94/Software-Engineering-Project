@@ -111,121 +111,6 @@
   },
   "permanentEffect": null
 }{
-  "name": "Leonardo da Vinci",
-  "description": "",
-  "requirements": {
-    "checker": false,
-    "resourceRequirements": null,
-    "cardRequirements": {
-      "BLUE": 4,
-      "GREEN": 2
-    }
-  },
-  "effect": {
-    "quantity": 1,
-    "possibleConversion": [
-      {
-        "costs": {
-          "list": []
-        },
-        "gains": {
-          "list": [
-            {
-              "resource": "STONE",
-              "quantity": 1
-            },
-            {
-              "resource": "WOOD",
-              "quantity": 1
-            }
-          ]
-        },
-        "councilObtain": null,
-        "player": null,
-        "typeOfEffect": "OBTAIN"
-      },
-      {
-        "costs": {
-          "list": []
-        },
-        "gains": {
-          "list": [
-            {
-              "resource": "SLAVE",
-              "quantity": 2
-            }
-          ]
-        },
-        "councilObtain": null,
-        "player": null,
-        "typeOfEffect": "OBTAIN"
-      },
-      {
-        "costs": {
-          "list": []
-        },
-        "gains": {
-          "list": [
-            {
-              "resource": "MONEY",
-              "quantity": 2
-            }
-          ]
-        },
-        "councilObtain": null,
-        "player": null,
-        "typeOfEffect": "OBTAIN"
-      },
-      {
-        "costs": {
-          "list": []
-        },
-        "gains": {
-          "list": [
-            {
-              "resource": "MILITARYPOINT",
-              "quantity": 2
-            }
-          ]
-        },
-        "councilObtain": null,
-        "player": null,
-        "typeOfEffect": "OBTAIN"
-      },
-      {
-        "costs": {
-          "list": []
-        },
-        "gains": {
-          "list": [
-            {
-              "resource": "FAITHPOINT",
-              "quantity": 1
-            }
-          ]
-        },
-        "councilObtain": null,
-        "player": null,
-        "typeOfEffect": "OBTAIN"
-      }
-    ],
-    "player": null,
-    "typeOfEffect": "COUNCIL_OBTAIN"
-  },
-  "owner": null,
-  "onceARoundEffect": {
-    "type": "PRODUCE",
-    "value": 0,
-    "discount": {
-      "list": []
-    },
-    "yetActivated": false,
-    "player": null,
-    "typeOfEffect": "INCREASE_ACTION",
-    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
-  },
-  "permanentEffect": null
-}{
   "name": "Sandro Botticelli",
   "description": "",
   "requirements": {
@@ -1073,121 +958,6 @@
     "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.CanPositioningEverywhereLeader"
   }
 }{
-  "name": "Francesco Sforza",
-  "description": "",
-  "requirements": {
-    "checker": false,
-    "resourceRequirements": null,
-    "cardRequirements": {
-      "VIOLET": 5
-    }
-  },
-  "effect": {
-    "quantity": 1,
-    "possibleConversion": [
-      {
-        "costs": {
-          "list": []
-        },
-        "gains": {
-          "list": [
-            {
-              "resource": "STONE",
-              "quantity": 1
-            },
-            {
-              "resource": "WOOD",
-              "quantity": 1
-            }
-          ]
-        },
-        "councilObtain": null,
-        "player": null,
-        "typeOfEffect": "OBTAIN"
-      },
-      {
-        "costs": {
-          "list": []
-        },
-        "gains": {
-          "list": [
-            {
-              "resource": "SLAVE",
-              "quantity": 2
-            }
-          ]
-        },
-        "councilObtain": null,
-        "player": null,
-        "typeOfEffect": "OBTAIN"
-      },
-      {
-        "costs": {
-          "list": []
-        },
-        "gains": {
-          "list": [
-            {
-              "resource": "MONEY",
-              "quantity": 2
-            }
-          ]
-        },
-        "councilObtain": null,
-        "player": null,
-        "typeOfEffect": "OBTAIN"
-      },
-      {
-        "costs": {
-          "list": []
-        },
-        "gains": {
-          "list": [
-            {
-              "resource": "MILITARYPOINT",
-              "quantity": 2
-            }
-          ]
-        },
-        "councilObtain": null,
-        "player": null,
-        "typeOfEffect": "OBTAIN"
-      },
-      {
-        "costs": {
-          "list": []
-        },
-        "gains": {
-          "list": [
-            {
-              "resource": "FAITHPOINT",
-              "quantity": 1
-            }
-          ]
-        },
-        "councilObtain": null,
-        "player": null,
-        "typeOfEffect": "OBTAIN"
-      }
-    ],
-    "player": null,
-    "typeOfEffect": "COUNCIL_OBTAIN"
-  },
-  "owner": null,
-  "onceARoundEffect": {
-    "type": "YIELD",
-    "value": 1,
-    "discount": {
-      "list": []
-    },
-    "yetActivated": false,
-    "player": null,
-    "typeOfEffect": "INCREASE_ACTION",
-    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
-  },
-  "permanentEffect": null
-}
-{
   "name": "Federico da Montefeltro",
   "description": "",
   "requirements": {
@@ -2226,4 +1996,217 @@
     "typeOfEffect": "INCREASE_ACTION",
     "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.IncreaseAction"
   }
+}{
+  "name": "Francesco Sforza",
+  "description": "",
+  "requirements": {
+    "checker": false,
+    "resourceRequirements": null,
+    "cardRequirements": {
+      "VIOLET": 5
+    }
+  },
+  "effect": {
+    "quantity": 1,
+    "possibleConversion": [
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "STONE",
+              "quantity": 1
+            },
+            {
+              "resource": "WOOD",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "SLAVE",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MONEY",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "typeOfEffect": "OBTAIN"
+      }
+    ],
+    "typeOfEffect": "COUNCIL_OBTAIN"
+  },
+  "onceARoundEffect": {
+    "type": "YIELD",
+    "actionLevel": 1,
+    "discount": {
+      "list": []
+    },
+    "obtainEffect": null,
+    "typeOfEffect": "DO_ACTION",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.DoAction"
+  },
+  "permanentEffect": null
+}{
+  "name": "Leonardo da Vinci",
+  "description": "",
+  "requirements": {
+    "checker": false,
+    "resourceRequirements": null,
+    "cardRequirements": {
+      "GREEN": 2,
+      "BLUE": 4
+    }
+  },
+  "effect": {
+    "quantity": 1,
+    "possibleConversion": [
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "STONE",
+              "quantity": 1
+            },
+            {
+              "resource": "WOOD",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "SLAVE",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MONEY",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "MILITARYPOINT",
+              "quantity": 2
+            }
+          ]
+        },
+        "councilObtain": null,
+        "typeOfEffect": "OBTAIN"
+      },
+      {
+        "costs": {
+          "list": []
+        },
+        "gains": {
+          "list": [
+            {
+              "resource": "FAITHPOINT",
+              "quantity": 1
+            }
+          ]
+        },
+        "councilObtain": null,
+        "typeOfEffect": "OBTAIN"
+      }
+    ],
+    "typeOfEffect": "COUNCIL_OBTAIN"
+  },
+  "onceARoundEffect": {
+    "type": "PRODUCE",
+    "actionLevel": 0,
+    "discount": {
+      "list": []
+    },
+    "obtainEffect": null,
+    "typeOfEffect": "DO_ACTION",
+    "CLASS_META_KEY": "it.polimi.ingsw.ps42.model.effect.DoAction"
+  },
+  "permanentEffect": null
 }

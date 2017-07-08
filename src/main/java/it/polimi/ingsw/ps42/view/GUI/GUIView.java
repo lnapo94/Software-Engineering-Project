@@ -58,6 +58,7 @@ import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardChooseDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardShowDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.PayBanDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.ResultWindow;
+import it.polimi.ingsw.ps42.view.GUI.dialog.ShowBonusAction;
 
 public class GUIView extends View implements TableInterface{
 
@@ -1060,7 +1061,8 @@ public class GUIView extends View implements TableInterface{
 		if(isRetrasmission && nextMove != null)
 			cancelMove(nextMove.getActionType(), nextMove.getPosition());
 		if(prototype != null){
-			//Show ActionPrototype
+			ShowBonusAction dialog = new ShowBonusAction(this, prototype);
+			dialog.run();
 			buildBonusFamiliar();
 		}
 		else{
