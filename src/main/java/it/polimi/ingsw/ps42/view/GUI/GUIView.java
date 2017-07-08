@@ -56,6 +56,7 @@ import it.polimi.ingsw.ps42.view.GUI.dialog.CardRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.CouncilRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardChooseDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardShowDialog;
+import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderFamiliarRequestDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.PayBanDialog;
 import it.polimi.ingsw.ps42.view.GUI.dialog.ResultWindow;
 import it.polimi.ingsw.ps42.view.GUI.dialog.ShowBonusAction;
@@ -1208,7 +1209,8 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void chooseFamiliarColor(LeaderFamiliarRequest message) {
 		// Ask to the Player what color to choose for the leaderCard Request
-		
+		LeaderFamiliarRequestDialog dialog = new LeaderFamiliarRequestDialog(this, message);
+		dialog.run();
 	}
 
 	@Override

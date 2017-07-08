@@ -513,7 +513,7 @@ public class GameLogic implements Observer {
 			}
 			
 			//If roundOrder is empty, then refill the array and start the round
-			if(playersWithRequest.isEmpty()) {
+			if(playersWithRequest.isEmpty() && currentPlayer == null) {
 				initAction();
 			}
 		} catch (ElementNotFoundException e) {
@@ -817,6 +817,7 @@ public class GameLogic implements Observer {
     	try {
     		Player player = searchPlayer(playerID);
 			if(player.getPlayerID().equals(currentPlayer.getPlayerID())) {
+				player.synchResource();
 				
 				if(bonusAction != null && (!bonusAction.checkAction(action) || !action.isBonusAction())) {
 					PlayerToken message = new PlayerToken(currentPlayer.getPlayerID(), bonusAction.clone());

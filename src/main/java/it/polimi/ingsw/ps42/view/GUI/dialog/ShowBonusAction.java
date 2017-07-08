@@ -54,6 +54,7 @@ public class ShowBonusAction extends JDialog{
 		JButton continueButton = new JButton("Continue");
 		continueButton.addActionListener(new ContinueAction());
 		continueButton.addKeyListener(new KeyboardListener());
+		continueButton.setFont(font);
 		
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
 		buttonPanel.add(Box.createHorizontalStrut((int)this.getWidth()/2));
