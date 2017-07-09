@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -696,6 +698,7 @@ public class GUIView extends View implements TableInterface{
 	
 	public void cancelMove(ActionType type, int position){
 		//Restore the position of the moved Familiar
+		logger.debug("Starting to delete the previous move");
 		if(movingFamiliar != null){
 			movingFamiliar.resetFamiliar();
 			if(movingFamiliar.getFamiliarColor() != null){
@@ -1119,19 +1122,35 @@ public class GUIView extends View implements TableInterface{
 	@Override
 	protected void choosePlayerMove(ActionPrototype prototype, boolean isRetrasmission) {
 		//Enable the Player to perform a new Move, if is a retrasmission then cancel the precedent
-		
+		logger.debug("Starting procedure for a new move, old move = "+ nextMove);
 		enableSkipButton();
 		
-		if(isRetrasmission && nextMove != null)
+		if(isRetrasmission && nextMove != null){
+			logger.debug("Deleting previous move");
+/*			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				
+				@Override
+				public void run() {
+					cancelMove(nextMove.getActionType(), nextMove.getPosition());
+					
+				}
+			}, 500);
+	*/
 			cancelMove(nextMove.getActionType(), nextMove.getPosition());
+		}
+		
 		if(prototype != null){
+			logger.debug("Showing action prototype and anabling bonus move");
 			ShowBonusAction dialog = new ShowBonusAction(this, prototype);
 			dialog.run();
 			buildBonusFamiliar();
 		}
 		else{
+			logger.debug("Enabling move");
 			enableMove();
 		}
+		logger.debug("Updating UI");
 		mainLayeredPane.updateUI();
 		
 	}
@@ -1199,6 +1218,7 @@ public class GUIView extends View implements TableInterface{
 	private void enableSkipButton(){
 		skipMove.setEnabled(true);
 		skipMove.setVisible(true);
+		
 	}
 	
 	private void disableSkipButton(){
@@ -1214,6 +1234,7 @@ public class GUIView extends View implements TableInterface{
 			bonusFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), imageLoader.loadBonusFamiliarImage(), null);
 			bonusFamiliar.enableListener();
 			bonusFamiliar.setTable(this);
+			bonusFamiliar.setVisible(true);
 			mainLayeredPane.add(bonusFamiliar, 0);
 			bonusFamiliar.setCanMove(true);
 		} catch (IOException e) {
@@ -1284,7 +1305,7 @@ public class GUIView extends View implements TableInterface{
 	}
 
 	@Override
-	protected void notifyLeaderCardDiscard() {
+	protected void notifyLeaderCardDiscard() { 
 		// TODO Auto-generated method stub
 		
 	}
@@ -1359,6 +1380,7 @@ public class GUIView extends View implements TableInterface{
 		disableFamiliarMove();
 		disableSkipButton();
 		if(bonusFamiliar != null){
+			bonusFamiliar.setVisible(false);
 			bonusFamiliar.setIcon(null);
 			bonusFamiliar.setEnabled(false);
 			mainLayeredPane.remove(bonusFamiliar);

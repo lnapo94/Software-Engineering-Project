@@ -26,7 +26,7 @@ public class Client {
 			System.out.println("Which kind of connection do you like? [Socket : S], [Remote Method Invocation (RMI) : R]");
 			
 			userInput = scanner.nextLine();
-			userInput = userInput.toUpperCase();
+			userInput = userInput.toUpperCase(); 
 			
 		} while((!userInput.equals("S") && !userInput.equals("R")));
 		

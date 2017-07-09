@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Observable;
 import java.util.Observer;
@@ -51,8 +53,9 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 		String RMIhostname = "//" + host + "/Server";
 		
 		try {
-			server = (ServerInterface) Naming.lookup(RMIhostname);
-		} catch (MalformedURLException | RemoteException | NotBoundException e) {
+			Registry registry = LocateRegistry.getRegistry(host, 1099);
+			server = (ServerInterface) registry.lookup("Server");
+		} catch (RemoteException | NotBoundException e) {
 			logger.fatal("Error in connection with RMI server");
 			logger.info(e);
 		}
@@ -90,10 +93,11 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 	@Override
 	public void notifyServerView(String serverViewID) throws RemoteException {
 		try {
-			this.serverView = (ServerViewInterface) Naming.lookup(serverViewID);
+			Registry registry = LocateRegistry.getRegistry(host, 1099);
+			this.serverView = (ServerViewInterface) registry.lookup(serverViewID);
 			this.server = null;
 			serverView.connectToServerView(this, playerID);
-		} catch (MalformedURLException | NotBoundException e) {
+		} catch (NotBoundException e) {
 			logger.fatal("Unable to connect to specify ServerView");
 			logger.info(e);
 		}
