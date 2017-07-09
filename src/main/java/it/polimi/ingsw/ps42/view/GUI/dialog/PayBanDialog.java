@@ -20,6 +20,12 @@ import javax.swing.JPanel;
 import it.polimi.ingsw.ps42.view.View;
 import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
+/**
+ * Class for choosing if pay the ban at the end of the period
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class PayBanDialog extends JDialog{
 
 	/**
@@ -32,8 +38,17 @@ public class PayBanDialog extends JDialog{
 	private View view;
 	private int banPeriod;
 	
+	/**
+	 * Private class for button events handling
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class ClickListener implements ActionListener{
 
+		/**
+		 * If button clicked then send a confirm or delete message given the source of the event
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//If a button is clicked check if is a cancel or confirm button and then send the response to the View
@@ -51,6 +66,15 @@ public class PayBanDialog extends JDialog{
 		
 	}
 	
+	/**
+	 * Constructor of the window given the GUIView where it will be displayed and the information about the ban to pay
+	 * 
+	 * @param view the GUIView where the window will be displayed
+	 * @param dimension the dimension of the window
+	 * @param location the location of the window
+	 * @param banImage the ban image to show to the player
+	 * @param banPeriod the period of the ban 
+	 */
 	public PayBanDialog(GUIView view, Dimension dimension, Point location, BufferedImage banImage, int banPeriod) {
 		
 		super(view.getMainFrame());
@@ -97,6 +121,12 @@ public class PayBanDialog extends JDialog{
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Private method to resize an image
+	 * @param imageToResize the BufferedImage to resize
+	 * @param newDimension the preferred new dimension
+	 * @return the ImageIcon of the image passed properly resized
+	 */
 	private ImageIcon resizeImage(BufferedImage imageToResize, Dimension newDimension){
 		Image cardResized = null;
 		if(imageToResize != null){
@@ -110,6 +140,9 @@ public class PayBanDialog extends JDialog{
 		return new ImageIcon(cardResized);
 	}
 	
+	/**
+	 * Method that close the current window
+	 */
 	public void close(){
 		this.dispose();
 	}

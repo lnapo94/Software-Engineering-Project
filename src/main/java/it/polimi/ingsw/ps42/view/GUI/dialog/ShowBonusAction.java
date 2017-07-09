@@ -17,6 +17,12 @@ import javax.swing.JPanel;
 import it.polimi.ingsw.ps42.model.action.ActionPrototype;
 import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
+/**
+ * Class for showing the action prototype of a bonus action 
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ShowBonusAction extends JDialog{
 
 	/**
@@ -24,6 +30,12 @@ public class ShowBonusAction extends JDialog{
 	 */
 	private static final long serialVersionUID = 7495493885551395022L;
 	
+	/**
+	 * Build a bonus action window given the action prototype to show and the GUIView where it will be displayed
+	 * 
+	 * @param view the GUIView where the window will be displayed 
+	 * @param bonusAction the action prototype to show
+	 */
 	public ShowBonusAction(GUIView view, ActionPrototype bonusAction) {
 		super(view.getMainFrame());
 		
@@ -65,17 +77,32 @@ public class ShowBonusAction extends JDialog{
 		
 	}
 	
+	/**
+	 * Method to enable the window to be seen 
+	 */
 	public void run() {
 		this.pack();
 		this.setVisible(true);		
 	}
 	
+	/**
+	 * Method that close the current window
+	 */
 	private void close() {
 		this.dispose();
 	}
 	
+	/**
+	 * Private class for the continue button event handling
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class ContinueAction implements ActionListener {
 
+		/**
+		 * When clicked close the window
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			close();
@@ -83,8 +110,17 @@ public class ShowBonusAction extends JDialog{
 		
 	}
 	
+	/**
+	 * Private class for keyboard event handling 
+	 * 
+	 * @author Luca Napoletano, Claudio Monatanari
+	 *
+	 */
 	private class KeyboardListener implements KeyListener {
 
+		/**
+		 * If enter is pressed then close the window
+		 */
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -94,13 +130,13 @@ public class ShowBonusAction extends JDialog{
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
+			// Nothings to do
 			
 		}
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
+			// Nothings to do
 			
 		}
 		

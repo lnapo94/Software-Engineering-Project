@@ -1346,7 +1346,10 @@ public class GUIView extends View implements TableInterface{
 	protected void askIfWantToPlay(PlayerToken moveToken) {
 		//Ask to the Player if he wants to perform a new Action and start the Timer
 		this.choosePlayerMove(moveToken.getActionPrototype(), moveToken.isRetrasmission());
-		timerLable.startTimer();
+		if(moveToken.isRetrasmission())
+			timerLable.restartTimer();
+		else
+			timerLable.startTimer();
 
 	}
 

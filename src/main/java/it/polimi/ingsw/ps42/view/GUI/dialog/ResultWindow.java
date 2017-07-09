@@ -16,6 +16,12 @@ import javax.swing.JPanel;
 
 import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
+/**
+ * Class for showing the final result of the game
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ResultWindow extends JDialog{
 
 	/**
@@ -26,6 +32,12 @@ public class ResultWindow extends JDialog{
 	private JFrame parent;
 	
 	
+	/**
+	 * Private class for handling the closing of the window
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class EndGameListener implements WindowListener{
 
 		@Override
@@ -34,6 +46,9 @@ public class ResultWindow extends JDialog{
 			
 		}
 
+		/**
+		 * Close all the other windows
+		 */
 		@Override
 		public void windowClosed(WindowEvent e) {
 			//Close all the windows of the game GUI
@@ -41,6 +56,9 @@ public class ResultWindow extends JDialog{
 			
 		}
 
+		/**
+		 * Close all the other windows
+		 */
 		@Override
 		public void windowClosing(WindowEvent e) {
 			// Nothing to do
@@ -69,6 +87,15 @@ public class ResultWindow extends JDialog{
 		
 		
 	}
+	
+	/**
+	 * Build the result window starting from the GUIView where it will be displayed and the final chart to show
+	 * 
+	 * @param view the GUIView where the window will be displayed
+	 * @param finalChart the final chart of the game
+	 * @param dimension the dimension of the window
+	 * @param location the location of the window
+	 */
 	public ResultWindow(GUIView view, List<String> finalChart, Dimension dimension, Point location) {
 		
 		super(view.getMainFrame());
@@ -117,6 +144,9 @@ public class ResultWindow extends JDialog{
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Private method to close all the others windows
+	 */
 	private void closeAll(){
 		
 		this.dispose();

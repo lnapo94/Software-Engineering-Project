@@ -24,11 +24,14 @@ import it.polimi.ingsw.ps42.message.PayRequest;
 import it.polimi.ingsw.ps42.model.Printable;
 import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
+
+/**
+ * Class for Card Request handling it exposes to the player the possible choice that can be made
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ */
 public class CardRequestDialog extends JDialog{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1426132029705455118L;
 	
 	private GUIView view;
@@ -43,7 +46,11 @@ public class CardRequestDialog extends JDialog{
 	private JButton confirm;
 	private JButton cancel;
 	
-	
+	/**
+	 * Constructor for the window given the GUIview where it will be displayed and the CardRequest message
+	 * @param view
+	 * @param message
+	 */
 	public CardRequestDialog(GUIView view, CardRequest message) {
 		super(view.getMainFrame());
 		this.view = view;
@@ -103,6 +110,9 @@ public class CardRequestDialog extends JDialog{
 			cancel.setEnabled(false);
 	}
 	
+	/**
+	 * Method to start the window, then it will be visible and usable
+	 */
 	public void run() {
 		this.setSize((int)(parent.getWidth() * 0.4), (int)(parent.getHeight() * 0.4));
 		this.setVisible(true);
@@ -110,6 +120,11 @@ public class CardRequestDialog extends JDialog{
 		this.setResizable(false);
 	}
 	
+	/**
+	 * Private method used to catch the response of the player
+	 * 
+	 * @return the index of the response from the list of possibilities
+	 */
 	private int sendRequest() {
 		for(JRadioButton radio : radioButtonsContainer) {
 			if(radio.isSelected()) {
@@ -119,12 +134,24 @@ public class CardRequestDialog extends JDialog{
 		return -1;
 	}
 	
+	/**
+	 * Method to close the window 
+	 */
 	public void close() {
 		this.dispose();
 	}
 	
+	/**
+	 * Private class for confirm button pressed actions 
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class ConfirmAction implements ActionListener {
 
+		/**
+		 * If the button if pressed, then send the response to the view and close the window
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int index = sendRequest();
@@ -136,8 +163,17 @@ public class CardRequestDialog extends JDialog{
 		
 	}
 	
+	/**
+	 * Proivate class for delete button pressed actions
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class CancelAction implements ActionListener {
 
+		/**
+		 * If the button if pressed then, send a cancelREquest message and close the window
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			view.sendCancelRequest(new CancelCardRequest(view.getViewPlayerID(), true));
@@ -146,8 +182,17 @@ public class CardRequestDialog extends JDialog{
 		
 	}
 	
+	/**
+	 * Private class for keyboard events handling
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class KeyboardListener implements KeyListener {
 		
+		/**
+		 * if enter is pressed then get the choice made and send it
+		 */
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -164,6 +209,9 @@ public class CardRequestDialog extends JDialog{
 			
 		}
 
+		/**
+		 * Enable numbers for selecting choice from the window
+		 */
 		@Override
 		public void keyTyped(KeyEvent e) {
 			int keyEvent = e.getKeyCode();

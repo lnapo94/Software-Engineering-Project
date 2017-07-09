@@ -21,11 +21,14 @@ import javax.swing.JRadioButton;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
+
+/**
+ * Class for asking the player which BonusBar want to play with
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ */
 public class BonusBarRequestDialog extends JDialog{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3444158853208641010L;
 	
 	private GUIView view;
@@ -38,6 +41,12 @@ public class BonusBarRequestDialog extends JDialog{
 	
 	private JButton confirm;
 	
+	
+	/**
+	 * Builder of the window
+	 * @param view the GUIview where the window will by displayed
+	 * @param list the list of BonusBar to choose from
+	 */
 	public BonusBarRequestDialog(GUIView view, List<BonusBar> list) {
 		super(view.getMainFrame());
 		this.view = view;
@@ -86,6 +95,9 @@ public class BonusBarRequestDialog extends JDialog{
 		confirm.addActionListener(new ConfirmAction());
 	}
 	
+	/**
+	 * Method to enable the window, then the window will be visible and usable
+	 */
 	public void run() {
 		this.setSize((int)(parent.getWidth() * 0.4), (int)(parent.getHeight() * 0.4));
 		this.setVisible(true);
@@ -93,6 +105,10 @@ public class BonusBarRequestDialog extends JDialog{
 		this.setResizable(false);
 	}
 	
+	/**
+	 * Private method used to send a response to the View
+	 * @return the index of the choice made in the list of BonusBar
+	 */
 	private int sendRequest() {
 		for(JRadioButton radio : radioButtonsContainer) {
 			if(radio.isSelected()) {
@@ -102,12 +118,24 @@ public class BonusBarRequestDialog extends JDialog{
 		return -1;
 	}
 	
+	/**
+	 * Public method to delete the window
+	 */
 	public void close() {
 		this.dispose();
 	}
 	
+	/**
+	 * Private Class for button pressed action
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class ConfirmAction implements ActionListener {
 
+		/**
+		 * Send the choice selected to the view
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int index = sendRequest();
@@ -119,8 +147,17 @@ public class BonusBarRequestDialog extends JDialog{
 		
 	}
 	
+	/**
+	 * Private class for keyboard events
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class KeyboardListener implements KeyListener {
 		
+		/**
+		 * If enter if pressed then send the respose to the view
+		 */
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -137,6 +174,9 @@ public class BonusBarRequestDialog extends JDialog{
 			
 		}
 
+		/**
+		 * If number pressed the send the corresponding value as a response
+		 */
 		@Override
 		public void keyTyped(KeyEvent e) {
 			int keyEvent = e.getKeyCode();

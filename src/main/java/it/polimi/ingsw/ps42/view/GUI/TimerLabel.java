@@ -1,6 +1,5 @@
 package it.polimi.ingsw.ps42.view.GUI;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -8,10 +7,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
 
 public class TimerLabel extends JLabel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9152307600364654079L;
 	private int seconds;
 	private int minutes;
 	
@@ -73,7 +75,7 @@ public class TimerLabel extends JLabel{
 	
 	public void showPlayerPlaying(String name){
 		this.setText(name+ " is playing");
-	}
+	} 
 	
 	private void skipMove(){
 		
@@ -90,6 +92,14 @@ public class TimerLabel extends JLabel{
 		
 	}
 		
+	public void restartTimer(){
+		
+		
+		timer = new Timer();
+		timer.schedule(new TimerLableTask(), 1000);
+		this.status = true;
+	}
+	
 	public void resetTimer(){
 		if(timer != null)
 			timer.cancel();

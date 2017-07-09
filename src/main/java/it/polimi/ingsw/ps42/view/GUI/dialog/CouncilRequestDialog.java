@@ -26,11 +26,15 @@ import it.polimi.ingsw.ps42.model.effect.Obtain;
 import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
+/**
+ * Class for council privilege conversion decision
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CouncilRequestDialog extends JDialog{
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 6440420607016105830L;
 	
 	private GUIView view;
@@ -47,6 +51,12 @@ public class CouncilRequestDialog extends JDialog{
 	
 	private transient Logger logger = Logger.getLogger(CouncilRequestDialog.class);
 	
+	/**
+	 * Constructor of the window starting from the GUIView and the council request
+	 * 
+	 * @param view the GUIview where the window will be displayed
+	 * @param message the council privilege related message
+	 */
 	public CouncilRequestDialog(GUIView view, CouncilRequest message) {
 		super(view.getMainFrame());
 		this.view = view;
@@ -98,18 +108,33 @@ public class CouncilRequestDialog extends JDialog{
 		confirm.addActionListener(new ConfirmAction());
 	}
 	
+	/**
+	 * Method to rebuild the same window when other choice has to be made
+	 * @param view the GUIView where the window will be displayed
+	 * @param message the council privilege related message
+	 * @param possibilities the list of remaining possibility to chose from
+	 * @param quantity the quantity of choice to be made
+	 */
 	private CouncilRequestDialog(GUIView view, CouncilRequest message, List<Obtain> possibilities, Integer quantity) {
 		this(view, message);
 		this.possibilities = possibilities;
 		this.quantity = quantity;
 	}
 	
+	/**
+	 * Method to enable the window to be seen and used
+	 */
 	public void run() {
 		this.setVisible(true);
 		this.setSize((int) (parent.getWidth() * 0.3), (int) (parent.getHeight() * 0.7));
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 	
+	/**
+	 * Private method to check the response and give back the corresponding index of the list of possibilities 
+	 * 
+	 * @return the index of the choice made of the list of possibilities 
+	 */
 	private int controlRequest() {
 		for(JRadioButton button : radioButtonsContainer) {
 			if(button.isSelected())
@@ -118,6 +143,11 @@ public class CouncilRequestDialog extends JDialog{
 		return -1;
 	}
 	
+	/**
+	 * Private method to send to the view the choice made by the player
+	 * @param choice the index of the choice made
+	 * @throws WrongChoiceException if the index exceeds the possible choice size
+	 */
 	private void sendRequest(Integer choice) throws WrongChoiceException {
 		
 		this.message.addChoice(choice);
@@ -132,8 +162,17 @@ public class CouncilRequestDialog extends JDialog{
 		}
 	}
 	
+	/**
+	 * Private class for confirm button pressed actions
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class ConfirmAction implements ActionListener {
 
+		/**
+		 * If the button is pressed then send the response to the view
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int choice = controlRequest();
@@ -149,8 +188,17 @@ public class CouncilRequestDialog extends JDialog{
 		
 	}
 	
+	/**
+	 * Private class for keybord events handling
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class KeyboardListener implements KeyListener {
 
+		/**
+		 * If enter is pressed then send the response to the view
+		 */
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -168,13 +216,13 @@ public class CouncilRequestDialog extends JDialog{
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
+			// Nothings to do
 			
 		}
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
+			// Nothings to do
 			
 		}
 		

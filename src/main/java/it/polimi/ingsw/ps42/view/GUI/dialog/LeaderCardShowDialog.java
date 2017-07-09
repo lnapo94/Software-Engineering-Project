@@ -29,11 +29,14 @@ import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.parser.ImageLoader;
 import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
+/**
+ * Class for leader Cards interacting during the game
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class LeaderCardShowDialog extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 9117390219349271997L;
 	
 	private GUIView view;
@@ -58,6 +61,12 @@ public class LeaderCardShowDialog extends JDialog {
 	
 	private transient Logger logger = Logger.getLogger(LeaderCardShowDialog.class);
 	
+	/**
+	 * Constructor for the window starting from the corresponding GUIView
+	 * 
+	 * @param view the GUIView where the window will be displayed
+	 * @throws IOException if any problem in leaderCard opening occurs
+	 */
 	public LeaderCardShowDialog(GUIView view) throws IOException {
 		super(view.getMainFrame());
 		//Set the variables
@@ -116,12 +125,22 @@ public class LeaderCardShowDialog extends JDialog {
 		this.add(buttonPanel);
 	}
 	
+	/**
+	 * Method for enabling the window to be visible and usable
+	 */
 	public void run() {
 		this.pack();
 		this.setVisible(true);
 		this.setResizable(false);
 	}
 	
+	/**
+	 * Private method for loading the leader Cards of the player
+	 * 
+	 * @param list the list of LeaderCards of the player
+	 * @param container the Container for the leader Cards
+	 * @throws IOException if any problem in leader Cards image opening occurs
+	 */
 	private void loadImage(List<LeaderCard> list, Container container) throws IOException {
 		for(int i = 0; i < totalCardList.size(); i++) {
 			JLabel label = new JLabel();
@@ -148,6 +167,13 @@ public class LeaderCardShowDialog extends JDialog {
 		}
 	}
 	
+	/**
+	 * Private method for resizing an image given a preferred new dimension
+	 * 
+	 * @param imageToResize the Buffered Image to resize
+	 * @param newDimension the preferred new dimension of the image
+	 * @return the Image Icon of the resized image
+	 */
 	private ImageIcon resizeImage(BufferedImage imageToResize, Dimension newDimension){
 		Image cardResized = null;
 		if(imageToResize != null){
@@ -161,12 +187,24 @@ public class LeaderCardShowDialog extends JDialog {
 		return new ImageIcon(cardResized);
 	}
 	
+	/**
+	 * Private method to delete the window
+	 */
 	private void close() {
 		this.dispose();
 	}
 	
+	/**
+	 * Private class for enabling a Leader Card
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class EnableAction implements ActionListener {
 
+		/**
+		 * Send a leader card enabling message to the view
+		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(index != -1 && !activatedList.contains(totalCardList.get(index))) {
@@ -177,8 +215,17 @@ public class LeaderCardShowDialog extends JDialog {
 		
 	}
 	
+	/**
+	 * Private class for discarding a Leader Card
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class DiscardAction implements ActionListener {
 
+		/**
+		 * Send a leader card discard message to the view
+		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(index != -1 && !activatedList.contains(totalCardList.get(index))) {
@@ -189,8 +236,17 @@ public class LeaderCardShowDialog extends JDialog {
 		
 	}
 	
+	/**
+	 * Private class for closing the window
+	 * 
+	 * @author Luca Napoletano, Claudio Motanari
+	 *
+	 */
 	private class CancelAction implements ActionListener {
 
+		/**
+		 * Close the window
+		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			close();			
@@ -198,14 +254,28 @@ public class LeaderCardShowDialog extends JDialog {
 		
 	}
 	
+	/**
+	 * Private class for mouse event handling
+	 * 
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class CardsMouseListener implements MouseListener {
 		
 		private JLabel label;
 		
+		/**
+		 * Constructor of the listener that associate the listener to a label
+		 * 
+		 * @param label the reference label for the listener
+		 */
 		public CardsMouseListener(JLabel label) {
 			this.label = label;
 		}
 		
+		/**
+		 * When click on it change the border of the JLabel
+		 */
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			label.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 10));
@@ -226,25 +296,25 @@ public class LeaderCardShowDialog extends JDialog {
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			// Nothings to do
 			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			// Nothings to do
 			
 		}
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			// Nothings to do
 			
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			// Nothings to do
 			
 		}
 		
