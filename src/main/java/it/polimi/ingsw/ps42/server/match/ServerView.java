@@ -1,9 +1,9 @@
 package it.polimi.ingsw.ps42.server.match;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,8 +63,9 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 		
 		//Exporting the RMI object
 		try {
-			Naming.rebind(getID(), (ServerViewInterface)UnicastRemoteObject.exportObject(this, 0));
-		} catch (RemoteException | MalformedURLException e) {
+			Registry registry = LocateRegistry.getRegistry();
+			registry.rebind(getID(), (ServerViewInterface)UnicastRemoteObject.exportObject(this, 0));
+		} catch (RemoteException e) {
 			logger.fatal("Error in binding of ServerView");
 			logger.info(e);
 		}

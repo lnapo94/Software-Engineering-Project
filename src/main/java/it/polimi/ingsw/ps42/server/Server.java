@@ -5,9 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,8 +84,10 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 		logger.info("Starting RMI procedure");
 		logger.info("Create registry...");
 		LocateRegistry.createRegistry(1099);
+		Registry registry = LocateRegistry.getRegistry();
 		logger.info("Export the server");
-		Naming.rebind("Server", this);
+		//Naming.rebind("Server", this);
+		registry.rebind("Server", this);
 		logger.info("RMI procedure done!");
 		
 		
