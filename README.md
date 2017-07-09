@@ -35,6 +35,6 @@ Furthermore you can configure a lot of things with our Game, such as cards effec
 Finally, we have used a logger to know everything in our application. We decided to use log4j, and, if you want, you can configure this logger easily going in Logger/Properties/ to see all the configuration. At the moment, we have setted 3 kind of configuration, one for the client, one for the server and one for the test units. All this log file are stored in Logger/ directory.
 
 ### Do you want to know more about us and our implementation?
-Please, if you want to know more about us and about our implementation, check out our [Wiki](https://github.com/lnapo94/Software-Engineering-Project/wiki) on GitHub. In our wiki you can find a deeper description of our project, and you can also find some picture that explain the _UML_ of the entire project
+Please, if you want to know more about us and our implementation, check out our [Wiki](https://github.com/lnapo94/Software-Engineering-Project/wiki) on GitHub. There you can find a deeper description of the project, and some picture that explain the _UML_ of the entire project
 
 **Enjoy our _Lorenzo il Magnifico_ application**
