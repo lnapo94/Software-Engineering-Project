@@ -28,7 +28,7 @@ public class ResultWindow extends JDialog{
 	 * 
 	 */
 	private static final long serialVersionUID = 8184158263384479430L;
-	private GUIView view;
+	private transient GUIView view;
 	private JFrame parent;
 	
 	
@@ -141,6 +141,13 @@ public class ResultWindow extends JDialog{
 		
 		//Add the listener
 		this.addWindowListener(new EndGameListener());
+		
+	}
+	
+	/**
+	 * Method used to show this window
+	 */
+	public void run() {
 		this.setVisible(true);
 	}
 	

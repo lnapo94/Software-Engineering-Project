@@ -27,7 +27,7 @@ public class ResourceWindow extends FunctionalLabel{
 	 */
 	private static final long serialVersionUID = 7926214458651089824L;
 	
-	private Player player;
+	private transient Player player;
 	private HashMap<Resource, JLabel> resourceLabel;
 	
 	/**

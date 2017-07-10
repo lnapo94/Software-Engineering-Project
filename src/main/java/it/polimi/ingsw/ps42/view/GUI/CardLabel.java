@@ -17,7 +17,7 @@ public class CardLabel extends FunctionalLabel {
 	 */
 	private static final long serialVersionUID = 2232406506047461027L;
 	
-	private BufferedImage cardImage;
+	private transient BufferedImage cardImage;
 	private CardZoom zoomLabel;
 	
 	/**
@@ -25,7 +25,7 @@ public class CardLabel extends FunctionalLabel {
 	 * @author Luca Napoletano, Claudio Montanari
 	 *
 	 */
-	private MouseAdapter mouseAdapter = new MouseAdapter() {
+	private transient MouseAdapter mouseAdapter = new MouseAdapter() {
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {

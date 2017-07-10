@@ -22,7 +22,7 @@ public class PositionContainer extends FunctionalLabel{
 	 */
 	private static final long serialVersionUID = -8026387550266457720L;
 	private List<JLabel> familiarPlaced;
-	private List<BufferedImage> familiarPlacedImages;
+	private transient List<BufferedImage> familiarPlacedImages;
 	private Dimension labelPreferredSize;
 	private Dimension reducedDimension;
 	private Dimension dimensionToUse;

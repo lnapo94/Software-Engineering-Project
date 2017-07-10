@@ -51,18 +51,18 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
 	private transient Logger logger = Logger.getLogger(Server.class);
 	
 	//Socket for the server
-	private ServerSocket serverSocket;
+	private transient ServerSocket serverSocket;
 	
 	//Executor to run more matches at the same time
-	private ExecutorService executor;
+	private transient ExecutorService executor;
 	
 	//Table to know where the player is playing
 	private HashMap<String, ServerView> playerTable;
 	
 	//View is waiting the start
-	private ServerView waitingView;
+	private transient ServerView waitingView;
 	
-	private Timer timer;
+	private transient Timer timer;
 	
 	/**
 	 * The constructor of the Server

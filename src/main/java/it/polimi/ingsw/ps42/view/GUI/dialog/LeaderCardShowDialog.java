@@ -39,7 +39,7 @@ public class LeaderCardShowDialog extends JDialog {
 
 	private static final long serialVersionUID = 9117390219349271997L;
 	
-	private GUIView view;
+	private transient GUIView view;
 	private JFrame parent;
 	
 	//Player's leader cards list
@@ -55,7 +55,7 @@ public class LeaderCardShowDialog extends JDialog {
 	private JButton cancel;
 	private JButton discard;
 	
-	private ImageLoader loader;
+	private transient ImageLoader loader;
 	
 	private int index = -1;
 	

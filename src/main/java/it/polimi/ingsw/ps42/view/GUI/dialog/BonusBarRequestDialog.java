@@ -31,7 +31,7 @@ public class BonusBarRequestDialog extends JDialog{
 
 	private static final long serialVersionUID = 3444158853208641010L;
 	
-	private GUIView view;
+	private transient GUIView view;
 	private JFrame parent;
 	
 	private ButtonGroup group;

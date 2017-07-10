@@ -24,7 +24,7 @@ public class BonusBar implements Serializable{
 	//This is the player's little bonus bar. Every player can have the same bonusbar (simple)
 	//or can have an advanced one (advanced mode)
 	
-	private Player player;
+	private transient Player player;
 	private final Effect productBonus;
 	private final Effect yieldBonus;
 	private final String name;

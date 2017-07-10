@@ -35,7 +35,7 @@ public class IncrementWindow extends JDialog{
 	 */
 	private static final long serialVersionUID = 7959414300010255228L;
 	
-	private GUIView view;
+	private transient GUIView view;
 	private JFrame mainFrame;
 	private JSlider slider;
 	private JButton confirmButton;
@@ -142,7 +142,6 @@ public class IncrementWindow extends JDialog{
 		this.setLayout(new GridLayout(8, 1));
 		this.setSize(dimension);
 		this.setLocation((int)(mainFrame.getWidth()*0.4),(int)(mainFrame.getHeight()*0.3));
-		this.setVisible(true);
 		this.setTitle("Your Move Resume");
 		
 		Font font = new Font("Papyrus", Font.ITALIC, (int)(dimension.getHeight()*0.08));
@@ -194,6 +193,13 @@ public class IncrementWindow extends JDialog{
 		confirmButton.addKeyListener(new KeyboardListener());
 		deleteButton.addActionListener(new ButtonAction());
 		this.mainFrame.addKeyListener(new KeyboardListener());
+	}
+	
+	/**
+	 * Method used to show this window
+	 */
+	public void run() {
+		this.setVisible(true);
 	}
 	
 	/**

@@ -38,7 +38,7 @@ public class LoginWindow extends JDialog{
 	private JButton cancel;
 	private String warning;
 	
-	private GUIView view;
+	private transient GUIView view;
 	private JFrame parent;
 	
 	/**
