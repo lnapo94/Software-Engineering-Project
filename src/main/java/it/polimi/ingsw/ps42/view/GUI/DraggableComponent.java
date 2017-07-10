@@ -26,13 +26,13 @@ public class DraggableComponent extends FunctionalLabel {
 	private volatile int screenY;
 	private volatile int myX;
 	private volatile int myY;
-	private BufferedImage image;
+	private transient BufferedImage image;
 	private boolean canMove;
 	
 	private int initialX;
 	private int initialY;
 	
-	private TableInterface table;
+	private transient TableInterface table;
 	
 	/**
 	 * Private class used to handle a mouse event on the draggable component

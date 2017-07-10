@@ -29,7 +29,7 @@ public class LeaderFamiliarRequestDialog extends JDialog{
 	
 	private static final long serialVersionUID = 3853801646684305891L;
 	
-	private GUIView view;
+	private transient GUIView view;
 	private JFrame parent;
 	
 	private JRadioButton orange;

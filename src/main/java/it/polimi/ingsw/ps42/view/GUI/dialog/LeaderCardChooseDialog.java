@@ -32,10 +32,10 @@ public class LeaderCardChooseDialog extends JDialog{
 
 	private static final long serialVersionUID = -6964310255996863156L;
 	
-	private GUIView view;
+	private transient GUIView view;
 	private JFrame parent;
 	private List<JLabel> cardContainer;
-	private ImageLoader loader;
+	private transient ImageLoader loader;
 	
 	private List<LeaderCard> list;
 	

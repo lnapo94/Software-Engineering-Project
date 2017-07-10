@@ -505,7 +505,7 @@ public class Table extends Observable{
 		for(int i = 0; i < councilSize; i++) {
 			CouncilPosition position = council.get(0);
 			if(position != null){
-				if(position != null && !temp.contains(position.getFamiliar().getPlayer()))
+				if(!temp.contains(position.getFamiliar().getPlayer()))
 					temp.add(position.getFamiliar().getPlayer());
 				council.remove(position);
 				//Remove also the familiar

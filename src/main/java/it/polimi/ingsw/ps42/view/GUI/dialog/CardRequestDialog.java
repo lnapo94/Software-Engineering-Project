@@ -34,7 +34,7 @@ public class CardRequestDialog extends JDialog{
 
 	private static final long serialVersionUID = 1426132029705455118L;
 	
-	private GUIView view;
+	private transient GUIView view;
 	private JFrame parent;
 	
 	private CardRequest message;

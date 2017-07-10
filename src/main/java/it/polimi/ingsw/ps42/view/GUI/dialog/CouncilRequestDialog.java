@@ -37,7 +37,7 @@ public class CouncilRequestDialog extends JDialog{
 	
 	private static final long serialVersionUID = 6440420607016105830L;
 	
-	private GUIView view;
+	private transient GUIView view;
 	private JFrame parent;
 	private List<Obtain> possibilities;
 	private Integer quantity;

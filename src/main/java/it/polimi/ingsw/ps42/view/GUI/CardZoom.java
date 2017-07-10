@@ -15,7 +15,7 @@ public class CardZoom extends FunctionalLabel {
 	 */
 	private static final long serialVersionUID = 6201276196334825923L;
 	
-	private final BufferedImage defaultImage;
+	private transient final BufferedImage defaultImage;
 	
 	/**
 	 * THe constructor of the CardZoom component

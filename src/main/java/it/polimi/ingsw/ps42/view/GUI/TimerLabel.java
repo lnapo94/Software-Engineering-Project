@@ -27,8 +27,8 @@ public class TimerLabel extends JLabel{
 	private int updatedSeconds;
 	private int updatedMinutes;
 	
-	private GUIView view;
-	private Timer timer;
+	private transient GUIView view;
+	private transient Timer timer;
 	private boolean status;
 	
 	/**

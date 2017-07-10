@@ -706,8 +706,8 @@ public class GUIView extends View implements TableInterface{
 	 */
 	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position, int actionValue, DraggableComponent familiarMoving){
 		this.movingFamiliar = familiarMoving;
-		new IncrementWindow(this, type, familiarColor, position, actionValue, player.getResource(Resource.SLAVE));
-		
+		IncrementWindow dialog = new IncrementWindow(this, type, familiarColor, position, actionValue, player.getResource(Resource.SLAVE));
+		dialog.run();
 	}
 	
 	/**
@@ -1433,7 +1433,8 @@ public class GUIView extends View implements TableInterface{
 		if(bans.get(banPeriod) != null){
 			Dimension banWindowDimension = new Dimension((int)(mainFrame.getWidth()*0.7),(int)(mainFrame.getHeight()*0.48) );
 			Point banWindowLocation = new Point((int)(tableImageDimension.getWidth()*0.4),(int)(tableImageDimension.getHeight()*0.4) );
-			new PayBanDialog(this, banWindowDimension ,banWindowLocation, bans.get(banPeriod).getCardImage(), banPeriod );
+			PayBanDialog dialog = new PayBanDialog(this, banWindowDimension ,banWindowLocation, bans.get(banPeriod).getCardImage(), banPeriod );
+			dialog.run();
 		}
 	}
 
@@ -1563,8 +1564,8 @@ public class GUIView extends View implements TableInterface{
 		
 		Dimension resultWindowDimension = new Dimension((int)(mainFrame.getWidth()*0.7),(int)(mainFrame.getHeight()*0.48) );
 		Point resultWindowLocation = new Point((int)(tableImageDimension.getWidth()*0.4),(int)(tableImageDimension.getHeight()*0.4) );
-		new ResultWindow(this, finalChart, resultWindowDimension, resultWindowLocation );
-		
+		ResultWindow dialog = new ResultWindow(this, finalChart, resultWindowDimension, resultWindowLocation );
+		dialog.run();
 	}
 	
 	/**

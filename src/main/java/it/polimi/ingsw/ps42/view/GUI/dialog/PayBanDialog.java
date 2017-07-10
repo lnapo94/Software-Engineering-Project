@@ -35,7 +35,7 @@ public class PayBanDialog extends JDialog{
 	
 	private JButton confirm;
 	private JButton cancel;
-	private View view;
+	private transient View view;
 	private int banPeriod;
 	
 	/**
@@ -118,6 +118,12 @@ public class PayBanDialog extends JDialog{
 		confirm.addActionListener(new ClickListener());
 		
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+	}
+	
+	/**
+	 * Method used to show this window
+	 */
+	public void run() {
 		this.setVisible(true);
 	}
 	
