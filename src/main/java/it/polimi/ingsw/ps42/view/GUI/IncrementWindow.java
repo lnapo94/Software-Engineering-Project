@@ -21,6 +21,12 @@ import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 
+/**
+ * Class that implements a JDialog to show the move the player wants to do. Moreover, this window is used also to increase 
+ * the action that the player is doing
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class IncrementWindow extends JDialog{
 
 	/**
@@ -41,6 +47,11 @@ public class IncrementWindow extends JDialog{
 	private int position;
 	private int increment;
 	
+	/**
+	 * Private class used to implement the increment operation with a slider
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class SliderListener implements ChangeListener{
 
 		public void stateChanged(ChangeEvent event)
@@ -52,6 +63,11 @@ public class IncrementWindow extends JDialog{
         }
      };
 	
+     /**
+      * Private class used to know when the user press a key on his keyboard
+      * @author Luca Napoletano, Claudio Montanari
+      *
+      */
 	private class KeyboardListener implements KeyListener {
 		
 		@Override
@@ -81,6 +97,11 @@ public class IncrementWindow extends JDialog{
 		
 	}
 	
+	/**
+	 * Private class to perform a button action. This class is used both for a confirm button and for a cancel button
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class ButtonAction implements ActionListener {
 
 		@Override
@@ -98,6 +119,15 @@ public class IncrementWindow extends JDialog{
 		
 	}
     
+	/**
+	 * Constructor of the IncrementWindow
+	 * @param view					The current GUIView on the screen
+	 * @param type					The type of the action chosen by the user
+	 * @param familiarColor			The Color of the moved familiar
+	 * @param position				The position where this familiar will be (e.g 2 floor of the green tower: ActionType = Take_Green, position = 1)
+	 * @param actionValue			The value of the chosen action
+	 * @param maxIncrement			The max increment to set correctly the slider (This is the number of slaves that the player has)
+	 */
 	public IncrementWindow(GUIView view, ActionType type, FamiliarColor familiarColor,int position,int actionValue , int maxIncrement) {
 		super(view.getMainFrame());
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -165,16 +195,25 @@ public class IncrementWindow extends JDialog{
 		this.mainFrame.addKeyListener(new KeyboardListener());
 	}
 	
+	/**
+	 * Method used to cancel a chosen move and to do another one
+	 */
 	private void cancelMove(){
 		this.view.cancelMove(type, position);
 		this.dispose();
 	}
 	
+	/**
+	 * Method used to send a complete move to the Controller
+	 */
 	private void trySendMove(){
 		PlayerMove move = new PlayerMove(view.getViewPlayerID(), type, familiarColor, position, increment);
 		this.view.setNewMove(move);
 	}
 	
+	/**
+	 * Method used to close this window
+	 */
 	private void close(){
 		dispose();
 	}

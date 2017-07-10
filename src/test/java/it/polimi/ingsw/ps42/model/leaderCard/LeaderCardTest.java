@@ -133,13 +133,13 @@ public class LeaderCardTest {
 		//Control if the request is a familiar request and if it is, apply it
 		if(request instanceof LeaderFamiliarRequest) {
 			LeaderFamiliarRequest familiarRequest = (LeaderFamiliarRequest) request;
-			familiarRequest.setFamiliarColor(FamiliarColor.NEUTRAL);
+			familiarRequest.setFamiliarColor(FamiliarColor.ORANGE);
 			familiarRequest.apply(enableEffectPlayer);
 		}
 		
-		//Now control if the neutral familiar of the player has 5 as its value
+		//Now control if the orange familiar of the player has 5 as its value
 		
-		assertEquals(5,enableEffectPlayer.getFamiliarValue(FamiliarColor.NEUTRAL));
+		assertEquals(5,enableEffectPlayer.getFamiliarValue(FamiliarColor.ORANGE));
 	}
 
 }
