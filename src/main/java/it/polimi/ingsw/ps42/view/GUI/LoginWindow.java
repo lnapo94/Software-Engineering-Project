@@ -39,6 +39,11 @@ public class LoginWindow extends JDialog{
 	private GUIView view;
 	private JFrame parent;
 	
+	/**
+	 * Constructor of the Login Window
+	 * @param view		The created GUIView
+	 * @param warning	The String to show when the chosen user name is yet used
+	 */
 	public LoginWindow(GUIView view, String warning) {
 		super(view.getMainFrame());
 		this.parent = view.getMainFrame();
@@ -103,11 +108,17 @@ public class LoginWindow extends JDialog{
 		userInput.addMouseListener(new MouseEvent());
 	}
 	
+	/**
+	 * Simple method to show this dialog
+	 */
 	public void run() {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 	
+	/**
+	 * Method used to check if the user input is correct, or if it isn't null
+	 */
 	private void controlInput() {
 		String input = userInput.getText();
 		boolean control = !input.equals("Insert here your ID") && !input.equals("") && !input.equals(warning);
@@ -119,11 +130,19 @@ public class LoginWindow extends JDialog{
 		}
 	}
 	
+	/**
+	 * Method used to close both the GUIView and this window
+	 */
 	private void closeAll() {
 		this.dispose();
 		parent.dispose();
 	}
 	
+	/**
+	 * Private Class used to know when the user press a key on his keyboard and to perform the correct action
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class KeyboardListener implements KeyListener {
 		
 		@Override
@@ -153,6 +172,11 @@ public class LoginWindow extends JDialog{
 		
 	}
 	
+	/**
+	 * Class used to create an action for the buttons
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class ButtonAction implements ActionListener {
 
 		@Override
@@ -168,6 +192,11 @@ public class LoginWindow extends JDialog{
 		
 	}
 	
+	/**
+	 * Private class used to know when a mouse click on the JTextField to reset its test
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class MouseEvent implements MouseListener {
 
 		@Override

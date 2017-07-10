@@ -9,6 +9,11 @@ import java.awt.image.BufferedImage;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.view.TableInterface;
 
+/**
+ * Class used to define an object that can be moved on the screen, e.g. the familiar
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class DraggableComponent extends FunctionalLabel {
 
 	/**
@@ -29,6 +34,11 @@ public class DraggableComponent extends FunctionalLabel {
 	
 	private TableInterface table;
 	
+	/**
+	 * Private class used to handle a mouse event on the draggable component
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class FamiliarPressedListener implements MouseListener{
 
 		@Override
@@ -78,6 +88,11 @@ public class DraggableComponent extends FunctionalLabel {
 		
 	}
 	
+	/**
+	 * Private class used to know the movement of the familiar
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class FamiliarDraggedListener implements MouseMotionListener{
 
 		@Override
@@ -96,6 +111,14 @@ public class DraggableComponent extends FunctionalLabel {
 		
 	}
 	
+	/**
+	 * Constructor of the draggable familiar
+	 * @param x				The x position on screen
+	 * @param y				The y position on screen
+	 * @param dimension		The dimension of the component
+	 * @param image			The image to show in the component
+	 * @param color			The color of the familiar to load the correct picture
+	 */
 	public DraggableComponent(int x, int y, Dimension dimension, BufferedImage image, FamiliarColor color) {
 		super();
 		this.familiarColor= color;
@@ -113,28 +136,50 @@ public class DraggableComponent extends FunctionalLabel {
 		this.setIcon(resizeImage(image, this.getSize()));
 	}
 	
+	/**
+	 * Getter for the image of the draggable component
+	 * @return		A BufferedImage of the picture shown in the component
+	 */
 	public BufferedImage getImage() {
 		return image;
 	}
 	
+	/**
+	 * Method used to add the mouse event and the mouse motion to the component
+	 */
 	public void enableListener(){
 		this.addMouseListener(new FamiliarPressedListener());
 		this.addMouseMotionListener(new FamiliarDraggedListener());
 	}
 	
+	/**
+	 * Method used to enable the motion of the component
+	 * @param state		The state of the component. If the state is True, then you can move the component, else you can't move the component on the screen
+	 */
 	public void setCanMove(boolean state){
 		this.canMove = state;
 	}
 	
+	/**
+	 * Method used to set the created table
+	 * @param table		The table to set to the draggable component
+	 */
 	public void setTable(TableInterface table) {
 		this.table = table;
 	}
 	
+	/**
+	 * Method used to reset the draggable component in the initial position
+	 */
 	public void resetFamiliar(){
 		setLocation(initialX, initialY);
 		setIcon(resizeImage(image, this.getSize()));
 	}
 	
+	/**
+	 * Getter for the color of the familiar represented by the draggable component
+	 * @return	The color of the represented familiar
+	 */
 	public FamiliarColor getFamiliarColor() {
 		return familiarColor;
 	}

@@ -144,9 +144,10 @@ public class LeaderCardTest {
 			familiarRequest.apply(enableEffectPlayer);
 		}
 		
-		//Now control if the neutral familiar of the player has 5 as its value
+		//Now control if the orange familiar of the player has 5 as its value
 		
 		assertEquals(5,enableEffectPlayer.getFamiliarValue(FamiliarColor.ORANGE));
+
 	}
 	
 	@Test

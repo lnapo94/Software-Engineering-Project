@@ -13,6 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.border.LineBorder;
 
+/**
+ * Class used to create a FunctionalLabel to contain a Card
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CardContainer extends FunctionalLabel{
 
 	/**
@@ -29,6 +34,12 @@ public class CardContainer extends FunctionalLabel{
 	
 	private JLayeredPane mainPane;
 	private Dimension cardDimension;
+	
+	/**
+	 * Private class used to handle a mouse event
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class MouseClickListener implements MouseListener {
 
 		@Override
@@ -67,6 +78,14 @@ public class CardContainer extends FunctionalLabel{
 		
 	}
 	
+	/**
+	 * Constructor for the card container
+	 * @param dimension				The dimension of the FunctionalLabel
+	 * @param location				The location on the screen
+	 * @param cardZoom				The CardZoom component on the screen to show the card zoomed
+	 * @param image					The image of the card
+	 * @param tableCardDimension	The dimension of the card on the table
+	 */
 	public CardContainer(Dimension dimension, Point location, CardZoom cardZoom, BufferedImage image, Dimension tableCardDimension ) {
 		
 		super();
@@ -93,6 +112,10 @@ public class CardContainer extends FunctionalLabel{
 		
 	}
 	
+	/**
+	 * Method used to add the card to the player's cards picture
+	 * @param image		The image of the card to add
+	 */
 	public void addBonusBarLabel(BufferedImage image){
 		JLabel bonusBar = new JLabel();
 		bonusBar.setSize((int)(this.getSize().getWidth()*0.042), (int)(this.getSize().getHeight() ));
@@ -102,12 +125,24 @@ public class CardContainer extends FunctionalLabel{
 		this.updateUI();
 	}
 	
+	/**
+	 * Build the positions for placing the cards
+	 * @param mainPane			The LayeredPane where the card goes
+	 * @param cardDimension		The dimension of the card
+	 */
 	private void buildCardPositions(JLayeredPane mainPane, Dimension cardDimension){
-		//Build the positions for placing the cards
 		placeCardPositions(yellowCard, mainPane, cardDimension, cardZoom, 0);
 		placeCardPositions(greenCard, mainPane, cardDimension, cardZoom, (int)(this.getHeight()*0.2 + cardDimension.getHeight()));
 	}
 	
+	/**
+	 * Method used to add a deck of CardLabel to the correct positions on the screen
+	 * @param deck				The list of CardLabel to add
+	 * @param mainPane			The main JLayeredPane of the app
+	 * @param cardDimension		The dimension of a single card
+	 * @param cardZoom			The CardZoom component
+	 * @param downShift			The vertical gap between two cards
+	 */
 	private void placeCardPositions(List<CardLabel> deck, JLayeredPane mainPane, Dimension cardDimension, CardZoom cardZoom, int downShift) {
 		
 		int deltaX = (int)(this.getWidth()*0.02 + (int) (this.getSize().getWidth() * 0.03));
@@ -122,6 +157,12 @@ public class CardContainer extends FunctionalLabel{
 		}
 	}
 
+	/**
+	 * Method used to create and add the first card, after that you can call the placeCardPosition method to place the other cards
+	 * @param deck			The deck of CardLabel to position
+	 * @param downShift		The vertical gap between two cards
+	 * @return
+	 */
 	private CardLabel newFirstCard(List<CardLabel> deck, int downShift){
 				
 		int deltaX = (int)(this.getWidth()*0.8 + this.getSize().getWidth() * 0.03 + deck.size() * (cardDimension.getWidth()*0.04) );
@@ -135,18 +176,30 @@ public class CardContainer extends FunctionalLabel{
 		return card;
 	}
 	
+	/**
+	 * Method used to place a green card on the screen
+	 * @param cardTaken		The picture to add to the screen
+	 */
 	public void addGreenCard(BufferedImage cardTaken){
 		CardLabel firstFree = searchFirstFree(greenCard);
 		if(firstFree != null)
 			firstFree.placeCard(cardTaken);
 	}
-	
+
+	/**
+	 * Method used to place a yellow card on the screen
+	 * @param cardTaken		The picture to add to the screen
+	 */
 	public void addYellowCard(BufferedImage cardTaken){
 		CardLabel firstFree = searchFirstFree(yellowCard);
 		if(firstFree != null)
 			firstFree.placeCard(cardTaken);
 	}
-	
+
+	/**
+	 * Method used to place a blue card on the screen
+	 * @param cardTaken		The picture to add to the screen
+	 */
 	public void addBlueCard(BufferedImage cardTaken){
 		CardLabel firstFree = newFirstCard(blueCard, (int)(this.getHeight()*0.12 + cardDimension.getHeight()));
 		if(firstFree != null){
@@ -154,7 +207,11 @@ public class CardContainer extends FunctionalLabel{
 			firstFree.setBorder(new LineBorder(Color.BLACK,(int) (firstFree.getWidth()*0.02)));
 		}
 	}	
-	
+
+	/**
+	 * Method used to place a violet card on the screen
+	 * @param cardTaken		The picture to add to the screen
+	 */
 	public void addVioletCard(BufferedImage cardTaken){
 		CardLabel firstFree = newFirstCard(violetCard, 0);
 		if(firstFree != null){
@@ -163,6 +220,11 @@ public class CardContainer extends FunctionalLabel{
 		}
 	}
 	
+	/**
+	 * Method used to search the first free position of the deck of card labels
+	 * @param deck
+	 * @return
+	 */
 	private CardLabel searchFirstFree(List<CardLabel> deck){
 		for (CardLabel card : deck) {
 			if(!card.hasACard())
@@ -171,6 +233,10 @@ public class CardContainer extends FunctionalLabel{
 		return null;
 	}
 	
+	/**
+	 * Method used to swap the picture of the deck on the screen
+	 * @param deck	The deck to swap	
+	 */
 	private void swap(List<CardLabel> deck){
 		
 		BufferedImage imageToSwap = deck.get(0).getCardImage();

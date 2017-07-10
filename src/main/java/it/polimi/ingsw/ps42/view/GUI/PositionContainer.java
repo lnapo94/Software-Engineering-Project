@@ -9,6 +9,12 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
+/**
+ * Class used to create a dynamic position container to add more familiar. It is used, for example, in the council position to set a new layout
+ * when the familiars are too much
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class PositionContainer extends FunctionalLabel{
 
 	/**
@@ -22,6 +28,12 @@ public class PositionContainer extends FunctionalLabel{
 	private Dimension dimensionToUse;
 	private boolean activated;
 	
+	/**
+	 * Constructor for the position container
+	 * @param dimension
+	 * @param location
+	 * @param labelPreferredSize
+	 */
 	public PositionContainer(Dimension dimension, Point location, Dimension labelPreferredSize) {
 		super();
 		this.activated = true;
@@ -36,6 +48,10 @@ public class PositionContainer extends FunctionalLabel{
 		this.dimensionToUse = labelPreferredSize;
 	}
 	
+	/**
+	 * Method used to place a familiar here
+	 * @param familiarImage		The picture of the familiar to add to this container
+	 */
 	public void placeFamiliar(BufferedImage familiarImage){
 		if(familiarPlaced.size() == 8)
 			resizeLayout();
@@ -43,6 +59,10 @@ public class PositionContainer extends FunctionalLabel{
 			
 	}
 	
+	/**
+	 * Method used to build and add a familiar 
+	 * @param familiarImage	The image for the familiar label to add to the container
+	 */
 	private void buildFamiliarLabel(BufferedImage familiarImage){
 		JLabel familiarLabel = new JLabel();
 		familiarLabel.setSize(dimensionToUse);
@@ -52,6 +72,9 @@ public class PositionContainer extends FunctionalLabel{
 		this.add(familiarLabel);
 	}
 	
+	/**
+	 * Method used to adjust the dimension of the component
+	 */
 	private void resizeLayout(){
 		for (JLabel familiar : familiarPlaced) {
 			this.remove(familiar);
@@ -66,6 +89,9 @@ public class PositionContainer extends FunctionalLabel{
 		}
 	}
 	
+	/**
+	 * Method used to reset all the familiars in this container
+	 */
 	public void resetPosition(){
 		for (JLabel label : familiarPlaced) {
 			label.setIcon(null);
@@ -78,6 +104,9 @@ public class PositionContainer extends FunctionalLabel{
 		updateUI();
 	}
 	
+	/**
+	 * Method used to remove the last familiar added here
+	 */
 	public void resetLastFamiliar(){
 		JLabel toRemove = familiarPlaced.remove(familiarPlaced.size()-1);
 		toRemove.setIcon(null);
@@ -86,19 +115,34 @@ public class PositionContainer extends FunctionalLabel{
 		updateUI();
 	}
 	
+	/**
+	 * Method used to know the last used index in this container of positions
+	 * @return The last used index
+	 */
 	public int getLastIndex(){
 		//if (familiarPlaced.size() != 0 )
 		return (familiarPlaced.size()-1);
 	}
 	
+	/**
+	 * Method used to know if the position container is empty
+	 * @return	True if there isn't any familiar placed here, otherwise False
+	 */
 	public boolean isEmpty(){
 		return familiarPlaced.isEmpty(); 
 	}
 	
+	/**
+	 * Method used to disable this component, in this way the player cannot position here his familiars
+	 */
 	public void disableContainer(){
 		this.activated = false;
 	}
 	
+	/**
+	 * Method used to know if this component is activated
+	 * @return	True if the player can position his familiars in this component, otherwise False
+	 */
 	public boolean isActivated(){
 		return activated;
 	}

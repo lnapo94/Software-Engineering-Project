@@ -15,6 +15,11 @@ import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.parser.ImageLoader;
 
+/**
+ * Class used to show the player's resources on the screen
+ * @author Luca
+ *
+ */
 public class ResourceWindow extends FunctionalLabel{
 
 	/**
@@ -25,6 +30,13 @@ public class ResourceWindow extends FunctionalLabel{
 	private Player player;
 	private HashMap<Resource, JLabel> resourceLabel;
 	
+	/**
+	 * The constructor of this resources container
+	 * @param dimension		The dimension on the screen
+	 * @param location		The chosen location on the screen to show the resources
+	 * @param loader		The ImageLoader to load the correct picture
+	 * @throws IOException	Thrown if there is a problem with a picture, probably the loader HashMap doesn't contains the correct picture or the picture file isn't in the correct location
+	 */
 	public ResourceWindow(Dimension dimension, Point location, ImageLoader loader) throws IOException {
 	
 		super();
@@ -56,12 +68,18 @@ public class ResourceWindow extends FunctionalLabel{
 				
 	}
 
+	/**
+	 * Method used to set the player to know every resource update
+	 * @param player		The player which resources will be shown here
+	 */
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
 	
+	/**
+	 * Method used to update, when necessary, the player resources
+	 */
 	public void update(){
-		//update the player Resources
 		Integer quantity;
 		for (Resource resource : Resource.values()) {
 			quantity = player.getResource(resource);

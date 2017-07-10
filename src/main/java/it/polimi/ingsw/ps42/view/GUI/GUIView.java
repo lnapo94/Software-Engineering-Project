@@ -517,7 +517,12 @@ public class GUIView extends View implements TableInterface{
 		return ban;
 	}
 	
-	//Method used to resize the image for a JLabel ImageIcon
+	/**
+	 * Method used to resize the image for a JLabel ImageIcon
+	 * @param imageToResize		The picture to resize with a new Dimension
+	 * @param newDimension		The dimension of the new picture
+	 * @return					An ImageIcon with the new dimensioned picture
+	 */
 	private ImageIcon resizeImage(BufferedImage imageToResize, Dimension newDimension){
 		Image imageResized = null;
 		if(imageToResize != null){
@@ -531,10 +536,12 @@ public class GUIView extends View implements TableInterface{
 		return new ImageIcon(imageResized);
 	}
 	
+	/**
+	 * For each position check if contains the point (x,y), if so change the imageIcon
+	 */
 	@Override
 	public boolean handleEvent(int x, int y, DraggableComponent familiarMoving) {
 	
-		//For each position check if contains the point (x,y), if so change the imageIcon
 		int actionValue = 0;
 		this.movingFamiliar = familiarMoving;
 		FamiliarColor color = familiarMoving.getFamiliarColor();
@@ -624,9 +631,15 @@ public class GUIView extends View implements TableInterface{
 		return false;
 	}
 	
+	/**
+	 * If the position is empty, discover if has been pointed
+	 * @param label		The interested point
+	 * @param x			The horizontal value
+	 * @param y			The vertical value
+	 * @return			True if (x,y) point is in the label, otherwise False
+	 */
 	private boolean containsPoint(JLabel label, int x, int y){
 		if(label.getIcon() == null || player.canPositioningEverywhere() || movingFamiliar.getFamiliarColor() == null){
-			//If the position is empty, discover if has been pointed
 			Point p = label.getLocationOnScreen();
 			if(p.getX() < x && x < p.getX()+label.getWidth()
 					&& p.getY() < y && y < p.getY() + label.getHeight())
@@ -635,6 +648,9 @@ public class GUIView extends View implements TableInterface{
 		return false;
 	}
 	
+	/**
+	 * Method used to add a player in this GUIView
+	 */
 	@Override
 	public void addPlayer(String playerID) {
 		super.addPlayer(playerID);
@@ -642,6 +658,9 @@ public class GUIView extends View implements TableInterface{
 		resourceWindow.update();
 	}
 	
+	/**
+	 * Method used to set to the correct player his resources
+	 */
 	@Override
 	public void setResources(HashMap<Resource, Integer> resources, String playerID) {
 		super.setResources(resources, playerID);
@@ -649,6 +668,9 @@ public class GUIView extends View implements TableInterface{
 			resourceWindow.update();
 	}
 	
+	/**
+	 * Method used to set the black die picture value when a message come from the controller
+	 */
 	@Override
 	public void setBlackDie(int value) {
 		super.setBlackDie(value);
@@ -661,6 +683,9 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 	
+	/**
+	 * Method used to set the orange die picture value when a message come from the controller
+	 */
 	@Override
 	public void setOrangeDie(int value) {
 		super.setOrangeDie(value);
@@ -674,6 +699,9 @@ public class GUIView extends View implements TableInterface{
 
 	}
 	
+	/**
+	 * Method used to set the white die picture value when a message come from the controller
+	 */
 	@Override
 	public void setWhiteDie(int value) {
 		super.setWhiteDie(value);
@@ -687,16 +715,30 @@ public class GUIView extends View implements TableInterface{
 
 	}
 	
+	/**
+	 * Ask the Player if he wants to increment the actual move and set the increment
+	 * @param type				The type of the player's action
+	 * @param familiarColor		The color of the moved familiar
+	 * @param position			The position where the familiar is
+	 * @param actionValue		The value of the player's action
+	 * @param familiarMoving	The component which is moved
+	 */
 	private void createNewMove( ActionType type, FamiliarColor familiarColor, int position, int actionValue, DraggableComponent familiarMoving){
-		//Ask the Player if he wants to increment the actual move and set the increment
 		this.movingFamiliar = familiarMoving;
 		new IncrementWindow(this, type, familiarColor, position, actionValue, player.getResource(Resource.SLAVE));
 		
 	}
 	
+	/**
+	 * Restore the position of the moved Familiar
+	 * @param type		The type of the action
+	 * @param position	The position to restore
+	 */
 	public void cancelMove(ActionType type, int position){
+
 		//Restore the position of the moved Familiar
 		logger.debug("Starting to delete the previous move");
+
 		if(movingFamiliar != null){
 			movingFamiliar.resetFamiliar();
 			if(movingFamiliar.getFamiliarColor() != null){
@@ -739,6 +781,9 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 	
+	/**
+	 * Method used to enable the player move when a message come from the Controller
+	 */
 	private void enableMove(){
 		enableFamiliar(blackFamiliar, player.getFamiliar(FamiliarColor.BLACK), true);
 		enableFamiliar(whiteFamiliar, player.getFamiliar(FamiliarColor.WHITE), true);
@@ -747,6 +792,9 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 	
+	/**
+	 * Method used to disable the player move when a message come from the Controller
+	 */
 	public void disableFamiliarMove(){
 
 		enableFamiliar(blackFamiliar, player.getFamiliar(FamiliarColor.BLACK), false);
@@ -755,11 +803,20 @@ public class GUIView extends View implements TableInterface{
 		enableFamiliar(neutralFamiliar, player.getFamiliar(FamiliarColor.NEUTRAL), false);
 	}
 	
+	/**
+	 * Private method used to set the status to a component
+	 * @param familiarIcon	The interested component
+	 * @param familiar		The familiar to check
+	 * @param status		the boolean that represents the status
+	 */
 	private void enableFamiliar(DraggableComponent familiarIcon, Familiar familiar, boolean status){
 		if(!familiar.isPositioned())
 			familiarIcon.setCanMove(status);
 	}
 	
+	/**
+	 * Method used to restore the status of all the familiars
+	 */
 	private void restoreFamiliar(){
 		blackFamiliar.resetFamiliar();
 		whiteFamiliar.resetFamiliar();
@@ -767,12 +824,19 @@ public class GUIView extends View implements TableInterface{
 		neutralFamiliar.resetFamiliar();
 	}
 	
+	/**
+	 * Method to reset the icon of all the familiars labels
+	 * @param positions		The list of JLabel to restore the icon
+	 */
 	private void resetFamiliarPositions(List<JLabel> positions){
 		for (JLabel position : positions) {
 			position.setIcon(null);
 		}
 	}
 	
+	/**
+	 * Method used to create the correct table when the match starts
+	 */
 	@Override
 	public void createTable(List<String> playersID) {
 		int playersNumber = playersID.size();
@@ -792,6 +856,9 @@ public class GUIView extends View implements TableInterface{
 		mainLayeredPane.moveToFront(neutralFamiliar);
 	}
 	
+	/**
+	 * Method used to cover the market positions when the players aren't enough
+	 */
 	private void coverMarket(){
 		
 		market.remove(2).setEnabled(false);
@@ -821,6 +888,9 @@ public class GUIView extends View implements TableInterface{
 		mainLayeredPane.add(market2, 1);
 	}
 	
+	/**
+	 * Method used to cover the market positions when the players aren't enough
+	 */
 	private void coverYieldAndProduct() {
 		
 		secondYield.disableContainer();
@@ -859,6 +929,9 @@ public class GUIView extends View implements TableInterface{
 		mainLayeredPane.add(yield, 1);
 	}
 	
+	/**
+	 * Method used to reset the table when a round is finished
+	 */
 	@Override
 	public void resetTable() {
 		super.resetTable();
@@ -878,6 +951,9 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 	
+	/**
+	 * Method used to set a familiar in the blue tower
+	 */
 	@Override
 	public void setFamiliarInBlueTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
 		super.setFamiliarInBlueTower(playerID, color, position);
@@ -886,6 +962,9 @@ public class GUIView extends View implements TableInterface{
 		}		
 	}
 	
+	/**
+	 * Method used to set a familiar in the green tower
+	 */
 	@Override
 	public void setFamiliarInGreenTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
 		super.setFamiliarInGreenTower(playerID, color, position);
@@ -894,6 +973,9 @@ public class GUIView extends View implements TableInterface{
 		}		
 	}
 	
+	/**
+	 * Method used to set a familiar in the yellow tower
+	 */
 	@Override
 	public void setFamiliarInYellowTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
 		super.setFamiliarInYellowTower(playerID, color, position);
@@ -902,6 +984,9 @@ public class GUIView extends View implements TableInterface{
 		}		
 	}
 	
+	/**
+	 * Method used to set a familiar in the violet tower
+	 */
 	@Override
 	public void setFamiliarInVioletTower(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
 		super.setFamiliarInVioletTower(playerID, color, position);
@@ -910,6 +995,9 @@ public class GUIView extends View implements TableInterface{
 		}		
 	}
 	
+	/**
+	 * Method used to set a familiar in the market
+	 */
 	@Override
 	public void setFamiliarInMarket(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
 		super.setFamiliarInMarket(playerID, color, position);
@@ -918,6 +1006,9 @@ public class GUIView extends View implements TableInterface{
 		}		
 	}
 	
+	/**
+	 * Method used to set a familiar in the yield positions
+	 */
 	@Override
 	public void setFamiliarInYield(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
 		super.setFamiliarInYield(playerID, color, position);
@@ -936,6 +1027,9 @@ public class GUIView extends View implements TableInterface{
 		}		
 	}
 	
+	/**
+	 * Method used to set a familiar in the product positions
+	 */
 	@Override
 	public void setFamiliarInProduce(String playerID, FamiliarColor color, int position) throws ElementNotFoundException {
 		super.setFamiliarInProduce(playerID, color, position);
@@ -954,6 +1048,9 @@ public class GUIView extends View implements TableInterface{
 		}		
 	}
 	
+	/**
+	 * Method used to set a familiar in the council positions
+	 */
 	@Override
 	public void setFamiliarInCouncil(String playerID, FamiliarColor color) throws ElementNotFoundException {
 		super.setFamiliarInCouncil(playerID, color);
@@ -967,6 +1064,12 @@ public class GUIView extends View implements TableInterface{
 		}		
 	}
 	
+	/**
+	 * Method used to set the picture of a position when it is occupied
+	 * @param playerID		The player who occupied that position
+	 * @param color			The color of the familiar the player has used
+	 * @param position		The JLabel of the occupied position
+	 */
 	private void setOccupied(String playerID, FamiliarColor color, JLabel position){
 		
 		try {
@@ -982,27 +1085,45 @@ public class GUIView extends View implements TableInterface{
 			}
 	}
 	
+	/**
+	 * Method used to set the green cards in the tower when a message come from the Controller
+	 */
 	@Override
 	public void setGreenCards(StaticList<Card> cards) {
 		super.setGreenCards(cards);
 		placeCards(greenTower, cards);
 	}
 	
+	/**
+	 * Method used to set the yellow cards in the tower when a message come from the Controller
+	 */
 	@Override
 	public void setYellowCards(StaticList<Card> cards) {
 		super.setYellowCards(cards);
 		placeCards(yellowTower, cards);
 	}
+	
+	/**
+	 * Method used to set the blue cards in the tower when a message come from the Controller
+	 */
 	@Override
 	public void setBlueCards(StaticList<Card> cards) {
 		super.setBlueCards(cards);
 		placeCards(blueTower, cards);
 	}
+	
+	/**
+	 * Method used to set the violet cards in the tower when a message come from the Controller
+	 */
 	@Override
 	public void setVioletCards(StaticList<Card> cards) {
 		super.setVioletCards(cards);
 		placeCards(violetTower, cards);
 	}
+	
+	/**
+	 * Method used to set the cards in a generic tower when a message come from the Controller
+	 */
 	private void placeCards(List<CardLabel> tower, StaticList<Card> cards) {
 		for(int i=0; i<4; i++){
 			BufferedImage cardImage;
@@ -1016,6 +1137,9 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 	
+	/**
+	 * Method used to set a green card to the specify player when a message come from the Controller
+	 */
 	@Override
 	public void setGreenCard(String playerID, int position) throws ElementNotFoundException {
 
@@ -1032,6 +1156,9 @@ public class GUIView extends View implements TableInterface{
 		greenTower.get(position).removeCard();
 	}
 	
+	/**
+	 * Method used to set a yellow card to the specify player when a message come from the Controller
+	 */
 	@Override
 	public void setYellowCard(String playerID, int position) throws ElementNotFoundException {
 
@@ -1048,6 +1175,9 @@ public class GUIView extends View implements TableInterface{
 		yellowTower.get(position).removeCard();
 	}
 	
+	/**
+	 * Method used to set a blue card to the specify player when a message come from the Controller
+	 */
 	@Override
 	public void setBlueCard(String playerID, int position) throws ElementNotFoundException {
 		
@@ -1065,6 +1195,9 @@ public class GUIView extends View implements TableInterface{
 		blueTower.get(position).removeCard();
 	}
 	
+	/**
+	 * Method used to set a violet card to the specify player when a message come from the Controller
+	 */
 	@Override
 	public void setVioletCard(String playerID, int position) throws ElementNotFoundException {
 
@@ -1081,13 +1214,19 @@ public class GUIView extends View implements TableInterface{
 		violetTower.get(position).removeCard();
 	}
 
+	/**
+	 * Ask the Player to choose a BonusBar from the given List
+	 */
 	@Override
 	protected void chooseBonusBar(List<BonusBar> bonusBarList) {
-		//Ask the Player to choose a BonusBar from the given List
+		
 		BonusBarRequestDialog dialog = new BonusBarRequestDialog(this, bonusBarList);
 		dialog.run();
 	}
 
+	/**
+	 * Method used to set the chosen bonus bar to the player
+	 */
 	@Override
 	public void setBonusBarChoice(List<BonusBar> bonusBars, int choice) {
 		try {
@@ -1099,9 +1238,12 @@ public class GUIView extends View implements TableInterface{
 		super.setBonusBarChoice(bonusBars, choice);
 	}
 	
+	/**
+	 * Ask the Player to choose a LeaderCard from the given List
+	 */
 	@Override
 	protected void chooseLeaderCard(List<LeaderCard> leaderCardList) {
-		// Ask the Player to choose a LeaderCard from the given List
+		
 		try {
 			LeaderCardChooseDialog dialog = new LeaderCardChooseDialog(this, leaderCardList);
 			dialog.run();
@@ -1111,16 +1253,23 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 
+	/**
+	 * Method used to chose the wanted council privilege from the message
+	 */
 	@Override
 	protected void chooseCouncilConversion(CouncilRequest message) {
 		CouncilRequestDialog dialog = new CouncilRequestDialog(this, message);
 		dialog.run();
 	}
 
+	/**
+	 * Enable the Player to perform a new Move, if it is a retrasmission cancel the precedent
+	 */
 	@Override
 	protected void choosePlayerMove(ActionPrototype prototype, boolean isRetrasmission) {
 		//Enable the Player to perform a new Move, if is a retrasmission then cancel the precedent
 		logger.debug("Starting procedure for a new move, old move = "+ nextMove);
+
 		enableSkipButton();
 		
 		if(isRetrasmission && nextMove != null){
@@ -1153,6 +1302,9 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 	
+	/**
+	 * Method used to build the "skip move" button on the screen
+	 */
 	private void buildSkipMoveButton(){
 		skipMove = new JButton("Skip Move");
 		skipMove.setLocation((int)(tableImageDimension.getWidth() * 0.01), (int)(tableImageDimension.getHeight() * 0.91));
@@ -1172,6 +1324,9 @@ public class GUIView extends View implements TableInterface{
 		disableSkipButton();
 	}
 	
+	/**
+	 * Method used to build the "show leader card" button on the screen
+	 */
 	private void buildLeaderCardsButton(){
 		leaderCardButton = new JButton("Leader Cards");
 		leaderCardButton.setLocation((int)(tableImageDimension.getWidth() * 0.01), (int)(tableImageDimension.getHeight() * 0.84));
@@ -1183,6 +1338,9 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 	
+	/**
+	 * Method used to build the "timer" label on the screen
+	 */
 	private void buildTimerLable(){
 
 		Dimension timerDimension = new Dimension((int)(tableImageDimension.getWidth() * 0.15), (int)(tableImageDimension.getHeight() * 0.07));
@@ -1192,6 +1350,11 @@ public class GUIView extends View implements TableInterface{
 		mainLayeredPane.add( timerLable, 0);
 	}
 	
+	/**
+	 * Private class used to implement the actionListener when a keyboard key is pressed
+	 * @author Luca Napoletano, Claudio Montanari
+	 *
+	 */
 	private class MyActionLister implements ActionListener {
 
 		private GUIView view;
@@ -1214,17 +1377,26 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 	
+	/**
+	 * Method used to enable the skip button 
+	 */
 	private void enableSkipButton(){
 		skipMove.setEnabled(true);
 		skipMove.setVisible(true);
 		
 	}
 	
+	/**
+	 * Method used to disable the skip button 
+	 */
 	private void disableSkipButton(){
 		skipMove.setEnabled(false);
 		skipMove.setVisible(false);	
 	}
 	
+	/**
+	 * Method used to build the bonus familiar when the player has a bonus action
+	 */
 	private void buildBonusFamiliar(){
 		
 		int deltaX = (int)(tableImageDimension.getWidth()*0.56 + blackFamiliar.getWidth() * 1.1 * 4);
@@ -1242,6 +1414,9 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 	
+	/**
+	 * Method used to set the new move for the player
+	 */
 	@Override
 	public void setNewMove(PlayerMove move) {
 		super.setNewMove(move);
@@ -1249,6 +1424,9 @@ public class GUIView extends View implements TableInterface{
 		this.nextMove = move;
 	}
 	
+	/**
+	 * Method used to load from file the picture of the 3 bans for this match
+	 */
 	@Override
 	public void setGameBans(BanMessage message) {
 		try{
@@ -1263,6 +1441,9 @@ public class GUIView extends View implements TableInterface{
 		super.setGameBans(message);
 	}
 	
+	/**
+	 * Method used to set a ban to the specify player
+	 */
 	@Override
 	public void setBanToPlayer(String playerID, int banPeriod) throws ElementNotFoundException {
 		super.setBanToPlayer(playerID, banPeriod);
@@ -1273,9 +1454,11 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 	
+	/**
+	 * Ask to the Player if he wants to pay for the current Period Ban
+	 */
 	@Override
 	protected void chooseIfPayBan(int banPeriod) {
-		// Ask to the Player if he wants to pay for the current Period Ban
 		if(bans.get(banPeriod) != null){
 			Dimension banWindowDimension = new Dimension((int)(mainFrame.getWidth()*0.7),(int)(mainFrame.getHeight()*0.48) );
 			Point banWindowLocation = new Point((int)(tableImageDimension.getWidth()*0.4),(int)(tableImageDimension.getHeight()*0.4) );
@@ -1290,9 +1473,11 @@ public class GUIView extends View implements TableInterface{
 		dialog.run();
 	}
 
+	/**
+	 * Ask to the Player what color to choose for the leaderCard Request
+	 */
 	@Override
 	protected void chooseFamiliarColor(LeaderFamiliarRequest message) {
-		// Ask to the Player what color to choose for the leaderCard Request
 		LeaderFamiliarRequestDialog dialog = new LeaderFamiliarRequestDialog(this, message);
 		dialog.run();
 	}
@@ -1309,16 +1494,20 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 
+	/**
+	 * Show a window asking the Player username
+	 */
 	@Override
 	public void askNewPlayerID() {
-		//Show a window asking the Player username
 		LoginWindow login = new LoginWindow(this, "Used ID yet chosen by another player");
 		login.run();
 	}
 
+	/**
+	 * Restore the Player cards and the player ban when he tries to reconnect
+	 */
 	@Override
 	protected void reconnect(ReconnectMessage message) {
-		//Restore the Player cards
 		try{	
 			for (Card card : message.getBlue()) {
 				cardContainer.addBlueCard(imageLoader.loadCardImage(card.getName()));
@@ -1352,6 +1541,9 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 	
+	/**
+	 * Method used to ask the next move of the player
+	 */
 	@Override
 	public void askPlayerMove(PlayerToken message) {
 		super.askPlayerMove(message);
@@ -1362,9 +1554,11 @@ public class GUIView extends View implements TableInterface{
 		}
 	}
 	
+	/**
+	 * Ask to the Player if he wants to perform a new Action and start the Timer
+	 */
 	@Override
 	protected void askIfWantToPlay(PlayerToken moveToken) {
-		//Ask to the Player if he wants to perform a new Action and start the Timer
 		this.choosePlayerMove(moveToken.getActionPrototype(), moveToken.isRetrasmission());
 		if(moveToken.isRetrasmission())
 			timerLable.restartTimer();
@@ -1373,6 +1567,9 @@ public class GUIView extends View implements TableInterface{
 
 	}
 
+	/**
+	 * Method used to not allow the player to move
+	 */
 	public void disableMove( ){
 		
 		disableFamiliarMove();
@@ -1399,10 +1596,19 @@ public class GUIView extends View implements TableInterface{
 		
 	}
 	
+	/**
+	 * Getter for the Main Window of the application
+	 * 
+	 * @return		The main JFrame of the app
+	 */
 	public JFrame getMainFrame() {
 		return mainFrame;
 	}
 	
+	/**
+	 * Getter for the current player of this GUIView
+	 * @return	The player of this GUIView
+	 */
 	public Player getPlayer() {
 		return this.player;
 	}
