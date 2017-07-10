@@ -23,6 +23,14 @@ import it.polimi.ingsw.ps42.model.position.TowerPosition;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * Class used to verify if the IncreaseAction effect works correctly. In this test is verified
+ * if the enableEffect() method of this effect copy this one in a list in player. After that, the player
+ * tries to take a card with a TakeCardAction, but to do that he needs that the increase action
+ * effect is activated.
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class IncreaseActionTest {
 	
 	private Player p1;

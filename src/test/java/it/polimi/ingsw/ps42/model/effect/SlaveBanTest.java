@@ -20,6 +20,12 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This Testing Unit aims to test the SlaveBan effect, for this reason it tries
+ * to enable that effect and verify if it is correctly activated
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class SlaveBanTest {
 
 	private Player player;
@@ -61,7 +67,10 @@ public class SlaveBanTest {
 		ban = new SlaveBan(2);
 	}
 	
-	
+	/**
+	 * Apply a card effect with the Slave Ban effect to the current player
+	 * and verify if the divisory is changed correctly
+	 */
 	@Test
 	public void test() {
 		

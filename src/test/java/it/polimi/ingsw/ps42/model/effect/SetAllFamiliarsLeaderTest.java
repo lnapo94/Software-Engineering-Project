@@ -11,6 +11,14 @@ import org.junit.Test;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * This JUnit aims to verify if the SetAllFamiliarsLeader effect works correctly.
+ * It creates an effect, and apply it to the player. After the application of this effect, all
+ * the colored familiars value will be setted to a specified value. This one is specified in 
+ * the effect
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class SetAllFamiliarsLeaderTest {
 	
 	private Player player;

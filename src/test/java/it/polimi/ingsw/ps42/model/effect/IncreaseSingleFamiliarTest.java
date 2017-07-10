@@ -12,6 +12,11 @@ import org.junit.Test;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * This class is used to test the IncreaseSingleFamiliar effect
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class IncreaseSingleFamiliarTest {
 
 	private Player player;
@@ -29,9 +34,14 @@ public class IncreaseSingleFamiliarTest {
 		player.setFamiliarValue(FamiliarColor.NEUTRAL, 1);
 	}
 
+	/**
+	 * This test tries to increase the neutral familiars with the application of the 
+	 * increase single familiar effect. After the application, the test verify the correctness
+	 * of the results
+	 */
 	@Test
 	public void test() {
-		Logger.getLogger(IncreaseFamiliarsPointTest.class).info(effectToEnable.print());
+		Logger.getLogger(IncreaseSingleFamiliarTest.class).info(effectToEnable.print());
 		
 		assertEquals(0, player.getFamiliarValue(FamiliarColor.ORANGE) + player.getFamiliar(FamiliarColor.ORANGE).getIncrement());
 		assertEquals(0, player.getFamiliarValue(FamiliarColor.BLACK) + player.getFamiliar(FamiliarColor.BLACK).getIncrement());

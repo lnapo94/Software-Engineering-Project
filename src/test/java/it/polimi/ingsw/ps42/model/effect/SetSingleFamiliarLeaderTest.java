@@ -11,6 +11,11 @@ import org.junit.Test;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * This test aims to verify if the SetSingleFamiliarLeader effect works well
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class SetSingleFamiliarLeaderTest {
 	
 	private Player player;
@@ -32,9 +37,13 @@ public class SetSingleFamiliarLeaderTest {
 		player.setFamiliarValue(FamiliarColor.NEUTRAL, 3);
 	}
 
+	/**
+	 * This test create a SetSingleFamiliarLeader effect and enable it. When it will be activated, 
+	 * the value of the white familiar will change to a new value, specify in the effect
+	 */
 	@Test
 	public void test() {
-		Logger.getLogger(SetAllFamiliarsLeaderTest.class).info(effectToEnable.print());
+		Logger.getLogger(SetSingleFamiliarLeaderTest.class).info(effectToEnable.print());
 		//Control if all familiars value is 3
 		assertEquals(3, player.getFamiliarValue(FamiliarColor.ORANGE));
 		assertEquals(3, player.getFamiliarValue(FamiliarColor.BLACK));

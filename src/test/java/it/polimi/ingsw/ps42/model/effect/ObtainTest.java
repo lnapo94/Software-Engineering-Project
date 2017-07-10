@@ -20,6 +20,11 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This testing unit is used to test the Obtain effect.
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ObtainTest {
 	
 	private Player p1;
@@ -54,6 +59,11 @@ public class ObtainTest {
 		p1.synchResource();
 	}
 	
+	/**
+	 * This test creates a card and give to it the Obtain effect. Then the player pay
+	 * that card and enable its immediate effect, and finally the player can choose from
+	 * the effect requests and take the gains.
+	 */
 	@Test
 	public void test() {
 		p1.addCard(card);

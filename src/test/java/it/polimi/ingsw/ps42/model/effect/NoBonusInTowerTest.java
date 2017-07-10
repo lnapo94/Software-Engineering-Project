@@ -10,6 +10,14 @@ import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * This test is used to verifyif the NoBonusInTower effect is activated correctly.
+ * To do that, the test creates one effect, then it applies the effect to the player and
+ * finally it verifies if the player's state variable is setted correctly.
+ * Moreover, this test tries to clone this effect to verify the result
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class NoBonusInTowerTest {
 	
 	private Player player;

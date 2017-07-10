@@ -17,6 +17,12 @@ import it.polimi.ingsw.ps42.model.exception.ElementNotFoundException;
 import it.polimi.ingsw.ps42.model.leaderCard.LeaderCard;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 
+/**
+ * This test aims to try all the functionalities of the loader classes in the parser package.
+ * In this way it is known if all the files and all the methods to load the files work well
+ * @author luca
+ *
+ */
 public class ParserTest {
 
 	private BanLoader banLoader;
@@ -31,6 +37,9 @@ public class ParserTest {
 	
 	private Logger logger = Logger.getLogger(ParserTest.class);
 	
+	/**
+	 * Load all the created files
+	 */
 	@Before
 	public void setup(){
 		
@@ -63,6 +72,9 @@ public class ParserTest {
 		 
 	}
 	
+	/**
+	 * This method tests all the useful methods of the classes in parser package
+	 */
 	@Test
 	public void test() {
 		//Check the objects loaded from file
@@ -95,12 +107,19 @@ public class ParserTest {
 		
 	}
 	
+	/**
+	 * Control if the timers are correct
+	 */
 	private void checkTimerLoader() {
 
 		assertTrue(timerLoader.getPlayerMoveTimer() >= 0);
 		assertTrue(timerLoader.getServerTimer() >= 0);
 	}
 
+	/**
+	 * Control if all positions in file are correct, and if the positions loaded exist
+	 * @throws IOException
+	 */
 	private void checkPositionLoader() throws IOException {
 
 		assertTrue(positionLoader.getNextCouncilPosition() != null );
@@ -113,12 +132,18 @@ public class ParserTest {
 		
 	}
 
+	/**
+	 * Check if the leader card files contains the cards
+	 */
 	private void checkLeaderCardLoader() {
 
 		List<LeaderCard> deck = leaderCardLoader.getLeaderCards();
 		assertTrue(deck.size() >= 0);
 	}
 
+	/**
+	 * Check if the loader of the pictures in /Resource/ folder is correct
+	 */
 	private void checkImageLoader() {
 		 
 		try{
@@ -142,11 +167,17 @@ public class ParserTest {
 		}
 	}
 
+	/**
+	 * Check if there are an HashMap to convert the faith point in victory point
+	 */
 	private void checkFaithPathLoader() {
 
 		assertTrue(faithPathLoader.conversion(2).getQuantity() >= 0);
 	}
 
+	/**
+	 * Check if the conversion loader file is loaded
+	 */
 	private void checkConversionLoader() {
 
 			assertTrue(conversionLoader.getBlueConversion(2).getQuantity() >= 0);
@@ -154,17 +185,27 @@ public class ParserTest {
 			assertTrue(conversionLoader.getOtherResourcesConversion(2).getQuantity() >= 0);
 	}
 
+	/**
+	 * Control if the card loader loads effectively a deck of cards
+	 */
 	private void checkCardLoader() {
 
 		List<Card> deck = cardLoader.getCards();
 		assertEquals(8, deck.size());
 	}
 
+	/**
+	 * Check if the bonus bar loader works correctly
+	 */
 	private void checkBonusBarLoader() {
 		List<BonusBar> bonusBars = bonusBarLoader.getBonusBars();
 		assertTrue(bonusBars.size() >= 4 );
 	}
 
+	/**
+	 * Check if the ban loader works correctly, loading 3 casually ban of the bans file 
+	 * @throws ElementNotFoundException		Thrown if there is a problem with the file
+	 */
 	private void checkBanLoader() throws ElementNotFoundException{
 		
 		assertTrue(banLoader.getBan(3) != null);

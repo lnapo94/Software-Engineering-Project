@@ -20,6 +20,15 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This test verifies if the DoAction effect works correctly. In fact, this test creates a player
+ * with some assigned resources, and also it creates a card with a cost and a multiple immediate effect.
+ * When the player pays the cards, he enables also the immediate effect of the card. In this way, the player
+ * has a bonus action to do. For this reason, the test takes the ActionPrototype from the player and
+ * creates a new Action for the player. In this way is verified if the DoAction effect works.
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class DoActionTest {
 
 	private Player player;

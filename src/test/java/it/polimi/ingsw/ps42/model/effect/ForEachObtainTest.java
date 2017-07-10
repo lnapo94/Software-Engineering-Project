@@ -19,6 +19,15 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This JUnit test case verifies if the ForEachObtain effect works. This test creates a player
+ * with some assigned resources, and also create a cards with 3 different effects: one for the permanent,
+ * one for the immediate and one for the final effects in card. All of this effects are ForEachObtain, and during
+ * the test, these effects will be activated, and after each activation will be verified if
+ * the effect works correctly, giving the exact resources
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ForEachObtainTest {
 
 	private Player player;

@@ -57,6 +57,7 @@ public class LeaderCardTest {
 		createPlayer();
 	}
 	
+
 	@Before
 	public void setUpOnceATimeEffectTest() {
 		//This time give to the card a resource requirement
@@ -76,6 +77,9 @@ public class LeaderCardTest {
 		onceATimeEffectLeaderCard = new LeaderCard("Second Leader Cards", "", requirements, effect, null, null);
 	}
 	
+	/**
+	 * Method used to create the player with the correct resources
+	 */
 	private void createPlayer() {
 		Card card = new Card("", "", CardColor.GREEN, 1, 1, null, null, null, null, null);
 		
@@ -85,7 +89,10 @@ public class LeaderCardTest {
 			enableEffectPlayer.addCard(card);
 	}
 
-	
+	/**
+	 * This test tries if the leader card requirement work well:
+	 * The leader card has a requirement to satisfy, and the player has this requirement to take this card
+	 */
 	@Test
 	public void enableAPermanentEffectTest() {
 		logger.info("Enable permanent effect for the card: " + requirementsCard.toString());
@@ -109,6 +116,10 @@ public class LeaderCardTest {
 		
 	}
 	
+	/**
+	 * This test give to a card a resource requirement this time, and tries if the 
+	 * once a time effect works
+	 */
 	@Test
 	public void enableOnceATimeEffectTest() {
 		logger.info("Enable once a round effect for the card: " + onceATimeEffectLeaderCard.toString());
@@ -150,6 +161,9 @@ public class LeaderCardTest {
 
 	}
 	
+	/**
+	 * This test tries to clone the card and verify if the cloned card is correct
+	 */
 	@Test
 	public void cloneCard() {
 		logger.info("Clone the \"" + onceATimeEffectLeaderCard.toString() + "\" card");

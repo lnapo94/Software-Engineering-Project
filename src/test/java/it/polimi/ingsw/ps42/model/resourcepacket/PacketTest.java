@@ -12,6 +12,12 @@ import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 
+/**
+ * Class used to test the ResourcePacket package to know if the Unit class and the Packet class
+ * works great
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class PacketTest {
 	
 	@BeforeClass
@@ -19,6 +25,13 @@ public class PacketTest {
 		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
 	}
 
+	/**
+	 * This test aims to know if all the functionality of the Packet and the Unit works. First, it is created 2 unit, 
+	 * the former with 13 Money, the latter with 11 FaithPoint, and the test tries if effectively in the two unit there are
+	 * these resources. Second, the test tries to create a packet with the precedent FaithPoint Unit, but, moreover, the test added
+	 * a new FaithPoint unit, composed by 19 FaithPoint, to try if in the Packet will be only one Unit of FaithPoint with the some of the 
+	 * two initial Units. Finally the test tries the creation of a Packet from an HashMap of Resources
+	 */
 	@Test
 	public void test() {
 		//Testing the Packet and the Unit

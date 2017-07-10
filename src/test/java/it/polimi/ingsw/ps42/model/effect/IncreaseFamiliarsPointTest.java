@@ -12,6 +12,13 @@ import org.junit.Test;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * This class is used to test the IncreaseFamiliarsPoint effect. This effect increases all
+ * the familiars value, except the neutral familiar.
+ * After the application of the effect, this test aims to verify if the clone method works correctly
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class IncreaseFamiliarsPointTest {
 	
 	private Player player;

@@ -12,6 +12,13 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This class is used to test the ObtainBan effect. This particular effect is used
+ * to decrease the player's resource every time he gains something. For example:
+ * Every time the player increase his resources with money, the player gains one less money
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ObtainBanTest {
 	
 	private Player p1;
@@ -45,10 +52,13 @@ public class ObtainBanTest {
 		packetForThePlayer.addUnit(unit2);
 	}
 
+	/**
+	 * This test simply apply the effect and verify if it works. In fact, the player has an
+	 * Obtain Ban for the military point, and every time he gains military point, he loses one
+	 * military point
+	 */
 	@Test
 	public void test() {
-		//Now player has a ban, so each time he gains a military resource, he also loses 
-		//one of that resource
 		p1.increaseResource(packetForThePlayer);
 		p1.synchResource();
 		assertEquals(2, p1.getResource(Resource.MILITARYPOINT));

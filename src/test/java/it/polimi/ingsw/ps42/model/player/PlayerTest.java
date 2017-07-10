@@ -17,6 +17,12 @@ import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This Unit case test tries to know if the Player package works great, testing all the mainly
+ * functionality, such as the addition of a bonus bar, the addition of cards and the increment of resources
+ * @author luca
+ *
+ */
 public class PlayerTest {
 	
 	@BeforeClass
@@ -24,6 +30,11 @@ public class PlayerTest {
 		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
 	}
 
+	/**
+	 * First, the test create the player, then it adds a simple bonus bar to the player.
+	 * Second the test tries to add some Packet to the player resources
+	 * Finally the test adds two cards to the player to try this functionality
+	 */
 	@Test
 	public void test() throws NotEnoughResourcesException {
 		Player player = new Player("Player 1");
