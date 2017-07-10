@@ -867,7 +867,7 @@ public abstract class View extends Observable implements Observer {
 			
 		}
 	}
-	
+	 
 	protected abstract void reconnect(ReconnectMessage message);
 	
 	/**

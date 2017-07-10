@@ -18,7 +18,7 @@ public class GameLogicTest {
 	@Test
 	public void test() throws NotEnoughPlayersException, GameLogicError, IOException, ElementNotFoundException {
 
-		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+		PropertyConfigurator.configure("Logger//Properties//test_log.properties"); 
 		
 		GameLogic logic;
 		TerminalView view1 = new TerminalView();
