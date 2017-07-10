@@ -96,24 +96,32 @@ public class CouncilActionTest {
 		
 	}
 	
+	/**
+	 * Create a simple council action
+	 * @throws NotEnoughResourcesException if the player does not have enough resources
+	 */
 	public void setupSimpleAction() throws NotEnoughResourcesException{
-		//Create a simple council action
 		setup();
 		action = new CouncilAction(ActionType.COUNCIL, familiar, tablePosition.get(0));
 		
 		
 	}
 	
+	/**
+	 * Create a bonus council action
+	 * @throws NotEnoughResourcesException if the player does not have enough resources
+	 */
 	public void setupBonusAction() throws NotEnoughResourcesException{
-		//Create a bonus council action
 		setup();
 		action = new CouncilAction(ActionType.COUNCIL, player, tablePosition.get(1), 1);
 		
 	}
 	
-	@Before
+	/**
+	 * Create an action that can not be performed since the player has a FirstPlayBan
+	 * @throws NotEnoughResourcesException if the player does not have enough resources
+	 */
 	public void setupCannotPlayAction() throws NotEnoughResourcesException{
-		//Create an action that can not be performed since the player has a FirstPlayBan
 		setup();
 		Effect ban = new NoFirstActionBan();
 		ban.enableEffect(player);
@@ -122,8 +130,11 @@ public class CouncilActionTest {
 		
 	}
 	
+	/**
+	 * Create an action that can not be performed since the familiar has a low level
+	 * @throws NotEnoughResourcesException if the player does not have enough resources
+	 */
 	public void setupLowLevelAction() throws NotEnoughResourcesException{
-		//Create an action that can not be performed since the familiar has a low level
 		setup();
 		Familiar neutral = player.getFamiliar(FamiliarColor.NEUTRAL);
 		neutral.setValue(0);
@@ -133,8 +144,11 @@ public class CouncilActionTest {
 		action = new CouncilAction(ActionType.COUNCIL, neutral, tablePosition.get(2));
 	}
 	
+	/**
+	 * Create an Increase Action effect for the CouncilAction and do an Action that use that increment
+	 * @throws NotEnoughResourcesException if the player does not have enough resources
+	 */
 	public void setupIncrementedAction() throws NotEnoughResourcesException{
-		//Create an Increase Action effect for the CouncilAction and do an Action that use that increment
 		setup();
 		IncreaseAction increaseEffect = new IncreaseAction(ActionType.COUNCIL, 3, null);
 		increaseEffect.enableEffect(player);
