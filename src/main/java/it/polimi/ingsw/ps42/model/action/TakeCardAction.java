@@ -335,7 +335,7 @@ public class TakeCardAction extends Action{
 	 * @return			True if the player can have another card, otherwise False
 	 */
 	private boolean playerCanHasAnotherCard(Card card) {
-		if(card != null && player.getCardList(card.getColor()).size() < 6) 
+		if(card != null && !player.getCardList(card.getColor()).isFull()) 
 			return true;
 		return false;
 	}
