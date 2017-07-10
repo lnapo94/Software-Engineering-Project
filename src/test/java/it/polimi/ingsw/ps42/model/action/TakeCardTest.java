@@ -87,7 +87,7 @@ public class TakeCardTest {
 		cost1.addUnit(new Unit(Resource.MILITARYPOINT, 2));
 		
 		Packet cost2 = new Packet();
-		cost2.addUnit(new Unit(Resource.MONEY, 2)); 
+		cost2.addUnit(new Unit(Resource.MONEY, 3)); 
 		
 		List<Packet> costs = new ArrayList<>();
 		costs.add(cost1);
@@ -109,11 +109,11 @@ public class TakeCardTest {
 		//Create a immediate effect for the third card (bonus action with a discount)
 		List<Effect> secondImmediateEffects = new ArrayList<>();
 		Packet discount = new Packet();
-		discount.addUnit(new Unit(Resource.WOOD, 5));
+		discount.addUnit(new Unit(Resource.STONE, 5));
 		secondImmediateEffects.add(new DoAction(ActionType.TAKE_GREEN, 5, discount, null));
 		
 		//Create the cards
-		//FistCard: cost: 2Money+2Wood OR 2Money; immEffect: +2Money OR +2MilitaryPoint.
+		//FistCard: cost: 2Money+2Military OR 3Money; immEffect: +2Money OR +2MilitaryPoint.
 		Card c = new Card("Card", "", CardColor.GREEN, 1, 3, costs, immediateEffects, null, null, null);
 		
 		//SecondCard: cost: 0; effect: none.
@@ -131,7 +131,7 @@ public class TakeCardTest {
 	}
 
 	/**
-	 * Tests two action: with the first the player takes a green card for free but with a bonus action, so then
+	 * Tests two action: with the first action the player takes a green card, from the first position, for free and obtains a bonus action, so then
 	 * tests the action obtained 
 	 */
 	@Test
@@ -153,6 +153,7 @@ public class TakeCardTest {
 			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1, tower, 2, 5, 0);
 			takeCardAction.addDiscount(bonusAction.getDiscount());
 			assertTrue(bonusAction.checkAction(takeCardAction));
+			p1.getRequests();
 		} catch (FamiliarInWrongPosition e) {
 		System.out.println("ERROR");
 		}
@@ -162,7 +163,7 @@ public class TakeCardTest {
 		assertEquals(checker , Response.SUCCESS);
 		List<CardRequest> requests = p1.getRequests();
 		
-		//Control request since there are two costs to choose from (2Money+2Wood OR 2Money) but only the second affordable
+		//Control request since there are two costs to choose from (2Money+2Wood OR 3Money) but only the second affordable
 		if(!requests.isEmpty()) {
 			//Now there is one request with only one cost
 			//Player can enable it
@@ -171,14 +172,15 @@ public class TakeCardTest {
 				//Control if there is only one possible cost
 				assertEquals(1, request.showChoice().size());
 				request.setChoice(0);
+				p1.addRequest(request);
 			}
 		}
-		//Here player has two money from the bonus position 
-		assertEquals(3, p1.getResource(Resource.MONEY));
+		
 		try {
 			takeCardAction.doAction();
+			p1.synchResource();
 			//Now player has 2 money, he payed two money for the card but he has earned two money from the position
-			assertEquals(3, p1.getResource(Resource.MONEY));
+			assertEquals(2, p1.getResource(Resource.MONEY));
 		} catch (FamiliarInWrongPosition e) {
 			System.out.println("ERROR");
 		}
@@ -239,7 +241,7 @@ public class TakeCardTest {
 	public void negativeTest4(){
 		
 		Packet temp = new Packet();
-		temp.addUnit(new Unit(Resource.MONEY, 2));
+		temp.addUnit(new Unit(Resource.MONEY, 3));
 		//Decrease the resources of the player so that he cannot afford the third green card
 		try {
 			p1.decreaseResource(temp);
@@ -249,8 +251,10 @@ public class TakeCardTest {
 			logger.info(e);
 		}
 		p1.synchResource();
-		assertEquals(1, p1.getResource(Resource.MONEY));
+		assertEquals(0, p1.getResource(Resource.MONEY));
 		TakeCardAction action = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 2);
+		
+		
 		
 		
 	}
