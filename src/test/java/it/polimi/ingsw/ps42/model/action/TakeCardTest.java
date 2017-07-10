@@ -239,15 +239,16 @@ public class TakeCardTest {
 	public void negativeTest4(){
 		
 		Packet temp = new Packet();
-		temp.addUnit(new Unit(Resource.MONEY, 1));
+		temp.addUnit(new Unit(Resource.MONEY, 2));
 		//Decrease the resources of the player so that he cannot afford the third green card
 		try {
 			p1.decreaseResource(temp);
+		
 		} catch (NotEnoughResourcesException e) {
 			logger.error("Problems in decreasing resources for negative test 4");
 			logger.info(e);
 		}
-		
+		p1.synchResource();
 		assertEquals(1, p1.getResource(Resource.MONEY));
 		TakeCardAction action = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 2);
 		
