@@ -14,6 +14,14 @@ import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * This class tests the main functionalities of the ActionCreator class:
+ * it creates all possible kind of Action and checks their creation through the 
+ * ActionCreator (Factory Pattern) went well
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class ActionCreatorTest {
 	
 	private Table table;

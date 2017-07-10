@@ -24,6 +24,15 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This class tests the main functionalities of the Card class:
+ * it creates some Cards and tries to pay them with different Players and then 
+ * tries to enable their effects; also tests some lateral functionalities such as 
+ * the cloning method, the getters and the show method
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CardTest {
 	
 	private Packet cost1;
@@ -163,13 +172,14 @@ public class CardTest {
 	}
 	
 	private void createImmediateEffects() {
-		
+		//Create the Cards immediate effects
 		Packet requirement1 = new Packet();
 		requirement1.addUnit(new Unit(Resource.FAITHPOINT, 1));
 		
 		Packet gain1 = new Packet();
 		gain1.addUnit(new Unit(Resource.MILITARYPOINT, 1));
 		
+		//A ForEachObtain such that: for each faith point it gives a military point
 		immediateEffect1 = new ForEachObtain(requirement1, gain1);
 		
 		Packet cost2 = new Packet();
@@ -178,6 +188,7 @@ public class CardTest {
 		Packet gain2 = new Packet();
 		gain2.addUnit(new Unit(Resource.FAITHPOINT, 5));
 		
+		//An Obtain such that: gives 5 faith points paying 2 money
 		immediateEffect2 = new Obtain(cost2, gain2, null);
 		
 		immediateEffects = new ArrayList<>();

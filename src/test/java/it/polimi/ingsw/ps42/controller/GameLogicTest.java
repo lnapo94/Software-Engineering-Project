@@ -13,6 +13,13 @@ import it.polimi.ingsw.ps42.server.Server;
 import it.polimi.ingsw.ps42.server.match.ServerView;
 import it.polimi.ingsw.ps42.view.TerminalView;
 
+/**
+ * This class tests the main functionality of the GameLogic class:
+ *  it tries to create a pair of View and a ServerView and then add them in the game
+ *  
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class GameLogicTest {
 
 	@Test
@@ -24,6 +31,7 @@ public class GameLogicTest {
 		TerminalView view1 = new TerminalView();
 		TerminalView view2 = new TerminalView();
 		
+		//Create the Views
 		view1.addPlayer("Player 1");
 		view2.addPlayer("Player 2");
 		
@@ -42,6 +50,8 @@ public class GameLogicTest {
 		
 		view1.createTable(players1View);
 		view2.createTable(players2View);
+		
+		//Create the ServerView and the GameLogic and load the Game
 		ServerView serverView = new ServerView(new Server());
 		logic = new GameLogic(players, serverView);
 		logic.loadGame();

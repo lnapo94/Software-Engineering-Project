@@ -9,6 +9,14 @@ import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.StaticList;
 
+/**
+ * This class tests the main functionalities of the StaticList class, 
+ * so it creates a StaticList of Integer, tries to add and remove some elements and verify the fixed  
+ * maximum dimension of the StaticList 
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class StaticListTest {
 	
 	private Logger logger = Logger.getLogger(StaticListTest.class);
@@ -20,6 +28,7 @@ public class StaticListTest {
 
 	@Test
 	public void test() {
+		//Create a StaticList and add some elements
 		StaticList<Integer> list = new StaticList<>(3);
 		list.add(2);
 		logger.info(list.get(0));
@@ -28,11 +37,15 @@ public class StaticListTest {
 		for(Integer i : list) {
 			logger.info("Number: " + i.toString());
 		}
+		
+		//Remove some elements
 		list.remove(2);
 		assertEquals("Now list has 2 elements", 2, list.size());
 		for(Integer i : list) {
 			logger.info("Number: " + i.toString());
 		}
+		
+		//Remove all the elements and verify it is empty
 		list.removeAll();
 		System.out.println(list.size());
 		for(Integer i : list) {

@@ -26,6 +26,14 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.TowerPosition;
 import it.polimi.ingsw.ps42.parser.BanLoader;
 
+/**
+ * This class tests the main functionalities of the Table class:
+ *  it creates a Table and adds to it four players, then tries to: set the game bans,
+ *  throw the dice for a round, place the cards for a round and finally reset the Table
+ *  
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class TableTest {
 	
 	private Table table;
@@ -54,6 +62,8 @@ public class TableTest {
 
 	@Test
 	public void test() throws NotEnoughResourcesException, FamiliarInWrongPosition {
+		
+		//Perform a market move on the Table and then reset the Table
 		p1.setFamiliarValue(FamiliarColor.ORANGE, 3);
 		PlayerMove move = new PlayerMove(p1.getPlayerID(), ActionType.MARKET,FamiliarColor.ORANGE, 3, 0);
 		Action action = new ActionCreator(p1, table, move, 1).getCreatedAction();
@@ -62,6 +72,13 @@ public class TableTest {
 		assertTrue(p1.getCouncilRequests().size() == 1);
 		
 		table.resetTable();
+		
+		checkTableReset();
+	}
+	
+	private void checkTableReset(){
+		//Check the reset methods functionalities
+		
 	}
 	
 	@Test

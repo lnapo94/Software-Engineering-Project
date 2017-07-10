@@ -30,6 +30,14 @@ import it.polimi.ingsw.ps42.model.position.CouncilPosition;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This class tests the CouncilAction class:
+ * it tries to create different kind of CouncilActions and verify that the 
+ * checkAction() and doAction() methods are right 
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CouncilActionTest {
 
 	private Player player;
@@ -57,7 +65,8 @@ public class CouncilActionTest {
 		familiar = player.getFamiliar(FamiliarColor.BLACK);
 		familiar.setValue(1);
 		
-		//Create the CouncilObtain effect and the Conversion List
+		//Create the CouncilObtain effect and the Conversion List:
+		// obtain 2 money or 2 wood or (1 stone and 1 slave)
 		List<Obtain> possibleConversion = new ArrayList<>();
 		Packet gains1 = new Packet();
 		gains1.addUnit(new Unit(Resource.MONEY, 2));
@@ -87,7 +96,6 @@ public class CouncilActionTest {
 		
 	}
 	
-	@Before
 	public void setupSimpleAction() throws NotEnoughResourcesException{
 		//Create a simple council action
 		setup();
@@ -96,7 +104,6 @@ public class CouncilActionTest {
 		
 	}
 	
-	@Before
 	public void setupBonusAction() throws NotEnoughResourcesException{
 		//Create a bonus council action
 		setup();
@@ -115,7 +122,6 @@ public class CouncilActionTest {
 		
 	}
 	
-	@Before
 	public void setupLowLevelAction() throws NotEnoughResourcesException{
 		//Create an action that can not be performed since the familiar has a low level
 		setup();
@@ -127,7 +133,6 @@ public class CouncilActionTest {
 		action = new CouncilAction(ActionType.COUNCIL, neutral, tablePosition.get(2));
 	}
 	
-	@Before
 	public void setupIncrementedAction() throws NotEnoughResourcesException{
 		//Create an Increase Action effect for the CouncilAction and do an Action that use that increment
 		setup();

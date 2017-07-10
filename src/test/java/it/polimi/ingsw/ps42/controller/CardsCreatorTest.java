@@ -14,6 +14,14 @@ import it.polimi.ingsw.ps42.controller.cardCreator.CardsFirstPeriod;
 import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 
+/**
+ * This class tests the functionality of the CardsCreator class:
+ *  it creates a CardCreator and then simulate the various calls made by the GameLogic
+ *  to obtain the right period and color cards
+ *  
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CardsCreatorTest {
 
 	private CardsCreator cardCreator;
@@ -26,6 +34,8 @@ public class CardsCreatorTest {
 			
 	@Before
 	public void setup(){
+		
+		//Try to create a CardsCreator
 		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
 		try {
 			cardCreator = new CardsFirstPeriod();
@@ -55,12 +65,14 @@ public class CardsCreatorTest {
 		verifyPeriod(1, yellowCards);
 		verifyPeriod(1, violetCards);
 		
+		//Skip to the Second Round
 		try {
 			cardCreator = cardCreator.nextState();
 		} catch (IOException e) {
 			logger.info(e);
 			logger.error("Problems in opening Card file");
 		}
+		
 		//Load the Second Round Cards and Verify their period
 		blueCards = cardCreator.getNextBlueCards();
 		greenCards = cardCreator.getNextGreenCards();
@@ -72,6 +84,7 @@ public class CardsCreatorTest {
 		verifyPeriod(1, yellowCards);
 		verifyPeriod(1, violetCards);
 		
+		//Skip to the Third Round
 		try {
 			cardCreator = cardCreator.nextState();
 		} catch (IOException e) {
@@ -90,6 +103,7 @@ public class CardsCreatorTest {
 		verifyPeriod(2, yellowCards);
 		verifyPeriod(2, violetCards);
 		
+		//Skip to the Fourth Round
 		try {
 			cardCreator = cardCreator.nextState();
 		} catch (IOException e) {
@@ -108,6 +122,7 @@ public class CardsCreatorTest {
 		verifyPeriod(2, yellowCards);
 		verifyPeriod(2, violetCards);
 				
+		//Skip to the Fifth Round
 		try {
 			cardCreator = cardCreator.nextState();
 		} catch (IOException e) {
@@ -126,12 +141,14 @@ public class CardsCreatorTest {
 		verifyPeriod(3, yellowCards);
 		verifyPeriod(3, violetCards);
 				
+		//Skip to the Sixth Round
 		try {
 			cardCreator = cardCreator.nextState();
 		} catch (IOException e) {
 			logger.info(e);
 			logger.error("Problems in opening Card file");
 		}
+		
 		//Load the Sixth Round Cards and Verify their period
 		blueCards = cardCreator.getNextBlueCards();
 		greenCards = cardCreator.getNextGreenCards();
@@ -142,7 +159,8 @@ public class CardsCreatorTest {
 		verifyPeriod(3, greenCards);
 		verifyPeriod(3, yellowCards);
 		verifyPeriod(3, violetCards);
-				
+			
+		//Verify there isn't other cards to load, so the game has ended
 		try {
 			cardCreator = cardCreator.nextState();
 			assertTrue(cardCreator == null);

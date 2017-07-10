@@ -32,6 +32,13 @@ import it.polimi.ingsw.ps42.message.CouncilRequest;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This class tests the functionality of the MarketAction class, so it tries to perform 
+ * different kinds of this Actions and verify the checkAction() and doAction() methods
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class MarketActionTest {
 
 	private Player player;
@@ -91,6 +98,9 @@ public class MarketActionTest {
 		
 		councilBonus = new CouncilObtain(2, possibleConversion);
 		
+		//Create two market positions,
+		//position1: obtain 2 money
+		//position 2: obtain 4 money
 		MarketPosition position1 = new MarketPosition(0, bonus1, 0, null);
 		MarketPosition position2 = new MarketPosition(0, bonus2, 3, null);
 		
@@ -101,11 +111,12 @@ public class MarketActionTest {
 		
 	}
 	
-	@Before
+	/**
+	 * Create an action that can be performed
+	 */
 	public void setupSimpleAction(){
 		
 		setup();		
-		//Create an action that can be performed
 		try {
 			marketAction = new MarketAction(ActionType.MARKET, familiar , tablePosition, 0);
 		} catch (NotEnoughResourcesException e) {
@@ -113,11 +124,13 @@ public class MarketActionTest {
 		}
 		
 	}
-	@Before
+	
+	/**
+	 * Create an action that can not be performed since the player can not pay the familiar increment
+	 */
 	public void setupFailAction(){
 		
 		setup();
-		//Create an action that can not be performed since the player can not pay the familiar increment
 		Familiar tempFamiliar = player.getFamiliar(FamiliarColor.ORANGE);
 		tempFamiliar.setValue(1);
 		tempFamiliar.setIncrement(7);
@@ -130,11 +143,12 @@ public class MarketActionTest {
 		}
 	}
 	
-	@Before
+	/**
+	 * Create an action with a familiar increment that can be performed
+	 */
 	public void setupFamiliarIncrementAction(){
 		
 		setup();
-		//Create an action with a familiar increment that can be performed
 		try {
 			marketActionIncremented = new MarketAction(ActionType.MARKET, incrementedFamiliar, tablePosition, 1);
 		} catch (NotEnoughResourcesException e) {
@@ -144,10 +158,12 @@ public class MarketActionTest {
 		
 	}
 	
-	@Before
+	/**
+	 * Create an action with a familiar increment but that can not be performed because of a ban
+	 * @throws NotEnoughResourcesException if the Player does not have enough resources
+	 */
 	public void setupFamiliarIncrementFailAction() throws NotEnoughResourcesException{
 		
-		//Create an action with a familiar increment but that can not be performed because of a ban
 		setup();
 		Effect ban = new NoFirstActionBan();
 		ban.enableEffect(player);
@@ -155,11 +171,12 @@ public class MarketActionTest {
 		
 	}
 	
-	@Before
+	/**
+	 * Create an action with a position level higher than the familiar
+	 */
 	public void setupLowLevelAction(){
 		
 		setup();
-		//Create an action with a position level higher than the familiar
 		MarketPosition position3 = new MarketPosition(4, null, 0, null);
 		tablePosition.add(position3);
 		try {
@@ -169,9 +186,12 @@ public class MarketActionTest {
 		}
 	}
 	
-	@Before 
+	/**
+	 * Create a position occupied and try to perform an action on that position
+	 * @throws FamiliarInWrongPosition if the Familiar is in the wrong position
+	 * @throws NotEnoughResourcesException if the Player does not have enough resources
+	 */
 	public void setupOccupiedPositionAction() throws FamiliarInWrongPosition, NotEnoughResourcesException {
-		//Create a position occupied and try to perform an action on that position
 		setup();
 		MarketPosition position3 = new MarketPosition(0, null, 0, null);
 		Familiar tempFamiliar = new Familiar(player, FamiliarColor.BLACK);
@@ -180,11 +200,13 @@ public class MarketActionTest {
 		tablePosition.add(position3);
 		action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 2);
 	}
-	
-	@Before
+
+	/**
+	 * Create an action that can be performed but set the market ban to the player
+	 * @throws NotEnoughResourcesException if the Player does not have enough resources
+	 */
 	public void setupBanAction() throws NotEnoughResourcesException{
 		
-		//Create an action that can be performed but set the market ban to the player
 		setup();
 		Effect ban = new NoMarketBan();
 		ban.enableEffect(player);
@@ -192,18 +214,22 @@ public class MarketActionTest {
 		action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 0);
 		
 	}
-	
-	@Before
+
+	/**
+	 * 	Create a bonus action
+	 * @throws NotEnoughResourcesException if the Player does not have enough resources
+	 */
 	public void setupBonusAction() throws NotEnoughResourcesException{
-		//Create a bonus action
 		setup();
 		action = new MarketAction(ActionType.MARKET, player, tablePosition, 0, 0);
 		
 	}
 	
-	@Before
+	/**
+	 * 	Add to the player an increase effect and check if the action can be performed
+	 * @throws NotEnoughResourcesException if the Player does not have enough resources
+	 */
 	public void setupIncreasedAction() throws NotEnoughResourcesException{
-		//Add to the player an increase effect and check if the action can be performed
 		setup();
 		Effect increaseEffect = new IncreaseAction(ActionType.MARKET, 2, null);
 		increaseEffect.enableEffect(player);
@@ -212,9 +238,11 @@ public class MarketActionTest {
 		
 	}
 	
-	@Before
+	/**
+	 * 	Create a market position with a councilObtain bonus and perform an action on that position
+	 * @throws NotEnoughResourcesException if the Player does not have enough resources
+	 */
 	public void setupCouncilObtainMarketAction() throws NotEnoughResourcesException{
-		//Create a market position with a councilObtain bonus and perform an action on that position
 		setup();
 
 		MarketPosition position3 = new MarketPosition(0, null, 0, councilBonus);		
@@ -223,13 +251,17 @@ public class MarketActionTest {
 		
 	}
 	
-	@Before
+	/**
+	 * Do a simple action action (Familiar in position 0 of Market) and then 
+	 * Enable the Player to place his familiar in occupied positions
+	 * 
+	 * @throws NotEnoughResourcesException if the Player does not have enough resources
+	 * @throws FamiliarInWrongPosition if the Familiar is in the wrong position
+	 */
 	public void setupDoubleFamiliarAction() throws NotEnoughResourcesException, FamiliarInWrongPosition{
 		
-		//Do a simple action action (Familiar in pos 0 of Market)
 		setupSimpleAction();
 		
-		//Enable the Player to place his familiar in occupied position
 		Effect canPositioningEverywhere = new CanPositioningEverywhereLeader();
 		canPositioningEverywhere.enableEffect(player);
 		
