@@ -157,15 +157,15 @@ public class GUIView extends View implements TableInterface{
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		//Create a full Screen main frame
 		mainFrame = new JFrame(); 
-		mainFrame.setBounds(0, 0,screen.width,(int)(screen.height ));  //*0.9
+		mainFrame.setBounds(0, 0,screen.width,screen.height);
 		mainFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setResizable(false);
+		mainFrame.setResizable(true);
 		mainFrame.getContentPane().setLayout(null);
 		mainFrame.setTitle("Lorenzo il Magnifico");
 		//Add a JLayeredPane
 		mainLayeredPane = new JLayeredPane();
-		mainLayeredPane.setBounds(5, 5, mainFrame.getWidth(), (int)(mainFrame.getHeight() * 0.9)); //no 0.9
+		mainLayeredPane.setBounds(5, 5, mainFrame.getWidth(), (int)(mainFrame.getHeight() * 0.9));
 		mainFrame.getContentPane().add(mainLayeredPane);
 		
 		Dimension leftPaneDimension = new Dimension((int)(mainLayeredPane.getWidth()*0.42), mainLayeredPane.getHeight());
