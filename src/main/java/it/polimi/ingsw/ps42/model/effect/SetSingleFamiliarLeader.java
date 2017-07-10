@@ -50,7 +50,7 @@ public class SetSingleFamiliarLeader extends Effect{
 	
 	/**
 	 * Method used to specify the familiar to apply this effect
-	 * @param color
+	 * @param color		The FamiliarColor of the familiar to increase
 	 */
 	public void setFamiliarColor(FamiliarColor color) {
 		if(this.color == null)

@@ -34,6 +34,7 @@ public class CardBan extends Effect{
 	
 	/**
 	 * Constructor for this class
+	 * @param color The card color used to apply the effect
 	 */
 	public CardBan(CardColor color) {
 		super(EffectType.CARD_BAN);

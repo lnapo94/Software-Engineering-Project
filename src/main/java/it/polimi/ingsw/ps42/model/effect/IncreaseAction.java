@@ -70,7 +70,7 @@ public class IncreaseAction extends Effect {
 	
 	/**
 	 * Method used to enable this effect at the correct time. It is called in actions
-	 * @param action
+	 * @param action	The action to check and increase
 	 */
 	public void activeIncrease(Action action){
 		//Increase the current action and add a discount if equals the type of the effect

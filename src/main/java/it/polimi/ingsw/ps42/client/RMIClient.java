@@ -8,7 +8,6 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -18,9 +17,10 @@ import it.polimi.ingsw.ps42.message.LoginMessage;
 import it.polimi.ingsw.ps42.message.Message;
 import it.polimi.ingsw.ps42.server.ServerInterface;
 import it.polimi.ingsw.ps42.server.match.ServerViewInterface;
-import it.polimi.ingsw.ps42.view.TerminalView;
 import it.polimi.ingsw.ps42.view.View;
 import it.polimi.ingsw.ps42.view.GUI.GUIView;
+
+import javax.swing.*;
 
 /**
  * The client that connects to the server thanks to RMI
@@ -144,33 +144,21 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 	 * @throws IOException	Thrown if there is a Network Error
 	 */
 	public void run() throws IOException {
-		
-		RMIClient client = new RMIClient(host);
-		
-		Scanner scanner = new Scanner(System.in);
-		String input;	
-		
-		View view = null;
 
-		
-		do {
-			System.out.println("Which Client do you want? [G : GUI], [C : CLI]");
-			
-			input = scanner.nextLine();
-			input = input.toUpperCase();
-		
-			
-		} while ((!input.equals("G") && !input.equals("C")));
-		
-		if(input.equals("G"))
-			view = new GUIView();
-		
-		if(input.equals("C"))
-			view = new TerminalView();
-		
-		scanner.close();
-		
-		client.addView(view);
+		RMIClient client = new RMIClient(host);
+
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					View view = new GUIView();
+					client.addView(view);
+				} catch (IOException e) {
+					logger.fatal("Unable to load the Graphical User Interface");
+					logger.info(e);
+				}
+			}
+		});
 	}
 	
 }

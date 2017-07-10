@@ -1,5 +1,12 @@
 package it.polimi.ingsw.ps42.client;
 
+import it.polimi.ingsw.ps42.message.GenericMessage;
+import it.polimi.ingsw.ps42.view.GUI.GUIView;
+import it.polimi.ingsw.ps42.view.View;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -7,15 +14,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Scanner;
-
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
-import it.polimi.ingsw.ps42.message.GenericMessage;
-import it.polimi.ingsw.ps42.view.TerminalView;
-import it.polimi.ingsw.ps42.view.View;
-import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
 /**
  * Class to load the Client, both from CLI and GUI
@@ -176,29 +174,20 @@ public class ClientSocket extends Observable implements Observer{
 	public void run() throws UnknownHostException, IOException {
 
 		ClientSocket client = new ClientSocket(host);
-		Scanner scanner = new Scanner(System.in);
-		String input;	
-		
-		View view = null;
-		
-		do {
-			System.out.println("Which Client do you want? [G : GUI], [C : CLI]");
-			
-			input = scanner.nextLine();
-			input = input.toUpperCase();
-			
-			
-		} while ((!input.equals("G") && !input.equals("C")));
-		 
-		if(input.equals("G"))
-			view = new GUIView();
-		
-		if(input.equals("C"))
-			view = new TerminalView();
-		
-		scanner.close();
-		client.addView(view);
-		client.startReading();
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					View view = new GUIView();
+					client.addView(view);
+					client.startReading();
+				} catch (IOException e) {
+					logger.fatal("Unable to load the Graphical User Interface");
+					logger.info(e);
+				}
+			}
+		});
+
 	}
 
 }

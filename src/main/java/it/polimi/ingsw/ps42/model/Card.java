@@ -250,8 +250,9 @@ public class Card implements Serializable{
 	
 	/**
 	 * Private method used to decrease the resources with the discount, only after a check
-	 * @param player	The interested player
-	 * @param discount	The verified discount 
+	 * @param player							The interested player
+	 * @param discount							The verified discount
+	 * @throws NotEnoughResourcesException		Thrown if the player has not enough resources to pay this card
 	 */
 	private void decreaseDiscount(Player player, Packet discount) throws NotEnoughResourcesException {
 		if(discount != null) {
@@ -311,9 +312,9 @@ public class Card implements Serializable{
 	/**
 	 * Method used to enable the immediate effect of the card, if it is known
 	 * the player choice
-	 * 
-	 * @param  choice						The effect which player wants to enable
-	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 *
+	 * @param player 		The interested player
+	 * @param choice 		The effect which player wants to enable
 	 */
 	public void enableImmediateEffect(int choice, Player player) {
 		//Try to enable the effect
@@ -361,9 +362,9 @@ public class Card implements Serializable{
 	/**
 	 * Method used to enable the permanent effect of the card, if it is known
 	 * the player choice
-	 * 
-	 * @param  choice						The effect which player wants to enable
-	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 *
+	 * @param player 		The interested player
+	 * @param  choice		The effect which player wants to enable
 	 */
 	public void enablePermanentEffect(int choice, Player player) {
 		logger = Logger.getLogger(Card.class);
@@ -410,9 +411,9 @@ public class Card implements Serializable{
 	/**
 	 * Method used to enable the final effect of the card, if it is known
 	 * the player choice
-	 * 
-	 * @param  choice						The effect which player wants to enable
-	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
+	 *
+	 * @param player 		The interested player
+	 * @param  choice		The effect which player wants to enable
 	 */
 	public void enableFinalEffect(int choice, Player player) {
 		logger = Logger.getLogger(Card.class);
@@ -504,8 +505,9 @@ public class Card implements Serializable{
 	/**
 	 * Method used to verify if the effect can be enabled immediately
 	 * 
-	 * @param effectList	The single effect to control
-	 * @return				True if the effect can be enabled immediately, otherwise False
+	 * @param effect	The single effect to control
+	 * @param index 	The index of the effect to add it to possibleChoiceIndex list
+	 * @return			True if the effect can be enabled immediately, otherwise False
 	 */
 	private boolean checkActivable(Effect effect, int index) {
 		//Return true if the effect can be enabled

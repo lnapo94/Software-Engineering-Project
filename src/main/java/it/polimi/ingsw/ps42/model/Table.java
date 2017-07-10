@@ -103,10 +103,10 @@ public class Table extends Observable{
 	
 	/**
 	 * The first constructor for the table, to construct the full table
-	 * @param player1
-	 * @param player2
-	 * @param player3
-	 * @param player4
+	 * @param player1		The first Player object to add to this table
+	 * @param player2		The second Player object to add to this table
+	 * @param player3		The third Player object to add to this table
+	 * @param player4		The fourth Player object to add to this table
 	 */
 	public Table(Player player1, Player player2, Player player3, Player player4) {
 		//4 players constructor
@@ -136,9 +136,9 @@ public class Table extends Observable{
 	 * The constructor used for a 3 player match, construct a table with market
 	 * with only 2 positions
 	 * 
-	 * @param player1
-	 * @param player2
-	 * @param player3
+	 * @param player1			The first Player object to add to this table
+	 * @param player2			The second Player object to add to this table
+	 * @param player3			The third Player object to add to this table
 	 */
 	public Table(Player player1, Player player2, Player player3) {
 		//3 players constructor
@@ -166,8 +166,8 @@ public class Table extends Observable{
 	 * Construct a table with only 2 market positions and with
 	 * 1 yield position and 1 produce positon
 	 * 
-	 * @param player1
-	 * @param player2
+	 * @param player1		The first Player object to add to this table
+	 * @param player2		The second Player object to add to this table
 	 */
 	public Table(Player player1, Player player2) {
 		//2 players constructor
@@ -403,6 +403,7 @@ public class Table extends Observable{
 	 * Remove a bonus bar from the current match
 	 * 
 	 * @param index		The bonus bar to remove
+	 * @return 			The BonusBar at that index
 	 */
 	public BonusBar removeBonusBar( int index){
 		return gameBonusBar.remove(index);
@@ -468,7 +469,7 @@ public class Table extends Observable{
 	 * Method used to set the second ban in the table
 	 * 
 	 * @param ban				The second ban to set
-	 * @param indexOfFirstBan	The index in the file of the ban
+	 * @param indexOfSecondBan	The index in the file of the ban
 	 */
 	public void addSecondBan(Effect ban, int indexOfSecondBan) {
 		secondBan = ban;
@@ -479,7 +480,7 @@ public class Table extends Observable{
 	 * Method used to set the third ban in the table and to notify the 3 bans in table
 	 * 
 	 * @param ban				The third ban to set
-	 * @param indexOfFirstBan	The index in the file of the ban
+	 * @param indexOfThirdBan	The index in the file of the ban
 	 */
 	public void addThirdBan(Effect ban, int indexOfThirdBan) {
 		thirdBan = ban;
@@ -652,6 +653,7 @@ public class Table extends Observable{
 
 	/**
 	 * Method used to reset the table when a round is finished
+	 * @return 	The list of Player that represents the new order
 	 */
 	public List<Player> resetTable() {
 		//Reset all the familiars
@@ -728,7 +730,7 @@ public class Table extends Observable{
 	
 	/**
 	 * Method used to send to a reconnecting player all his stuffs
-	 * @param player
+	 * @param player		The player to reconnect to the game
 	 */
 	public void reconnectPlayer(Player player) {
 		player.sendResources();
@@ -746,7 +748,12 @@ public class Table extends Observable{
 		setChanged();
 		notifyObservers(message);
 	}
-	
+
+	/**
+	 * Method used to copy a StaticList of Card to send it to the View
+	 * @param source		The StaticList to copy
+	 * @return				The copied StaticList
+	 */
 	private StaticList<Card> copyCardList(StaticList<Card> source) {
 		StaticList<Card> tempList = new StaticList<>(source.getMaxSize());
 		
