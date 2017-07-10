@@ -79,16 +79,16 @@ public class ActionCreator {
 		
 		case MARKET :
 			if(familiar == null)
-				action = new MarketAction(type, player, table.getMarket(), playerMove.getPosition(), actionIncrement);
+				action = new MarketAction(player, table.getMarket(), playerMove.getPosition(), actionIncrement);
 			else
-				action = new MarketAction(type, familiar, table.getMarket(), playerMove.getPosition());
+				action = new MarketAction(familiar, table.getMarket(), playerMove.getPosition());
 			break;
 		
 		case COUNCIL :
 			if(familiar == null)
-				action = new CouncilAction(type, player, table.getFreeCouncilPosition(), actionIncrement);
+				action = new CouncilAction(player, table.getFreeCouncilPosition(), actionIncrement);
 			else
-				action = new CouncilAction(type, familiar, table.getFreeCouncilPosition());
+				action = new CouncilAction(familiar, table.getFreeCouncilPosition());
 			break;
 			
 		default :

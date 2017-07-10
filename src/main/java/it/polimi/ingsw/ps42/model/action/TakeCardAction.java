@@ -45,7 +45,7 @@ public class TakeCardAction extends Action{
 	 * @param positionInTableList				The exact index of the chosen position
 	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
 	 */
-	public TakeCardAction(ActionType type, Familiar familiar, StaticList<TowerPosition> tablePosition, int positionInTableList) throws NotEnoughResourcesException{
+	public TakeCardAction(ActionType type, Familiar familiar, StaticList<TowerPosition> tablePosition, int positionInTableList) {
 		//Constructor for normal action
 		super(type, familiar);
 		this.tablePosition = tablePosition;
@@ -63,7 +63,7 @@ public class TakeCardAction extends Action{
 	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
 	 */
 	public TakeCardAction(ActionType type, Player player, StaticList<TowerPosition> tablePosition, 
-			int positionInTableList, int actionValue, int actionIncrement) throws NotEnoughResourcesException{
+			int positionInTableList, int actionValue, int actionIncrement) {
 		//Constructor for bonus action
 		super(type, player, actionValue, actionIncrement);
 		this.tablePosition = tablePosition;

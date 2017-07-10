@@ -1,7 +1,6 @@
 package it.polimi.ingsw.ps42.model.action;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,15 +137,10 @@ public class TakeCardTest {
 	@Test
 	public void test() {
 		
-		//Check p1 can take the first green card so it will receive a bonus action take green of level 5
-		try {
-			assertEquals(3, p1.getResource(Resource.MONEY));
-			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 0);
-			Response checker = takeCardAction.checkAction();
-			assertTrue(checker == Response.SUCCESS);
-		} catch (NotEnoughResourcesException e) {
-			System.out.println("Player hasn't enough resources");
-		}
+		assertEquals(3, p1.getResource(Resource.MONEY));
+		takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 0);
+		Response checker = takeCardAction.checkAction();
+		assertTrue(checker == Response.SUCCESS);
 		assertEquals(0, p1.getRequests().size());
 		
 		//Do the action and later verify the player resources and if the player received the bonus action
@@ -159,12 +153,12 @@ public class TakeCardTest {
 			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1, tower, 2, 5, 0);
 			takeCardAction.addDiscount(bonusAction.getDiscount());
 			assertTrue(bonusAction.checkAction(takeCardAction));
-		} catch (FamiliarInWrongPosition | NotEnoughResourcesException e) {
+		} catch (FamiliarInWrongPosition e) {
 		System.out.println("ERROR");
 		}
 		
 		//Check the new action given by the bonus action effect (must verify the action prototype first)
-		Response checker = takeCardAction.checkAction();
+		checker = takeCardAction.checkAction();
 		assertEquals(checker , Response.SUCCESS);
 		List<CardRequest> requests = p1.getRequests();
 		
@@ -199,14 +193,8 @@ public class TakeCardTest {
 		p2 = new Player("P2");
 		p2.setCanPlay(false);
 		
-		try {
-			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p2.getFamiliar(FamiliarColor.ORANGE), tower, 0);
-			assertTrue(Response.CANNOT_PLAY == takeCardAction.checkAction());
-		} catch (NotEnoughResourcesException e) {
-			logger.error("Player can not pay the card");
-			logger.info(e);
-			fail();
-		}
+		takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p2.getFamiliar(FamiliarColor.ORANGE), tower, 0);
+		assertTrue(Response.CANNOT_PLAY == takeCardAction.checkAction());
 	}
 	
 	/**
@@ -217,13 +205,8 @@ public class TakeCardTest {
 		
 		p2 = new Player("P2");
 		
-		try {
-			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p2.getFamiliar(FamiliarColor.ORANGE), tower, 0);
-			assertTrue(Response.FAILURE == takeCardAction.checkAction());
-		} catch (NotEnoughResourcesException e) {
-			logger.error("Player can not pay the card");
-			logger.info(e);
-		}
+		takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p2.getFamiliar(FamiliarColor.ORANGE), tower, 0);
+		assertTrue(Response.FAILURE == takeCardAction.checkAction());
 
 	}
 	
@@ -243,13 +226,8 @@ public class TakeCardTest {
 		//Control how many cards the player has
 		assertEquals(2, p1.getCardList(CardColor.GREEN).size());
 		
-		try {
-			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 0);
-			assertTrue(Response.FAILURE == takeCardAction.checkAction());
-		} catch (NotEnoughResourcesException e) {
-			logger.error("Player can not pay the card");
-			logger.info(e);
-		}
+		takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 0);
+		assertTrue(Response.FAILURE == takeCardAction.checkAction());
 		
 		//Try to rollback the action and check player resources has not changed
 		takeCardAction.rollBackAction();

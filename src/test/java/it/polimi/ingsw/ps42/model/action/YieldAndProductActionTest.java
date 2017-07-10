@@ -22,7 +22,6 @@ import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
-import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.player.BonusBar;
 import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.position.YieldAndProductPosition;
@@ -82,8 +81,6 @@ public class YieldAndProductActionTest {
 			player.synchResource();
 			assertEquals(2, player.getResource(Resource.MONEY));
 			assertEquals(1, player.getResource(Resource.MILITARYPOINT));
-		} catch (NotEnoughResourcesException e) {
-			fail();
 		} catch (FamiliarInWrongPosition e) {
 			fail();
 		}
@@ -101,8 +98,6 @@ public class YieldAndProductActionTest {
 			player.synchResource();
 			assertEquals(4, player.getResource(Resource.MONEY));
 			assertEquals(1, player.getResource(Resource.MILITARYPOINT));
-		} catch (NotEnoughResourcesException e) {
-			fail();
 		} catch (FamiliarInWrongPosition e) {
 			fail();
 		}
@@ -129,7 +124,7 @@ public class YieldAndProductActionTest {
 			
 			action = new YieldAndProductAction(ActionType.PRODUCE, secondPlayer.getFamiliar(FamiliarColor.ORANGE), otherPositions, firstProductPosition);
 			assertTrue(Response.LOW_LEVEL == action.checkAction());
-		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {
+		} catch (FamiliarInWrongPosition e) {
 			fail();
 		}
 
@@ -168,7 +163,7 @@ public class YieldAndProductActionTest {
 			else{
 				fail();
 			}
-		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {
+		} catch (FamiliarInWrongPosition e) {
 			e.printStackTrace();
 		}
 		

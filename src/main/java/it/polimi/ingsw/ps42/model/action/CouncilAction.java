@@ -32,9 +32,9 @@ public class CouncilAction extends Action {
 	 * @param tablePosition					The position took from the table
 	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
 	 */
-	public CouncilAction(ActionType type, Familiar familiar, CouncilPosition tablePosition) throws NotEnoughResourcesException{
+	public CouncilAction(Familiar familiar, CouncilPosition tablePosition) {
 		
-		super(type, familiar);
+		super(ActionType.COUNCIL, familiar);
 		this.tablePosition = tablePosition;
 	}
 	
@@ -46,8 +46,8 @@ public class CouncilAction extends Action {
 	 * @param actionIncrement				The increment the player wants
 	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
 	 */
-	public CouncilAction(ActionType type, Player player, CouncilPosition tablePosition, int actionIncrement) throws NotEnoughResourcesException{
-		super(type, player, 1, actionIncrement);
+	public CouncilAction(Player player, CouncilPosition tablePosition, int actionIncrement) {
+		super(ActionType.COUNCIL, player, 1, actionIncrement);
 		this.tablePosition = tablePosition;
 	}
 	

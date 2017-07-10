@@ -23,7 +23,6 @@ import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
-import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -117,11 +116,7 @@ public class MarketActionTest {
 	public void setupSimpleAction(){
 		
 		setup();		
-		try {
-			marketAction = new MarketAction(ActionType.MARKET, familiar , tablePosition, 0);
-		} catch (NotEnoughResourcesException e) {
-			e.printStackTrace();
-		}
+		marketAction = new MarketAction(familiar , tablePosition, 0);
 		
 	}
 	
@@ -134,13 +129,8 @@ public class MarketActionTest {
 		Familiar tempFamiliar = player.getFamiliar(FamiliarColor.ORANGE);
 		tempFamiliar.setValue(1);
 		tempFamiliar.setIncrement(7);
-		try {
-			action = new MarketAction(ActionType.MARKET, tempFamiliar, tablePosition, 1);
-			assertTrue(true);
-		} catch (NotEnoughResourcesException e) {
-			assertTrue(false);
-
-		}
+		action = new MarketAction(tempFamiliar, tablePosition, 1);
+		assertTrue(true);
 	}
 	
 	/**
@@ -149,25 +139,19 @@ public class MarketActionTest {
 	public void setupFamiliarIncrementAction(){
 		
 		setup();
-		try {
-			marketActionIncremented = new MarketAction(ActionType.MARKET, incrementedFamiliar, tablePosition, 1);
-		} catch (NotEnoughResourcesException e) {
-			
-			e.printStackTrace();
-		}
+		marketActionIncremented = new MarketAction(incrementedFamiliar, tablePosition, 1);
 		
 	}
 	
 	/**
 	 * Create an action with a familiar increment but that can not be performed because of a ban
-	 * @throws NotEnoughResourcesException if the Player does not have enough resources
 	 */
-	public void setupFamiliarIncrementFailAction() throws NotEnoughResourcesException{
+	public void setupFamiliarIncrementFailAction() {
 		
 		setup();
 		Effect ban = new NoFirstActionBan();
 		ban.enableEffect(player);
-		action = new MarketAction(ActionType.MARKET, incrementedFamiliar, tablePosition, 1);
+		action = new MarketAction(incrementedFamiliar, tablePosition, 1);
 		
 	}
 	
@@ -179,75 +163,66 @@ public class MarketActionTest {
 		setup();
 		MarketPosition position3 = new MarketPosition(4, null, 0, null);
 		tablePosition.add(position3);
-		try {
-			action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 2);
-		} catch (NotEnoughResourcesException e) {
-			e.printStackTrace();
-		}
+		action = new MarketAction(familiar, tablePosition, 2);
 	}
 	
 	/**
 	 * Create a position occupied and try to perform an action on that position
 	 * @throws FamiliarInWrongPosition if the Familiar is in the wrong position
-	 * @throws NotEnoughResourcesException if the Player does not have enough resources
 	 */
-	public void setupOccupiedPositionAction() throws FamiliarInWrongPosition, NotEnoughResourcesException {
+	public void setupOccupiedPositionAction() throws FamiliarInWrongPosition {
 		setup();
 		MarketPosition position3 = new MarketPosition(0, null, 0, null);
 		Familiar tempFamiliar = new Familiar(player, FamiliarColor.BLACK);
 		
 		position3.setFamiliar( tempFamiliar);
 		tablePosition.add(position3);
-		action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 2);
+		action = new MarketAction(familiar, tablePosition, 2);
 	}
 
 	/**
 	 * Create an action that can be performed but set the market ban to the player
-	 * @throws NotEnoughResourcesException if the Player does not have enough resources
 	 */
-	public void setupBanAction() throws NotEnoughResourcesException{
+	public void setupBanAction() {
 		
 		setup();
 		Effect ban = new NoMarketBan();
 		ban.enableEffect(player);
 		
-		action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 0);
+		action = new MarketAction(familiar, tablePosition, 0);
 		
 	}
 
 	/**
 	 * 	Create a bonus action
-	 * @throws NotEnoughResourcesException if the Player does not have enough resources
 	 */
-	public void setupBonusAction() throws NotEnoughResourcesException{
+	public void setupBonusAction() {
 		setup();
-		action = new MarketAction(ActionType.MARKET, player, tablePosition, 0, 0);
+		action = new MarketAction(player, tablePosition, 0, 0);
 		
 	}
 	
 	/**
 	 * 	Add to the player an increase effect and check if the action can be performed
-	 * @throws NotEnoughResourcesException if the Player does not have enough resources
 	 */
-	public void setupIncreasedAction() throws NotEnoughResourcesException{
+	public void setupIncreasedAction() {
 		setup();
 		Effect increaseEffect = new IncreaseAction(ActionType.MARKET, 2, null);
 		increaseEffect.enableEffect(player);
 		
-		action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 1);
+		action = new MarketAction(familiar, tablePosition, 1);
 		
 	}
 	
 	/**
 	 * 	Create a market position with a councilObtain bonus and perform an action on that position
-	 * @throws NotEnoughResourcesException if the Player does not have enough resources
 	 */
-	public void setupCouncilObtainMarketAction() throws NotEnoughResourcesException{
+	public void setupCouncilObtainMarketAction() {
 		setup();
 
 		MarketPosition position3 = new MarketPosition(0, null, 0, councilBonus);		
 		tablePosition.add(position3);
-		action = new MarketAction(ActionType.MARKET, familiar, tablePosition, 2);
+		action = new MarketAction(familiar, tablePosition, 2);
 		
 	}
 	
@@ -255,10 +230,9 @@ public class MarketActionTest {
 	 * Do a simple action action (Familiar in position 0 of Market) and then 
 	 * Enable the Player to place his familiar in occupied positions
 	 * 
-	 * @throws NotEnoughResourcesException if the Player does not have enough resources
 	 * @throws FamiliarInWrongPosition if the Familiar is in the wrong position
 	 */
-	public void setupDoubleFamiliarAction() throws NotEnoughResourcesException, FamiliarInWrongPosition{
+	public void setupDoubleFamiliarAction() throws FamiliarInWrongPosition {
 		
 		setupSimpleAction();
 		
@@ -274,7 +248,7 @@ public class MarketActionTest {
 		assertEquals(2, player.getResource(Resource.MONEY));
 		//Do another action in the same position		
 		player.setFamiliarValue(FamiliarColor.WHITE, 3);
-		marketAction = new MarketAction(ActionType.MARKET, player.getFamiliar(FamiliarColor.WHITE) , tablePosition, 0);
+		marketAction = new MarketAction(player.getFamiliar(FamiliarColor.WHITE) , tablePosition, 0);
 		
 	}
 	
@@ -324,16 +298,11 @@ public class MarketActionTest {
 		}
 		
 		
-		//Familiar Incremented Fail to Play Action Test
-		try {
-			setupFamiliarIncrementFailAction();
-			assertEquals(Response.CANNOT_PLAY, action.checkAction());
-			player.restoreResource();
-			assertEquals(5, player.getResource(Resource.SLAVE));
-			assertEquals(0, player.getResource(Resource.MONEY));
-		} catch (NotEnoughResourcesException e1) {
-			e1.printStackTrace();
-		}
+		setupFamiliarIncrementFailAction();
+		assertEquals(Response.CANNOT_PLAY, action.checkAction());
+		player.restoreResource();
+		assertEquals(5, player.getResource(Resource.SLAVE));
+		assertEquals(0, player.getResource(Resource.MONEY));
 		
 		
 		//Low level Familiar Action Test
@@ -358,23 +327,15 @@ public class MarketActionTest {
 			
 		} catch (FamiliarInWrongPosition e) {
 			e.printStackTrace();
-		} catch (NotEnoughResourcesException e) {
-			e.printStackTrace();
 		}
 		
 		
-		//Market Ban Action Test
-		try {
-			setupBanAction();
-			assertEquals( Response.FAILURE, action.checkAction());
-			player.restoreResource();
-			assertEquals(5, player.getResource(Resource.SLAVE));
-			assertEquals(0, player.getResource(Resource.MONEY));
-			//Nothing to do since the action do not passed the check
-			
-		} catch (NotEnoughResourcesException e) {
-			e.printStackTrace();
-		}
+		setupBanAction();
+		assertEquals( Response.FAILURE, action.checkAction());
+		player.restoreResource();
+		assertEquals(5, player.getResource(Resource.SLAVE));
+		assertEquals(0, player.getResource(Resource.MONEY));
+		//Nothing to do since the action do not passed the check
 		
 		
 		//Market Bonus Action Test
@@ -386,7 +347,7 @@ public class MarketActionTest {
 			assertEquals(0 , player.getResource(Resource.MONEY));
 			action.doAction();
 			assertEquals(2 , player.getResource(Resource.MONEY));
-		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {
+		} catch (FamiliarInWrongPosition e) {
 			e.printStackTrace();
 		}
 	
@@ -400,7 +361,7 @@ public class MarketActionTest {
 			assertEquals( 0, player.getResource(Resource.MONEY));
 			action.doAction();
 			assertEquals(4 , player.getResource(Resource.MONEY));
-		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {
+		} catch (FamiliarInWrongPosition e) {
 			e.printStackTrace();
 		}
 		
@@ -426,7 +387,7 @@ public class MarketActionTest {
 			assertEquals( 2, player.getResource(Resource.MILITARYPOINT));
 			assertEquals( 2, player.getResource(Resource.FAITHPOINT));
 		} 
-		catch (NotEnoughResourcesException | FamiliarInWrongPosition | WrongChoiceException e) {
+		catch (FamiliarInWrongPosition | WrongChoiceException e) {
 			e.printStackTrace();
 		}
 		
@@ -446,7 +407,7 @@ public class MarketActionTest {
 			
 			assertEquals(0, player.getFamiliar(FamiliarColor.WHITE).getIncrement());
 			assertEquals(0, player.getFamiliar(FamiliarColor.BLACK).getIncrement());
-		} catch (NotEnoughResourcesException | FamiliarInWrongPosition e) {
+		} catch (FamiliarInWrongPosition e) {
 			e.printStackTrace();
 		}
 		

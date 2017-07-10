@@ -32,9 +32,9 @@ public class MarketAction extends Action {
 	 * @param positionInTableList				The exact index of the chosen position
 	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
 	 */
-	public MarketAction(ActionType type, Familiar familiar, StaticList<MarketPosition> tablePosition, int positionInTableList) throws NotEnoughResourcesException{
+	public MarketAction(Familiar familiar, StaticList<MarketPosition> tablePosition, int positionInTableList) {
 
-		super(type, familiar);
+		super(ActionType.MARKET, familiar);
 		this.tablePosition = tablePosition;
 		this.positionInTableList = positionInTableList;
 	}
@@ -48,9 +48,9 @@ public class MarketAction extends Action {
 	 * @param actionIncrement					The increment of this bonus action
 	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
 	 */
-	public MarketAction(ActionType type, Player player, StaticList<MarketPosition> tablePosition, int positionInTableList, int actionIncrement) throws NotEnoughResourcesException{
+	public MarketAction(Player player, StaticList<MarketPosition> tablePosition, int positionInTableList, int actionIncrement) {
 
-		super(type, player, 1, actionIncrement);
+		super(ActionType.MARKET, player, 1, actionIncrement);
 		this.tablePosition = tablePosition;
 		this.positionInTableList = positionInTableList;
 	}

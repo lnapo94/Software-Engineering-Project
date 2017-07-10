@@ -22,7 +22,6 @@ import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
 import it.polimi.ingsw.ps42.model.enumeration.Resource;
 import it.polimi.ingsw.ps42.model.enumeration.Response;
 import it.polimi.ingsw.ps42.model.exception.FamiliarInWrongPosition;
-import it.polimi.ingsw.ps42.model.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.ps42.model.exception.WrongChoiceException;
 import it.polimi.ingsw.ps42.model.player.Familiar;
 import it.polimi.ingsw.ps42.model.player.Player;
@@ -98,57 +97,52 @@ public class CouncilActionTest {
 	
 	/**
 	 * Create a simple council action
-	 * @throws NotEnoughResourcesException if the player does not have enough resources
 	 */
-	public void setupSimpleAction() throws NotEnoughResourcesException{
+	public void setupSimpleAction() {
 		setup();
-		action = new CouncilAction(ActionType.COUNCIL, familiar, tablePosition.get(0));
+		action = new CouncilAction(familiar, tablePosition.get(0));
 		
 		
 	}
 	
 	/**
 	 * Create a bonus council action
-	 * @throws NotEnoughResourcesException if the player does not have enough resources
 	 */
-	public void setupBonusAction() throws NotEnoughResourcesException{
+	public void setupBonusAction() {
 		setup();
-		action = new CouncilAction(ActionType.COUNCIL, player, tablePosition.get(1), 1);
+		action = new CouncilAction(player, tablePosition.get(1), 1);
 		
 	}
 	
 	/**
 	 * Create an action that can not be performed since the player has a FirstPlayBan
-	 * @throws NotEnoughResourcesException if the player does not have enough resources
 	 */
-	public void setupCannotPlayAction() throws NotEnoughResourcesException{
+	public void setupCannotPlayAction() {
 		setup();
 		Effect ban = new NoFirstActionBan();
 		ban.enableEffect(player);
 		familiar.setIncrement(1);
-		action = new CouncilAction(ActionType.COUNCIL, familiar, tablePosition.get(0));
+		action = new CouncilAction(familiar, tablePosition.get(0));
 		
 	}
 	
 	/**
 	 * Create an action that can not be performed since the familiar has a low level
-	 * @throws NotEnoughResourcesException if the player does not have enough resources
 	 */
-	public void setupLowLevelAction() throws NotEnoughResourcesException{
+	public void setupLowLevelAction() {
 		setup();
 		Familiar neutral = player.getFamiliar(FamiliarColor.NEUTRAL);
 		neutral.setValue(0);
 		neutral.setIncrement(2);
 		CouncilPosition tempPosition = new CouncilPosition(3, null, 0, councilObtain);
 		tablePosition.add(tempPosition);
-		action = new CouncilAction(ActionType.COUNCIL, neutral, tablePosition.get(2));
+		action = new CouncilAction(neutral, tablePosition.get(2));
 	}
 	
 	/**
 	 * Create an Increase Action effect for the CouncilAction and do an Action that use that increment
-	 * @throws NotEnoughResourcesException if the player does not have enough resources
 	 */
-	public void setupIncrementedAction() throws NotEnoughResourcesException{
+	public void setupIncrementedAction() {
 		setup();
 		IncreaseAction increaseEffect = new IncreaseAction(ActionType.COUNCIL, 3, null);
 		increaseEffect.enableEffect(player);
@@ -158,7 +152,7 @@ public class CouncilActionTest {
 		Obtain bouns = new Obtain(null, tempGains, null);
 		CouncilPosition tempPosition = new CouncilPosition(4, bouns, 0, councilObtain);
 		tablePosition.add(tempPosition);
-		action = new CouncilAction(ActionType.COUNCIL, familiar, tablePosition.get(2));
+		action = new CouncilAction(familiar, tablePosition.get(2));
 	}
 	
 	@Test
@@ -184,7 +178,7 @@ public class CouncilActionTest {
 			player.synchResource();
 			assertEquals(4, player.getResource(Resource.SLAVE));
 			assertEquals(1, player.getResource(Resource.STONE));
-		} catch (NotEnoughResourcesException | WrongChoiceException | FamiliarInWrongPosition e) {
+		} catch (WrongChoiceException | FamiliarInWrongPosition e) {
 			e.printStackTrace();
 		}
 		
@@ -204,33 +198,21 @@ public class CouncilActionTest {
 			assertEquals(0, player.getResource(Resource.STONE));			
 			assertEquals(2, player.getResource(Resource.WOOD));			
 
-		} catch (NotEnoughResourcesException | FamiliarInWrongPosition | WrongChoiceException e) {
+		} catch (FamiliarInWrongPosition | WrongChoiceException e) {
 			e.printStackTrace();
 		}
 				
-		//Can not Play CouncilAction Test
-		try {
-			setupCannotPlayAction();
-			assertEquals(Response.CANNOT_PLAY, action.checkAction());
-			player.restoreResource();
-			assertEquals(3, player.getResource(Resource.SLAVE));
-			//Nothing to do more since the action do not passed the check
-			
-		} catch (NotEnoughResourcesException e) {
-			e.printStackTrace();
-		}
+		setupCannotPlayAction();
+		assertEquals(Response.CANNOT_PLAY, action.checkAction());
+		player.restoreResource();
+		assertEquals(3, player.getResource(Resource.SLAVE));
+		//Nothing to do more since the action do not passed the check
 		
-		//Low level CouncilAction Test
-		try {
-			setupLowLevelAction();
-			assertEquals(Response.LOW_LEVEL, action.checkAction());
-			player.restoreResource();
-			assertEquals(3, player.getResource(Resource.SLAVE));
-			//Nothing to do more since the action do not passed the check
-
-		} catch (NotEnoughResourcesException e) {
-			e.printStackTrace();
-		}
+		setupLowLevelAction();
+		assertEquals(Response.LOW_LEVEL, action.checkAction());
+		player.restoreResource();
+		assertEquals(3, player.getResource(Resource.SLAVE));
+		//Nothing to do more since the action do not passed the check
 		
 		//Incremented CouncilAction Test
 		try {
@@ -247,7 +229,7 @@ public class CouncilActionTest {
 			request.apply(player);
 			player.synchResource();
 			assertEquals( 2, player.getResource(Resource.MONEY));
-		} catch (NotEnoughResourcesException | FamiliarInWrongPosition | WrongChoiceException e) {
+		} catch (FamiliarInWrongPosition | WrongChoiceException e) {
 			e.printStackTrace();
 		}
 		

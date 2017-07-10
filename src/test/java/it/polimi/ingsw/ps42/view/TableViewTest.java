@@ -24,6 +24,12 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This test aims to control all the TableView functionality, to verify if this class
+ * can manage all the Controller update messages, like the dice updates, the placement of the cards 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class TableViewTest {
 
 	private TableView table;
@@ -51,6 +57,10 @@ public class TableViewTest {
 		
 	}
 	
+	/**
+	 * This test try to verify if, when a dice update message arrives in the view,
+	 * the table can set its dice values 
+	 */
 	public void testDice(){
 		
 		table.setBlackDie(2);
@@ -68,6 +78,9 @@ public class TableViewTest {
 		}
 	}
 	
+	/**
+	 * This method tries to set the correct ban to the correct player.
+	 */
 	public void testBanMethods(){
 		
 		table.addFirstBan(new CardBan(CardColor.BLUE));
@@ -95,6 +108,10 @@ public class TableViewTest {
 
 	}
 	
+	/**
+	 * Simple test used to test a game mechanic. In this case the method tests when a familiar
+	 * is placed in a tower position
+	 */
 	public void testFamiliarSetter(){
 		
 		try {
@@ -108,6 +125,10 @@ public class TableViewTest {
 		
 	}
 	
+	/**
+	 * This test tries to set a card in the correct TableView tower and to take it from the tower
+	 * @throws ElementNotFoundException
+	 */
 	public void testCardGetters() throws ElementNotFoundException{
 		
 		//Create 4 Cards 
@@ -139,6 +160,9 @@ public class TableViewTest {
 		
 	}
 	
+	/**
+	 * This is the method run by the JUnit test, it tests all the before methods
+	 */
 	@Test
 	public void test() {
 

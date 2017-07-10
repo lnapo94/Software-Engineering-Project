@@ -36,7 +36,7 @@ public class YieldAndProductAction extends Action {
 	 * @param firstPosition					The first yield or product position in the table (For default game, is that has no malus)
 	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
 	 */
-	public YieldAndProductAction(ActionType type, Familiar familiar, List<YieldAndProductPosition> tablePosition, YieldAndProductPosition firstPosition) throws NotEnoughResourcesException{
+	public YieldAndProductAction(ActionType type, Familiar familiar, List<YieldAndProductPosition> tablePosition, YieldAndProductPosition firstPosition) {
 		//Constructor for normal action
 		super(type, familiar);
 		this.tablePosition = tablePosition;
@@ -54,7 +54,7 @@ public class YieldAndProductAction extends Action {
 	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
 	 */
 	public YieldAndProductAction(ActionType type, Player player, List<YieldAndProductPosition> tablePosition,
-			YieldAndProductPosition firstPosition, int actionValue, int actionIncrement) throws NotEnoughResourcesException {
+			YieldAndProductPosition firstPosition, int actionValue, int actionIncrement) {
 
 		super(type, player, actionValue, actionIncrement);
 		this.tablePosition = tablePosition;
