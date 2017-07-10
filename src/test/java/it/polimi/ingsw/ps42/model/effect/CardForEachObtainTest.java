@@ -15,6 +15,13 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This class tests the CardForEach effect, so it creates a Player with different cards, enable on him 
+ * the CardForEach effect and later verifies that the right number of resources has been given to the player
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CardForEachObtainTest {
 
 	private Player player;

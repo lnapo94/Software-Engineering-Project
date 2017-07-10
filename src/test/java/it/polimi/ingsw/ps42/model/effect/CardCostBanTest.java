@@ -17,6 +17,14 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This class tests the functionality of the CardCostBan effect, so it creates two player with some 
+ *  victory points and some cards, later activate the CardCostBan on each of the players and checks 
+ *  their victory points
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CardCostBanTest {
 	
 	private Player p1;

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.junit.After;
 import org.junit.Before;
@@ -21,12 +22,22 @@ import it.polimi.ingsw.ps42.model.player.Player;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+
+/**
+ * This class tests the functionality of the CouncilObtain effect, so it creates two player that will take a card
+ * with a CouncilObtain effect, enable it, resolve its requests and later verify the resources of each player
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CouncilObtainTest {
 
 	private Player player1;
 	private Player player2;
 	private Card card;
 	private Card card2;
+	
+	private Logger logger = Logger.getLogger(CouncilObtainTest.class);
 	
 	@BeforeClass
 	public static void classSetUp() {
@@ -138,15 +149,17 @@ public class CouncilObtainTest {
 				finalCheck();
 				
 			} catch (WrongChoiceException e) {
-				e.printStackTrace();
+				logger.error("Problems occured in council obtain test");
+				logger.info(e);
 			}
 			
 			
 		} catch (NotEnoughResourcesException e) {
+		
+			logger.error("Problems occured in council obtain test");
+			logger.info(e);
 			
-			e.printStackTrace();
 		}
-
 		
 	}
 

@@ -180,7 +180,7 @@ public class TakeCardTest {
 			takeCardAction.doAction();
 			p1.synchResource();
 			//Now player has 2 money, he payed two money for the card but he has earned two money from the position
-			assertEquals(2, p1.getResource(Resource.MONEY));
+			assertEquals(0 , p1.getResource(Resource.MONEY));
 		} catch (FamiliarInWrongPosition e) {
 			System.out.println("ERROR");
 		}
@@ -254,8 +254,10 @@ public class TakeCardTest {
 		assertEquals(0, p1.getResource(Resource.MONEY));
 		TakeCardAction action = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 2);
 		
+		//Check an action you cannot afford
+		assertEquals( Response.LOW_LEVEL ,action.checkAction());
 		
-		
+		assertEquals(0, p1.getResource(Resource.MONEY));
 		
 	}
 	
