@@ -98,6 +98,9 @@ public class GameLogic implements Observer {
     //Variable to know if the player is answer to some leader request
     private boolean isAnswerPendingCouncilRequest;
     
+    //Variable used to check if the Controller is waiting a move
+    private boolean isWaitingAMove;
+    
     //Logger
     private transient Logger logger = Logger.getLogger(GameLogic.class);
 
@@ -714,10 +717,15 @@ public class GameLogic implements Observer {
     	}
     }
     
+    /**
+     * Private method used when the GameLogic needs a move from a player
+     */
     private void askMoveToPlayer() {
-		//DEBUG
 		logger.debug("Player: " + currentPlayer.getPlayerID() + " is playing...");
 		currentPlayer.askMove();
+		
+		//Set the variable
+		isWaitingAMove = true;
 		
         //Set the timer
         Timer timer = new Timer();
@@ -808,6 +816,14 @@ public class GameLogic implements Observer {
     }
     
     /**
+     * Method used to know if the GameLogic is waiting a move from a player
+     * @return	True if the Controller is waiting a move, otherwise False
+     */
+    public boolean isWaitingAMove() {
+    	return this.isWaitingAMove;
+    }
+    
+    /**
      * Method called by the visitor to handle a PlayerMove
      * @param action		The action created from the PlayerMove
      * @param playerID		The player who is playing
@@ -816,7 +832,7 @@ public class GameLogic implements Observer {
     	
     	try {
     		Player player = searchPlayer(playerID);
-			if(player.getPlayerID().equals(currentPlayer.getPlayerID())) {
+			if(player.getPlayerID().equals(currentPlayer.getPlayerID()) && isWaitingAMove()) {
 				player.synchResource();
 				
 				if(bonusAction != null && (!bonusAction.checkAction(action) || !action.isBonusAction())) {
@@ -856,6 +872,8 @@ public class GameLogic implements Observer {
 						player.retrasmitMessage(message);
 					}
 					else if(currentAction == null){
+						//Now the Controller isn't waiting a move
+						isWaitingAMove = false;
 						//Cancel the bonus action if there was one in GameLogic
 						bonusAction = null;
 						//Cancel the timer
@@ -954,6 +972,7 @@ public class GameLogic implements Observer {
     	currentPlayer.synchResource();
     	
     	if(bonusAction != null) {
+    		isWaitingAMove = true;
     		currentPlayer.askMove();
     		Timer timer = new Timer();
     		timer.schedule(new PlayerMoveTimer(currentPlayer, this), TIMER_SECONDS * 1000);
@@ -1194,6 +1213,9 @@ public class GameLogic implements Observer {
 						timerTable.remove(player).cancel();
 					
 					if(playersList.size() == 1) {
+
+						table.finish();
+						
 						rollBackAction();
 						removePlayerFromPendingRequest(playersList.get(0));
 						
@@ -1212,8 +1234,6 @@ public class GameLogic implements Observer {
 						
 						if(timerTable.containsKey(playersList.get(0)))
 							timerTable.remove(playersList.get(0)).cancel();
-						
-						table.finish();
 					}
 				}
 			} catch (ElementNotFoundException e) {

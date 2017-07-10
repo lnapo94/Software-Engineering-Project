@@ -1,9 +1,12 @@
 package it.polimi.ingsw.ps42.model.leaderCard;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -27,10 +30,12 @@ public class LeaderCardTest {
 	private LeaderCard requirementsCard;
 	private Player enableEffectPlayer;
 	private LeaderCard onceATimeEffectLeaderCard;
+	private static Logger logger;
 	
 	@BeforeClass
 	public static void classSetUp() {
 		PropertyConfigurator.configure("Logger//Properties//test_log.properties");
+		logger = Logger.getLogger(LeaderCardTest.class);
 	}
 	
 	@Before
@@ -83,6 +88,7 @@ public class LeaderCardTest {
 	
 	@Test
 	public void enableAPermanentEffectTest() {
+		logger.info("Enable permanent effect for the card: " + requirementsCard.toString());
 		enableEffectPlayer.setLeaderCard(requirementsCard);
 		requirementsCard.setOwner(enableEffectPlayer);
 		
@@ -105,6 +111,7 @@ public class LeaderCardTest {
 	
 	@Test
 	public void enableOnceATimeEffectTest() {
+		logger.info("Enable once a round effect for the card: " + onceATimeEffectLeaderCard.toString());
 		enableEffectPlayer.setLeaderCard(onceATimeEffectLeaderCard);
 		onceATimeEffectLeaderCard.setOwner(enableEffectPlayer);
 		
@@ -133,13 +140,27 @@ public class LeaderCardTest {
 		//Control if the request is a familiar request and if it is, apply it
 		if(request instanceof LeaderFamiliarRequest) {
 			LeaderFamiliarRequest familiarRequest = (LeaderFamiliarRequest) request;
-			familiarRequest.setFamiliarColor(FamiliarColor.NEUTRAL);
+			familiarRequest.setFamiliarColor(FamiliarColor.ORANGE);
 			familiarRequest.apply(enableEffectPlayer);
 		}
 		
 		//Now control if the neutral familiar of the player has 5 as its value
 		
-		assertEquals(5,enableEffectPlayer.getFamiliarValue(FamiliarColor.NEUTRAL));
+		assertEquals(5,enableEffectPlayer.getFamiliarValue(FamiliarColor.ORANGE));
+	}
+	
+	@Test
+	public void cloneCard() {
+		logger.info("Clone the \"" + onceATimeEffectLeaderCard.toString() + "\" card");
+		
+		//Test used to clone a leader card
+		LeaderCard clonedCard = onceATimeEffectLeaderCard.clone();
+		
+		//Control if the cards names are equals
+		clonedCard.equals(onceATimeEffectLeaderCard);
+		
+		//Verified if the two cards has the some once a round effect
+		assertTrue(clonedCard.getOnceARoundEffect().getTypeOfEffect() == onceATimeEffectLeaderCard.getOnceARoundEffect().getTypeOfEffect());
 	}
 
 }

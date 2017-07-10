@@ -330,8 +330,14 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	@Override
 	public void sendMessage(Message message) throws RemoteException {
 		logger.info("new msg for the game logic from:" +message.getPlayerID());
-		setChanged();
-		notifyObservers(message);
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				setChanged();
+				notifyObservers(message);
+			}
+		}).start();
 	}
 	
 

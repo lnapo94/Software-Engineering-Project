@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -1167,6 +1165,7 @@ public class GUIView extends View implements TableInterface{
 			public void actionPerformed(ActionEvent e) {
 				//Send to the GameLogic an emptyMove
 				setEmptyMove();
+				nextMove = null;
 				disableMove();
 			}
 		});
@@ -1376,7 +1375,6 @@ public class GUIView extends View implements TableInterface{
 
 	public void disableMove( ){
 		
-		nextMove = null;
 		disableFamiliarMove();
 		disableSkipButton();
 		if(bonusFamiliar != null){

@@ -65,15 +65,14 @@ public class PlayerMoveTimer extends TimerTask{
 		
 		logic.removeBonusAction();
 		
-		logic.initAction();
-		
 		if(isBanRequest) {
 			//Conversion for the correct period
 			int index = (logic.getCurrentRound() / 2) - 1;
 			
 			//By default, enable the ban
 			logic.handleBan(player.getPlayerID(), index, false);
-		}
+		} else 
+			logic.initAction();
 	}
 
 }

@@ -1,8 +1,6 @@
 package it.polimi.ingsw.ps42.client;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -50,7 +48,6 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 	public RMIClient(String host) {
 		this.host = host;
 		PropertyConfigurator.configure("Logger//Properties//client_log.properties");
-		String RMIhostname = "//" + host + "/Server";
 		
 		try {
 			Registry registry = LocateRegistry.getRegistry(host, 1099);
@@ -139,7 +136,7 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 			}
 		}
 	}
-	
+
 	/**
 	 * Method used to start the RMI client and create the correct view
 	 * 
