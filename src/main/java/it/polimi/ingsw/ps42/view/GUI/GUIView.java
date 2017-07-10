@@ -205,10 +205,10 @@ public class GUIView extends View implements TableInterface{
 		mainLayeredPane.add(lowTableLabel, -1);
 		
 		//Add the label for the Dice
-		buildDicePositions(mainLayeredPane, lowTableDimension);
+		buildDicePositions(lowTableDimension);
 		
 		//Add the Ban's Labels 
-		buildBanLabel(mainLayeredPane);
+		buildBanLabel();
 
 		//Set the Cards taken container
 		Dimension containerDimension = new Dimension((int)(rightPanelDimension.getWidth()),(int) (rightPanelDimension.getHeight()-cardZoom.getHeight()));
@@ -217,11 +217,11 @@ public class GUIView extends View implements TableInterface{
 		mainLayeredPane.add(cardContainer, -1);
 		
 		//Build the main Familiar positions
-		buildCardPosition(cardDimension, mainLayeredPane);
+		buildCardPosition(cardDimension);
 		
-		buildFamiliarStartingPositions(mainLayeredPane);
+		buildFamiliarStartingPositions();
 		
-		buildFamiliarMovePositions(mainLayeredPane);
+		buildFamiliarMovePositions();
 		
 		//Add the Resource Update Window
 		Dimension resourceWindowDimension = new Dimension((int)(rightPanelDimension.getWidth()-cardZoom.getWidth()), (int)(rightPanelDimension.getHeight() - lowTableLabel.getHeight() - containerDimension.getHeight()));
@@ -246,10 +246,9 @@ public class GUIView extends View implements TableInterface{
 	/**
 	 * Initialize the Card Position Label
 	 * @param cardDimension Dimension of the card that will be placed
-	 * @param mainPane Pane where the Card will be placed
 	 * @throws IOException 	Thrown if some file cannot be opened
 	 */
-	private void buildCardPosition(Dimension cardDimension, JLayeredPane mainPane) throws IOException{
+	private void buildCardPosition(Dimension cardDimension) throws IOException{
 		
 		int deltaX = (int)(tableImageDimension.getWidth()*0.022);
 		int deltaY = (int)(tableImageDimension.getHeight()*0.03);
@@ -262,7 +261,7 @@ public class GUIView extends View implements TableInterface{
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
 			greenTower.addFirst(card);
-			mainPane.add(card, 0);
+			mainLayeredPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
 		deltaY = (int)(tableImageDimension.getHeight()*0.03);
@@ -271,7 +270,7 @@ public class GUIView extends View implements TableInterface{
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
 			blueTower.addFirst(card);
-			mainPane.add(card, 0);
+			mainLayeredPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
 		deltaY = (int)(tableImageDimension.getHeight()*0.03);
@@ -280,7 +279,7 @@ public class GUIView extends View implements TableInterface{
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
 			yellowTower.addFirst(card);
-			mainPane.add(card, 0);
+			mainLayeredPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
 		deltaY = (int)(tableImageDimension.getHeight()*0.03);
@@ -289,7 +288,7 @@ public class GUIView extends View implements TableInterface{
 		for(int i=0; i<4; i++){
 			CardLabel card = new CardLabel(deltaX, deltaY, cardDimension, cardZoom); 
 			violetTower.addFirst(card);
-			mainPane.add(card, 0);
+			mainLayeredPane.add(card, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.015) + cardDimension.getHeight();
 		}
 
@@ -298,10 +297,9 @@ public class GUIView extends View implements TableInterface{
 
 	/**
 	 * Method used to construct the familiars' starting position on the screen
-	 * @param mainPane		The LayeredPane where position the label
 	 * @throws IOException	Thrown if some picture cannot be opened
 	 */
-	private void buildFamiliarStartingPositions(JLayeredPane mainPane) throws IOException{
+	private void buildFamiliarStartingPositions() throws IOException{
 		
 		int deltaX = (int)(tableImageDimension.getWidth()*0.56 );
 		int deltaY = (int)(tableImageDimension.getHeight()*0.93);
@@ -309,35 +307,34 @@ public class GUIView extends View implements TableInterface{
 		blackFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), imageLoader.loadFamiliarImage( 0, FamiliarColor.BLACK), FamiliarColor.BLACK);
 		blackFamiliar.enableListener();
 		blackFamiliar.setTable(this);
-		mainPane.add(blackFamiliar, 2);
+		mainLayeredPane.add(blackFamiliar, 2);
 		
 		int border = (int)(blackFamiliar.getWidth()*1.1); 
 		deltaX += border;
 		whiteFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), imageLoader.loadFamiliarImage( 0, FamiliarColor.WHITE), FamiliarColor.WHITE);
 		whiteFamiliar.enableListener();
 		whiteFamiliar.setTable(this);
-		mainPane.add(whiteFamiliar, 2);
+		mainLayeredPane.add(whiteFamiliar, 2);
 		
 		deltaX += border;
 		orangeFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), imageLoader.loadFamiliarImage(0, FamiliarColor.ORANGE), FamiliarColor.ORANGE);
 		orangeFamiliar.enableListener();
 		orangeFamiliar.setTable(this);
-		mainPane.add(orangeFamiliar, 2);
+		mainLayeredPane.add(orangeFamiliar, 2);
 		
 		deltaX += border;
 		neutralFamiliar = new DraggableComponent(deltaX, deltaY, tableImageDimension.getSize(), imageLoader.loadFamiliarImage(0, FamiliarColor.NEUTRAL), FamiliarColor.NEUTRAL);
 		neutralFamiliar.enableListener();
 		neutralFamiliar.setTable(this);
-		mainPane.add(neutralFamiliar, 2);
+		mainLayeredPane.add(neutralFamiliar, 2);
 		
 	}
 	
 	/**
 	 * Method used to build all the possible labels where a familiar can be positioned
-	 * @param mainPane			The LayeredPane where position the label
 	 * @throws IOException 		Thrown if some file cannot be opened
 	 */
-	private void buildFamiliarMovePositions(JLayeredPane mainPane) throws IOException{
+	private void buildFamiliarMovePositions() throws IOException{
 		
 		//Build the Tower related familiarMove positions
 		greenTowerForFamiliar = new LinkedList<>();
@@ -347,96 +344,93 @@ public class GUIView extends View implements TableInterface{
 
 		int deltaX = (int)(tableImageDimension.getWidth()*0.172);
 		Dimension positionDimension = new Dimension((int)(tableImageDimension.getWidth()*0.06), (int)(tableImageDimension.getHeight()*0.05));
-		placeFamiliarPosition(mainPane, positionDimension, greenTowerForFamiliar, deltaX);
+		placeFamiliarPosition(positionDimension, greenTowerForFamiliar, deltaX);
 		deltaX += (int)(tableImageDimension.getWidth()*0.242);
-		placeFamiliarPosition(mainPane, positionDimension, blueTowerForFamiliar, deltaX);
+		placeFamiliarPosition(positionDimension, blueTowerForFamiliar, deltaX);
 		deltaX += (int)(tableImageDimension.getWidth()*0.242);
-		placeFamiliarPosition(mainPane, positionDimension, yellowTowerForFamiliar, deltaX);
+		placeFamiliarPosition(positionDimension, yellowTowerForFamiliar, deltaX);
 		deltaX += (int)(tableImageDimension.getWidth()*0.241);
-		placeFamiliarPosition(mainPane, positionDimension, violetTowerForFamiliar, deltaX);		
+		placeFamiliarPosition(positionDimension, violetTowerForFamiliar, deltaX);		
 		
 		//Build the Council related familiarMove positions
 		Dimension positionContainerDimension = new Dimension((int)(tableImageDimension.getWidth()*0.3), (int)(tableImageDimension.getHeight()*0.12));
 		Point positionContainerLocation = new Point((int)(tableImageDimension.getWidth()*0.52), (int)(tableImageDimension.getHeight()*0.76));
 		council = new PositionContainer(positionContainerDimension, positionContainerLocation, new Dimension((int)(tableImageDimension.getWidth()*0.06), (int)(tableImageDimension.getHeight()*0.05)));
-		mainPane.add(council, 0);
+		mainLayeredPane.add(council, 0);
 		
 		//Build the Market, Yield and Product familiarMove positions
 		market = new ArrayList<>();
 
 		int deltaY = (int)(tableImageDimension.getHeight()*0.11);
-		firstProduce = placeYieldAndProductPosition(mainPane, positionDimension, firstProduce, deltaY);
+		firstProduce = placeYieldAndProductPosition(positionDimension, firstProduce, deltaY);
 		//Build the second Position
 		deltaX = (int)(tableImageDimension.getWidth() + cardZoom.getWidth() + lowTableDimension.getWidth()*0.14);
 		Dimension secondPositionDimension = new Dimension((int)(tableImageDimension.getWidth()*0.25), (int)(tableImageDimension.getHeight()*0.1));
 		secondProduce = new PositionContainer(secondPositionDimension, new Point(deltaX, (int)(deltaY*0.75)), positionDimension);
-		mainPane.add(secondProduce, 0);
+		mainLayeredPane.add(secondProduce, 0);
 		
 		deltaY += (int)(tableImageDimension.getHeight()*0.145);
-		firstYield = placeYieldAndProductPosition(mainPane, positionDimension, firstYield, deltaY);
+		firstYield = placeYieldAndProductPosition(positionDimension, firstYield, deltaY);
 		//Build the second Position
 		secondYield = new PositionContainer(secondPositionDimension, new Point(deltaX, (int)(deltaY * 0.9)), positionDimension);
-		mainPane.add(secondYield, 0);
+		mainLayeredPane.add(secondYield, 0);
 		
 		deltaX = (int)(tableImageDimension.getWidth()*1.615 + cardZoom.getWidth() );
 		deltaY = (int)(tableImageDimension.getHeight()*0.08);
-		placeMarket(positionDimension, deltaX, deltaY, mainPane);
+		placeMarket(positionDimension, deltaX, deltaY);
 		deltaX += (int)(positionDimension.getWidth()*1.85);
-		placeMarket(positionDimension, deltaX, deltaY, mainPane);
+		placeMarket(positionDimension, deltaX, deltaY);
 		deltaX += (int)(positionDimension.getWidth()*1.75);
 		deltaY = (int)(tableImageDimension.getHeight()*0.11);
-		placeMarket(positionDimension, deltaX, deltaY, mainPane);
+		placeMarket(positionDimension, deltaX, deltaY);
 		deltaX += (int)(positionDimension.getWidth()*1.42);
 		deltaY += (int)(tableImageDimension.getHeight()*0.085);
-		placeMarket(positionDimension, deltaX, deltaY, mainPane);
+		placeMarket(positionDimension, deltaX, deltaY);
 		
 		mainLayeredPane.updateUI();
 	}
 	
 	/**
 	 * Method used to create all the single positions of the market
-	 * @param positionDimension		The dimesions of the position 
+	 * @param positionDimension		The dimension of the position 
 	 * @param x						The X of the screen where position the label
 	 * @param y						The Y of the screen where position the label
-	 * @param mainPane				The LayeredPane where position the label
 	 */
-	private void placeMarket(Dimension positionDimension, int x, int y, JLayeredPane mainPane) {
+	private void placeMarket(Dimension positionDimension, int x, int y) {
 		
 		JLabel position = new JLabel();
 		position.setSize(positionDimension);
 		position.setLocation(x, y);
 		market.add(position);
-		mainPane.add(position, 0);
+		mainLayeredPane.add(position, 0);
 	}
 	
 	/**
 	 * Method used to create all the single positions of the yield and the product
-	 * @param mainPane				The LayeredPane where position the label
-	 * @param positionDimension		The dimesions of the position 
+	 * @param positionDimension		The dimension of the position 
 	 * @param firstPosition			The label of the first position
 	 * @param deltaY				Used to set the correct delta between yield and product on the screen
 	 * @return						The label with the correct dimension to place the familiars
 	 */
-	private JLabel placeYieldAndProductPosition(JLayeredPane mainPane, Dimension positionDimension, JLabel firstPosition, int deltaY) {
+	private JLabel placeYieldAndProductPosition(Dimension positionDimension, JLabel firstPosition, int deltaY) {
 		
 		//Build the first position
 		int deltaX = (int)(tableImageDimension.getWidth()*1.03 + cardZoom.getWidth() );
 		firstPosition = new JLabel();
 		firstPosition.setSize(positionDimension);
 		firstPosition.setLocation(deltaX, deltaY);
-		mainPane.add(firstPosition, 0);
+		mainLayeredPane.add(firstPosition, 0);
 		deltaX += positionDimension.getWidth();
 		return firstPosition;
 	}
 	
 	/**
 	 * Method used to create all the 4 towers positions
-	 * @param mainPane				The LayeredPane where position the label
-	 * @param positionDimension		The dimesions of the position 
+	 * @param positionDimension		The dimension of the position 
 	 * @param tower					The list used to contain all the tower labels
 	 * @param rightShift			The parameter to set the horizontal gap between the towers
 	 */
-	private void placeFamiliarPosition(JLayeredPane mainPane, Dimension positionDimension, LinkedList<JLabel> tower, int rightShift) {
+	private void placeFamiliarPosition(Dimension positionDimension, LinkedList<JLabel> tower, int rightShift) {
 		
 		int deltaY = (int)(tableImageDimension.getHeight()*0.081);
 		for (int i=0; i<4; i++){
@@ -444,76 +438,72 @@ public class GUIView extends View implements TableInterface{
 			familiarPosition.setSize(positionDimension);
 			familiarPosition.setLocation(rightShift, deltaY);
 			tower.addFirst(familiarPosition);
-			mainPane.add(familiarPosition, 0);
+			mainLayeredPane.add(familiarPosition, 0);
 			deltaY += (int)(tableImageDimension.getHeight()*0.1858);
 		}
 	}
 	
 	/**
 	 * Method used to create the dice positions on the screen
-	 * @param mainPane				The LayeredPane where position the label
 	 * @param lowerTableDimension	The dimension of the lower part of table on the screen to use the correct proportions
 	 */
-	private void buildDicePositions(JLayeredPane mainPane, Dimension lowerTableDimension ) {
+	private void buildDicePositions(Dimension lowerTableDimension ) {
 		
 		Dimension diceDimension = new Dimension((int)(lowerTableDimension.getWidth()*0.09),(int)(lowerTableDimension.getHeight()*0.21));
-		blackDice = buildSingleDice(mainPane, diceDimension, lowerTableDimension, 0);
+		blackDice = buildSingleDice(diceDimension, lowerTableDimension, 0);
 		int rightShift = (int)(diceDimension.getWidth()*1.29);
-		whiteDice = buildSingleDice(mainPane, diceDimension, lowerTableDimension, rightShift);
+		whiteDice = buildSingleDice(diceDimension, lowerTableDimension, rightShift);
 		rightShift += (int)(diceDimension.getWidth()*1.3);
-		orangeDice = buildSingleDice(mainPane, diceDimension, lowerTableDimension, rightShift);
+		orangeDice = buildSingleDice(diceDimension, lowerTableDimension, rightShift);
 	}
 	
 	/**
 	 * Method used to build the single label for the die
-	 * @param mainPane					The LayeredPane where position the label
 	 * @param diceDimension				The die dimension
 	 * @param lowerTableDimension		The dimension of the lower part of table on the screen to use the correct proportions
 	 * @param rightShift				The distance between one die and another one on the screen
 	 * @return							The label with the image of the correct die
 	 */
-	private JLabel buildSingleDice(JLayeredPane mainPane, Dimension diceDimension, Dimension lowerTableDimension, int rightShift) {
+	private JLabel buildSingleDice(Dimension diceDimension, Dimension lowerTableDimension, int rightShift) {
 		
 		Point location = new Point((int) (tableImageDimension.getWidth() + cardZoom.getWidth() + lowerTableDimension.getWidth()*0.58 + rightShift),(int) (lowerTableDimension.getHeight()*0.72));
 		JLabel diceLable = new JLabel();
 		diceLable.setSize(diceDimension);
 		diceLable.setLocation(location);
-		mainPane.add(diceLable, 0);
+		mainLayeredPane.add(diceLable, 0);
 		return diceLable;
 	}
 	
 	/**
 	 * Method used to build all the ban labels
-	 * @param mainPane		The LayeredPane where position the label
 	 */
-	private void buildBanLabel(JLayeredPane mainPane) {
+	private void buildBanLabel() {
 		
 		bans = new ArrayList<>();
 		int deltaX = 0;
 		int deltaY = 0;
 		Dimension banDimension = new Dimension((int)(tableImageDimension.getWidth()*0.088), (int)(tableImageDimension.getHeight()*0.15));
-		bans.add(buildSingleBanLabel(mainPane,banDimension, deltaX, deltaY));
+		bans.add(buildSingleBanLabel(banDimension, deltaX, deltaY));
 		deltaX += (int)(tableImageDimension.getWidth() * 0.008 + banDimension.getWidth());
 		deltaY += (int)(banDimension.getHeight() * 0.1);
-		bans.add(buildSingleBanLabel(mainPane,banDimension, deltaX, deltaY));
+		bans.add(buildSingleBanLabel(banDimension, deltaX, deltaY));
 		deltaX += (int)(tableImageDimension.getWidth() * 0.004 + banDimension.getWidth());
 		deltaY = 0;
-		bans.add(buildSingleBanLabel(mainPane,banDimension, deltaX, deltaY ));
+		bans.add(buildSingleBanLabel(banDimension, deltaX, deltaY ));
 
 	}
 	
 	/**
 	 * Method used to build a single ban label
-	 * @param mainPane			The LayeredPane where position the label
 	 * @param banDimension		The dimesion of the ban
 	 * @param rightShift		The horizontal gap between two bans on the screen
 	 * @param downShift			The vertical gap between the bans
 	 * @return					The CardLabel with the image of the ban
 	 */
-	private CardLabel buildSingleBanLabel(JLayeredPane mainPane, Dimension banDimension, int rightShift, int downShift) {
+	private CardLabel buildSingleBanLabel(Dimension banDimension, int rightShift, int downShift) {
 		
 		CardLabel ban = new CardLabel((int)(tableImageDimension.getWidth()*0.172 + rightShift), (int)(tableImageDimension.getHeight()*0.835 + downShift), banDimension, cardZoom);
-		mainPane.add(ban, 0);
+		mainLayeredPane.add(ban, 0);
 		return ban;
 	}
 	
@@ -1267,23 +1257,13 @@ public class GUIView extends View implements TableInterface{
 	 */
 	@Override
 	protected void choosePlayerMove(ActionPrototype prototype, boolean isRetrasmission) {
-		//Enable the Player to perform a new Move, if is a retrasmission then cancel the precedent
+		//Enable the Player to perform a new Move, if is a retransmission then cancel the precedent
 		logger.debug("Starting procedure for a new move, old move = "+ nextMove);
 
 		enableSkipButton();
 		
 		if(isRetrasmission && nextMove != null){
 			logger.debug("Deleting previous move");
-/*			Timer timer = new Timer();
-			timer.schedule(new TimerTask() {
-				
-				@Override
-				public void run() {
-					cancelMove(nextMove.getActionType(), nextMove.getPosition());
-					
-				}
-			}, 500);
-	*/
 			cancelMove(nextMove.getActionType(), nextMove.getPosition());
 		}
 		
@@ -1333,7 +1313,7 @@ public class GUIView extends View implements TableInterface{
 		leaderCardButton.setSize(skipMove.getSize());
 		leaderCardButton.setFont(new Font("Papyrus", Font.ITALIC, (int)(leaderCardButton.getWidth()*0.13)));
 		mainLayeredPane.add(leaderCardButton, 0);
-		leaderCardButton.addActionListener(new MyActionLister(this));
+		leaderCardButton.addActionListener(new MyActionListener(this));
 				
 		
 	}
@@ -1355,11 +1335,11 @@ public class GUIView extends View implements TableInterface{
 	 * @author Luca Napoletano, Claudio Montanari
 	 *
 	 */
-	private class MyActionLister implements ActionListener {
+	private class MyActionListener implements ActionListener {
 
 		private GUIView view;
 		
-		public MyActionLister(GUIView view) {
+		public MyActionListener(GUIView view) {
 			this.view = view;
 		}
 		
@@ -1484,13 +1464,13 @@ public class GUIView extends View implements TableInterface{
 
 	@Override
 	protected void notifyLeaderCardActivation() {
-		// TODO Auto-generated method stub
+		// Nothings to do currently
 		
 	}
 
 	@Override
 	protected void notifyLeaderCardDiscard() { 
-		// TODO Auto-generated method stub
+		// Nothings to do currently
 		
 	}
 

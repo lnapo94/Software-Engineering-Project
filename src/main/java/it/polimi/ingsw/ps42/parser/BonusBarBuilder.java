@@ -1,6 +1,9 @@
 package it.polimi.ingsw.ps42.parser;
 
 import java.io.IOException;
+import java.util.Scanner;
+
+import org.apache.log4j.Logger;
 
 import com.google.gson.GsonBuilder;
 
@@ -62,6 +65,37 @@ public class BonusBarBuilder extends Builder{
 			
 		}
 		return new Obtain(null, gains, councilObtain);
+	}
+	
+	public static void main(String[] args) {
+		
+		Logger logger = Logger.getLogger(BonusBarBuilder.class);
+		BonusBarBuilder builder;
+		Scanner scanner = new Scanner(System.in);
+		String councilFile = "Resource//Position//CouncilPosition//CouncilConvertion.json";
+		String bonusBarFile;
+		try {
+			System.out.println("Inserire path e nome del file\n [path consigliato: Resource//BonusBars//bonusBars.json] ");
+			bonusBarFile = scanner.nextLine();
+			builder = new BonusBarBuilder(bonusBarFile, councilFile);
+			String response;
+			int i = 0;
+			do{
+				builder.createBonusBar();
+				i++;
+				System.out.println("Aggiungere un'altra bonusBar?(si/no) ["+i+" bonusBar aggiunte]");
+				response = scanner.nextLine();
+			}
+			while(response.toUpperCase().equals("SI"));
+			builder.close();
+			scanner.close();
+		} catch (IOException e) {
+			logger.error("Problems with file opening procedure");
+			logger.info(e);
+		}
+		
+		
+		
 	}
 
 }

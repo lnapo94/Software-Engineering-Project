@@ -1,4 +1,4 @@
 {
   "ServerTimer": 15,
-  "PlayerMoveTimer": 30
+  "PlayerMoveTimer": 200
 }

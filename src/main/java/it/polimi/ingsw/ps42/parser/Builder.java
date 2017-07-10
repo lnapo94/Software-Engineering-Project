@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonStreamParser;
@@ -26,6 +28,7 @@ public abstract class Builder {
 	protected Scanner scanner;
 	protected List<Obtain> councilConversion;
 	
+	protected Logger logger = Logger.getLogger(Builder.class);
 	
 	public Builder(String fileName, String councilConversionFile) throws IOException {
 		

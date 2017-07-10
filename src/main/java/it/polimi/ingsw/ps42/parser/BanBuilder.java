@@ -1,6 +1,9 @@
 package it.polimi.ingsw.ps42.parser;
 
 import java.io.IOException;
+import java.util.Scanner;
+
+import org.apache.log4j.Logger;
 
 import com.google.gson.GsonBuilder;
 
@@ -202,4 +205,36 @@ public class BanBuilder extends Builder{
 		return new CardBan(color);
 	}
 
+	public static void main(String[] args) {
+			
+			Logger logger = Logger.getLogger(BanBuilder.class);
+			BanBuilder builder;
+			Scanner scanner = new Scanner(System.in);
+			String BanFile;
+			try {
+				System.out.println("Inserire path e nome del file\n\n [path consigliato: Resource//BansFile//NPeriodBans.json "
+						+"e.g. Resource//BansFile//firstPeriodBans.json]");
+				BanFile = scanner.nextLine();
+				builder = new BanBuilder(BanFile);
+				String response;
+				int i = 0;
+				do{
+					builder.addBan();
+					i++;
+					System.out.println("Aggiungere un'altro Ban?(si/no) ["+i+" ban aggiunti]");
+					response = scanner.nextLine();
+				}
+				while(response.toUpperCase().equals("SI"));
+				builder.close();
+				scanner.close();
+			} catch (IOException e) {
+				logger.error("Problems with file opening procedure");
+				logger.info(e);
+			}
+			
+			
+			
+		}
+
+	
 }

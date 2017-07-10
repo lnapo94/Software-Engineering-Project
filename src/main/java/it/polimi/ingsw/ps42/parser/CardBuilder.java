@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.ps42.model.Card;
@@ -340,10 +342,16 @@ public class CardBuilder extends Builder {
 
 	public static void main(String[] args) {
 		
+		Logger logger = Logger.getLogger(CardBuilder.class);
 		CardBuilder builder;
 		Scanner scanner = new Scanner(System.in);
+		String councilFile = "Resource//Position//CouncilPosition//CouncilConvertion.json";
+		String cardFile;
 		try {
-			builder = new CardBuilder("Resource//Cards//ThirdPeriod//blue.json", "Resource//Position//CouncilPosition//CouncilConvertion.json");
+			System.out.println("Inserire path e nome del file\n\n [path consigliato: Resource//Cards//NumberOfPeriod//cardColor.json "
+					+ "\n e.g. Resource//Cards//ThirdPeriod//blue.json]");
+			cardFile = scanner.nextLine();
+			builder = new CardBuilder(cardFile, councilFile);
 			String response;
 			int i =0;
 			do{
@@ -356,6 +364,8 @@ public class CardBuilder extends Builder {
 			builder.close();
 			scanner.close();
 		} catch (IOException e) {
+			logger.error("Problems with file opening procedure");
+			logger.info(e);
 		}
 		
 		
