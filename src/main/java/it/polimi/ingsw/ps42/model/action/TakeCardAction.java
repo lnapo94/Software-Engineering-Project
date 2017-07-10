@@ -9,6 +9,7 @@ import it.polimi.ingsw.ps42.message.CardRequest;
 import it.polimi.ingsw.ps42.message.CardUpdateMessage;
 import it.polimi.ingsw.ps42.message.FamiliarUpdateMessage;
 import it.polimi.ingsw.ps42.message.Message;
+import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.StaticList;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
@@ -217,6 +218,11 @@ public class TakeCardAction extends Action{
 			}
 		}
 		
+		//Control if the player can take another card
+		if(!playerCanHasAnotherCard(position.getCard())) {
+			rollBackAction();
+			return Response.FAILURE;
+		}
 		
 		try {
 			position.getCard().payCard(player, discount);
@@ -320,6 +326,17 @@ public class TakeCardAction extends Action{
 				return true;
 			}
 		}
+		return false;
+	}
+	
+	/**
+	 * Private method used to control if the player can have another card
+	 * @param card		The card to check, is only used to take the correct color to control
+	 * @return			True if the player can have another card, otherwise False
+	 */
+	private boolean playerCanHasAnotherCard(Card card) {
+		if(card != null && player.getCardList(card.getColor()).size() < 6) 
+			return true;
 		return false;
 	}
 }

@@ -189,6 +189,7 @@ public class IncrementWindow extends JDialog{
 		
 		//Add all the listener
 		slider.addChangeListener(new SliderListener());
+		slider.addKeyListener(new KeyboardListener());
 		confirmButton.addActionListener(new ButtonAction());
 		confirmButton.addKeyListener(new KeyboardListener());
 		deleteButton.addActionListener(new ButtonAction());
