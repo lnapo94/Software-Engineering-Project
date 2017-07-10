@@ -843,6 +843,7 @@ public class GameLogic implements Observer {
 				}
 				else {				
 					action.paySlave();
+					currentPlayer.synchResource();
 					//Control if there is a discount
 					if(bonusAction != null) {
 						action.addDiscount(bonusAction.getDiscount());
