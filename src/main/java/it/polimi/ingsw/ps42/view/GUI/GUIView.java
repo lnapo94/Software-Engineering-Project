@@ -157,14 +157,15 @@ public class GUIView extends View implements TableInterface{
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		//Create a full Screen main frame
 		mainFrame = new JFrame(); 
-		mainFrame.setBounds(0, 0,screen.width,(int)(screen.height * 0.90));
+		mainFrame.setBounds(0, 0,screen.width,(int)(screen.height ));  //*0.9
 		mainFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setResizable(false);
 		mainFrame.getContentPane().setLayout(null);
 		mainFrame.setTitle("Lorenzo il Magnifico");
 		//Add a JLayeredPane
 		mainLayeredPane = new JLayeredPane();
-		mainLayeredPane.setBounds(5, 5, mainFrame.getWidth(), mainFrame.getHeight());
+		mainLayeredPane.setBounds(5, 5, mainFrame.getWidth(), (int)(mainFrame.getHeight() * 0.9)); //no 0.9
 		mainFrame.getContentPane().add(mainLayeredPane);
 		
 		Dimension leftPaneDimension = new Dimension((int)(mainLayeredPane.getWidth()*0.42), mainLayeredPane.getHeight());
@@ -181,6 +182,13 @@ public class GUIView extends View implements TableInterface{
 		tableImageDimension = new Dimension(tableIcon.getIconWidth(), tableIcon.getIconHeight());
 		Dimension cardDimension = new Dimension((int)(tableIcon.getIconWidth()*0.13), (int)(tableIcon.getIconHeight()*0.17));
 
+		//Add a lower background bar label
+		JLabel backgroundBar = new JLabel();
+		backgroundBar.setSize((int)mainLayeredPane.getWidth(), (int)(screen.getHeight() - tableImageDimension.getHeight()));
+		backgroundBar.setLocation( 0, (int)tableImageDimension.getHeight());
+		backgroundBar.setIcon(resizeImage( ImageIO.read(new File("Resource//Images//Others//backgroundLowerBar.png")), backgroundBar.getSize()));
+		mainFrame.add(backgroundBar, -1);
+		
 		//Set the CardZoom Panel
 		BufferedImage cardBack = ImageIO.read(new File("Resource//Images//LeaderCards//back.jpg"));
 		cardZoom = new CardZoom(cardBack, new Dimension((int)(cardDimension.getWidth()*3), (int)(cardDimension.getHeight()*3)));
@@ -228,7 +236,7 @@ public class GUIView extends View implements TableInterface{
 		
 		//Build the timerLable
 		buildTimerLable();
-				
+		
 		LoginWindow login = new LoginWindow(this, "");
 		login.run();
 		
@@ -1314,7 +1322,7 @@ public class GUIView extends View implements TableInterface{
 	 */
 	private void buildTimerLable(){
 
-		Dimension timerDimension = new Dimension((int)(tableImageDimension.getWidth() * 0.15), (int)(tableImageDimension.getHeight() * 0.07));
+		Dimension timerDimension = new Dimension((int)(tableImageDimension.getWidth() * 0.165), (int)(tableImageDimension.getHeight() * 0.07));
 		Point timerLocation = new Point((int)(tableImageDimension.getWidth() * 0.01), (int)(tableImageDimension.getHeight() * 0.77));
 		timerLable = new TimerLabel(this, timerDimension, timerLocation, MOVE_SECONDS);
 		timerLable.setVisible(true);

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps42.view.GUI;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -74,7 +75,7 @@ public class TimerLabel extends JLabel{
 		Font font = new Font("Papyrus", Font.ITALIC, (int)(dimension.getWidth()*0.2));
 		
 		this.setFont(font);
-		
+		this.setForeground(Color.WHITE);
 		minutes = (int)(secondsToWait / 60);
 		seconds = (int)(((secondsToWait / 60) - minutes) * 60);
 		
