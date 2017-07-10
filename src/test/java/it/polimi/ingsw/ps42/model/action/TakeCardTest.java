@@ -30,6 +30,13 @@ import it.polimi.ingsw.ps42.model.position.TowerPosition;
 import it.polimi.ingsw.ps42.model.resourcepacket.Packet;
 import it.polimi.ingsw.ps42.model.resourcepacket.Unit;
 
+/**
+ * This class tests the TakeCardAction, so it tries to create different kinds of TakeCard actions
+ * and verify that the checkAction() and doAction() methods are right
+ * 
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class TakeCardTest {
 	
 	private Player p1;
@@ -48,14 +55,15 @@ public class TakeCardTest {
 
 	@Before
 	public void setUp() throws Exception {
-		//Create the player with only 5 money
+		//Create the player with only 3 money
 		p1 = new Player("Player 1");
 		Packet resource = new Packet();
 		resource.addUnit(new Unit(Resource.MONEY, 3));
 		p1.increaseResource(resource);
 		p1.synchResource();
+		
 		//Create one tower
-		//With the lasts 2 floor with an 2 money obtain effect, the others empty
+		//With the lasts 2 floor with a 2 money obtain effect, the others empty
 		Packet packet = new Packet();
 		packet.addUnit(new Unit(Resource.MONEY, 2));
 		Obtain bonus = new Obtain(null, packet, null);
@@ -108,8 +116,10 @@ public class TakeCardTest {
 		//Create the cards
 		//FistCard: cost: 2Money+2Wood OR 2Money; immEffect: +2Money OR +2MilitaryPoint.
 		Card c = new Card("Card", "", CardColor.GREEN, 1, 3, costs, immediateEffects, null, null, null);
+		
 		//SecondCard: cost: 0; effect: none.
 		Card useless = new Card("", "", CardColor.GREEN, 1, 3, null, null, null, null, null);
+		
 		//ThirdCard: cost: 0; immEffect: BonusAction(TakeGreen val 5, discount: 0)
 		Card discountedCard = new Card("card3", "Card with discount", CardColor.GREEN, 1, 2, null, secondImmediateEffects, null, null, null);
 		
@@ -121,12 +131,16 @@ public class TakeCardTest {
 
 	}
 
+	/**
+	 * Tests two action: with the first the player takes a green card for free but with a bonus action, so then
+	 * tests the action obtained 
+	 */
 	@Test
 	public void test() {
 		
+		//Check p1 can take the first green card so it will receive a bonus action take green of level 5
 		try {
 			assertEquals(3, p1.getResource(Resource.MONEY));
-			//Take the first card, you will receive a bonus action take green of level 5
 			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 0);
 			Response checker = takeCardAction.checkAction();
 			assertTrue(checker == Response.SUCCESS);
@@ -135,11 +149,12 @@ public class TakeCardTest {
 		}
 		assertEquals(0, p1.getRequests().size());
 		
+		//Do the action and later verify the player resources and if the player received the bonus action
 		try {
 			takeCardAction.doAction();
 			p1.synchResource();
 			assertEquals(3, p1.getResource(Resource.MONEY));
-			//Now player has a BonusAction to perform
+			//Now player has a BonusAction to perform, so he tries to a take the third green card  
 			ActionPrototype bonusAction = p1.getBonusAction();
 			takeCardAction = new TakeCardAction(ActionType.TAKE_GREEN, p1, tower, 2, 5, 0);
 			takeCardAction.addDiscount(bonusAction.getDiscount());
@@ -147,12 +162,13 @@ public class TakeCardTest {
 		} catch (FamiliarInWrongPosition | NotEnoughResourcesException e) {
 		System.out.println("ERROR");
 		}
-		 
+		
+		//Check the new action given by the bonus action effect (must verify the action prototype first)
 		Response checker = takeCardAction.checkAction();
 		assertEquals(checker , Response.SUCCESS);
 		List<CardRequest> requests = p1.getRequests();
 		
-		//Control request
+		//Control request since there are two costs to choose from (2Money+2Wood OR 2Money) but only the second affordable
 		if(!requests.isEmpty()) {
 			//Now there is one request with only one cost
 			//Player can enable it
@@ -174,9 +190,11 @@ public class TakeCardTest {
 		}
 	}
 	
+	/**
+	 * Method used to test when the player cannot play
+	 */
 	@Test
 	public void negativeTest1() {
-		//Method used to test when the player cannot play
 		
 		p2 = new Player("P2");
 		p2.setCanPlay(false);
@@ -191,9 +209,11 @@ public class TakeCardTest {
 		}
 	}
 	
+	/**
+	 * Method used to test if the player cannot do an action because his familiar value is too low
+	 */
 	@Test
 	public void negativeTest2() {
-		//Method used to test if the player cannot do an action because his familiar value is too low
 		
 		p2 = new Player("P2");
 		
@@ -207,13 +227,16 @@ public class TakeCardTest {
 
 	}
 	
+	/**
+	 * Player p1 tries to take a green card when he hasn't enough military points so then test the rollBack of the action
+	 */
 	@Test
 	public void negativeTest3() {
-		//Player p1 tries to take a green card when he hasn't enough military points
 		
 		//Create a green card to add 2 times to the player
 		Card uselessCard = new Card("Useless Card", "", CardColor.GREEN, 1, 1, null, null, null, null, null);
 		
+		assertEquals(3, p1.getResource(Resource.MONEY));
 		p1.addCard(uselessCard);
 		p1.addCard(uselessCard);
 		
@@ -228,8 +251,28 @@ public class TakeCardTest {
 			logger.info(e);
 		}
 		
-		//Try to rollback the action
+		//Try to rollback the action and check player resources has not changed
 		takeCardAction.rollBackAction();
+		assertEquals(3, p1.getResource(Resource.MONEY));
+		
+	}
+	
+	@Test
+	public void negativeTest4(){
+		
+		Packet temp = new Packet();
+		temp.addUnit(new Unit(Resource.MONEY, 1));
+		//Decrease the resources of the player so that he cannot afford the third green card
+		try {
+			p1.decreaseResource(temp);
+		} catch (NotEnoughResourcesException e) {
+			logger.error("Problems in decreasing resources for negative test 4");
+			logger.info(e);
+		}
+		
+		assertEquals(1, p1.getResource(Resource.MONEY));
+		TakeCardAction action = new TakeCardAction(ActionType.TAKE_GREEN, p1.getFamiliar(FamiliarColor.ORANGE), tower, 2);
+		
 		
 	}
 	

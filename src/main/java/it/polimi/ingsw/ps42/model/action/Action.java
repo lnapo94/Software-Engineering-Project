@@ -54,9 +54,8 @@ public abstract class Action extends Observable{
 	 * 
 	 * @param type							The type of the action
 	 * @param familiar						The familiar the player wants to move
-	 * @throws NotEnoughResourcesException	Thrown if the player hasn't enough resources
 	 */
-	public Action(ActionType type, Familiar familiar) throws NotEnoughResourcesException{
+	public Action(ActionType type, Familiar familiar) {
 		
 		this.type=type;
 		this.familiar=familiar;
@@ -76,9 +75,8 @@ public abstract class Action extends Observable{
 	 * @param player							The interested player
 	 * @param actionValue						The value of the bonus action
 	 * @param actionIncrement					The increment the player wants
-	 * @throws NotEnoughResourcesException		Thrown if the player hasn't enough resources
 	 */
-	public Action(ActionType type, Player player, int actionValue, int actionIncrement) throws NotEnoughResourcesException {
+	public Action(ActionType type, Player player, int actionValue, int actionIncrement) {
 		
 		
 		this.type = type;
