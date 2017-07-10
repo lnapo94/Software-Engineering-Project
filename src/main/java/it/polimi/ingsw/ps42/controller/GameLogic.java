@@ -1232,7 +1232,7 @@ public class GameLogic implements Observer {
 						WinnerMessage winnerMessage = new WinnerMessage(playersList.get(0).getPlayerID(), result);
 						playersList.get(0).notifyRanking(winnerMessage);
 						
-						if(timerTable.containsKey(playersList.get(0)))
+						if(!playersList.isEmpty() && timerTable.containsKey(playersList.get(0)))
 							timerTable.remove(playersList.get(0)).cancel();
 					}
 				}

@@ -137,7 +137,6 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	 * @return				True if the disconnected players list contains the specify ID, False otherwise
 	 */
 	public synchronized boolean wasConnected(String playerID){
-		//Return if the playerID passed is in use by an active Player
 		for (String player: disconnectedPlayers) {
 			if(player.equals(playerID))
 				return true;
@@ -245,7 +244,8 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 		//Send to Socket Client
 		connections.forEach((playerID, connection)->{
 			try {
-				connection.send(message);
+				if(!disconnectedPlayers.contains(playerID))
+					connection.send(message);
 			} catch (IOException e) {
 				//The player is disconnected so remove his connection
 				logger.info("The player is disconnected so remove his connection");
@@ -258,25 +258,22 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 		
 		RMIConnections.forEach((playerID, client) -> {
 			try {
-				client.notify(message);
+				if(!disconnectedPlayers.contains(playerID))
+					client.notify(message);
 			} catch (RemoteException e) {
 				logger.info("Unable to notify the RMI client, disconnect it");
 				logger.info(e);
 				try {
-					setChanged();
-					notifyObservers(playerID);
 					disconnectClient(playerID);
 				} catch (RemoteException e1) {
 					logger.error("Unable to disconnect the client");
 					logger.info(e1);
+				} finally {
+					setChanged();
+					notifyObservers(playerID);
 				}
 			}
 		});
-
-		for(String playerID : disconnectedPlayers) {
-			connections.remove(playerID);
-			RMIConnections.remove(playerID);
-		}
 	}
 	
 	/**
@@ -285,7 +282,7 @@ public class ServerView extends Observable implements Observer, ServerViewInterf
 	 */
 	public synchronized void deleteConnection(String playerID) {
 		disconnectedPlayers.add(playerID);
-		Connection connection = connections.remove(playerID);
+		Connection connection = connections.get(playerID);
 		connection.deleteObserver(this);
 	}
 
