@@ -12,6 +12,13 @@ import it.polimi.ingsw.ps42.model.Card;
 import it.polimi.ingsw.ps42.model.enumeration.CardColor;
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * This class tests the CardBan class, so it create the effect, enable it on a player and 
+ * later verify that he do not has anymore the cards according to the effect
+ *  
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CardBanTest {
 	
 	CardBan ban;
@@ -26,8 +33,8 @@ public class CardBanTest {
 
 	@Before
 	public void setUp() throws Exception {
-		//Create the effect. In this case, at the end of the match, I remove the card
-		//before I counting the victory point from cards
+		//Create the effect. In this case, at the end of the match, the gameLogic remove the card
+		//before counting the victory point from cards
 		ban = new CardBan(CardColor.GREEN);
 		
 		//Create a player
@@ -44,7 +51,7 @@ public class CardBanTest {
 
 	@Test
 	public void test() {
-		//Assign the ban to the player
+		//Assign the ban to the player and verify he does not have the cards anymore
 		ban.enableEffect(p1);
 		assertEquals(1, p1.getCardList(CardColor.YELLOW).size());
 		assertEquals(0, p1.getCardList(CardColor.GREEN).size());

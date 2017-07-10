@@ -11,6 +11,13 @@ import org.junit.Test;
 
 import it.polimi.ingsw.ps42.model.player.Player;
 
+/**
+ * This class tests the CanPositioningEveryWhere effect (Leader Cards), so it
+ * enables the Effect on a player and then checks if the player can position its familiar every where 
+ *    
+ * @author Luca Napoletano, Claudio Montanari
+ *
+ */
 public class CanPositioningEverywhereLeaderTest {
 
 	private Player player;
