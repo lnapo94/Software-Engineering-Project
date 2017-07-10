@@ -86,7 +86,7 @@ public class CardContainer extends FunctionalLabel{
 	 * @param image					The image of the card
 	 * @param tableCardDimension	The dimension of the card on the table
 	 */
-	public CardContainer(Dimension dimension, Point location, CardZoom cardZoom, BufferedImage image, Dimension tableCardDimension ) {
+	public CardContainer(Dimension dimension, Point location, CardZoom cardZoom, BufferedImage image, BufferedImage lateralImage, Dimension tableCardDimension ) {
 		
 		super();
 		greenCard = new ArrayList<>();
@@ -101,12 +101,20 @@ public class CardContainer extends FunctionalLabel{
 		mainPane.setBounds(0, 0, (int)this.getWidth(),(int) this.getHeight());
 		this.add(mainPane);
 		
+		//Set up background images 
 		JLabel backGround = new JLabel();
 		int shift = (int) (dimension.getWidth() * 0.03);
 		backGround.setSize(new Dimension((int)(dimension.getWidth()*0.8), (int)dimension.getHeight()));
 		backGround.setLocation(shift,0);
 		backGround.setIcon(resizeImage(image, backGround.getSize()));
 		mainPane.add(backGround, -1);
+		
+		JLabel backGround2 = new JLabel();
+		backGround2.setSize(new Dimension((int)(dimension.getWidth()*0.2), (int)dimension.getHeight()));
+		backGround2.setLocation(shift + (int)(dimension.getWidth()*0.8), 0);
+		backGround2.setIcon(resizeImage(lateralImage, backGround2.getSize()));
+		mainPane.add(backGround2, -1);
+		
 		this.cardDimension = new Dimension((int)(tableCardDimension.getWidth()*1.1), (int)(tableCardDimension.getHeight()*1.1));
 		buildCardPositions(mainPane, cardDimension);
 		

@@ -213,7 +213,7 @@ public class GUIView extends View implements TableInterface{
 		//Set the Cards taken container
 		Dimension containerDimension = new Dimension((int)(rightPanelDimension.getWidth()),(int) (rightPanelDimension.getHeight()-cardZoom.getHeight()));
 		Point containerLocation = new Point((int)leftPaneDimension.getWidth(), (int)cardZoom.getHeight());
-		cardContainer = new CardContainer(containerDimension, containerLocation, cardZoom, ImageIO.read(new File("Resource//Images//Others//cardContainer.jpg")), cardDimension);
+		cardContainer = new CardContainer(containerDimension, containerLocation, cardZoom, ImageIO.read(new File("Resource//Images//Others//cardContainer.jpg")),ImageIO.read(new File("Resource//Images//Others//aggiuntaContainer.png")) , cardDimension);
 		mainLayeredPane.add(cardContainer, -1);
 		
 		//Build the main Familiar positions
@@ -1253,7 +1253,7 @@ public class GUIView extends View implements TableInterface{
 	}
 
 	/**
-	 * Enable the Player to perform a new Move, if it is a retrasmission cancel the precedent
+	 * Enable the Player to perform a new Move, if it is a retransmission cancel the precedent
 	 */
 	@Override
 	protected void choosePlayerMove(ActionPrototype prototype, boolean isRetrasmission) {
