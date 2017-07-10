@@ -31,7 +31,7 @@ public class PayRequest extends CardRequest{
 	@Override
 	public void apply(Player player) {
 		try {
-			card.payCard(player, userChoice, discount);
+			card.payCard(player, possibleChoiceIndex.get(userChoice), discount);
 		} catch (NotEnoughResourcesException e) {
 			throw new ArithmeticException("Card cannot be payed, control goes down");
 		}
