@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps42.view.GUI;
+package it.polimi.ingsw.ps42.view.GUI.dialog;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -20,6 +20,7 @@ import javax.swing.event.ChangeListener;
 import it.polimi.ingsw.ps42.message.PlayerMove;
 import it.polimi.ingsw.ps42.model.enumeration.ActionType;
 import it.polimi.ingsw.ps42.model.enumeration.FamiliarColor;
+import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
 /**
  * Class that implements a JDialog to show the move the player wants to do. Moreover, this window is used also to increase 

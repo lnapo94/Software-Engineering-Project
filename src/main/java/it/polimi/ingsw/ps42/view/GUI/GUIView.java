@@ -2,7 +2,6 @@ package it.polimi.ingsw.ps42.view.GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Image;
@@ -26,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.border.LineBorder;
 
+import it.polimi.ingsw.ps42.view.GUI.dialog.*;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -51,15 +51,6 @@ import it.polimi.ingsw.ps42.parser.ImageLoader;
 import it.polimi.ingsw.ps42.parser.TimerLoader;
 import it.polimi.ingsw.ps42.view.TableInterface;
 import it.polimi.ingsw.ps42.view.View;
-import it.polimi.ingsw.ps42.view.GUI.dialog.BonusBarRequestDialog;
-import it.polimi.ingsw.ps42.view.GUI.dialog.CardRequestDialog;
-import it.polimi.ingsw.ps42.view.GUI.dialog.CouncilRequestDialog;
-import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardChooseDialog;
-import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderCardShowDialog;
-import it.polimi.ingsw.ps42.view.GUI.dialog.LeaderFamiliarRequestDialog;
-import it.polimi.ingsw.ps42.view.GUI.dialog.PayBanDialog;
-import it.polimi.ingsw.ps42.view.GUI.dialog.ResultWindow;
-import it.polimi.ingsw.ps42.view.GUI.dialog.ShowBonusAction;
 
 /**
  * Class that represents all the Graphical User Interface component of our implementation
@@ -1592,20 +1583,5 @@ public class GUIView extends View implements TableInterface{
 	public Player getPlayer() {
 		return this.player;
 	}
-	
-	public static void main(String[] args) {
-		Logger logger = Logger.getLogger(GUIView.class);
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUIView window = new GUIView();
-				} catch (Exception e) {
-					logger.error("Problems in GUI View creation");
-					logger.info(e);
-				}
-			}
-		});
-	}
-
 
 }

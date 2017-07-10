@@ -170,7 +170,6 @@ public class ClientSocket extends Observable implements Observer{
 	/**
 	 * Main method to start the ClientSocket Class
 	 * 
-	 * @param host						The IP Address or the Web Address of the Server
 	 * @throws UnknownHostException		Thrown if the {@code String host = "IP address"} is an Unknown IP address
 	 * @throws IOException				Thrown if there is a network problem
 	 */

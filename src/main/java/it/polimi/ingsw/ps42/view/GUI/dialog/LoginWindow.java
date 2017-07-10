@@ -1,4 +1,6 @@
-package it.polimi.ingsw.ps42.view.GUI;
+package it.polimi.ingsw.ps42.view.GUI.dialog;
+
+import it.polimi.ingsw.ps42.view.GUI.GUIView;
 
 import java.awt.Color;
 import java.awt.Dimension;
