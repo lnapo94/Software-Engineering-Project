@@ -203,7 +203,7 @@ public class CardTest {
 		firstCard = new Card("First", "Something", CardColor.YELLOW, 2, 4, costs, immediateEffects, requirements, null, null);
 		secondCard = new Card("First", "Something", CardColor.YELLOW, 2, 4, costs, immediateEffects, requirements, null, null);
 		thirdCard = new Card("First", "Something", CardColor.YELLOW, 2, 4, costs, immediateEffects, null, null, null);
-		
+
 		cloneCard = firstCard.clone();
 	}
 
@@ -325,8 +325,8 @@ public class CardTest {
 			
 			//Verify if card has been payed
 			assertEquals(3, canTakeCard.getResource(Resource.MONEY));
-			assertEquals(3, canTakeCard.getResource(Resource.STONE));
-			assertEquals(0, canTakeCard.getResource(Resource.WOOD));
+			assertEquals(0, canTakeCard.getResource(Resource.STONE));
+			assertEquals(3, canTakeCard.getResource(Resource.WOOD));
 			
 		} catch (NotEnoughResourcesException e) {
 			fail();
