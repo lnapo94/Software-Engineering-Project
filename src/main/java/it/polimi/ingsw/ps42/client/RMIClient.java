@@ -37,6 +37,8 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 	
 	private String playerID;
 	
+	private ClientInterface remoteRef;
+	
 	
 	private transient Logger logger = Logger.getLogger(RMIClient.class);
 	
@@ -52,6 +54,7 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 		try {
 			Registry registry = LocateRegistry.getRegistry(host, 1099);
 			server = (ServerInterface) registry.lookup("Server");
+			remoteRef = (ClientInterface) UnicastRemoteObject.exportObject(this, 0);
 		} catch (RemoteException | NotBoundException e) {
 			logger.fatal("Error in connection with RMI server");
 			logger.info(e);
@@ -127,7 +130,7 @@ public class RMIClient extends Observable implements Observer, ClientInterface{
 				try {
 					LoginMessage message = (LoginMessage) arg1;
 					this.playerID = message.getUserName();
-					server.sendLoginMessage((ClientInterface) UnicastRemoteObject.exportObject(this, 0), message);
+					server.sendLoginMessage(remoteRef, message);
 				} catch (RemoteException e) {
 					logger.info("Unable to send a message to the RMI Server");
 					logger.info(e);
